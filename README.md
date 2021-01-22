@@ -4,7 +4,7 @@
 
 # laurabeatris.com
 
-My portfolio has the goal to share my achievements, projects, content creations and a little bit about my life. 
+My portfolio has the goal to share my achievements, projects, content creations, and a little bit about my life.
 
 [![Author](https://img.shields.io/badge/author-LauraBeatris-43CEA2?style=flat-square)](https://github.com/LauraBeatris)
 [![Languages](https://img.shields.io/github/languages/count/LauraBeatris/laurabeatris.com?color=%2343CEA2&style=flat-square)](#)
