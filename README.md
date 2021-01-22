@@ -43,7 +43,7 @@ Define the environment variables by creating a .env.local file similar to [.env.
 
 **Question:** What are the technologies used in this project?
 
-**Answer:** [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com/) and [GraphCMS](https://graphcms.com/).
+**Answer:** [Next.js](https://nextjs.org/), [Chakra UI](https://chakra-ui.com/) and [GraphCMS](https://graphcms.com/).
 
 **Question** Why Next.js instead of other frameworks of React out there?
 
