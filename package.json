@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint-code-style": "eslint . --ext=.ts,.tsx --fix",
+    "lint-code-style": "eslint . --ext=.js,.ts,.tsx --fix",
     "lint-check-types": "tsc --noemit",
     "linter": "yarn lint-code-style && yarn lint-check-types"
   },
@@ -35,8 +35,10 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-react-hooks": "^4.0.8",
+    "globby": "^11.0.2",
     "husky": "^4.3.8",
     "lint-staged": "^10.5.3",
+    "prettier": "^2.2.1",
     "typescript": "^4.1.3"
   }
 }
