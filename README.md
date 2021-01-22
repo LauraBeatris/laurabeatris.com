@@ -16,7 +16,7 @@ My portfolio has the goal to share my achievements, projects, content creations,
 </p>
 
 <p align="center">
-   <a href="https://use-selected-items-hook-6vsdik4n4.vercel.app/">Go check it out 🎉</a>
+   <a href="laurabeatris.com">Go check it out 🎉</a>
 </p>
 
 ---
