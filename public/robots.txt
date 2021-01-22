@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://laurabeatris.com/sitemap.xml
