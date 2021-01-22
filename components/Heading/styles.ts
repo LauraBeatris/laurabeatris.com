@@ -12,6 +12,9 @@ export default {
     },
     sm: {
       fontSize: '1.5rem'
+    },
+    xs: {
+      fontSize: '1.2rem'
     }
   },
   defaultProps: {
