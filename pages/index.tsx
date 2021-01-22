@@ -1,5 +1,6 @@
 import { Heading } from 'components/Heading'
 import { Paragraph } from 'components/Paragraph'
+import { HighlightLink } from 'components/HighlightLink'
 
 export default function Home () {
   return (
@@ -11,6 +12,9 @@ export default function Home () {
       <Paragraph size='md'>
         I’m a Software Engineer and creator. I work at YLD and also run my Youtube Channel and a Podcast about programming. Teaching code and creating solutions are my favorite things in the world. 🚀
       </Paragraph>
+      <HighlightLink size='md' href='https://twitter.com/lauradotjs'>
+        Teste
+      </HighlightLink>
     </>
   )
 }
