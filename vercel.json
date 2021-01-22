@@ -1,0 +1,37 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/fonts/inter-var-latin.woff2",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/resume",
+      "destination": "/resume-2021.pdf"
+    },
+    {
+      "source": "/youtube",
+      "destination": "https://www.youtube.com/c/LauraBeatris"
+    },
+    {
+      "source": "/github",
+      "destination": "https://github.com/LauraBeatris"
+    },
+    {
+      "source": "/linkedin",
+      "destination": "https://www.linkedin.com/in/laurabeatris/"
+    },
+    {
+      "source": "/twitter",
+      "destination": "https://twitter.com/lauradotjs"
+    }
+  ]
+}
