@@ -1,5 +1,10 @@
+import { Heading } from 'components/Heading'
+
 export default function Home () {
   return (
-    <h1>Hey!</h1>
+    <Heading width={346}>
+      Happy Sunday! ✌🏼
+      I'm Laura Beatris
+    </Heading>
   )
 }
