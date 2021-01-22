@@ -1,0 +1,8 @@
+# Lint all files except .eslintrc.js
+!.eslintrc.js
+
+# Dependencies
+node_modules/
+
+# Build Output
+out/
