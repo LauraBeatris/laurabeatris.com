@@ -12,7 +12,7 @@ function Paragraph ({
 }: TextProps) {
   const styles = useStyleConfig(paragraphThemeKey, { size, variant })
 
-  return (<Text sx={styles} {...rest}>{children}</Text>)
+  return (<Text as='p' sx={styles} {...rest}>{children}</Text>)
 }
 
 export { Paragraph, paragraphStyles, paragraphThemeKey }
