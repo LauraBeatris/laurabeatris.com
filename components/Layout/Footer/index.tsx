@@ -58,7 +58,7 @@ export function Footer () {
             {
                 footerLinks.map(({ imageSrc, href }) => (
                   <Link key={href} href={href} isExternal>
-                    <Image width={5} height={5} src={imageSrc} />
+                    <Image width={5} src={imageSrc} />
                   </Link>
                 ))
               }
