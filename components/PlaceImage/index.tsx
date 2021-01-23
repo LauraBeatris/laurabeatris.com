@@ -16,25 +16,20 @@ export function PlaceImage ({
       <style jsx global>{`
           .place-image {
             border-radius: 4px;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
           }
         `}
       </style>
-      <Box
+      <Image
+        src={imageSrc}
+        alt={`Picture of ${name} city`}
+        quality={100}
         width={734}
         height={300}
-        maxWidth='full'
-        position='relative'
-        borderRadius='md'
-      >
-        <Image
-          src={imageSrc}
-          alt={`Picture of ${name} city`}
-          layout='fill'
-          quality={100}
-          className='place-image'
-        />
-      </Box>
+        className='place-image'
+      />
 
       <Stack spacing={0.5} direction='column'>
         <Heading size='xs' as='strong'>
