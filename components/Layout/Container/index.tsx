@@ -1,15 +1,14 @@
-import { ContainerProps } from '@chakra-ui/react'
+import { Container as ChakraContainer, ContainerProps } from '@chakra-ui/react'
 
 export function Container ({ children, ...rest }: ContainerProps) {
   return (
-    <Container
-      as='main'
+    <ChakraContainer
       maxW='3xl'
       paddingX={8}
       paddingBottom={8}
       {...rest}
     >
       {children}
-    </Container>
+    </ChakraContainer>
   )
 }
