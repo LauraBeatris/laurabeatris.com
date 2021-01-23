@@ -1,8 +1,9 @@
 import Image from 'next/image'
 import { Text, Stack } from '@chakra-ui/react'
 
-import { PlaceImageProps } from './types'
 import { Heading } from 'components/UI/Heading'
+
+import { PlaceImageProps } from './types'
 
 export function PlaceImage ({
   name,
