@@ -20,7 +20,7 @@ export function Layout ({ children }) {
         </Container>
       </Flex>
 
-      <Container>
+      <Container as='main'>
         {children}
       </Container>
 

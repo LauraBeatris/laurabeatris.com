@@ -16,7 +16,11 @@ const iconProps = { boxSize: '2em', color: 'white.100' }
 export function HeaderNavigation () {
   return (
     <>
-      <HStack display={['none', null, 'flex']} as='ul' spacing={4}>
+      <HStack
+        as='ul'
+        display={['none', null, 'flex']}
+        spacing={4}
+      >
         {
           navigationItems.map(({ name, href }) => (
             <Link key={name} href={href}>{name}</Link>
@@ -30,10 +34,10 @@ export function HeaderNavigation () {
             <>
               <MenuButton
                 as={Button}
+                display={['normal', null, 'none']}
                 paddingX={2}
                 variant='unstyled'
                 backgroundColor='green.400'
-                display={['normal', null, 'none']}
               >
                 {
                   isOpen
@@ -44,9 +48,20 @@ export function HeaderNavigation () {
               <MenuList>
                 {
                   navigationItems.map(({ name, href }) => (
-                    <MenuItem key={name} color='dark'>
-                      <Link activeColor='green.400' key={name} href={href}>{name}</Link>
-                    </MenuItem>
+                    <Link
+                      key={name}
+                      href={href}
+                      activeColor='green.400'
+                      _hover={{ textDecoration: 'none' }}
+                    >
+                      <MenuItem
+                        key={name}
+                        _focus={{ backgroundColor: 'none' }}
+                        _hover={{ backgroundColor: 'white.100' }}
+                      >
+                        {name}
+                      </MenuItem>
+                    </Link>
                   ))
                 }
               </MenuList>
