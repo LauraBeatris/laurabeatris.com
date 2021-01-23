@@ -5,7 +5,12 @@ import { Link as ChakraLink } from '@chakra-ui/react'
 
 import { LinkProps } from './types'
 
-export function Link ({ href, children, activeColor = 'dark' }: LinkProps) {
+export function Link ({
+  href,
+  children,
+  activeColor = 'dark',
+  ...rest
+}: LinkProps) {
   const router = useRouter()
 
   const isActive = router.pathname === href
@@ -16,6 +21,7 @@ export function Link ({ href, children, activeColor = 'dark' }: LinkProps) {
         color={isActive ? activeColor : 'dark'}
         fontWeight={isActive ? 700 : 500}
         letterSpacing={0.5}
+        {...rest}
       >
         {children}
       </ChakraLink>
