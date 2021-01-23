@@ -1,20 +1,30 @@
-import { Flex, Container } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 
 import { Header } from 'components/Layout/Header'
 
+import { GradientLine } from './GradientLine'
+import { Container } from './Container'
+
 export function Layout ({ children }) {
   return (
-    <Flex minHeight='100vh' backgroundColor='white.100'>
-      <Container
-        as='main'
-        maxW='3xl'
-        paddingX={8}
-        paddingBottom={8}
-      >
-        <Header />
+    <Flex
+      direction='column'
+      minHeight='200vh'
+      backgroundColor='white.100'
+      justifyContent='space-between'
+    >
+      <Flex direction='column'>
+        <GradientLine />
+        <Container>
+          <Header />
+        </Container>
+      </Flex>
 
+      <Container>
         {children}
       </Container>
+
+      <GradientLine />
     </Flex>
   )
 }
