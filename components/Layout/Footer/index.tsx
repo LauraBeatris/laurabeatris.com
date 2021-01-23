@@ -1,6 +1,6 @@
 import { Link, Flex, Image, HStack, VStack } from '@chakra-ui/react'
 
-import { Heading } from 'components/UI/Heading'
+import { Heading } from 'components/Base/Heading'
 import { Container } from 'components/Layout/Container'
 import { GradientLine } from 'components/GradientLine'
 

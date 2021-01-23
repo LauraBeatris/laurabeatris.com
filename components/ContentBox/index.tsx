@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import { Stack } from '@chakra-ui/react'
 
-import { Paragraph } from 'components/UI/Paragraph'
-import { Heading } from 'components/UI/Heading'
+import { Paragraph } from 'components/Base/Paragraph'
+import { Heading } from 'components/Base/Heading'
 
 import { ContentBoxProps } from './types'
 

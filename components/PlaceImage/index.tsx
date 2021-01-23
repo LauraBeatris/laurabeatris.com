@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { Text, Stack } from '@chakra-ui/react'
 
-import { Heading } from 'components/UI/Heading'
+import { Heading } from 'components/Base/Heading'
 
 import { PlaceImageProps } from './types'
 

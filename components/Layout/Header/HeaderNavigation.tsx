@@ -8,7 +8,7 @@ import {
   MenuButton
 } from '@chakra-ui/react'
 
-import { Link } from 'components/UI/Link'
+import { Link } from 'components/Base/Link'
 import { navigationItems } from 'constants/navigation'
 
 const iconProps = { boxSize: '2em', color: 'white.100' }

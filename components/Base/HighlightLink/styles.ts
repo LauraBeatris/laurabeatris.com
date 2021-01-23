@@ -1,4 +1,4 @@
-import { paragraphStyles } from 'components/UI/Paragraph'
+import { paragraphStyles } from 'components/Base/Paragraph'
 
 const { sizes } = paragraphStyles
 
