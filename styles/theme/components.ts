@@ -1,6 +1,6 @@
-import { highlightLinkStyles, highlightLinkThemeKey } from 'components/HighlightLink'
-import { headingStyles, headingThemeKey } from 'components/Heading'
-import { paragraphStyles, paragraphThemeKey } from 'components/Paragraph'
+import { highlightLinkStyles, highlightLinkThemeKey } from 'components/UI/HighlightLink'
+import { headingStyles, headingThemeKey } from 'components/UI/Heading'
+import { paragraphStyles, paragraphThemeKey } from 'components/UI/Paragraph'
 
 export const components = {
   [headingThemeKey]: headingStyles,
