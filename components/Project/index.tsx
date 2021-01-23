@@ -1,7 +1,7 @@
 import { Badge, Image, Stack } from '@chakra-ui/react'
 
-import { Heading } from 'components/Heading'
-import { Paragraph } from 'components/Paragraph'
+import { Heading } from 'components/Base/Heading'
+import { Paragraph } from 'components/Base/Paragraph'
 
 import { ProjectProps } from './types'
 
