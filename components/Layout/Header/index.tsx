@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import { Flex } from '@chakra-ui/react'
 
-import { ToggleThemeIcon } from 'components/Layout/ToggleThemeIcon'
+import { ToggleThemeIcon } from 'components/ToggleThemeIcon'
 import { Container } from 'components/Layout/Container'
 
 import { HeaderNavigation } from './HeaderNavigation'
-import { GradientLine } from '../GradientLine'
+import { GradientLine } from '../../GradientLine'
+import Link from 'next/link'
 
 export function Header () {
   return (
@@ -26,13 +27,19 @@ export function Header () {
         justifyContent='space-between'
         paddingY={8}
       >
-        <Flex marginRight={['auto', null, 'unset']}>
-          <Image
-            src='/images/logo.png'
-            width={45}
-            height={59}
-            loading='eager'
-          />
+        <Flex
+          title='Click to go to home'
+          cursor='pointer'
+          marginRight={['auto', null, 'unset']}
+        >
+          <Link href='/'>
+            <Image
+              src='/images/logo.png'
+              width={45}
+              height={59}
+              loading='eager'
+            />
+          </Link>
         </Flex>
 
         <HeaderNavigation />
