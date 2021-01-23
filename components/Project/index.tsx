@@ -56,7 +56,10 @@ export function Project ({
           </Stack>
         </Stack>
 
-        <Paragraph size='sm'>
+        <Paragraph
+          size='sm'
+          variant='regular'
+        >
           {description}
         </Paragraph>
       </Stack>

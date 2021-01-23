@@ -11,6 +11,11 @@ export default {
       fontSize: '1rem'
     }
   },
+  variants: {
+    regular: {
+      fontWeight: 400
+    }
+  },
   defaultProps: {
     size: 'md'
   }
