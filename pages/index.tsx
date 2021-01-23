@@ -1,6 +1,7 @@
 import { VStack, Heading } from '@chakra-ui/react'
 import { HighlightLink } from 'components/Base/HighlightLink'
 import { Paragraph } from 'components/Base/Paragraph'
+import { links } from 'constants/links'
 import { getDayOfWeek } from 'utils/getDayOfWeek'
 
 const now = new Date()
@@ -25,8 +26,8 @@ export default function Home () {
 
       <Paragraph variant='regular'>
         I'm a Software Engineer and Content Creator.
-        I run a <HighlightLink href='https://www.youtube.com/c/LauraBeatris'>Youtube Channel</HighlightLink>{' '}
-        and a <HighlightLink>Podcast</HighlightLink> about programming.
+        I run a <HighlightLink href={links.youtube}>Youtube Channel</HighlightLink>{' '}
+        and a <HighlightLink href={links.podcast}>Podcast</HighlightLink> about programming.
         Teaching and creating solutions are my favorite things in the world. <span role='img' aria-hidden='true'>🚀</span>
       </Paragraph>
     </VStack>

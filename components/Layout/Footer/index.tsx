@@ -3,22 +3,23 @@ import { Link, Flex, Image, HStack, VStack } from '@chakra-ui/react'
 import { Heading } from 'components/Base/Heading'
 import { Container } from 'components/Layout/Container'
 import { GradientLine } from 'components/GradientLine'
+import { links } from 'constants/links'
 
 const footerLinks = [
   {
-    href: 'https://github.com/LauraBeatris',
+    href: links.github,
     imageSrc: '/images/icons/github.png'
   },
   {
-    href: 'https://www.linkedin.com/in/laurabeatris/',
+    href: links.linkedin,
     imageSrc: '/images/icons/linkedin.png'
   },
   {
-    href: 'https://www.youtube.com/c/LauraBeatris',
+    href: links.youtube,
     imageSrc: '/images/icons/youtube.png'
   },
   {
-    href: 'https://twitter.com/lauradotjs',
+    href: links.twitter,
     imageSrc: '/images/icons/twitter.png'
   }
 ]
