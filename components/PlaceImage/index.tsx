@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Box, Text, Stack } from '@chakra-ui/react'
+import { Text, Stack } from '@chakra-ui/react'
 
 import { PlaceImageProps } from './types'
 import { Heading } from 'components/Heading'
@@ -13,22 +13,13 @@ export function PlaceImage ({
 }: PlaceImageProps) {
   return (
     <Stack direction='column' spacing={4} {...rest}>
-      <style jsx global>{`
-          .place-image {
-            border-radius: 4px;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-        `}
-      </style>
       <Image
         src={imageSrc}
         alt={`Picture of ${name} city`}
         quality={100}
         width={734}
         height={300}
-        className='place-image'
+        className='next-image'
       />
 
       <Stack spacing={0.5} direction='column'>

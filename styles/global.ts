@@ -17,4 +17,11 @@ export const global = css`
     background-color: ${colors.green[400]};
     color: ${colors.white[100]};
   }
+
+  .next-image {
+    border-radius: 4px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `
