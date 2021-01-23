@@ -20,7 +20,6 @@ export function Link ({
       <ChakraLink
         color={isActive ? activeColor : 'dark'}
         fontWeight={isActive ? 700 : 500}
-        letterSpacing={0.5}
         {...rest}
       >
         {children}
