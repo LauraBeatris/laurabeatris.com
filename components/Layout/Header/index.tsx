@@ -1,12 +1,12 @@
-import Image from 'next/image'
 import { Flex } from '@chakra-ui/react'
+import Image from 'next/image'
+import Link from 'next/link'
 
 import { ToggleThemeIcon } from 'components/ToggleThemeIcon'
 import { Container } from 'components/Layout/Container'
+import { GradientLine } from 'components/GradientLine'
 
 import { HeaderNavigation } from './HeaderNavigation'
-import { GradientLine } from '../../GradientLine'
-import Link from 'next/link'
 
 export function Header () {
   return (

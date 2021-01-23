@@ -1,4 +1,5 @@
 import { VStack, Heading } from '@chakra-ui/react'
+
 import { HighlightLink } from 'components/Base/HighlightLink'
 import { Paragraph } from 'components/Base/Paragraph'
 import { links } from 'constants/links'
