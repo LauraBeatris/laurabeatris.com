@@ -9,5 +9,8 @@ export const colors = {
   dark: '#262626',
   green: {
     400: '#43CEA2'
-  }
+  },
+  heather: '#C5CFDC',
+  lightningYellow: '#F9B52A',
+  saffron: '#F7CC42'
 }
