@@ -18,6 +18,7 @@ export function Link ({
   return (
     <NextLink href={href}>
       <ChakraLink
+        href={href}
         color={isActive ? activeColor : 'dark'}
         fontWeight={isActive ? 700 : 500}
         {...rest}

@@ -20,10 +20,13 @@ export function HeaderNavigation () {
         as='ul'
         display={['none', null, 'flex']}
         spacing={4}
+        css={{ listStyle: 'none' }}
       >
         {
           navigationItems.map(({ name, href }) => (
-            <Link key={name} href={href}>{name}</Link>
+            <li key={name}>
+              <Link href={href}>{name}</Link>
+            </li>
           ))
         }
       </HStack>
