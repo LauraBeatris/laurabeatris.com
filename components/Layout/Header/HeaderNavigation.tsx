@@ -34,9 +34,11 @@ export function HeaderNavigation () {
             <>
               <MenuButton
                 as={Button}
-                display={['normal', null, 'none']}
-                paddingX={2}
+                display={['flex', null, 'none']}
                 variant='unstyled'
+                paddingX={2}
+                alignItems='center'
+                justifyContent='center'
                 backgroundColor='green.400'
               >
                 {
