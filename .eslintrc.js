@@ -5,11 +5,15 @@ module.exports = {
     'standard',
     'standard-react',
     'standard-jsx',
-    'plugin:@typescript-eslint/recommended'
+    'plugin:@typescript-eslint/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/typescript'
   ],
   plugins: [
     'react-hooks',
-    'jsx-a11y'
+    'jsx-a11y',
+    'import'
   ],
   rules: {
     'react/react-in-jsx-scope': 'off',
@@ -17,7 +21,11 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     'react/prop-types': 'off',
     '@typescript-eslint/no-var-requires': 'off',
-    'no-console': 1
+    'no-console': 1,
+    'import/order': ['error', {
+      groups: ['builtin', 'external', 'internal'],
+      'newlines-between': 'always-and-inside-groups'
+    }]
   },
   globals: {
     React: 'writable'

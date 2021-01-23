@@ -4,6 +4,7 @@ import Document, {
   Main,
   NextScript
 } from 'next/document'
+
 import { colors } from 'styles/theme/colors'
 
 class MyDocument extends Document {

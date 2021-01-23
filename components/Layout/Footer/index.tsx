@@ -1,10 +1,10 @@
-import { Link, Flex, HStack, VStack } from '@chakra-ui/react'
 import { AiFillGithub, AiFillLinkedin, AiFillYoutube, AiFillTwitterCircle } from 'react-icons/ai'
+import { Link, Flex, HStack, VStack } from '@chakra-ui/react'
 
+import { links } from 'constants/links'
 import { Heading } from 'components/Base/Heading'
 import { Container } from 'components/Layout/Container'
 import { GradientLine } from 'components/GradientLine'
-import { links } from 'constants/links'
 
 const footerLinks = [
   {
