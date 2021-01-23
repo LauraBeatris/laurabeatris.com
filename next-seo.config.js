@@ -1,5 +1,5 @@
 const title = 'Laura Beatris – Software Engineer and Content Creator'
-const description = 'Software Engineer who loves education about programming and create innovative solutions.'
+const description = 'Software Engineer who loves to teach and create innovative solutions.'
 const url = 'https://laurabeatris.com'
 
 export const configSEO = {
