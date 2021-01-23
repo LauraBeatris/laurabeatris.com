@@ -5,7 +5,6 @@ export function Container ({ children, ...rest }: ContainerProps) {
     <ChakraContainer
       maxW='3xl'
       paddingX={8}
-      paddingBottom={8}
       {...rest}
     >
       {children}
