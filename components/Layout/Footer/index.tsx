@@ -1,4 +1,5 @@
-import { Link, Flex, Image, HStack, VStack } from '@chakra-ui/react'
+import { Link, Flex, HStack, VStack } from '@chakra-ui/react'
+import { AiFillGithub, AiFillLinkedin, AiFillYoutube, AiFillTwitterCircle } from 'react-icons/ai'
 
 import { Heading } from 'components/Base/Heading'
 import { Container } from 'components/Layout/Container'
@@ -8,19 +9,19 @@ import { links } from 'constants/links'
 const footerLinks = [
   {
     href: links.github,
-    imageSrc: '/images/icons/github.png'
+    icon: AiFillGithub
   },
   {
     href: links.linkedin,
-    imageSrc: '/images/icons/linkedin.png'
+    icon: AiFillLinkedin
   },
   {
     href: links.youtube,
-    imageSrc: '/images/icons/youtube.png'
+    icon: AiFillYoutube
   },
   {
     href: links.twitter,
-    imageSrc: '/images/icons/twitter.png'
+    icon: AiFillTwitterCircle
   }
 ]
 
@@ -51,16 +52,23 @@ export function Footer () {
           </Heading>
 
           <HStack
-            spacing={2}
+            spacing={4}
             alignItems='flex-end'
             justifyContent='center'
           >
             {
-                footerLinks.map(({ imageSrc, href }) => (
-                  <Link key={href} href={href} isExternal>
-                    <Image width={5} src={imageSrc} />
-                  </Link>
-                ))
+              footerLinks.map(({ href, icon: Icon }) => (
+                <Link
+                  key={href}
+                  width={5}
+                  height={5}
+                  href={href}
+                  position='relative'
+                  isExternal
+                >
+                  <Icon size={25} />
+                </Link>
+              ))
               }
           </HStack>
         </VStack>
