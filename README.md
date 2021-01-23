@@ -4,8 +4,6 @@
 
 # laurabeatris.com
 
-My portfolio has the goal to share my achievements, projects, content creations, and a little bit about my life.
-
 [![Author](https://img.shields.io/badge/author-LauraBeatris-43CEA2?style=flat-square)](https://github.com/LauraBeatris)
 [![Languages](https://img.shields.io/github/languages/count/LauraBeatris/laurabeatris.com?color=%2343CEA2&style=flat-square)](#)
 [![Stars](https://img.shields.io/github/stars/LauraBeatris/laurabeatris.com?color=43CEA2&style=flat-square)](https://github.com/LauraBeatris/laurabeatris.com/stargazers)
@@ -51,7 +49,7 @@ Define the environment variables by creating a .env.local file similar to [.env.
 
 # :bug: Issues
 
-Feel free to **file a new issue** with a respective title and description. If you already found a solution to your problem, **I would love to review your pull request**! 
+Feel free to **file a new issue** with a respective title and description. If you already found a solution to your problem, **I would love to review your pull request**!
 
 # :tada: Contributing
 
