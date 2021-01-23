@@ -41,7 +41,7 @@ export function Project ({
           direction='column'
           alignItems='start'
         >
-          <Heading size='xs'>{name}</Heading>
+          <Heading as='strong' size='xs'>{name}</Heading>
 
           <Stack direction='row' spacing={1}>
             {technologies.map((technology) => (
