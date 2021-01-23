@@ -12,13 +12,9 @@ export default function Home () {
     <VStack
       width='full'
       paddingY={10}
-      alignItems={['center', 'flex-start']}
+      alignItems='flex-start'
     >
-      <Heading
-        as='h1'
-        maxWidth={['100%', '70%']}
-        textAlign={['center']}
-      >
+      <Heading as='h1'>
         Happy {dayOfWeek}!
         <br />
         I'm Laura Beatris
