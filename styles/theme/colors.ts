@@ -4,13 +4,19 @@ export const colors = {
   },
   gray: {
     100: '#BFBFBF',
+    200: '#C5CFDC',
     300: '#6B6B6B'
   },
   dark: '#262626',
   green: {
-    400: '#43CEA2'
+    400: '#43CEA2',
+    500: '#38B19F'
   },
-  heather: '#C5CFDC',
-  lightningYellow: '#F9B52A',
-  saffron: '#F7CC42'
+  blue: {
+    100: '#3196b3'
+  },
+  yellow: {
+    100: '#F7CC42',
+    200: '#F9B52A'
+  }
 }
