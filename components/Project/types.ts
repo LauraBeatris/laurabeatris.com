@@ -1,9 +1,17 @@
 import { BoxProps } from '@chakra-ui/react'
 
-// TODO - Use codegen to generate types from GraphCMS models
 export type ProjectProps = BoxProps & {
-  name: string;
-  imageUrl: string;
+  title: string;
+  liveUrl: string;
+  githubUrl: string;
   description: string;
-  technologies: Array<string>;
+  mainImageUrl: string;
+  stack: {
+    id: string;
+    language: string;
+    framework?: string;
+    libraries?: Array<string>;
+    databases?: Array<string>;
+    categories: Array<string>;
+  };
 }

@@ -14,6 +14,9 @@ export default {
   variants: {
     regular: {
       fontWeight: 400
+    },
+    white: {
+      color: 'white.100'
     }
   },
   defaultProps: {
