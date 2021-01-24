@@ -1,16 +1,8 @@
-import {
-  VStack,
-  Popover,
-  Button,
-  PopoverBody,
-  PopoverArrow,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverCloseButton
-} from '@chakra-ui/react'
+import { VStack } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
 
 import { Heading } from 'components/Base/Heading'
+import { Popover } from 'components/Base/Popover'
 import { Paragraph } from 'components/Base/Paragraph'
 import { HighlightLink } from 'components/Base/HighlightLink'
 import { links } from 'constants/links'
@@ -42,27 +34,10 @@ export default function Home () {
 
       <Heading as='h2' paddingTop={10}>
         Projects
-        <Popover aria-label={popoverText} placement='top'>
-          <PopoverTrigger>
-            <Button
-              height='unset'
-              variant='unstyled'
-              minWidth='unset'
-              marginLeft={2}
-            >
-              <InfoIcon boxSize={5} color='green.400' />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent backgroundColor='dark'>
-            <PopoverArrow backgroundColor='dark' />
-            <PopoverCloseButton color='white.100' />
-            <PopoverBody>
-              <Paragraph variant='white' size='sm'>
-                {popoverText}
-              </Paragraph>
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
+        <Popover
+          popoverText={popoverText}
+          buttonContent={<InfoIcon boxSize={5} color='green.400' />}
+        />
       </Heading>
     </VStack>
   )
