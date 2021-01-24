@@ -84,7 +84,12 @@ export function Project ({
               {
                 githubUrl
                   ? (
-                    <Link href={githubUrl} isExternal>
+                    <Link
+                      href={githubUrl}
+                      title='See the project on GitHub'
+                      isExternal
+                      aria-label='See project on GitHub'
+                    >
                       <AiFillGithub>{githubUrl}</AiFillGithub>
                     </Link>
                     )
@@ -94,7 +99,12 @@ export function Project ({
               {
                 liveUrl
                   ? (
-                    <Link href={liveUrl} isExternal>
+                    <Link
+                      href={liveUrl}
+                      title='See project live version'
+                      isExternal
+                      aria-label='See project live version'
+                    >
                       <AiOutlineLink>{liveUrl}</AiOutlineLink>
                     </Link>
                     )
