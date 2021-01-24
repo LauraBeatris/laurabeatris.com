@@ -31,11 +31,12 @@
 ```
 $ git clone https://github.com/LauraBeatris/laurabeatris.com.git
 $ cd laurabeatris.com
+$ cp .env.local.example .env.local
 $ yarn
 $ yarn dev
 ```
 
-Define the environment variables by creating a .env.local file similar to [.env.example](https://github.com/LauraBeatris/laurabeatris.com/blob/main/.env.example)
+Define the environment variables by creating a .env.local file similar to [.env.local.example](https://github.com/LauraBeatris/laurabeatris.com/blob/main/.env.local.example)
 
 # :postbox: Faq
 
