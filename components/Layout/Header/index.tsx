@@ -38,7 +38,7 @@ export function Header () {
           marginRight={['auto', null, 'unset']}
         >
           <Link href='/'>
-            {/* Needs to wrap functional component with element due to this
+            {/* Should wrap functional component with element due to this
               issue of next/link https://github.com/vercel/next.js/issues/7915 */}
             <div>
               <Image
