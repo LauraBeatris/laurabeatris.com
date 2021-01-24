@@ -1,4 +1,3 @@
-import React from 'react'
 import NextLink from 'next/link'
 import { useRouter } from 'next/dist/client/router'
 import { Link as ChakraLink } from '@chakra-ui/react'

@@ -7,13 +7,21 @@ import {
   MenuItem,
   MenuButton
 } from '@chakra-ui/react'
+import useSound from 'use-sound'
 
 import { Link } from 'components/Base/Link'
 import { navigationItems } from 'constants/navigation'
+import menuOpenSound from 'public/sounds/menu-open.mp3'
 
 const iconProps = { boxSize: '2em', color: 'white.100' }
 
 export function HeaderNavigation () {
+  const [play] = useSound(menuOpenSound)
+
+  const handleMenuClick = () => {
+    play()
+  }
+
   return (
     <>
       <HStack
@@ -39,6 +47,7 @@ export function HeaderNavigation () {
                 as={Button}
                 display={['flex', null, 'none']}
                 variant='unstyled'
+                onClick={handleMenuClick}
                 paddingX={2}
                 alignItems='center'
                 justifyContent='center'

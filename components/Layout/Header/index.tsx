@@ -3,11 +3,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import hexToRgba from 'hex-to-rgba'
 
-import { ToggleThemeIcon } from 'components/ToggleThemeIcon'
 import { Container } from 'components/Layout/Container'
 import { GradientLine } from 'components/GradientLine'
 
 import { colors } from 'styles/theme/colors'
+
+import { ToggleThemeButton } from 'components/ToggleThemeButton'
 
 import { HeaderNavigation } from './HeaderNavigation'
 
@@ -51,10 +52,8 @@ export function Header () {
         </Flex>
 
         <HeaderNavigation />
-        <ToggleThemeIcon
-          title='Switch to dark mode'
-          marginLeft={[2, null, 'unset']}
-        />
+
+        <ToggleThemeButton marginLeft={[2, null, 'unset']} />
       </Container>
     </Flex>
   )

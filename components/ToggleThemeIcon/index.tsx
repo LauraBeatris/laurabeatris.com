@@ -7,10 +7,11 @@ import { ToggleThemeIconProps } from './types'
 
 const { colors } = theme
 
-// TODO - Implement color mode with Chakra UI
-const isDarkTheme = false
-
-export function ToggleThemeIcon ({ title, ...rest }: ToggleThemeIconProps) {
+export function ToggleThemeIcon ({
+  title,
+  isDarkTheme,
+  ...rest
+}: ToggleThemeIconProps) {
   return (
     <Flex
       alignItems='center'
