@@ -1,21 +1,20 @@
-import { useReducer } from 'react'
 import { SimpleGrid, VStack } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
 
 import { Project } from 'components/Project'
 import { Heading } from 'components/Base/Heading'
 import { Popover } from 'components/Base/Popover'
-import { ContinueToExploreButton } from 'components/ContinueToExploreButton'
+import { PaginationButton } from 'components/PaginationButton'
+import { useProjectsPagination } from 'hooks/useProjectsPagination'
 
 const popoverText = 'Click on the projects to see more details about it'
 
 export function ProjectsList ({ projects }) {
-  const [page, nextPage] = useReducer((page) => page + 1, 1)
-
-  const offset = page * 4
-  const projectsWithPagination = (projects ?? []).slice(0, offset)
-
-  const hasMoreProjects = Boolean(projects[offset - 1])
+  const {
+    data,
+    hasMoreProjects,
+    handlePagination
+  } = useProjectsPagination(projects)
 
   return (
     <VStack
@@ -36,13 +35,12 @@ export function ProjectsList ({ projects }) {
         spacing={4}
         columns={[1, null, 2]}
       >
-        {(projectsWithPagination ?? []).map(({
+        {(data ?? []).map(({
           title,
           stack,
           liveUrl,
           githubUrl,
           mainImage,
-          imagesList,
           description
         }) => {
           const { url } = mainImage
@@ -61,13 +59,11 @@ export function ProjectsList ({ projects }) {
         })}
       </SimpleGrid>
 
-      {
-        hasMoreProjects
-          ? (
-            <ContinueToExploreButton onClick={nextPage} alignSelf='center' />
-            )
-          : null
-      }
+      <PaginationButton
+        showMore={hasMoreProjects}
+        onClick={handlePagination}
+        alignSelf='center'
+      />
     </VStack>
   )
 }
