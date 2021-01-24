@@ -14,6 +14,15 @@ import {
 import { AiFillTool, AiFillDatabase } from 'react-icons/ai'
 import { MdLanguage, MdLibraryBooks } from 'react-icons/md'
 
+function ProjectDetailsListItem ({ icon, title, value }) {
+  return (
+    <ListItem>
+      <ListIcon as={icon} color='green.400' />
+      <Text as='strong'>{title}:</Text> {value}
+    </ListItem>
+  )
+}
+
 export function ProjectDetailsModal ({
   title,
   stack,
@@ -36,27 +45,31 @@ export function ProjectDetailsModal ({
         <ModalCloseButton />
         <ModalBody>
           <List spacing={3}>
-            <ListItem>
-              <ListIcon as={MdLanguage} color='green.400' />
-              <Text as='strong'>Language:</Text> {language}
-            </ListItem>
-            <ListItem>
-              <ListIcon as={AiFillTool} color='green.400' />
-              <Text as='strong'>Framework:</Text> {framework}
-            </ListItem>
-            <ListItem>
-              <ListIcon as={MdLibraryBooks} color='green.400' />
-              <Text as='strong'>Libraries:</Text> {libraries}
-            </ListItem>
+            <ProjectDetailsListItem
+              icon={MdLanguage}
+              title='Language'
+              value={language}
+            />
+
+            <ProjectDetailsListItem
+              icon={AiFillTool}
+              title='Framework'
+              value={framework}
+            />
+
+            <ProjectDetailsListItem
+              icon={MdLibraryBooks}
+              title='Libraries'
+              value={libraries}
+            />
 
             {
               databases.length > 0
-                ? (
-                  <ListItem>
-                    <ListIcon as={AiFillDatabase} color='green.400' />
-                    <Text as='strong'>Databases:</Text> {databases}
-                  </ListItem>
-                  )
+                ? <ProjectDetailsListItem
+                    icon={AiFillDatabase}
+                    title='Databases'
+                    value={databases}
+                  />
                 : null
             }
           </List>
