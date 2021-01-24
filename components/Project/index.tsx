@@ -7,14 +7,14 @@ import { ProjectProps } from './types'
 
 export function Project ({
   name,
-  imageUrl,
+  imageSrc,
   description,
   technologies,
   ...rest
 }: ProjectProps) {
   return (
     <Stack
-      direction={['column', 'row']}
+      direction={['column']}
       spacing={5}
       padding={5}
       alignItems='center'
@@ -24,19 +24,20 @@ export function Project ({
     >
       <Image
         alt={name}
-        src={imageUrl}
-        width={131}
-        height={83}
+        src={imageSrc}
+        width='full'
         borderRadius='md'
       />
 
       <Stack
+        width='full'
         spacing={2}
         direction='column'
         alignItems='start'
         justifyContent='space-between'
       >
         <Stack
+          width='full'
           spacing={1}
           direction='column'
           alignItems='start'
