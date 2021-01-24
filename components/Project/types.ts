@@ -9,9 +9,9 @@ export type ProjectProps = BoxProps & {
   stack: {
     id: string;
     language: string;
-    framework: string;
-    libraries: Array<string>;
-    databases: Array<string>;
+    framework?: string;
+    libraries?: Array<string>;
+    databases?: Array<string>;
     categories: Array<string>;
   };
 }

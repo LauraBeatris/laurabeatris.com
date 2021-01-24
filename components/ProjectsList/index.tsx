@@ -35,28 +35,30 @@ export function ProjectsList ({ projects }) {
         spacing={4}
         columns={[1, null, 2]}
       >
-        {(data ?? []).map(({
-          title,
-          stack,
-          liveUrl,
-          githubUrl,
-          mainImage,
-          description
-        }) => {
-          const { url } = mainImage
+        {
+          data.map(({
+            title,
+            stack,
+            liveUrl,
+            githubUrl,
+            mainImage,
+            description
+          }) => {
+            const { url } = mainImage
 
-          return (
-            <Project
-              key={title}
-              title={title}
-              stack={stack}
-              liveUrl={liveUrl}
-              githubUrl={githubUrl}
-              mainImageUrl={url}
-              description={description}
-            />
-          )
-        })}
+            return (
+              <Project
+                key={title}
+                title={title}
+                stack={stack}
+                liveUrl={liveUrl}
+                githubUrl={githubUrl}
+                mainImageUrl={url}
+                description={description}
+              />
+            )
+          })
+        }
       </SimpleGrid>
 
       <PaginationButton
