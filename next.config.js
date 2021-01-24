@@ -5,5 +5,8 @@ module.exports = {
     }
 
     return config
+  },
+  images: {
+    domains: ['media.graphcms.com']
   }
 }
