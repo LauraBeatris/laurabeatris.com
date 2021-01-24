@@ -25,7 +25,11 @@ export function ProjectDetailsModal ({
   const databases = (stack.databases ?? []).join(', ')
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      isCentered
+    >
       <ModalOverlay />
       <ModalContent marginX={5} backgroundColor='white.100'>
         <ModalHeader>{title}</ModalHeader>
