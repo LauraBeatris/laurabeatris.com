@@ -14,10 +14,6 @@ const GET_PROJECTS_QUERY = gql`
         id
         url
       }
-      imagesList {
-        id
-        url
-      }
       stack {
         id
         framework

@@ -15,7 +15,7 @@ import menuOpenSound from 'public/sounds/menu-open.mp3'
 import { PopoverProps } from './types'
 
 export function Popover ({ buttonContent, popoverText, ...rest }: PopoverProps) {
-  const [play] = useSound(menuOpenSound)
+  const [play] = useSound(menuOpenSound, { volume: 0.2 })
 
   const handleClick = () => {
     play()
