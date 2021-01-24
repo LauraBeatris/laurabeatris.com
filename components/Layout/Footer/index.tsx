@@ -8,18 +8,22 @@ import { GradientLine } from 'components/GradientLine'
 
 const footerLinks = [
   {
+    name: 'GitHub',
     href: links.github,
     icon: AiFillGithub
   },
   {
+    name: 'Linkedin',
     href: links.linkedin,
     icon: AiFillLinkedin
   },
   {
+    name: 'Youtube',
     href: links.youtube,
     icon: AiFillYoutube
   },
   {
+    name: 'Twitter',
     href: links.twitter,
     icon: AiFillTwitterCircle
   }
@@ -57,7 +61,11 @@ export function Footer () {
             justifyContent='center'
           >
             {
-              footerLinks.map(({ href, icon: Icon }) => (
+              footerLinks.map(({
+                name,
+                href,
+                icon: Icon
+              }) => (
                 <Link
                   key={href}
                   width={5}
@@ -65,6 +73,7 @@ export function Footer () {
                   href={href}
                   position='relative'
                   isExternal
+                  title={`Go to ${name}`}
                 >
                   <Icon size={25} />
                 </Link>

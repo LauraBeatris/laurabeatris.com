@@ -8,12 +8,30 @@ import { HighlightLink } from 'components/Base/HighlightLink'
 import { links } from 'constants/links'
 import { getDayOfWeek } from 'utils/getDayOfWeek'
 import { Project } from 'components/Project'
+import { getProjects } from 'graphql/queries/getProjects'
 
 const now = new Date()
 const dayOfWeek = getDayOfWeek(now.getDate(), now.getMonth(), now.getFullYear())
 const popoverText = 'Click on the projects to see more details about it'
 
-export default function Home () {
+export async function getStaticProps () {
+  try {
+    const { projects } = await getProjects()
+
+    return {
+      props: { projects }
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error)
+
+    return {
+      props: {}
+    }
+  }
+}
+
+export default function Home ({ projects }) {
   return (
     <VStack
       width='full'
@@ -51,33 +69,28 @@ export default function Home () {
           spacing={4}
           columns={[1, null, 2]}
         >
-          <Project
-            name='Portfolio'
-            imageSrc='/images/florianopolis.jpg'
-            technologies={['React', 'Next.js', 'Chakra UI', 'GraphCMS']}
-            description='The website that you are seeing right now.'
-          />
+          {(projects ?? []).map(({
+            title,
+            stack,
+            liveUrl,
+            githubUrl,
+            mainImage,
+            description
+          }) => {
+            const { url } = mainImage
 
-          <Project
-            name='Portfolio'
-            imageSrc='/images/florianopolis.jpg'
-            technologies={['React', 'Next.js', 'Chakra UI', 'GraphCMS']}
-            description='The website that you are seeing right now.'
-          />
-
-          <Project
-            name='Portfolio'
-            imageSrc='/images/florianopolis.jpg'
-            technologies={['React', 'Next.js', 'Chakra UI', 'GraphCMS']}
-            description='The website that you are seeing right now.'
-          />
-
-          <Project
-            name='Portfolio'
-            imageSrc='/images/florianopolis.jpg'
-            technologies={['React', 'Next.js', 'Chakra UI', 'GraphCMS']}
-            description='The website that you are seeing right now.'
-          />
+            return (
+              <Project
+                key={title}
+                title={title}
+                stack={stack}
+                liveUrl={liveUrl}
+                githubUrl={githubUrl}
+                mainImageUrl={url}
+                description={description}
+              />
+            )
+          })}
         </SimpleGrid>
       </VStack>
     </VStack>

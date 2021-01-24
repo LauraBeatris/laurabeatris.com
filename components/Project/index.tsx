@@ -1,4 +1,5 @@
-import { Wrap, Flex, Badge, Stack, WrapItem } from '@chakra-ui/react'
+import { Wrap, Flex, Badge, Stack, WrapItem, Link } from '@chakra-ui/react'
+import { AiFillGithub, AiOutlineLink } from 'react-icons/ai'
 import Image from 'next/image'
 
 import { Heading } from 'components/Base/Heading'
@@ -7,12 +8,16 @@ import { Paragraph } from 'components/Base/Paragraph'
 import { ProjectProps } from './types'
 
 export function Project ({
-  name,
-  imageSrc,
+  stack,
+  title,
+  liveUrl,
+  githubUrl,
   description,
-  technologies,
+  mainImageUrl,
   ...rest
 }: ProjectProps) {
+  const { categories } = stack
+
   return (
     <Stack
       direction='column'
@@ -30,10 +35,10 @@ export function Project ({
         borderRadius='md'
       >
         <Image
-          alt={name}
-          src={imageSrc}
+          alt={title}
+          src={mainImageUrl}
           layout='fill'
-          className='next-image'
+          className='next-image next-image---contained'
         />
       </Flex>
 
@@ -50,10 +55,34 @@ export function Project ({
           direction='column'
           alignItems='start'
         >
-          <Heading as='strong' size='xs'>{name}</Heading>
+          <Stack direction='row' alignItems='center'>
+            <Heading as='strong' size='xs'>
+              {title}
+            </Heading>
 
-          <Wrap spacing={1}>
-            {technologies.map((technology) => (
+            {
+              githubUrl
+                ? (
+                  <Link href={githubUrl} isExternal>
+                    <AiFillGithub>{githubUrl}</AiFillGithub>
+                  </Link>
+                  )
+                : null
+            }
+
+            {
+              liveUrl
+                ? (
+                  <Link href={liveUrl} isExternal>
+                    <AiOutlineLink>{liveUrl}</AiOutlineLink>
+                  </Link>
+                  )
+                : null
+            }
+          </Stack>
+
+          <Wrap spacing={1} marginBottom='auto'>
+            {categories.map((technology) => (
               <WrapItem key={technology}>
                 <Badge variant='subtle' colorScheme='green'>
                   {technology}
