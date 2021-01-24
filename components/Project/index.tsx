@@ -1,4 +1,5 @@
-import { Badge, Image, Stack } from '@chakra-ui/react'
+import { Wrap, Flex, Badge, Stack, WrapItem } from '@chakra-ui/react'
+import Image from 'next/image'
 
 import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
@@ -22,12 +23,19 @@ export function Project ({
       borderWidth={0.5}
       {...rest}
     >
-      <Image
-        alt={name}
-        src={imageSrc}
+      <Flex
+        height={152}
         width='full'
+        position='relative'
         borderRadius='md'
-      />
+      >
+        <Image
+          alt={name}
+          src={imageSrc}
+          layout='fill'
+          className='next-image'
+        />
+      </Flex>
 
       <Stack
         width='full'
@@ -44,17 +52,15 @@ export function Project ({
         >
           <Heading as='strong' size='xs'>{name}</Heading>
 
-          <Stack direction='row' spacing={1}>
+          <Wrap spacing={1}>
             {technologies.map((technology) => (
-              <Badge
-                key={technology}
-                variant='subtle'
-                colorScheme='green'
-              >
-                {technology}
-              </Badge>
+              <WrapItem key={technology}>
+                <Badge variant='subtle' colorScheme='green'>
+                  {technology}
+                </Badge>
+              </WrapItem>
             ))}
-          </Stack>
+          </Wrap>
         </Stack>
 
         <Paragraph
