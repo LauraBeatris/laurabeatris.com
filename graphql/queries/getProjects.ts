@@ -4,7 +4,7 @@ import { graphQLClient } from 'config/graphQLClient'
 
 const GET_PROJECTS_QUERY = gql`
   query GetProjects {
-    projects(first: 4) {
+    projects {
       id
       title
       liveUrl
