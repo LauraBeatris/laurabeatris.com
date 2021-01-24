@@ -37,12 +37,16 @@ export function Header () {
           marginRight={['auto', null, 'unset']}
         >
           <Link href='/'>
-            <Image
-              src='/images/logo.png'
-              width={45}
-              height={59}
-              loading='eager'
-            />
+            {/* Needs to wrap functional component with element due to this
+              issue of next/link https://github.com/vercel/next.js/issues/7915 */}
+            <div>
+              <Image
+                src='/images/logo.png'
+                width={45}
+                height={59}
+                loading='eager'
+              />
+            </div>
           </Link>
         </Flex>
 
