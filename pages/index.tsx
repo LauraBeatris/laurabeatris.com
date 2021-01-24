@@ -9,6 +9,7 @@ import { links } from 'constants/links'
 import { getDayOfWeek } from 'utils/getDayOfWeek'
 import { Project } from 'components/Project'
 import { getProjects } from 'graphql/queries/getProjects'
+import { ContinueToExploreButton } from 'components/ContinueToExploreButton'
 
 const now = new Date()
 const dayOfWeek = getDayOfWeek(now.getDate(), now.getMonth(), now.getFullYear())
@@ -92,6 +93,8 @@ export default function Home ({ projects }) {
             )
           })}
         </SimpleGrid>
+
+        <ContinueToExploreButton alignSelf='center' />
       </VStack>
     </VStack>
   )
