@@ -14,7 +14,7 @@ export function Project ({
 }: ProjectProps) {
   return (
     <Stack
-      direction={['column']}
+      direction='column'
       spacing={5}
       padding={5}
       alignItems='center'
