@@ -2,13 +2,12 @@ import {
   List,
   Text,
   Modal,
-  Button,
   ListItem,
   ListIcon,
   ModalBody,
   ModalHeader,
-  ModalFooter,
   ModalOverlay,
+  ModalFooter,
   ModalContent,
   ModalCloseButton
 } from '@chakra-ui/react'
@@ -59,15 +58,7 @@ export function ProjectDetailsModal ({
           </List>
         </ModalBody>
 
-        <ModalFooter>
-          <Button
-            color='white.100'
-            onClick={onClose}
-            backgroundColor='green.500'
-          >
-            Close
-          </Button>
-        </ModalFooter>
+        <ModalFooter />
       </ModalContent>
     </Modal>
   )
