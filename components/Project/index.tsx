@@ -77,7 +77,11 @@ export function Project ({
             alignItems='start'
           >
             <Stack direction='row' alignItems='center'>
-              <Heading as='strong' size='xs'>
+              <Heading
+                as='strong'
+                size='xs'
+                textAlign='left'
+              >
                 {title}
               </Heading>
 
