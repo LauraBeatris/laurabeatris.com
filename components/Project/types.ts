@@ -11,6 +11,7 @@ export type ProjectProps = BoxProps & {
     language: string;
     framework: string;
     libraries: Array<string>;
-    categories: Array<string>
+    databases: Array<string>;
+    categories: Array<string>;
   };
 }

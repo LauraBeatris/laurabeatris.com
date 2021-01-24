@@ -1,4 +1,4 @@
-import { useState, useReducer } from 'react'
+import { useReducer } from 'react'
 import { SimpleGrid, VStack } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
 
@@ -13,7 +13,7 @@ export function ProjectsList ({ projects }) {
   const [page, nextPage] = useReducer((page) => page + 1, 1)
 
   const offset = page * 4
-  const projectsWithPagination = projects.slice(0, offset)
+  const projectsWithPagination = (projects ?? []).slice(0, offset)
 
   const hasMoreProjects = Boolean(projects[offset - 1])
 
@@ -42,6 +42,7 @@ export function ProjectsList ({ projects }) {
           liveUrl,
           githubUrl,
           mainImage,
+          imagesList,
           description
         }) => {
           const { url } = mainImage
@@ -53,6 +54,7 @@ export function ProjectsList ({ projects }) {
               stack={stack}
               liveUrl={liveUrl}
               githubUrl={githubUrl}
+              imagesList={imagesList}
               mainImageUrl={url}
               description={description}
             />

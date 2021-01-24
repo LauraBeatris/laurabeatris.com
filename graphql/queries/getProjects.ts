@@ -23,6 +23,7 @@ const GET_PROJECTS_QUERY = gql`
         framework
         language
         libraries
+        databases
         categories
       }
     }
