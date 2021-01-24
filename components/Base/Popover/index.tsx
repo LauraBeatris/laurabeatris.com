@@ -7,12 +7,20 @@ import {
   PopoverContent,
   PopoverCloseButton
 } from '@chakra-ui/react'
+import useSound from 'use-sound'
 
 import { Paragraph } from 'components/Base/Paragraph'
+import menuOpenSound from 'public/sounds/menu-open.mp3'
 
 import { PopoverProps } from './types'
 
 export function Popover ({ buttonContent, popoverText, ...rest }: PopoverProps) {
+  const [play] = useSound(menuOpenSound)
+
+  const handleClick = () => {
+    play()
+  }
+
   return (
     <ChakraPopover
       aria-label={popoverText}
@@ -22,6 +30,7 @@ export function Popover ({ buttonContent, popoverText, ...rest }: PopoverProps) 
       <PopoverTrigger>
         <Button
           height='unset'
+          onClick={handleClick}
           variant='unstyled'
           minWidth='unset'
           marginLeft={2}

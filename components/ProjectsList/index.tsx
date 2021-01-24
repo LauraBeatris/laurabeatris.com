@@ -54,7 +54,6 @@ export function ProjectsList ({ projects }) {
               stack={stack}
               liveUrl={liveUrl}
               githubUrl={githubUrl}
-              imagesList={imagesList}
               mainImageUrl={url}
               description={description}
             />
