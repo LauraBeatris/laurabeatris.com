@@ -1,3 +1,4 @@
+import { useState, useReducer } from 'react'
 import { SimpleGrid, VStack } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
 
@@ -9,6 +10,13 @@ import { ContinueToExploreButton } from 'components/ContinueToExploreButton'
 const popoverText = 'Click on the projects to see more details about it'
 
 export function ProjectsList ({ projects }) {
+  const [page, nextPage] = useReducer((page) => page + 1, 1)
+
+  const offset = page * 4
+  const projectsWithPagination = projects.slice(0, offset)
+
+  const hasMoreProjects = Boolean(projects[offset - 1])
+
   return (
     <VStack
       width='full'
@@ -28,7 +36,7 @@ export function ProjectsList ({ projects }) {
         spacing={4}
         columns={[1, null, 2]}
       >
-        {(projects ?? []).map(({
+        {(projectsWithPagination ?? []).map(({
           title,
           stack,
           liveUrl,
@@ -52,7 +60,13 @@ export function ProjectsList ({ projects }) {
         })}
       </SimpleGrid>
 
-      <ContinueToExploreButton alignSelf='center' />
+      {
+        hasMoreProjects
+          ? (
+            <ContinueToExploreButton onClick={nextPage} alignSelf='center' />
+            )
+          : null
+      }
     </VStack>
   )
 }
