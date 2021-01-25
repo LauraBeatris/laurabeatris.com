@@ -14,9 +14,11 @@ import {
 import { AiFillTool, AiFillDatabase } from 'react-icons/ai'
 import { MdLanguage, MdLibraryBooks } from 'react-icons/md'
 
+import { colors } from 'styles/theme/colors'
+
 function ProjectDetailsListItem ({ icon, title, value }) {
   return (
-    <ListItem>
+    <ListItem color='dark'>
       <ListIcon as={icon} color='green.400' />
       <Text as='strong'>{title}:</Text> {value}
     </ListItem>
@@ -41,8 +43,12 @@ export function ProjectDetailsModal ({
     >
       <ModalOverlay />
       <ModalContent marginX={5} backgroundColor='white.100'>
-        <ModalHeader>{title}</ModalHeader>
-        <ModalCloseButton />
+        <ModalHeader>
+          <Text color='dark'>
+            {title}
+          </Text>
+        </ModalHeader>
+        <ModalCloseButton css={{ svg: { color: colors.dark } }} />
         <ModalBody>
           <List spacing={3}>
             <ProjectDetailsListItem

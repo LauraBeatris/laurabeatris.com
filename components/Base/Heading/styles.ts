@@ -17,6 +17,14 @@ export default {
       fontSize: '1.2rem'
     }
   },
+  variants: {
+    light: {
+      color: 'white.100'
+    },
+    dark: {
+      color: 'dark'
+    }
+  },
   defaultProps: {
     size: 'lg'
   }

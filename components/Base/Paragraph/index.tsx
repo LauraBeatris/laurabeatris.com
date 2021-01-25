@@ -1,18 +1,31 @@
-import { Text, TextProps, useStyleConfig } from '@chakra-ui/react'
+import { Text, useColorModeValue, useStyleConfig } from '@chakra-ui/react'
 
 import paragraphStyles from './styles'
+import { ParagraphProps } from './types'
 
 const paragraphThemeKey = 'Paragraph'
 
 function Paragraph ({
   size,
-  variant,
   children,
+  useColorModeVariant = true,
   ...rest
-}: TextProps) {
-  const styles = useStyleConfig(paragraphThemeKey, { size, variant })
+}: ParagraphProps) {
+  const variant = useColorModeValue('dark', 'light')
+  const styles = useStyleConfig(paragraphThemeKey, {
+    size,
+    variant: useColorModeVariant ? variant : rest.variant
+  })
 
-  return (<Text as='p' sx={styles} {...rest}>{children}</Text>)
+  return (
+    <Text
+      as='p'
+      sx={styles}
+      variant={variant}
+      {...rest}
+    >{children}
+    </Text>
+  )
 }
 
 export { Paragraph, paragraphStyles, paragraphThemeKey }

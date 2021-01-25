@@ -32,7 +32,8 @@ export default function Home ({ projects }) {
   return (
     <VStack
       width='full'
-      paddingY={10}
+      paddingTop={5}
+      paddingBottom={10}
       alignItems='flex-start'
     >
       <Heading as='h1'>

@@ -5,7 +5,8 @@ import {
   HStack,
   MenuList,
   MenuItem,
-  MenuButton
+  MenuButton,
+  useColorModeValue
 } from '@chakra-ui/react'
 import useSound from 'use-sound'
 
@@ -21,6 +22,8 @@ export function HeaderNavigation () {
   const handleMenuClick = () => {
     play()
   }
+
+  const menuBackgroundColor = useColorModeValue('white.100', 'dark')
 
   return (
     <>
@@ -59,19 +62,19 @@ export function HeaderNavigation () {
                     : (<HamburgerIcon {...iconProps} />)
                 }
               </MenuButton>
-              <MenuList>
+              <MenuList backgroundColor={menuBackgroundColor}>
                 {
                   navigationItems.map(({ name, href }) => (
                     <Link
                       key={name}
                       href={href}
                       activeColor='green.400'
-                      _hover={{ textDecoration: 'none' }}
+                      _hover={{ textDecoration: 'none', color: 'green.400' }}
                     >
                       <MenuItem
                         key={name}
                         _focus={{ backgroundColor: 'none' }}
-                        _hover={{ backgroundColor: 'white.100' }}
+                        _hover={{ backgroundColor: 'unset' }}
                       >
                         {name}
                       </MenuItem>

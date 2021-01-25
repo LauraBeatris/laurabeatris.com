@@ -1,3 +1,4 @@
+import { ColorMode, ColorModeScript } from '@chakra-ui/react'
 import Document, {
   Html,
   Head,
@@ -6,6 +7,7 @@ import Document, {
 } from 'next/document'
 
 import { colors } from 'styles/theme/colors'
+import { config } from 'styles/theme/config'
 
 class MyDocument extends Document {
   render () {
@@ -35,6 +37,7 @@ class MyDocument extends Document {
           <link rel='mask-icon' href='/favicons/safari-pinned-tab.svg' color={colors.white[100]} />
         </Head>
         <body>
+          <ColorModeScript initialColorMode={config.initialColorMode as ColorMode} />
           <Main />
           <NextScript />
         </body>

@@ -18,7 +18,7 @@ export function PaginationButton ({
       flexDirection='column'
       {...rest}
     >
-      <Text color='dark'>{text}</Text>
+      <Text>{text}</Text>
 
       <Icon />
     </Button>
