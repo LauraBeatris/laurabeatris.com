@@ -1,6 +1,5 @@
-import { List, ListItem, Text, UnorderedList, VStack } from '@chakra-ui/react'
-
 import { InferGetStaticPropsType } from 'next'
+import { List, ListItem, Text, UnorderedList, VStack } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
@@ -53,76 +52,82 @@ export default function LearningJournal ({
           work,
           curiosity,
           programming
-        }) => (
-          <VStack
-            as='li'
-            key={id}
-            width='full'
-            spacing={5}
-            alignItems='flex-start'
-          >
-            <Text
-              as='h3'
-              bgClip='text'
-              fontSize={22}
-              fontWeight='bold'
-              bgGradient='linear(to-r, green.400, green.500, blue.100)'
+        }) => {
+          const shouldShowWorkEntries = (work ?? []).length > 0
+          const shouldShowCuriosityEntries = (curiosity ?? []).length > 0
+          const shouldShowProgrammingEntries = (programming ?? []).length > 0
+
+          return (
+            <VStack
+              as='li'
+              key={id}
+              width='full'
+              spacing={5}
+              alignItems='flex-start'
             >
-              {date}
-            </Text>
+              <Text
+                as='h3'
+                bgClip='text'
+                fontSize={22}
+                fontWeight='bold'
+                bgGradient='linear(to-r, green.400, green.500, blue.100)'
+              >
+                {date}
+              </Text>
 
-            {
-              ((work ?? []).length > 0)
-                ? (
-                  <>
-                    <Heading size='xs'>Work</Heading>
-                    <UnorderedList paddingLeft={5}>
-                      {
-                        work.map(text => (
-                          <ListItem key={text}>{text}</ListItem>
-                        ))
-                      }
-                    </UnorderedList>
-                  </>
-                  )
-                : null
-            }
+              {
+                shouldShowWorkEntries
+                  ? (
+                    <>
+                      <Heading size='xs'>Work</Heading>
+                      <UnorderedList paddingLeft={5}>
+                        {
+                          work.map(text => (
+                            <ListItem key={text}>{text}</ListItem>
+                          ))
+                        }
+                      </UnorderedList>
+                    </>
+                    )
+                  : null
+              }
 
-            {
-              ((programming ?? []).length > 0)
-                ? (
-                  <>
-                    <Heading size='xs'>Programming</Heading>
-                    <UnorderedList paddingLeft={5}>
-                      {
-                        programming.map(text => (
-                          <ListItem key={text}>{text}</ListItem>
-                        ))
-                      }
-                    </UnorderedList>
-                  </>
-                  )
-                : null
-            }
+              {
+                shouldShowProgrammingEntries
+                  ? (
+                    <>
+                      <Heading size='xs'>Programming</Heading>
+                      <UnorderedList paddingLeft={5}>
+                        {
+                          programming.map(text => (
+                            <ListItem key={text}>{text}</ListItem>
+                          ))
+                        }
+                      </UnorderedList>
+                    </>
+                    )
+                  : null
+              }
 
-            {
-              ((curiosity ?? []).length > 0)
-                ? (
-                  <>
-                    <Heading size='xs'>Curiosity</Heading>
-                    <UnorderedList paddingLeft={5}>
-                      {
-                        curiosity.map(text => (
-                          <ListItem key={text}>{text}</ListItem>
-                        ))
-                      }
-                    </UnorderedList>
-                  </>
-                  )
-                : null
-            }
-          </VStack>
-        ))}
+              {
+                shouldShowCuriosityEntries
+                  ? (
+                    <>
+                      <Heading size='xs'>Curiosity</Heading>
+                      <UnorderedList paddingLeft={5}>
+                        {
+                          curiosity.map(text => (
+                            <ListItem key={text}>{text}</ListItem>
+                          ))
+                        }
+                      </UnorderedList>
+                    </>
+                    )
+                  : null
+              }
+            </VStack>
+          )
+        })}
       </List>
     </VStack>
   )
