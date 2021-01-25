@@ -5,7 +5,7 @@ import { Timeline } from 'graphql/schema'
 
 const GET_TIMELINE_QUERY = gql`
   query GetTimeline {
-    timeline: timelines(orderBy: year_ASC) {
+    timeline: timelines(orderBy: year_DESC) {
       id
       year
       achievements(orderBy: createdAt_DESC) {
