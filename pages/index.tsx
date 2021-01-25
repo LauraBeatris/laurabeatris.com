@@ -8,7 +8,7 @@ import { Timeline } from 'components/Timeline'
 import { links } from 'constants/links'
 import { getDayOfWeek } from 'utils/getDayOfWeek'
 import { getProjects } from 'graphql/queries/getProjects'
-import { getTimeline } from 'graphql/queries/getTimeline'
+import { getTimelineList } from 'graphql/queries/getTimelineList'
 
 const now = new Date()
 const dayOfWeek = getDayOfWeek(now.getDate(), now.getMonth(), now.getFullYear())
@@ -16,12 +16,12 @@ const dayOfWeek = getDayOfWeek(now.getDate(), now.getMonth(), now.getFullYear())
 export async function getStaticProps () {
   try {
     const projects = await getProjects()
-    const timeline = await getTimeline()
+    const timelistList = await getTimelineList()
 
     return {
       props: {
-        timeline,
-        projects
+        projects,
+        timelistList
       }
     }
   } catch (error) {
@@ -34,7 +34,7 @@ export async function getStaticProps () {
   }
 }
 
-export default function Home ({ projects, timeline }) {
+export default function Home ({ projects, timelistList }) {
   return (
     <VStack
       width='full'
@@ -56,7 +56,7 @@ export default function Home ({ projects, timeline }) {
       </Paragraph>
 
       <ProjectsList projects={projects} />
-      <Timeline timeline={timeline} />
+      <Timeline timelistList={timelistList} />
     </VStack>
   )
 }

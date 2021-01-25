@@ -5,7 +5,9 @@ import { Project } from 'components/Project'
 import { Heading } from 'components/Base/Heading'
 import { Popover } from 'components/Base/Popover'
 import { PaginationButton } from 'components/PaginationButton'
-import { useProjectsPagination } from 'hooks/useProjectsPagination'
+import { usePagination } from 'hooks/usePagination'
+
+import { Project as ProjectType } from 'graphql/schema'
 
 import { ProjectsListProps } from './types'
 
@@ -14,9 +16,9 @@ const popoverText = 'Click on the projects to see more details about it'
 export function ProjectsList ({ projects }: ProjectsListProps) {
   const {
     data,
-    hasMoreProjects,
+    hasMoreItems,
     handlePagination
-  } = useProjectsPagination(projects)
+  } = usePagination<ProjectType>({ list: projects })
 
   return (
     <VStack
@@ -72,7 +74,7 @@ export function ProjectsList ({ projects }: ProjectsListProps) {
       </SimpleGrid>
 
       <PaginationButton
-        showMore={hasMoreProjects}
+        showMore={hasMoreItems}
         onClick={handlePagination}
         alignSelf='center'
       />

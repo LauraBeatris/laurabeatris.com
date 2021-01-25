@@ -1,11 +1,20 @@
 import { List, ListItem, VStack } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
+import { PaginationButton } from 'components/PaginationButton'
+import { usePagination } from 'hooks/usePagination'
+import { Timeline as TimelineType } from 'graphql/schema'
 
 import { TimelineProps } from './types'
 import { Achievements } from './Achievements'
 
-export function Timeline ({ timeline }: TimelineProps) {
+export function Timeline ({ timelistList }: TimelineProps) {
+  const {
+    data,
+    hasMoreItems,
+    handlePagination
+  } = usePagination<TimelineType>({ list: timelistList, itemsPerPage: 2 })
+
   return (
     <VStack
       width='full'
@@ -18,7 +27,7 @@ export function Timeline ({ timeline }: TimelineProps) {
 
       <List spacing={4}>
         {
-          (timeline ?? []).map(({ year, achievements }) => (
+          (data ?? []).map(({ year, achievements }) => (
             <ListItem key={year}>
               <Heading size='sm'>
                 {year}
@@ -29,6 +38,12 @@ export function Timeline ({ timeline }: TimelineProps) {
           ))
         }
       </List>
+
+      <PaginationButton
+        showMore={hasMoreItems}
+        onClick={handlePagination}
+        alignSelf='center'
+      />
     </VStack>
   )
 }
