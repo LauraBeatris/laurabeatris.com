@@ -15,8 +15,11 @@ export default {
     regular: {
       fontWeight: 400
     },
-    white: {
+    light: {
       color: 'white.100'
+    },
+    dark: {
+      color: 'gray.300'
     }
   },
   defaultProps: {

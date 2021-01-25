@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react'
+import { Flex, useColorModeValue } from '@chakra-ui/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import hexToRgba from 'hex-to-rgba'
@@ -13,6 +13,11 @@ import { ToggleThemeButton } from 'components/ToggleThemeButton'
 import { HeaderNavigation } from './HeaderNavigation'
 
 export function Header () {
+  const backgroundColor = useColorModeValue(
+    hexToRgba(colors.white[100], 0.5),
+    hexToRgba(colors.dark, 0.5)
+  )
+
   return (
     <Flex
       as='header'
@@ -22,7 +27,7 @@ export function Header () {
       zIndex='docked'
       position='sticky'
       direction='column'
-      backgroundColor={hexToRgba(colors.white[100], 0.5)}
+      backgroundColor={backgroundColor}
     >
       <GradientLine />
       <Container

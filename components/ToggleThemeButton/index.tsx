@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { Button, ButtonProps } from '@chakra-ui/react'
+import { Button, ButtonProps, useColorMode } from '@chakra-ui/react'
 import useSound from 'use-sound'
 
 import switchOnSound from 'public/sounds/switch-on.mp3'
@@ -8,16 +7,17 @@ import switchOffSound from 'public/sounds/switch-off.mp3'
 import { ToggleThemeIcon } from 'components/ToggleThemeIcon'
 
 export function ToggleThemeButton (props: ButtonProps) {
-  // TODO - Use color mode from Chakra UI
-  const [isDarkTheme, setIsDarkTheme] = useState(false)
-  const [play] = useSound(isDarkTheme ? switchOnSound : switchOffSound)
+  const { colorMode, toggleColorMode } = useColorMode()
+
+  const isDarkMode = colorMode === 'dark'
+  const [play] = useSound(isDarkMode ? switchOnSound : switchOffSound)
 
   const handleClick = () => {
-    setIsDarkTheme(prev => !prev)
+    toggleColorMode()
     play()
   }
 
-  const iconTitle = isDarkTheme ? 'Switch to light mode' : 'Switch to dark mode'
+  const iconTitle = isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'
 
   return (
     <Button
@@ -28,7 +28,7 @@ export function ToggleThemeButton (props: ButtonProps) {
       justifyContent='center'
       {...props}
     >
-      <ToggleThemeIcon title={iconTitle} isDarkTheme={isDarkTheme} />
+      <ToggleThemeIcon title={iconTitle} isDarkMode={isDarkMode} />
     </Button>
   )
 }
