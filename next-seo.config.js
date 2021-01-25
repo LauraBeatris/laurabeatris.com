@@ -14,7 +14,7 @@ export const configSEO = {
     description,
     images: [
       {
-        url: `${url}/static/images/banner.png`,
+        url: `${url}/images/banner.png`,
         alt: title,
         width: 1280,
         height: 720
