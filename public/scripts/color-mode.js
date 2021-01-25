@@ -1,5 +1,5 @@
 // The script is render-blocking so it needs to be short to avoid overhead
-// It will not be compiled by Babel do not use new JS features.
+// It will not be compiled by Babel so do not use new JS features.
 (function () {
   function setTheme (newTheme) {
     document.body.className = newTheme
@@ -11,7 +11,7 @@
   window.__setPreferredTheme = function (newTheme) {
     setTheme(newTheme)
     try {
-      localStorage.setItem('theme', JSON.stringify(window.__theme))
+      localStorage.setItem('chakra-ui-color-mode', JSON.stringify(window.__theme))
     } catch (err) {}
   }
   const darkQuery = window.matchMedia('(prefers-color-scheme: dark)')
