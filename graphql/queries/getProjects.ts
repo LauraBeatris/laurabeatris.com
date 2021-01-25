@@ -1,6 +1,7 @@
 import { gql } from 'graphql-request'
 
 import { graphQLClient } from 'config/graphQLClient'
+import { Project } from 'graphql/schema'
 
 const GET_PROJECTS_QUERY = gql`
   query GetProjects {
@@ -27,9 +28,9 @@ const GET_PROJECTS_QUERY = gql`
 `
 
 export async function getProjects () {
-  const result = await graphQLClient.request(
+  const { projects } = await graphQLClient.request(
     GET_PROJECTS_QUERY
   )
 
-  return result
+  return projects as Array<Project>
 }

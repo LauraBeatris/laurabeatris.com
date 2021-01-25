@@ -1,7 +1,8 @@
 import { useReducer } from 'react'
 
+import { Pagination } from './types'
+
 const INITIAL_PAGE = 1
-const ITEMS_PER_PAGE = 4
 
 const ACTION_TYPES = {
   NEXT: 'NEXT',
@@ -19,15 +20,18 @@ const paginationReducer = (page, action) => {
   }
 }
 
-export function useProjectsPagination (projects) {
+export function usePagination<Timeline> ({
+  list,
+  itemsPerPage = 4
+}: Pagination<Timeline>) {
   const [page, dispatch] = useReducer(paginationReducer, INITIAL_PAGE)
 
-  const offset = page * ITEMS_PER_PAGE
-  const data = (projects ?? []).slice(0, offset)
-  const hasMoreProjects = Boolean(projects[offset - 1])
+  const offset = page * itemsPerPage
+  const data = (list ?? []).slice(0, offset)
+  const hasMoreItems = Boolean(list[offset - 1])
 
   const handlePagination = () => {
-    if (!hasMoreProjects) {
+    if (!hasMoreItems) {
       dispatch(ACTION_TYPES.RESET)
 
       return
@@ -38,7 +42,7 @@ export function useProjectsPagination (projects) {
 
   return {
     data,
-    hasMoreProjects,
+    hasMoreItems,
     handlePagination
   }
 }
