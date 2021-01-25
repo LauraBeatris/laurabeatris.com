@@ -27,7 +27,8 @@ module.exports = {
     }]
   },
   globals: {
-    React: 'writable'
+    React: 'writable',
+    localStorage: true
   },
   settings: {
     'import/resolver': {
