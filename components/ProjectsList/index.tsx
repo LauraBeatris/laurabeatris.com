@@ -31,6 +31,8 @@ export function ProjectsList ({ projects }) {
       </Heading>
 
       <SimpleGrid
+        as='ul'
+        css={{ listStyle: 'none' }}
         width='full'
         spacing={4}
         columns={[1, null, 2]}
@@ -47,15 +49,16 @@ export function ProjectsList ({ projects }) {
             const { url } = mainImage
 
             return (
-              <Project
-                key={title}
-                title={title}
-                stack={stack}
-                liveUrl={liveUrl}
-                githubUrl={githubUrl}
-                mainImageUrl={url}
-                description={description}
-              />
+              <li key={title}>
+                <Project
+                  title={title}
+                  stack={stack}
+                  liveUrl={liveUrl}
+                  githubUrl={githubUrl}
+                  mainImageUrl={url}
+                  description={description}
+                />
+              </li>
             )
           })
         }
