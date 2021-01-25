@@ -3,20 +3,26 @@ import { VStack } from '@chakra-ui/react'
 import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
 import { HighlightLink } from 'components/Base/HighlightLink'
+import { ProjectsList } from 'components/ProjectsList'
+import { Timeline } from 'components/Timeline'
 import { links } from 'constants/links'
 import { getDayOfWeek } from 'utils/getDayOfWeek'
 import { getProjects } from 'graphql/queries/getProjects'
-import { ProjectsList } from 'components/ProjectsList'
+import { getTimeline } from 'graphql/queries/getTimeline'
 
 const now = new Date()
 const dayOfWeek = getDayOfWeek(now.getDate(), now.getMonth(), now.getFullYear())
 
 export async function getStaticProps () {
   try {
-    const { projects } = await getProjects()
+    const projects = await getProjects()
+    const timeline = await getTimeline()
 
     return {
-      props: { projects }
+      props: {
+        timeline,
+        projects
+      }
     }
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -28,7 +34,7 @@ export async function getStaticProps () {
   }
 }
 
-export default function Home ({ projects }) {
+export default function Home ({ projects, timeline }) {
   return (
     <VStack
       width='full'
@@ -50,6 +56,7 @@ export default function Home ({ projects }) {
       </Paragraph>
 
       <ProjectsList projects={projects} />
+      <Timeline timeline={timeline} />
     </VStack>
   )
 }
