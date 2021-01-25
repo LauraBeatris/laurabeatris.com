@@ -1,8 +1,13 @@
 import { StackProps } from '@chakra-ui/react'
+
 import { PropsWithChildren } from 'react'
 
-export type ContentBoxProps = StackProps & PropsWithChildren<{
-  title: string;
-  imageSrc: string;
-  subtitle: string;
-}>
+import { Content } from 'graphql/schema'
+
+export type ContentBoxProps = StackProps
+  & Omit<Content, 'id' | 'image'>
+  & PropsWithChildren<{
+    title: string;
+    imageSrc: string;
+    subtitle: string;
+  }>
