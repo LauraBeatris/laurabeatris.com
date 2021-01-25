@@ -2,18 +2,13 @@ import { gql } from 'graphql-request'
 
 import { graphQLClient } from 'config/graphQLClient'
 import { Content } from 'graphql/schema'
+import { CONTENT_FRAGMENT } from 'graphql/fragments/contentFragment'
 
 const GET_PODCAST_PARTICIPATIONS = gql`
+  ${CONTENT_FRAGMENT}
   query GetPodcastParticipations {
     podcastParticipations: contents(where: {category: PodcastParticipation}) {
-      id
-      url
-      title
-      image {
-        id
-        url
-      }
-      subtitle
+      ...ContentFields
     }
   }
 `
