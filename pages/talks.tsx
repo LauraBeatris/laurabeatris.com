@@ -1,10 +1,10 @@
 import { InferGetStaticPropsType } from 'next'
-import { Flex, VStack, SimpleGrid } from '@chakra-ui/react'
+import { VStack } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
-import { ContentBox } from 'components/ContentBox'
 import { getTalks } from 'graphql/queries/getTalks'
 import { getPodcastParticipations } from 'graphql/queries/getPodcastParticipations'
+import { ContentList } from 'components/ContentList'
 
 function ContentSection ({ title, contentList }) {
   return (
@@ -15,40 +15,7 @@ function ContentSection ({ title, contentList }) {
     >
       <Heading as='h2'>{title}</Heading>
 
-      <SimpleGrid
-        as='ul'
-        css={{ listStyle: 'none' }}
-        width='full'
-        spacing={8}
-        columns={[1, null, 2]}
-      >
-        {
-          (contentList ?? []).map(({
-            url,
-            title,
-            image,
-            subtitle
-          }) => {
-            const { url: imageUrl } = image
-
-            return (
-              <Flex
-                as='li'
-                key={title}
-                width='full'
-              >
-                <ContentBox
-                  url={url}
-                  width='full'
-                  title={title}
-                  imageSrc={imageUrl}
-                  subtitle={subtitle}
-                />
-              </Flex>
-            )
-          })
-        }
-      </SimpleGrid>
+      <ContentList contentList={contentList} />
     </VStack>
   )
 }

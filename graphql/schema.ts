@@ -41,3 +41,11 @@ export type Content = {
   image: Asset;
   subtitle?: string;
 }
+
+export type LearningJournal = {
+  id: string;
+  date: Date;
+  work: Array<string>;
+  curiosity?: Array<string>;
+  programming?: Array<string>;
+}
