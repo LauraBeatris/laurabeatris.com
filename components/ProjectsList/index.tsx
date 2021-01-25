@@ -1,4 +1,4 @@
-import { SimpleGrid, VStack } from '@chakra-ui/react'
+import { Flex, SimpleGrid, VStack } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
 
 import { Project } from 'components/Project'
@@ -7,9 +7,11 @@ import { Popover } from 'components/Base/Popover'
 import { PaginationButton } from 'components/PaginationButton'
 import { useProjectsPagination } from 'hooks/useProjectsPagination'
 
+import { ProjectsListProps } from './types'
+
 const popoverText = 'Click on the projects to see more details about it'
 
-export function ProjectsList ({ projects }) {
+export function ProjectsList ({ projects }: ProjectsListProps) {
   const {
     data,
     hasMoreProjects,
@@ -49,8 +51,13 @@ export function ProjectsList ({ projects }) {
             const { url } = mainImage
 
             return (
-              <li key={title}>
+              <Flex
+                as='li'
+                key={title}
+                width='full'
+              >
                 <Project
+                  width='full'
                   title={title}
                   stack={stack}
                   liveUrl={liveUrl}
@@ -58,7 +65,7 @@ export function ProjectsList ({ projects }) {
                   mainImageUrl={url}
                   description={description}
                 />
-              </li>
+              </Flex>
             )
           })
         }
