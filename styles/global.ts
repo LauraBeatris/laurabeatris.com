@@ -29,4 +29,8 @@ export const global = css`
       object-fit: contain;
     }
   }
+
+  body {
+    background-color: var(--bg-color);
+  }
 `
