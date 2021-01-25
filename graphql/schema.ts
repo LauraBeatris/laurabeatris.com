@@ -33,3 +33,11 @@ export type Timeline = {
   year: number;
   achievements: Array<Achievement>
 }
+
+export type Content = {
+  id: string;
+  url: string;
+  title: string;
+  image: Asset;
+  subtitle?: string;
+}
