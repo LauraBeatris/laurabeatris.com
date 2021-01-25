@@ -36,8 +36,8 @@ class MyDocument extends Document {
           />
           <link rel='mask-icon' href='/favicons/safari-pinned-tab.svg' color={colors.white[100]} />
         </Head>
+        <ColorModeScript initialColorMode={config.initialColorMode as ColorMode} />
         <body>
-          <ColorModeScript initialColorMode={config.initialColorMode as ColorMode} />
           <Main />
           <NextScript />
         </body>
