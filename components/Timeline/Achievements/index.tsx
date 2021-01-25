@@ -7,7 +7,7 @@ import { AchievementsProps } from './types'
 
 export function Achievements ({ achievements }: AchievementsProps) {
   return (
-    <List paddingY={4}>
+    <List paddingBottom={4}>
       {
         (achievements ?? []).map(({ title, description }, index) => {
           const isLastElement = index === achievements.length - 1
