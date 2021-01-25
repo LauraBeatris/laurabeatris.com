@@ -2,18 +2,13 @@ import { gql } from 'graphql-request'
 
 import { graphQLClient } from 'config/graphQLClient'
 import { Content } from 'graphql/schema'
+import { CONTENT_FRAGMENT } from 'graphql/fragments/contentFragment'
 
 const GET_TALKS_QUERY = gql`
+  ${CONTENT_FRAGMENT}
   query GetTalks {
     talks: contents(where: {category: Talk}) {
-      id
-      url
-      title
-      image {
-        id
-        url
-      }
-      subtitle
+     ...ContentFields
     }
   }
 `
