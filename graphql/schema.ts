@@ -14,12 +14,14 @@ export type Project = {
   description?: string;
 }
 
+export type Achievement = {
+  id: string;
+  title: string;
+  description?: string;
+}
+
 export type Timeline = Array<{
   id: string;
   year: number;
-  achievements: Array<{
-    id: string;
-    title: string;
-    description?: string;
-  }>
+  achievements: Array<Achievement>
 }>
