@@ -1,13 +1,25 @@
-import { ColorMode, ColorModeScript } from '@chakra-ui/react'
 import Document, {
   Html,
   Head,
   Main,
   NextScript
 } from 'next/document'
+import { getColor } from '@chakra-ui/theme-tools'
 
 import { colors } from 'styles/theme/colors'
-import { config } from 'styles/theme/config'
+import { theme } from 'styles/theme'
+
+// a helper function to create color variables given a variable name and theme keys
+function createVar (name, light, dark) {
+  return `
+    root.style.setProperty(
+      '${name}',
+      mql.matches
+        ? '${getColor(theme, dark)}'
+        : '${getColor(theme, light)}'
+    );
+  `
+}
 
 class MyDocument extends Document {
   render () {
@@ -37,8 +49,20 @@ class MyDocument extends Document {
           <link rel='mask-icon' href='/favicons/safari-pinned-tab.svg' color={colors.white[100]} />
         </Head>
         <body>
-          <script src='/scripts/color-mode.js' />
-          <ColorModeScript initialColorMode={config.initialColorMode as ColorMode} />
+          <script
+            key='cm'
+            dangerouslySetInnerHTML={{
+              __html: `
+          const mql = window.matchMedia('(prefers-color-scheme: dark)');
+          const root = document.documentElement;
+          ${createVar('--bg-color', 'dark', 'white.100')}
+          ${createVar('--text-color', 'dark', 'white.100')}
+          ${createVar('--placeholder-text-color', 'dark', 'white.100')}
+          ${createVar('--border-color', 'dark', 'white.100')}
+          ${createVar('--button-text-color', 'dark', 'white.100')}
+        `
+            }}
+          />
           <Main />
           <NextScript />
         </body>

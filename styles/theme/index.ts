@@ -9,5 +9,11 @@ export const theme = extendTheme({
   config,
   colors,
   fonts,
+  global: {
+    body: {
+      bg: 'var(--bg-color)',
+      color: 'var(--text-color)'
+    }
+  },
   components
 })
