@@ -1,3 +1,4 @@
+import { InferGetStaticPropsType } from 'next'
 import { VStack } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
@@ -16,12 +17,12 @@ const dayOfWeek = getDayOfWeek(now.getDate(), now.getMonth(), now.getFullYear())
 export async function getStaticProps () {
   try {
     const projects = await getProjects()
-    const timelistList = await getTimelineList()
+    const timelineList = await getTimelineList()
 
     return {
       props: {
         projects,
-        timelistList
+        timelineList
       }
     }
   } catch (error) {
@@ -34,7 +35,10 @@ export async function getStaticProps () {
   }
 }
 
-export default function Home ({ projects, timelistList }) {
+export default function Home ({
+  projects,
+  timelineList
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <VStack
       width='full'
@@ -56,7 +60,7 @@ export default function Home ({ projects, timelistList }) {
       </Paragraph>
 
       <ProjectsList projects={projects} />
-      <Timeline timelistList={timelistList} />
+      <Timeline timelineList={timelineList} />
     </VStack>
   )
 }

@@ -8,12 +8,12 @@ import { Timeline as TimelineType } from 'graphql/schema'
 import { TimelineProps } from './types'
 import { Achievements } from './Achievements'
 
-export function Timeline ({ timelistList }: TimelineProps) {
+export function Timeline ({ timelineList }: TimelineProps) {
   const {
     data,
     hasMoreItems,
     handlePagination
-  } = usePagination<TimelineType>({ list: timelistList, itemsPerPage: 2 })
+  } = usePagination<TimelineType>({ list: timelineList, itemsPerPage: 2 })
 
   return (
     <VStack

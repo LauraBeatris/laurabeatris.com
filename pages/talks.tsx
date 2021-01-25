@@ -1,3 +1,4 @@
+import { InferGetStaticPropsType } from 'next'
 import { Flex, VStack, SimpleGrid } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
@@ -73,7 +74,10 @@ export async function getStaticProps () {
   }
 }
 
-export default function Talks ({ talks, podcastParticipations }) {
+export default function Talks ({
+  talks,
+  podcastParticipations
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <VStack
       width='full'
