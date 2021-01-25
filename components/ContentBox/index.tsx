@@ -26,7 +26,11 @@ export function ContentBox ({
         />
 
         <Stack direction='column' spacing={1}>
-          <Paragraph size='sm' as='span'>{subtitle}</Paragraph>
+          {
+            subtitle
+              ? <Paragraph size='sm' as='span'>{subtitle}</Paragraph>
+              : null
+          }
 
           <Heading size='xs'>{title}</Heading>
 

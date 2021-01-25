@@ -6,6 +6,7 @@ import { Paragraph } from 'components/Base/Paragraph'
 import { HighlightLink } from 'components/Base/HighlightLink'
 import { getPodcastEpisodes } from 'graphql/queries/getPodcastEpisodes'
 import { links } from 'constants/links'
+import { ContentList } from 'components/ContentList'
 
 export async function getStaticProps () {
   try {
@@ -40,7 +41,8 @@ export default function Podcast ({
 
       <Paragraph variant='regular'>
         Me and my friend <HighlightLink href='https://br.linkedin.com/in/joseph-oliveira-294a19165'>Joseph Oliveira</HighlightLink>,
-        created a podcast called <HighlightLink href={links.podcast}>useCast</HighlightLink>, in order to share knowledge about the world of web development. The podcast doesn't only cover technical aspects but also bring content related to soft skills and career.
+        created a podcast called <HighlightLink href={links.podcast}>useCast</HighlightLink>, in order to share knowledge about the world of web development.
+        The podcast doesn't only cover technical aspects but also bring content related to soft skills and career.
       </Paragraph>
 
       <VStack
@@ -51,6 +53,8 @@ export default function Podcast ({
         <Heading as='h2' size='sm'>Last Episodes</Heading>
 
         <Paragraph variant='regular'>Coming soon 🚧</Paragraph>
+
+        <ContentList contentList={podcastEpisodes} />
       </VStack>
     </VStack>
   )
