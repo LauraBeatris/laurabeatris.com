@@ -4,6 +4,8 @@ import {
   localStorageManager
 } from '@chakra-ui/react'
 
+import { theme } from 'styles/theme'
+
 /**
  * Custom ChakraProvider to use cookieStorageManager for SSR
  * and avoid color mode flashes
@@ -15,7 +17,10 @@ export function ChakraProvider ({ cookies, children }) {
       : localStorageManager
 
   return (
-    <OriginalChakraProvider colorModeManager={colorModeManager}>
+    <OriginalChakraProvider
+      theme={theme}
+      colorModeManager={colorModeManager}
+    >
       {children}
     </OriginalChakraProvider>
   )
