@@ -1,10 +1,11 @@
-import { InferGetStaticPropsType } from 'next'
+import { InferGetServerSidePropsType } from 'next'
 import { VStack } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
 import { getTalks } from 'graphql/queries/getTalks'
 import { getPodcastParticipations } from 'graphql/queries/getPodcastParticipations'
 import { ContentList } from 'components/ContentList'
+import { ChakraProvider } from 'providers/ChakraProvider'
 
 function ContentSection ({ title, contentList }) {
   return (
@@ -20,7 +21,7 @@ function ContentSection ({ title, contentList }) {
   )
 }
 
-export async function getStaticProps () {
+export async function getServerSideProps ({ req }) {
   try {
     const talks = await getTalks()
     const podcastParticipations = await getPodcastParticipations()
@@ -28,7 +29,8 @@ export async function getStaticProps () {
     return {
       props: {
         talks,
-        podcastParticipations
+        podcastParticipations,
+        cookies: req.headers.cookie ?? ''
       }
     }
   } catch (error) {
@@ -43,25 +45,28 @@ export async function getStaticProps () {
 
 export default function Talks ({
   talks,
+  cookies,
   podcastParticipations
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <VStack
-      width='full'
-      spacing={10}
-      paddingTop={5}
-      paddingBottom={10}
-      alignItems='flex-start'
-    >
-      <ContentSection
-        title='Talks'
-        contentList={talks}
-      />
+    <ChakraProvider cookies={cookies}>
+      <VStack
+        width='full'
+        spacing={10}
+        paddingTop={5}
+        paddingBottom={10}
+        alignItems='flex-start'
+      >
+        <ContentSection
+          title='Talks'
+          contentList={talks}
+        />
 
-      <ContentSection
-        title='Podcast Participations'
-        contentList={podcastParticipations}
-      />
-    </VStack>
+        <ContentSection
+          title='Podcast Participations'
+          contentList={podcastParticipations}
+        />
+      </VStack>
+    </ChakraProvider>
   )
 }
