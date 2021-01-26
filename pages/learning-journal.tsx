@@ -1,17 +1,19 @@
-import { InferGetStaticPropsType } from 'next'
+import { InferGetServerSidePropsType } from 'next'
 import { List, ListItem, Text, UnorderedList, VStack } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
 import { getLearningJournals } from 'graphql/queries/getLearningJournal'
+import { ChakraProvider } from 'providers/ChakraProvider'
 
-export async function getStaticProps () {
+export async function getServerSideProps ({ req }) {
   try {
     const learningJournals = await getLearningJournals()
 
     return {
       props: {
-        learningJournals
+        learningJournals,
+        cookies: req.headers.cookie ?? ''
       }
     }
   } catch (error) {
@@ -25,28 +27,30 @@ export async function getStaticProps () {
 }
 
 export default function LearningJournal ({
+  cookies,
   learningJournals
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const formatLearningJournals = learningJournals.map(({ date, ...rest }) => ({
     ...rest,
     date: new Date(date).toDateString()
   }))
 
   return (
-    <VStack
-      width='full'
-      paddingTop={5}
-      paddingBottom={10}
-      alignItems='flex-start'
-    >
-      <Heading as='h2'>Learning Journal</Heading>
+    <ChakraProvider cookies={cookies}>
+      <VStack
+        width='full'
+        paddingTop={5}
+        paddingBottom={10}
+        alignItems='flex-start'
+      >
+        <Heading as='h2'>Learning Journal</Heading>
 
-      <Paragraph variant='regular'>
-        Documenting my learning journey throughout the years.
-      </Paragraph>
+        <Paragraph variant='regular'>
+          Documenting my learning journey throughout the years.
+        </Paragraph>
 
-      <List width='full' paddingTop={5} spacing={6}>
-        {
+        <List width='full' paddingTop={5} spacing={6}>
+          {
           (formatLearningJournals ?? []).map(({
             id,
             date,
@@ -130,7 +134,8 @@ export default function LearningJournal ({
             )
           })
         }
-      </List>
-    </VStack>
+        </List>
+      </VStack>
+    </ChakraProvider>
   )
 }
