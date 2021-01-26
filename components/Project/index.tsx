@@ -29,6 +29,10 @@ export function Project ({
 
   const { categories } = stack
 
+  const onLinkClick = (event) => {
+    event.stopPropagation()
+  }
+
   return (
     <>
       <ProjectDetailsModal
@@ -91,6 +95,7 @@ export function Project ({
                     <Link
                       href={githubUrl}
                       title='See the project on GitHub'
+                      onClick={onLinkClick}
                       isExternal
                       aria-label='See project on GitHub'
                     >
@@ -106,6 +111,7 @@ export function Project ({
                     <Link
                       href={liveUrl}
                       title='See project live version'
+                      onClick={onLinkClick}
                       isExternal
                       aria-label='See project live version'
                     >
