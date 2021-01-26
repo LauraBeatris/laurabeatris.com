@@ -20,12 +20,10 @@ export default function MyApp ({ Component, pageProps }: AppProps) {
   return (
     <>
       <DefaultSeo {...configSEO} />
-      <ChakraProvider theme={theme} resetCSS>
-        <Global styles={global} />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ChakraProvider>
+      <Global styles={global} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </>
   )
 }

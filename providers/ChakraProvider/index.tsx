@@ -18,6 +18,7 @@ export function ChakraProvider ({ cookies, children }) {
 
   return (
     <OriginalChakraProvider
+      resetCSS
       theme={theme}
       colorModeManager={colorModeManager}
     >
