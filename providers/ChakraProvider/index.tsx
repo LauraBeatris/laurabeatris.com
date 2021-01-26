@@ -5,6 +5,7 @@ import {
 } from '@chakra-ui/react'
 
 import { theme } from 'styles/theme'
+import { Layout } from 'components/Layout'
 
 /**
  * Custom ChakraProvider to use cookieStorageManager for SSR
@@ -22,7 +23,11 @@ export function ChakraProvider ({ cookies, children }) {
       theme={theme}
       colorModeManager={colorModeManager}
     >
-      {children}
+      <Layout>
+
+        {children}
+      </Layout>
+
     </OriginalChakraProvider>
   )
 }
