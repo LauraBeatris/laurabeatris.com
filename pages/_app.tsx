@@ -10,9 +10,10 @@ import { Layout } from 'components/Layout'
 import useHasMounted from 'hooks/useHasMounted'
 
 export default function MyApp ({ Component, pageProps }: AppProps) {
-  const isMounted = useHasMounted()
+  // Temporary solution to avoid showing color mode after hydration process
+  const hasMounted = useHasMounted()
 
-  if (!isMounted) {
+  if (!hasMounted) {
     return null
   }
 
