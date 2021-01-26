@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-   <a href="laurabeatris.com">Go check it out 🎉</a>
+   <a href="https://laurabeatris.com">Go check it out 🎉</a>
 </p>
 
 ---
