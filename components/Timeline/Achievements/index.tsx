@@ -26,7 +26,7 @@ export function Achievements ({ achievements }: AchievementsProps) {
                   ? <Flex
                       left='5px'
                       top={isFirstElement ? 5 : 0}
-                      width={1}
+                      width='2.5px'
                       bottom={0}
                       height={isLastElement ? 5 : 'unset'}
                       zIndex={-1}
@@ -42,8 +42,8 @@ export function Achievements ({ achievements }: AchievementsProps) {
                 justifyContent='flex-start'
               >
                 <Box
-                  width={4}
-                  height={4}
+                  width='14px'
+                  height='14px'
                   marginTop={1}
                   borderRadius='full'
                   bgGradient='linear(to-r, green.400, green.500, blue.100)'
