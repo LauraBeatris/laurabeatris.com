@@ -3,7 +3,7 @@ import { List, ListItem, Text, UnorderedList, VStack } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
-import { getLearningJournals } from 'graphql/queries/getLearningJournal'
+import { getLearningJournals } from 'graphql/queries/getLearningJournals'
 import { ChakraProvider } from 'providers/ChakraProvider'
 
 export async function getServerSideProps ({ req }) {
