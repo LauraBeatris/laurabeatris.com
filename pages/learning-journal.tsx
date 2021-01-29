@@ -57,7 +57,7 @@ export default function LearningJournal ({
               work,
               curiosity,
               programming
-            }, index) => {
+            }) => {
               const shouldShowWorkEntries = (work ?? []).length > 0
               const shouldShowCuriosityEntries = (curiosity ?? []).length > 0
               const shouldShowProgrammingEntries = (programming ?? []).length > 0
@@ -72,15 +72,18 @@ export default function LearningJournal ({
                   paddingTop={5}
                   borderTopWidth={1}
                 >
-                  <Text
-                    as='h3'
-                    bgClip='text'
-                    fontSize={22}
-                    fontWeight='bold'
-                    bgGradient='linear(to-r, green.400, green.500, blue.100)'
-                  >
-                    {date}
-                  </Text>
+                  <a href={`#${date}`}>
+                    <Text
+                      as='h3'
+                      id={date}
+                      bgClip='text'
+                      fontSize={22}
+                      fontWeight='bold'
+                      bgGradient='linear(to-r, green.400, green.500, blue.100)'
+                    >
+                      {date}
+                    </Text>
+                  </a>
 
                   {
                     shouldShowWorkEntries
