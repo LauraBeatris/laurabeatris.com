@@ -1,18 +1,16 @@
 import { Text, useColorModeValue, useStyleConfig } from '@chakra-ui/react'
 
-import paragraphStyles from './styles'
 import { ParagraphProps } from './types'
+import { PARAGRAPH_THEME_KEY } from './styles'
 
-const paragraphThemeKey = 'Paragraph'
-
-function Paragraph ({
+export function Paragraph ({
   size,
   children,
   useColorModeVariant = true,
   ...rest
 }: ParagraphProps) {
   const variant = useColorModeValue('dark', 'light')
-  const styles = useStyleConfig(paragraphThemeKey, {
+  const styles = useStyleConfig(PARAGRAPH_THEME_KEY, {
     size,
     variant: useColorModeVariant ? variant : rest.variant
   })
@@ -27,5 +25,3 @@ function Paragraph ({
     </Text>
   )
 }
-
-export { Paragraph, paragraphStyles, paragraphThemeKey }

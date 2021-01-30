@@ -1,16 +1,14 @@
 import { Heading as ChakraHeading, HeadingProps, useColorModeValue, useStyleConfig } from '@chakra-ui/react'
 
-import headingStyles from './styles'
+import { HEADING_THEME_KEY } from './styles'
 
-const headingThemeKey = 'Heading'
-
-function Heading ({
+export function Heading ({
   size,
   children,
   ...rest
 }: HeadingProps) {
   const variant = useColorModeValue('dark', 'light')
-  const styles = useStyleConfig(headingThemeKey, {
+  const styles = useStyleConfig(HEADING_THEME_KEY, {
     size,
     variant
   })
@@ -25,5 +23,3 @@ function Heading ({
     </ChakraHeading>
   )
 }
-
-export { Heading, headingStyles, headingThemeKey }

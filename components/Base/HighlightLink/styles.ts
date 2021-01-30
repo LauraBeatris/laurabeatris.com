@@ -1,8 +1,10 @@
-import { paragraphStyles } from 'components/Base/Paragraph'
+import { paragraphStyles } from 'components/Base/Paragraph/styles'
 
 const { sizes } = paragraphStyles
 
-export default {
+export const HIGHLIGHT_LINK_THEME_KEY = 'HighlightLink'
+
+export const highlightLinkStyles = {
   baseStyle: {
     color: 'green.400',
     fontWeight: 500,

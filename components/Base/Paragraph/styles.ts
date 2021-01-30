@@ -1,4 +1,6 @@
-export default {
+export const PARAGRAPH_THEME_KEY = 'Paragraph'
+
+export const paragraphStyles = {
   baseStyle: {
     color: 'gray.300',
     fontWeight: 500

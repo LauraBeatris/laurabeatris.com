@@ -1,4 +1,6 @@
-export default {
+export const HEADING_THEME_KEY = 'Heading'
+
+export const headingStyles = {
   baseStyle: {
     fontWeight: 'bold',
     color: 'dark'

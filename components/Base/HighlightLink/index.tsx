@@ -1,16 +1,14 @@
 import { Link as ChakraLink, LinkProps, useStyleConfig } from '@chakra-ui/react'
 
-import highlightLinkStyles from './styles'
+import { HIGHLIGHT_LINK_THEME_KEY } from './styles'
 
-const highlightLinkThemeKey = 'HighlightLink'
-
-function HighlightLink ({
+export function HighlightLink ({
   size,
   variant,
   children,
   ...rest
 }: LinkProps) {
-  const styles = useStyleConfig(highlightLinkThemeKey, { size, variant })
+  const styles = useStyleConfig(HIGHLIGHT_LINK_THEME_KEY, { size, variant })
 
   return (
     <ChakraLink
@@ -22,5 +20,3 @@ function HighlightLink ({
     </ChakraLink>
   )
 }
-
-export { HighlightLink, highlightLinkStyles, highlightLinkThemeKey }
