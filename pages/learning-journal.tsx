@@ -111,7 +111,9 @@ export default function LearningJournal ({
                           <UnorderedList paddingLeft={5}>
                             {
                               work.map(text => (
-                                <ListItem key={text}>{text}</ListItem>
+                                <ListItem key={text}>
+                                  <Paragraph size='sm'>{text}</Paragraph>
+                                </ListItem>
                               ))
                             }
                           </UnorderedList>
