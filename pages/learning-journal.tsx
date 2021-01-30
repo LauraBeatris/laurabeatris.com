@@ -4,12 +4,11 @@ import { List, Text, VStack } from '@chakra-ui/react'
 import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
 import { PaginationButton } from 'components/PaginationButton'
+import { LearningJournalList } from 'components/LearningJournalList'
 import { getLearningJournals } from 'graphql/queries/getLearningJournals'
 import { ChakraProvider } from 'providers/ChakraProvider'
 import { usePagination } from 'hooks/usePagination'
-
-import { FormattedLearningJournal } from './types'
-import { LearningJournalList } from './LearningJournalList'
+import { LearningJournal as LearningJournalType } from 'graphql/schema'
 
 export async function getServerSideProps ({ req }) {
   try {
@@ -29,6 +28,10 @@ export async function getServerSideProps ({ req }) {
       props: {}
     }
   }
+}
+
+type FormattedLearningJournal = Omit<LearningJournalType, 'date'> & {
+  dateTitle: string;
 }
 
 export default function LearningJournal ({
