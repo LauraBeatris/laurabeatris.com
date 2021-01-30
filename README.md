@@ -46,7 +46,7 @@ Define the environment variables by creating a .env.local file similar to [.env.
 
 **Question** Why Next.js instead of other frameworks of React out there?
 
-**Answer** I chose Next.js in order to opt out for different rendering strategies. The pages are being [statically generated](https://nextjs.org/docs/basic-features/data-fetching#getstaticprops-static-generation) by fetching data from a headless CMS.
+**Answer** I chose Next.js in order to opt out for different rendering strategies.
 
 # :bug: Issues
 
