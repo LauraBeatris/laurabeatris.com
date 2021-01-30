@@ -1,14 +1,12 @@
 import { InferGetServerSidePropsType } from 'next'
-import { List, ListItem, Text, VStack } from '@chakra-ui/react'
+import { List, Text, VStack } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
-import { UnorderedList } from 'components/Base/UnorderedList'
 import { PaginationButton } from 'components/PaginationButton'
 import { getLearningJournals } from 'graphql/queries/getLearningJournals'
 import { ChakraProvider } from 'providers/ChakraProvider'
 import { usePagination } from 'hooks/usePagination'
-import { LearningJournal as LearningJournalSchemaType } from 'graphql/schema'
 
 import { FormattedLearningJournal } from './types'
 import { LearningJournalList } from './LearningJournalList'
