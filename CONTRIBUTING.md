@@ -18,7 +18,6 @@ If you have an idea for an enhancement, go ahead and share it via an issue, but 
 
 If you encounter a problem with this project, please open an issue. Be sure to include:
 
-- Package version
 - Node and Next versions
 - Brief but thorough description of the issue
 - Link to a CodeSandbox (or similar) demonstrating the problem (optional, but highly recommended, especially for complex problems)
