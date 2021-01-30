@@ -1,12 +1,13 @@
 import { InferGetServerSidePropsType } from 'next'
-import { List, ListItem, Text, UnorderedList, VStack } from '@chakra-ui/react'
+import { List, ListItem, Text, VStack } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
+import { UnorderedList } from 'components/Base/UnorderedList'
+import { PaginationButton } from 'components/PaginationButton'
 import { getLearningJournals } from 'graphql/queries/getLearningJournals'
 import { ChakraProvider } from 'providers/ChakraProvider'
 import { usePagination } from 'hooks/usePagination'
-import { PaginationButton } from 'components/PaginationButton'
 import { LearningJournal as LearningJournalSchemaType } from 'graphql/schema'
 
 export async function getServerSideProps ({ req }) {
@@ -27,6 +28,29 @@ export async function getServerSideProps ({ req }) {
       props: {}
     }
   }
+}
+
+function LearningJournalList ({ title, list }) {
+  const shouldShowLearningJournalList = (list ?? []).length > 0
+
+  if (!shouldShowLearningJournalList) {
+    return null
+  }
+
+  return (
+    <>
+      <Heading size='xs'>{title}</Heading>
+      <UnorderedList>
+        {
+          list.map(text => (
+            <ListItem key={text}>
+              <Paragraph size='sm'>{text}</Paragraph>
+            </ListItem>
+          ))
+        }
+      </UnorderedList>
+    </>
+  )
 }
 
 type FormattedLearningJournal = Omit<LearningJournalSchemaType, 'date'> & {
@@ -78,86 +102,31 @@ export default function LearningJournal ({
               dateTitle,
               curiosity,
               programming
-            }) => {
-              const shouldShowWorkEntries = (work ?? []).length > 0
-              const shouldShowCuriosityEntries = (curiosity ?? []).length > 0
-              const shouldShowProgrammingEntries = (programming ?? []).length > 0
-
-              return (
-                <VStack
-                  as='li'
-                  key={id}
-                  width='full'
-                  spacing={5}
-                  alignItems='flex-start'
-                  paddingTop={5}
-                  borderTopWidth={1}
+            }) => (
+              <VStack
+                as='li'
+                key={id}
+                width='full'
+                spacing={5}
+                alignItems='flex-start'
+                paddingTop={5}
+                borderTopWidth={1}
+              >
+                <Text
+                  as='h3'
+                  bgClip='text'
+                  fontSize={22}
+                  fontWeight='bold'
+                  bgGradient='linear(to-r, green.400, green.500, blue.100)'
                 >
-                  <Text
-                    as='h3'
-                    bgClip='text'
-                    fontSize={22}
-                    fontWeight='bold'
-                    bgGradient='linear(to-r, green.400, green.500, blue.100)'
-                  >
-                    {dateTitle}
-                  </Text>
+                  {dateTitle}
+                </Text>
 
-                  {
-                    shouldShowWorkEntries
-                      ? (
-                        <>
-                          <Heading size='xs'>Work</Heading>
-                          <UnorderedList paddingLeft={5}>
-                            {
-                              work.map(text => (
-                                <ListItem key={text}>
-                                  <Paragraph size='sm'>{text}</Paragraph>
-                                </ListItem>
-                              ))
-                            }
-                          </UnorderedList>
-                        </>
-                        )
-                      : null
-                  }
-
-                  {
-                    shouldShowProgrammingEntries
-                      ? (
-                        <>
-                          <Heading size='xs'>Programming</Heading>
-                          <UnorderedList paddingLeft={5}>
-                            {
-                              programming.map(text => (
-                                <ListItem key={text}>{text}</ListItem>
-                              ))
-                            }
-                          </UnorderedList>
-                        </>
-                        )
-                      : null
-                  }
-
-                  {
-                    shouldShowCuriosityEntries
-                      ? (
-                        <>
-                          <Heading size='xs'>Curiosity</Heading>
-                          <UnorderedList paddingLeft={5}>
-                            {
-                              curiosity.map(text => (
-                                <ListItem key={text}>{text}</ListItem>
-                              ))
-                            }
-                          </UnorderedList>
-                        </>
-                        )
-                      : null
-                  }
-                </VStack>
-              )
-            })
+                <LearningJournalList title='Work' list={work} />
+                <LearningJournalList title='Programming' list={programming} />
+                <LearningJournalList title='Curiosity' list={curiosity} />
+              </VStack>
+            ))
           }
         </List>
 
