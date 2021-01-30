@@ -12,7 +12,7 @@ If you have an idea for an enhancement, go ahead and share it via an issue, but 
 
 ## Code Style
 
-[Husky](https://github.com/typicode/husky) execute scrips according to git hooks in order to test if a developer is following the [Eslint Lint Rules](https://github.com/LauraBeatris/floripa-mais/blob/master/.eslintrc.js).
+[Husky](https://github.com/typicode/husky) execute scrips according to git hooks in order to test if a developer is following the [ESLint Lint Rules](https://github.com/LauraBeatris/floripa-mais/blob/master/.eslintrc.js).
 
 ## Bug reports
 
