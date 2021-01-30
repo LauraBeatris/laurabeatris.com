@@ -1,7 +1,6 @@
 import { ListItem } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
-import { Paragraph } from 'components/Base/Paragraph'
 import { UnorderedList } from 'components/Base/UnorderedList'
 
 export function LearningJournalList ({ title, list }) {
@@ -18,7 +17,7 @@ export function LearningJournalList ({ title, list }) {
         {
           list.map(text => (
             <ListItem key={text}>
-              <Paragraph size='sm'>{text}</Paragraph>
+              {text}
             </ListItem>
           ))
         }
