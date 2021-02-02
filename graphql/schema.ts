@@ -42,10 +42,17 @@ export type Content = {
   subtitle?: string;
 }
 
+export type Resource = {
+  id: string;
+  url: string;
+  label: string;
+}
+
 export type LearningJournal = {
   id: string;
   date: Date;
   work: Array<string>;
+  resources?: Array<Resource>;
   curiosity?: Array<string>;
   programming?: Array<string>;
 }

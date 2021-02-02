@@ -11,6 +11,11 @@ const GET_LEARNING_JOURNALS_QUERY = gql`
       date
       curiosity
       programming
+      resources {
+        id
+        url
+        label
+      }
     }
   }
 `
