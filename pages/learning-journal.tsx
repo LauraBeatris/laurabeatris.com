@@ -1,5 +1,6 @@
 import { InferGetServerSidePropsType } from 'next'
-import { List, Text, VStack } from '@chakra-ui/react'
+import { Link, List, ListIcon, ListItem, Text, VStack } from '@chakra-ui/react'
+import { LinkIcon } from '@chakra-ui/icons'
 
 import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
@@ -76,34 +77,70 @@ export default function LearningJournal ({
             (data ?? []).map(({
               id,
               work,
+              resources,
               dateTitle,
               curiosity,
               programming
-            }) => (
-              <VStack
-                as='li'
-                key={id}
-                width='full'
-                spacing={5}
-                alignItems='flex-start'
-                paddingTop={5}
-                borderTopWidth={1}
-              >
-                <Text
-                  as='h3'
-                  bgClip='text'
-                  fontSize={22}
-                  fontWeight='bold'
-                  bgGradient='linear(to-r, green.400, green.500, blue.100)'
-                >
-                  {dateTitle}
-                </Text>
+            }) => {
+              const shouldShowResources = (resources ?? []).length > 0
 
-                <LearningJournalList title='Work' list={work} />
-                <LearningJournalList title='Programming' list={programming} />
-                <LearningJournalList title='Curiosity' list={curiosity} />
-              </VStack>
-            ))
+              return (
+                <VStack
+                  as='li'
+                  key={id}
+                  width='full'
+                  spacing={5}
+                  alignItems='flex-start'
+                  paddingTop={5}
+                  borderTopWidth={1}
+                >
+                  <Text
+                    as='h3'
+                    bgClip='text'
+                    fontSize={22}
+                    fontWeight='bold'
+                    bgGradient='linear(to-r, green.400, green.500, blue.100)'
+                  >
+                    {dateTitle}
+                  </Text>
+
+                  <LearningJournalList title='Work' list={work} />
+                  <LearningJournalList title='Programming' list={programming} />
+                  <LearningJournalList title='Curiosity' list={curiosity} />
+
+                  {
+                    shouldShowResources
+                      ? (
+                        <>
+                          <Heading size='xs'>Resources</Heading>
+                          <List spacing={2}>
+                            {
+                              resources.map(({ url, label }) => (
+                                <ListItem key={label}>
+                                  <ListIcon as={LinkIcon} />
+
+                                  <Link
+                                    href={url}
+                                    bgClip='text'
+                                    isExternal
+                                    fontWeight='bold'
+                                    bgGradient='linear(to-r, green.400, green.500, blue.100)'
+                                    borderBottomWidth={1}
+                                    borderBottomColor='gray.100'
+                                  >
+                                    {label}
+                                  </Link>
+                                </ListItem>
+                              ))
+                            }
+                          </List>
+                        </>
+                        )
+                      : null
+                    }
+                </VStack>
+              )
+            })
           }
         </List>
 
