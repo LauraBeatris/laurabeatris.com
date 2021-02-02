@@ -14,10 +14,6 @@
   ],
   "redirects": [
     {
-      "source": "/resume",
-      "destination": "/resume-2021.pdf"
-    },
-    {
       "source": "/youtube",
       "destination": "https://www.youtube.com/c/LauraBeatris"
     },
