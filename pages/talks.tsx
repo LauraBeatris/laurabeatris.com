@@ -1,11 +1,10 @@
-import { InferGetServerSidePropsType } from 'next'
+import { InferGetStaticPropsType } from 'next'
 import { VStack } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
 import { getTalks } from 'graphql/queries/getTalks'
 import { getPodcastParticipations } from 'graphql/queries/getPodcastParticipations'
 import { ContentList } from 'components/ContentList'
-import { ChakraProvider } from 'providers/ChakraProvider'
 
 function ContentSection ({ title, contentList }) {
   return (
@@ -21,7 +20,7 @@ function ContentSection ({ title, contentList }) {
   )
 }
 
-export async function getServerSideProps ({ req }) {
+export async function getStaticProps () {
   try {
     const talks = await getTalks()
     const podcastParticipations = await getPodcastParticipations()
@@ -29,8 +28,7 @@ export async function getServerSideProps ({ req }) {
     return {
       props: {
         talks,
-        podcastParticipations,
-        cookies: req.headers.cookie ?? ''
+        podcastParticipations
       }
     }
   } catch (error) {
@@ -45,28 +43,25 @@ export async function getServerSideProps ({ req }) {
 
 export default function Talks ({
   talks,
-  cookies,
   podcastParticipations
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <ChakraProvider cookies={cookies}>
-      <VStack
-        width='full'
-        spacing={10}
-        paddingTop={5}
-        paddingBottom={10}
-        alignItems='flex-start'
-      >
-        <ContentSection
-          title='Talks'
-          contentList={talks}
-        />
+    <VStack
+      width='full'
+      spacing={10}
+      paddingTop={5}
+      paddingBottom={10}
+      alignItems='flex-start'
+    >
+      <ContentSection
+        title='Talks'
+        contentList={talks}
+      />
 
-        <ContentSection
-          title='Podcast Participations'
-          contentList={podcastParticipations}
-        />
-      </VStack>
-    </ChakraProvider>
+      <ContentSection
+        title='Podcast Participations'
+        contentList={podcastParticipations}
+      />
+    </VStack>
   )
 }

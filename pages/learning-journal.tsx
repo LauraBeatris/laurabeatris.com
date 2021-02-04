@@ -1,4 +1,4 @@
-import { InferGetServerSidePropsType } from 'next'
+import { InferGetStaticPropsType } from 'next'
 import { Link, List, ListIcon, ListItem, Text, VStack } from '@chakra-ui/react'
 import { LinkIcon } from '@chakra-ui/icons'
 
@@ -7,18 +7,16 @@ import { Paragraph } from 'components/Base/Paragraph'
 import { PaginationButton } from 'components/PaginationButton'
 import { LearningJournalList } from 'components/LearningJournalList'
 import { getLearningJournals } from 'graphql/queries/getLearningJournals'
-import { ChakraProvider } from 'providers/ChakraProvider'
 import { usePagination } from 'hooks/usePagination'
 import { LearningJournal as LearningJournalType } from 'graphql/schema'
 
-export async function getServerSideProps ({ req }) {
+export async function getStaticProps () {
   try {
     const learningJournals = await getLearningJournals()
 
     return {
       props: {
-        learningJournals,
-        cookies: req.headers.cookie ?? ''
+        learningJournals
       }
     }
   } catch (error) {
@@ -36,9 +34,8 @@ type FormattedLearningJournal = Omit<LearningJournalType, 'date'> & {
 }
 
 export default function LearningJournal ({
-  cookies,
   learningJournals
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const formattedLearningJournals = learningJournals.map(({ date, ...rest }) => ({
     ...rest,
     dateTitle: new Date(date).toDateString()
@@ -54,26 +51,25 @@ export default function LearningJournal ({
   })
 
   return (
-    <ChakraProvider cookies={cookies}>
-      <VStack
+    <VStack
+      width='full'
+      paddingTop={5}
+      paddingBottom={10}
+      alignItems='flex-start'
+    >
+      <Heading as='h2'>Learning Journal</Heading>
+
+      <Paragraph variant='regular'>
+        Documenting my learning journey throughout the years.
+      </Paragraph>
+
+      <List
         width='full'
+        spacing={6}
         paddingTop={5}
-        paddingBottom={10}
-        alignItems='flex-start'
+        marginBottom={5}
       >
-        <Heading as='h2'>Learning Journal</Heading>
-
-        <Paragraph variant='regular'>
-          Documenting my learning journey throughout the years.
-        </Paragraph>
-
-        <List
-          width='full'
-          spacing={6}
-          paddingTop={5}
-          marginBottom={5}
-        >
-          {
+        {
             (data ?? []).map(({
               id,
               work,
@@ -142,14 +138,13 @@ export default function LearningJournal ({
               )
             })
           }
-        </List>
+      </List>
 
-        <PaginationButton
-          showMore={hasMoreItems}
-          onClick={handlePagination}
-          alignSelf='center'
-        />
-      </VStack>
-    </ChakraProvider>
+      <PaginationButton
+        showMore={hasMoreItems}
+        onClick={handlePagination}
+        alignSelf='center'
+      />
+    </VStack>
   )
 }
