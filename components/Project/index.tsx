@@ -43,7 +43,7 @@ export function Project ({
         onClose={onClose}
       />
 
-      <HydrationSkeleton>
+      <HydrationSkeleton width='full' height='full'>
         <Stack
           as='button'
           height='full'
