@@ -47,6 +47,7 @@ export function Project ({
         <Stack
           as='button'
           height='full'
+          width='full'
           onClick={onOpen}
           spacing={5}
           padding={5}
