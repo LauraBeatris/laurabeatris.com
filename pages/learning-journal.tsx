@@ -9,6 +9,7 @@ import { LearningJournalList } from 'components/LearningJournalList'
 import { getLearningJournals } from 'graphql/queries/getLearningJournals'
 import { usePagination } from 'hooks/usePagination'
 import { LearningJournal as LearningJournalType } from 'graphql/schema'
+import { HydrationSkeleton } from 'components/Base/HydrationSkeleton'
 
 export async function getStaticProps () {
   try {
@@ -81,30 +82,30 @@ export default function LearningJournal ({
               const shouldShowResources = (resources ?? []).length > 0
 
               return (
-                <VStack
-                  as='li'
-                  key={id}
-                  width='full'
-                  spacing={5}
-                  alignItems='flex-start'
-                  paddingTop={5}
-                  borderTopWidth={1}
-                >
-                  <Text
-                    as='h3'
-                    bgClip='text'
-                    fontSize={22}
-                    fontWeight='bold'
-                    bgGradient='linear(to-r, green.400, green.500, blue.100)'
+                <HydrationSkeleton key={id}>
+                  <VStack
+                    as='li'
+                    width='full'
+                    spacing={5}
+                    alignItems='flex-start'
+                    paddingTop={5}
+                    borderTopWidth={1}
                   >
-                    {dateTitle}
-                  </Text>
+                    <Text
+                      as='h3'
+                      bgClip='text'
+                      fontSize={22}
+                      fontWeight='bold'
+                      bgGradient='linear(to-r, green.400, green.500, blue.100)'
+                    >
+                      {dateTitle}
+                    </Text>
 
-                  <LearningJournalList title='Work' list={work} />
-                  <LearningJournalList title='Programming' list={programming} />
-                  <LearningJournalList title='Curiosity' list={curiosity} />
+                    <LearningJournalList title='Work' list={work} />
+                    <LearningJournalList title='Programming' list={programming} />
+                    <LearningJournalList title='Curiosity' list={curiosity} />
 
-                  {
+                    {
                     shouldShowResources
                       ? (
                         <>
@@ -134,7 +135,8 @@ export default function LearningJournal ({
                         )
                       : null
                     }
-                </VStack>
+                  </VStack>
+                </HydrationSkeleton>
               )
             })
           }

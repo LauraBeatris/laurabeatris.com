@@ -1,10 +1,10 @@
-import { Button, ButtonProps, Skeleton, useColorMode } from '@chakra-ui/react'
+import { Button, ButtonProps, useColorMode } from '@chakra-ui/react'
 import useSound from 'use-sound'
 
 import switchOnSound from 'public/sounds/switch-on.mp3'
 import switchOffSound from 'public/sounds/switch-off.mp3'
-
 import { ToggleThemeIcon } from 'components/ToggleThemeIcon'
+import { HydrationSkeleton } from 'components/Base/HydrationSkeleton'
 import { useHasMounted } from 'hooks/useHasMounted'
 
 export function ToggleThemeButton (props: ButtonProps) {
@@ -22,7 +22,7 @@ export function ToggleThemeButton (props: ButtonProps) {
   const iconTitle = isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'
 
   return (
-    <Skeleton
+    <HydrationSkeleton
       isLoaded={hasMounted}
       startColor='transparent'
       endColor='transparent'
@@ -37,6 +37,6 @@ export function ToggleThemeButton (props: ButtonProps) {
       >
         <ToggleThemeIcon title={iconTitle} isDarkMode={isDarkMode} />
       </Button>
-    </Skeleton>
+    </HydrationSkeleton>
   )
 }
