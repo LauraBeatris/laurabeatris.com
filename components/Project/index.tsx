@@ -46,6 +46,7 @@ export function Project ({
       <HydrationSkeleton>
         <Stack
           as='button'
+          height='full'
           onClick={onOpen}
           spacing={5}
           padding={5}
