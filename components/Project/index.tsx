@@ -12,6 +12,7 @@ import { AiFillGithub, AiOutlineLink } from 'react-icons/ai'
 
 import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
+import { HydrationSkeleton } from 'components/Base/HydrationSkeleton'
 
 import { ProjectProps } from './types'
 import { ProjectDetailsModal } from './ProjectDetailsModal'
@@ -42,54 +43,56 @@ export function Project ({
         onClose={onClose}
       />
 
-      <Stack
-        as='button'
-        onClick={onOpen}
-        spacing={5}
-        padding={5}
-        direction='column'
-        alignItems='center'
-        borderRadius='md'
-        borderWidth={0.5}
-        {...rest}
-      >
-        <Flex
-          height={152}
-          width='full'
-          position='relative'
-          borderRadius='md'
-        >
-          <Image
-            alt={title}
-            src={mainImageUrl}
-            layout='fill'
-            className='next-image next-image---contained'
-          />
-        </Flex>
-
+      <HydrationSkeleton>
         <Stack
-          width='full'
-          spacing={2}
+          as='button'
+          height='full'
+          onClick={onOpen}
+          spacing={5}
+          padding={5}
           direction='column'
-          alignItems='start'
-          justifyContent='space-between'
+          alignItems='center'
+          borderRadius='md'
+          borderWidth={0.5}
+          {...rest}
         >
+          <Flex
+            height={152}
+            width='full'
+            position='relative'
+            borderRadius='md'
+          >
+            <Image
+              alt={title}
+              src={mainImageUrl}
+              layout='fill'
+              className='next-image next-image---contained'
+            />
+          </Flex>
+
           <Stack
             width='full'
-            spacing={1}
+            spacing={2}
             direction='column'
             alignItems='start'
+            justifyContent='space-between'
           >
-            <Stack direction='row' alignItems='center'>
-              <Heading
-                as='strong'
-                size='xs'
-                textAlign='left'
-              >
-                {title}
-              </Heading>
+            <Stack
+              width='full'
+              spacing={1}
+              direction='column'
+              alignItems='start'
+            >
+              <Stack direction='row' alignItems='center'>
+                <Heading
+                  as='strong'
+                  size='xs'
+                  textAlign='left'
+                >
+                  {title}
+                </Heading>
 
-              {
+                {
                 githubUrl
                   ? (
                     <Link
@@ -105,7 +108,7 @@ export function Project ({
                   : null
               }
 
-              {
+                {
                 liveUrl
                   ? (
                     <Link
@@ -120,10 +123,10 @@ export function Project ({
                     )
                   : null
               }
-            </Stack>
+              </Stack>
 
-            <Wrap spacing={1} marginBottom='auto'>
-              {
+              <Wrap spacing={1} marginBottom='auto'>
+                {
                 categories.map((technology) => (
                   <WrapItem key={technology}>
                     <Badge variant='subtle' colorScheme='green'>
@@ -132,18 +135,19 @@ export function Project ({
                   </WrapItem>
                 ))
               }
-            </Wrap>
-          </Stack>
+              </Wrap>
+            </Stack>
 
-          <Paragraph
-            size='sm'
-            variant='regular'
-            textAlign='left'
-          >
-            {description}
-          </Paragraph>
+            <Paragraph
+              size='sm'
+              variant='regular'
+              textAlign='left'
+            >
+              {description}
+            </Paragraph>
+          </Stack>
         </Stack>
-      </Stack>
+      </HydrationSkeleton>
     </>
   )
 }

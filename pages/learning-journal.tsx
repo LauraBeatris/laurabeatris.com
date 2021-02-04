@@ -1,4 +1,4 @@
-import { InferGetServerSidePropsType } from 'next'
+import { InferGetStaticPropsType } from 'next'
 import { Link, List, ListIcon, ListItem, Text, VStack } from '@chakra-ui/react'
 import { LinkIcon } from '@chakra-ui/icons'
 
@@ -7,18 +7,17 @@ import { Paragraph } from 'components/Base/Paragraph'
 import { PaginationButton } from 'components/PaginationButton'
 import { LearningJournalList } from 'components/LearningJournalList'
 import { getLearningJournals } from 'graphql/queries/getLearningJournals'
-import { ChakraProvider } from 'providers/ChakraProvider'
 import { usePagination } from 'hooks/usePagination'
 import { LearningJournal as LearningJournalType } from 'graphql/schema'
+import { HydrationSkeleton } from 'components/Base/HydrationSkeleton'
 
-export async function getServerSideProps ({ req }) {
+export async function getStaticProps () {
   try {
     const learningJournals = await getLearningJournals()
 
     return {
       props: {
-        learningJournals,
-        cookies: req.headers.cookie ?? ''
+        learningJournals
       }
     }
   } catch (error) {
@@ -36,9 +35,8 @@ type FormattedLearningJournal = Omit<LearningJournalType, 'date'> & {
 }
 
 export default function LearningJournal ({
-  cookies,
   learningJournals
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const formattedLearningJournals = learningJournals.map(({ date, ...rest }) => ({
     ...rest,
     dateTitle: new Date(date).toDateString()
@@ -54,19 +52,22 @@ export default function LearningJournal ({
   })
 
   return (
-    <ChakraProvider cookies={cookies}>
-      <VStack
-        width='full'
-        paddingTop={5}
-        paddingBottom={10}
-        alignItems='flex-start'
+    <VStack
+      width='full'
+      paddingTop={5}
+      paddingBottom={10}
+      alignItems='flex-start'
+    >
+      <Heading as='h2'>Learning Journal</Heading>
+
+      <Paragraph variant='regular'>
+        Documenting my learning journey throughout the years.
+      </Paragraph>
+
+      <HydrationSkeleton
+        endColor='transparent'
+        startColor='transparent'
       >
-        <Heading as='h2'>Learning Journal</Heading>
-
-        <Paragraph variant='regular'>
-          Documenting my learning journey throughout the years.
-        </Paragraph>
-
         <List
           width='full'
           spacing={6}
@@ -143,13 +144,13 @@ export default function LearningJournal ({
             })
           }
         </List>
+      </HydrationSkeleton>
 
-        <PaginationButton
-          showMore={hasMoreItems}
-          onClick={handlePagination}
-          alignSelf='center'
-        />
-      </VStack>
-    </ChakraProvider>
+      <PaginationButton
+        showMore={hasMoreItems}
+        onClick={handlePagination}
+        alignSelf='center'
+      />
+    </VStack>
   )
 }
