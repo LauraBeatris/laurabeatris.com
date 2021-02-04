@@ -62,6 +62,7 @@ export function Project ({
             width='full'
             position='relative'
             borderRadius='md'
+            alignSelf='center'
           >
             <Image
               alt={title}
@@ -75,6 +76,7 @@ export function Project ({
             width='full'
             spacing={2}
             direction='column'
+            alignSelf='start'
             alignItems='start'
             justifyContent='space-between'
           >
