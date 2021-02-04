@@ -64,13 +64,17 @@ export default function LearningJournal ({
         Documenting my learning journey throughout the years.
       </Paragraph>
 
-      <List
-        width='full'
-        spacing={6}
-        paddingTop={5}
-        marginBottom={5}
+      <HydrationSkeleton
+        endColor='transparent'
+        startColor='transparent'
       >
-        {
+        <List
+          width='full'
+          spacing={6}
+          paddingTop={5}
+          marginBottom={5}
+        >
+          {
             (data ?? []).map(({
               id,
               work,
@@ -82,30 +86,30 @@ export default function LearningJournal ({
               const shouldShowResources = (resources ?? []).length > 0
 
               return (
-                <HydrationSkeleton key={id}>
-                  <VStack
-                    as='li'
-                    width='full'
-                    spacing={5}
-                    alignItems='flex-start'
-                    paddingTop={5}
-                    borderTopWidth={1}
+                <VStack
+                  as='li'
+                  key={id}
+                  width='full'
+                  spacing={5}
+                  alignItems='flex-start'
+                  paddingTop={5}
+                  borderTopWidth={1}
+                >
+                  <Text
+                    as='h3'
+                    bgClip='text'
+                    fontSize={22}
+                    fontWeight='bold'
+                    bgGradient='linear(to-r, green.400, green.500, blue.100)'
                   >
-                    <Text
-                      as='h3'
-                      bgClip='text'
-                      fontSize={22}
-                      fontWeight='bold'
-                      bgGradient='linear(to-r, green.400, green.500, blue.100)'
-                    >
-                      {dateTitle}
-                    </Text>
+                    {dateTitle}
+                  </Text>
 
-                    <LearningJournalList title='Work' list={work} />
-                    <LearningJournalList title='Programming' list={programming} />
-                    <LearningJournalList title='Curiosity' list={curiosity} />
+                  <LearningJournalList title='Work' list={work} />
+                  <LearningJournalList title='Programming' list={programming} />
+                  <LearningJournalList title='Curiosity' list={curiosity} />
 
-                    {
+                  {
                     shouldShowResources
                       ? (
                         <>
@@ -135,12 +139,12 @@ export default function LearningJournal ({
                         )
                       : null
                     }
-                  </VStack>
-                </HydrationSkeleton>
+                </VStack>
               )
             })
           }
-      </List>
+        </List>
+      </HydrationSkeleton>
 
       <PaginationButton
         showMore={hasMoreItems}

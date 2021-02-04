@@ -23,9 +23,9 @@ export function ToggleThemeButton (props: ButtonProps) {
 
   return (
     <HydrationSkeleton
+      endColor='transparent'
       isLoaded={hasMounted}
       startColor='transparent'
-      endColor='transparent'
     >
       <Button
         onClick={handleClick}
