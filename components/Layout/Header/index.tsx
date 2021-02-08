@@ -50,7 +50,7 @@ export function Header () {
                 src='/images/logo.png'
                 width={45}
                 height={59}
-                loading='eager'
+                priority
               />
             </div>
           </Link>
