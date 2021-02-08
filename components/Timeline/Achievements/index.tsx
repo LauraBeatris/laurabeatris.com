@@ -2,6 +2,7 @@ import { List, HStack, ListItem, VStack, Box, Flex } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
+import { GradientCircle } from 'components/GradientCircle'
 
 import { AchievementsProps } from './types'
 
@@ -24,7 +25,7 @@ export function Achievements ({ achievements }: AchievementsProps) {
               {
                 shouldConnectDots
                   ? <Flex
-                      left='5px'
+                      left='4.5px'
                       top={isFirstElement ? 5 : 0}
                       width='2.5px'
                       bottom={0}
@@ -41,13 +42,12 @@ export function Achievements ({ achievements }: AchievementsProps) {
                 alignItems='flex-start'
                 justifyContent='flex-start'
               >
-                <Box
-                  width='14px'
-                  height='14px'
+                <GradientCircle
+                  minWidth='12px'
+                  height='12px'
                   marginTop={1}
-                  borderRadius='full'
-                  bgGradient='linear(to-r, green.400, green.500, blue.100)'
                 />
+
                 <VStack
                   width='full'
                   spacing={2}
