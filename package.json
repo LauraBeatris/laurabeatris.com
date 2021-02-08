@@ -8,6 +8,7 @@
     "start": "next start",
     "lint-code-style": "eslint . --ext=.js,.ts,.tsx --fix",
     "lint-check-types": "tsc --noemit",
+    "lint-unused-exports": "./node_modules/.bin/ts-unused-exports tsconfig.json --allowUnusedTypes --excludePathsFromReport=pages",
     "linter": "yarn lint-code-style && yarn lint-check-types"
   },
   "dependencies": {
@@ -48,6 +49,7 @@
     "husky": "^4.3.8",
     "lint-staged": "^10.5.3",
     "prettier": "^2.2.1",
+    "ts-unused-exports": "^7.0.1",
     "typescript": "^4.1.3"
   }
 }
