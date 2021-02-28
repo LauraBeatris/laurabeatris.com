@@ -12,10 +12,6 @@ export const navigationItems = [
     href: '/talks'
   },
   {
-    name: 'Podcast',
-    href: '/podcast'
-  },
-  {
     name: 'Learning Journal',
     href: '/learning-journal'
   }
