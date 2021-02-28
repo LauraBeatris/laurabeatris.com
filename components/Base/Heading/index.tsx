@@ -7,18 +7,12 @@ export function Heading ({
   children,
   ...rest
 }: HeadingProps) {
-  const variant = useColorModeValue('dark', 'light')
   const styles = useStyleConfig(HEADING_THEME_KEY, {
-    size,
-    variant
+    size
   })
 
   return (
-    <ChakraHeading
-      sx={styles}
-      variant={variant}
-      {...rest}
-    >
+    <ChakraHeading sx={styles} {...rest}>
       {children}
     </ChakraHeading>
   )

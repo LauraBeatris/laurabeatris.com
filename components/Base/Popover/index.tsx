@@ -5,8 +5,7 @@ import {
   PopoverArrow,
   PopoverTrigger,
   PopoverContent,
-  PopoverCloseButton,
-  useColorModeValue
+  PopoverCloseButton
 } from '@chakra-ui/react'
 import useSound from 'use-sound'
 
@@ -15,11 +14,16 @@ import menuOpenSound from 'public/sounds/menu-open.mp3'
 
 import { PopoverProps } from './types'
 
+const popoverBackgroundCss = {
+  backgroundColor: 'var(--popover-background-color)'
+}
+
+const popoverColorCss = {
+  color: 'var(--popover-color)'
+}
+
 export function Popover ({ buttonContent, popoverText, ...rest }: PopoverProps) {
   const [play] = useSound(menuOpenSound, { volume: 0.2 })
-  const contentBackgroundColor = useColorModeValue('dark', 'white.100')
-  const closeButtonColor = useColorModeValue('white.100', 'dark')
-  const paragraphVariant = useColorModeValue('light', 'dark')
 
   const handleClick = () => {
     play()
@@ -42,14 +46,13 @@ export function Popover ({ buttonContent, popoverText, ...rest }: PopoverProps) 
           {buttonContent}
         </Button>
       </PopoverTrigger>
-      <PopoverContent backgroundColor={contentBackgroundColor}>
-        <PopoverArrow backgroundColor={contentBackgroundColor} />
-        <PopoverCloseButton color={closeButtonColor} />
+      <PopoverContent css={popoverBackgroundCss}>
+        <PopoverArrow css={popoverBackgroundCss} />
+        <PopoverCloseButton color="var('popover-text-color')" />
         <PopoverBody>
           <Paragraph
+            css={popoverColorCss}
             size='sm'
-            variant={paragraphVariant}
-            useColorModeVariant={false}
           >
             {popoverText}
           </Paragraph>

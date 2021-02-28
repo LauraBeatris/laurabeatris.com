@@ -2,7 +2,7 @@ export const PARAGRAPH_THEME_KEY = 'Paragraph'
 
 export const paragraphStyles = {
   baseStyle: {
-    color: 'gray.300',
+    color: 'var(--text-color)',
     fontWeight: 500
   },
   sizes: {
@@ -15,13 +15,8 @@ export const paragraphStyles = {
   },
   variants: {
     regular: {
+      color: 'var(--gray-paragraph-variant-color)',
       fontWeight: 400
-    },
-    light: {
-      color: 'white.100'
-    },
-    dark: {
-      color: 'gray.300'
     }
   },
   defaultProps: {

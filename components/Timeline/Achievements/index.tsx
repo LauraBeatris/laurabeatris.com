@@ -65,6 +65,7 @@ export function Achievements ({ achievements }: AchievementsProps) {
                   <Paragraph
                     size='sm'
                     width='full'
+                    variant='regular'
                     textAlign='left'
                   >
                     {description}
