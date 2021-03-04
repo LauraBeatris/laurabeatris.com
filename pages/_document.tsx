@@ -1,4 +1,3 @@
-import { ColorMode, ColorModeScript } from '@chakra-ui/react'
 import Document, {
   Html,
   Head,
@@ -6,8 +5,10 @@ import Document, {
   NextScript
 } from 'next/document'
 
-import { colors } from 'styles/theme/colors'
-import { config } from 'styles/theme/config'
+import { FlashlessScript } from 'chakra-ui-flashless'
+
+import { theme } from 'styles/theme'
+import { colorModeVariables } from 'styles/theme/colorModeVariables'
 
 class MyDocument extends Document {
   render () {
@@ -28,16 +29,22 @@ class MyDocument extends Document {
           <link rel='icon' type='image/png' sizes='16x16' href='/favicons/favicon-16x16.png' />
           <meta name='application-name' content='&nbsp;' />
           <meta content='IE=edge' httpEquiv='X-UA-Compatible' />
-          <meta name='msapplication-TileColor' content={colors.white[100]} />
+          <meta name='msapplication-TileColor' content={theme.colors.white[100]} />
           <meta name='msapplication-TileImage' content='mstile-144x144.png' />
           <meta
             content='/favicons/browserconfig.xml'
             name='msapplication-config'
           />
-          <link rel='mask-icon' href='/favicons/safari-pinned-tab.svg' color={colors.white[100]} />
+          <link rel='mask-icon' href='/favicons/safari-pinned-tab.svg' color={theme.colors.white[100]} />
         </Head>
         <body>
-          <ColorModeScript />
+          <FlashlessScript
+            theme={theme}
+            // TODO - Export types from chakra-ui-flashless
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            customVariables={colorModeVariables}
+          />
           <Main />
           <NextScript />
         </body>

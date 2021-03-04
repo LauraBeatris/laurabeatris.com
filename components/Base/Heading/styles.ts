@@ -2,8 +2,8 @@ export const HEADING_THEME_KEY = 'Heading'
 
 export const headingStyles = {
   baseStyle: {
-    fontWeight: 'bold',
-    color: 'dark'
+    color: 'var(--text-color)',
+    fontWeight: 'bold'
   },
   sizes: {
     lg: {
@@ -17,14 +17,6 @@ export const headingStyles = {
     },
     xs: {
       fontSize: '1.2rem'
-    }
-  },
-  variants: {
-    light: {
-      color: 'white.100'
-    },
-    dark: {
-      color: 'dark'
     }
   },
   defaultProps: {

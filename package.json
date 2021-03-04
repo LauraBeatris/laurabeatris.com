@@ -16,6 +16,7 @@
     "@chakra-ui/react": "^1.1.5",
     "@emotion/react": "^11.1.4",
     "@emotion/styled": "^11.0.0",
+    "chakra-ui-flashless": "^0.0.8",
     "file-loader": "^6.2.0",
     "framer-motion": "^3.2.2-rc.1",
     "graphql": "^15.4.0",
