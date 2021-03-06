@@ -54,8 +54,6 @@ export default function Home ({
 
       <Paragraph variant='regular'>
         I'm a Software Engineer at  <HighlightLink href={links.yld}>YLD</HighlightLink> and Content Creator.
-        I run a <HighlightLink href={links.youtube}>Youtube Channel</HighlightLink>{' '}
-        and a <HighlightLink href={links.podcast}>Podcast</HighlightLink> about programming.
         Teaching and creating solutions are my favorite things in the world. <span role='img' aria-hidden='true'>🚀</span>
       </Paragraph>
 
