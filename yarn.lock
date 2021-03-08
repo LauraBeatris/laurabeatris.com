@@ -839,6 +839,14 @@
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.1.1.tgz#9daf5745156fd84b8e9889a2dc721f0c58e894aa"
   integrity sha512-CAEbWH7OIur6jEOzaai83jq3FmKmv4PmX1JYfs9IrYcGEVI/lyL1EXJGCj7eFVJ0bg5QR8LMxBlEtA+xKiLpFw==
 
+"@laurabeatris/chakra-ui-flashless@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@laurabeatris/chakra-ui-flashless/-/chakra-ui-flashless-0.0.9.tgz#6eaf51aefc005640590b9623a08e0f8c28f7a2b9"
+  integrity sha512-uPHWPulgIyeQ6E68bjDYvdWk/aBuWo+QQhPzqRPnny8lbtK3XLdl1OpPJTaJFY99gzStkgYV03zBVvfartPztw==
+  dependencies:
+    lodash.merge "^4.6.2"
+    outdent "^0.8.0"
+
 "@next/env@10.0.5":
   version "10.0.5"
   resolved "https://registry.yarnpkg.com/@next/env/-/env-10.0.5.tgz#446e59ee7a8d05061be784b24732c369653038ab"
@@ -1844,14 +1852,6 @@ caniuse-lite@^1.0.30001093, caniuse-lite@^1.0.30001113, caniuse-lite@^1.0.300011
   version "1.0.30001179"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001179.tgz#b0803883b4471a6c62066fb1752756f8afc699c8"
   integrity sha512-blMmO0QQujuUWZKyVrD1msR4WNDAqb/UPO1Sw2WWsQ7deoM5bJiicKnWJ1Y0NS/aGINSnKPIWBMw5luX+NDUCA==
-
-chakra-ui-flashless@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/chakra-ui-flashless/-/chakra-ui-flashless-0.0.8.tgz#51a69dbeca00b8620bfbedf9028c949981522564"
-  integrity sha512-VJT+El7a9JA5ikEMq0WkbEJpdyKWq2rh7sQxmwjeTx7VDt2unr5Xll5JAgRvj1ijHg1bqoEDh8Stav0JTfwcaQ==
-  dependencies:
-    lodash.merge "^4.6.2"
-    outdent "^0.8.0"
 
 chalk@2.4.2, chalk@^2.0.0, chalk@^2.4.2:
   version "2.4.2"
