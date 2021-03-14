@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 import { Container } from 'components/Layout/Container'
 import { GradientLine } from 'components/GradientLine'
+import { ToggleThemeButton } from 'components/ToggleThemeButton'
 
 import { HeaderNavigation } from './HeaderNavigation'
 
@@ -48,7 +49,7 @@ export function Header () {
 
         <HeaderNavigation />
 
-        {/* <ToggleThemeButton marginLeft={[2, null, 'unset']} /> */}
+        <ToggleThemeButton marginLeft={[2, null, 'unset']} />
       </Container>
     </Flex>
   )
