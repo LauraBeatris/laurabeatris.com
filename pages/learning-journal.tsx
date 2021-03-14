@@ -133,7 +133,7 @@ export default function LearningJournal ({
                                   </Link>
                                 </ListItem>
                               ))
-                            }
+                             }
                           </List>
                         </>
                         )
