@@ -1,5 +1,5 @@
 import { extendTheme } from '@chakra-ui/react'
-import { flashless } from 'chakra-ui-flashless'
+import { flashless } from '@laurabeatris/chakra-ui-flashless'
 
 import { colors } from './colors'
 import { fonts } from './fonts'
