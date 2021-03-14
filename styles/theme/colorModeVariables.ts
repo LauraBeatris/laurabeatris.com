@@ -1,8 +1,9 @@
 import hexToRgba from 'hex-to-rgba'
+import { Types } from '@laurabeatris/chakra-ui-flashless'
 
 import { colors } from './colors'
 
-export const colorModeVariables = {
+export const colorModeVariables: Types.Variables = {
   // '--variable-name': [lightVariant, [darkVariant, 0.5]]
   '--app-background-color': [colors.white['100'], colors.dark],
   '--header-background-color': [

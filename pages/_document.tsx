@@ -5,7 +5,7 @@ import Document, {
   NextScript
 } from 'next/document'
 
-import { FlashlessScript } from 'chakra-ui-flashless'
+import { FlashlessScript } from '@laurabeatris/chakra-ui-flashless'
 
 import { theme } from 'styles/theme'
 import { colorModeVariables } from 'styles/theme/colorModeVariables'
@@ -40,9 +40,6 @@ class MyDocument extends Document {
         <body>
           <FlashlessScript
             theme={theme}
-            // TODO - Export types from chakra-ui-flashless
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             customVariables={colorModeVariables}
           />
           <Main />

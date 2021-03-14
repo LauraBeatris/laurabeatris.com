@@ -1,5 +1,6 @@
-import { Button, ButtonProps, useColorMode } from '@chakra-ui/react'
+import { Button, ButtonProps } from '@chakra-ui/react'
 import useSound from 'use-sound'
+import { useColorMode } from '@laurabeatris/chakra-ui-flashless'
 
 import switchOnSound from 'public/sounds/switch-on.mp3'
 import switchOffSound from 'public/sounds/switch-off.mp3'
