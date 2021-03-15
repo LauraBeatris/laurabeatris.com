@@ -62,23 +62,21 @@ export function HeaderNavigation () {
                     : (<HamburgerIcon {...iconProps} />)
                 }
               </MenuButton>
-              <MenuList backgroundColor={menuBackgroundColor}>
+              <MenuList backgroundColor='var(--header-mobile-menu-color)'>
                 {
                   navigationItems.map(({ name, href }) => (
-                    <Link
+                    <MenuItem
                       key={name}
-                      href={href}
-                      activeColor='green.400'
-                      _hover={{ textDecoration: 'none', color: 'green.400' }}
+                      _focus={{ backgroundColor: 'none' }}
+                      _hover={{ backgroundColor: 'unset' }}
                     >
-                      <MenuItem
-                        key={name}
-                        _focus={{ backgroundColor: 'none' }}
-                        _hover={{ backgroundColor: 'unset' }}
+                      <Link
+                        href={href}
+                        _hover={{ textDecoration: 'none', color: 'green.400' }}
                       >
                         {name}
-                      </MenuItem>
-                    </Link>
+                      </Link>
+                    </MenuItem>
                   ))
                 }
               </MenuList>
