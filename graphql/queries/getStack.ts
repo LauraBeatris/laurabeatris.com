@@ -9,7 +9,6 @@ const GET_STACK_QUERY = gql`
   query GetStacks {
     stacks {
       id
-      framework
       categories
     }
   }
@@ -22,11 +21,9 @@ export async function getStack () {
 
   const transformedStacks = stacks.reduce(
     (accumulator, {
-      categories,
-      framework
+      categories
     }) => ({
-      categories: uniq(union(accumulator.categories, categories)),
-      frameworks: uniq(union(accumulator.frameworks, [framework]))
+      categories: uniq(union(accumulator.categories, categories))
     }), {})
 
   return transformedStacks as TransformedStack
