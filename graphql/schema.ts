@@ -56,3 +56,11 @@ export type LearningJournal = {
   curiosity?: Array<string>;
   programming?: Array<string>;
 }
+
+export type TransformedStack = {
+  languages: Array<string>,
+  libraries: Array<string>,
+  databases: Array<string>,
+  categories: Array<string>,
+  frameworks: Array<string>
+}
