@@ -3,9 +3,13 @@ import { gql } from 'graphql-request'
 import { graphQLClient } from 'config/graphQLClient'
 import { Project } from 'graphql/schema'
 
-const GET_PROJECTS_QUERY = gql`
-  query GetProjects {
-    projects {
+export const GET_PROJECTS_QUERY = gql`
+  query GetProjects($title: String = "") {
+    projects(where: {
+      OR: {
+        title_contains: $title
+      }
+    }) {
       id
       title
       liveUrl
@@ -27,9 +31,12 @@ const GET_PROJECTS_QUERY = gql`
   }
 `
 
-export async function getProjects () {
+export async function getProjects (queryData) {
+  const [, filters] = queryData.queryKey
+
   const { projects } = await graphQLClient.request(
-    GET_PROJECTS_QUERY
+    GET_PROJECTS_QUERY,
+    filters
   )
 
   return projects as Array<Project>
