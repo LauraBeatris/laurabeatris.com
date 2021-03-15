@@ -1,4 +1,4 @@
-import { InferGetStaticPropsType } from 'next'
+import { InferGetServerSidePropsType } from 'next'
 import { VStack } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
@@ -8,21 +8,21 @@ import { ProjectsList } from 'components/ProjectsList'
 import { Timeline } from 'components/Timeline'
 import { links } from 'constants/links'
 import { getDayOfWeek } from 'utils/getDayOfWeek'
-import { getProjects } from 'graphql/queries/getProjects'
 import { getTimelineList } from 'graphql/queries/getTimelineList'
+import { getStack } from 'graphql/queries/getStack'
 
 const now = new Date()
 const dayOfWeek = getDayOfWeek(now.getDate(), now.getMonth(), now.getFullYear())
 
-export async function getStaticProps () {
+export async function getServerSideProps () {
   try {
-    const projects = await getProjects()
     const timelineList = await getTimelineList()
+    const transformedStack = await getStack()
 
     return {
       props: {
-        projects,
-        timelineList
+        timelineList,
+        transformedStack
       }
     }
   } catch (error) {
@@ -36,9 +36,9 @@ export async function getStaticProps () {
 }
 
 export default function Home ({
-  projects,
-  timelineList
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+  timelineList,
+  transformedStack
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <VStack
       width='full'
@@ -57,7 +57,7 @@ export default function Home ({
         Teaching and creating solutions are my favorite things in the world. <span role='img' aria-hidden='true'>🚀</span>
       </Paragraph>
 
-      <ProjectsList projects={projects} />
+      <ProjectsList transformedStack={transformedStack} />
       <Timeline timelineList={timelineList} />
     </VStack>
   )
