@@ -1,24 +1,31 @@
-import { Flex, SimpleGrid, VStack } from '@chakra-ui/react'
+import { useState } from 'react'
+import { Flex, SimpleGrid, Stack, VStack } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
 
 import { Project } from 'components/Project'
 import { Heading } from 'components/Base/Heading'
 import { Popover } from 'components/Base/Popover'
 import { PaginationButton } from 'components/PaginationButton'
+import { ProjectFilters } from 'components/ProjectFilters'
 import { usePagination } from 'hooks/usePagination'
-
 import { Project as ProjectType } from 'graphql/schema'
+import { useProjects } from 'hooks/useProjects'
 
 import { ProjectsListProps } from './types'
 
 const popoverText = 'Click on the projects to see more details about it'
 
-export function ProjectsList ({ projects }: ProjectsListProps) {
+export function ProjectsList ({ transformedStack }: ProjectsListProps) {
+  const [title, setTitle] = useState('')
+  const { data: projects, isLoading } = useProjects({ title })
+
   const {
     data,
     hasMoreItems,
     handlePagination
   } = usePagination<ProjectType>({ list: projects })
+
+  const shouldShowPagination = !isLoading && projects?.length > 1
 
   return (
     <VStack
@@ -26,13 +33,23 @@ export function ProjectsList ({ projects }: ProjectsListProps) {
       spacing={5}
       alignItems='flex-start'
     >
-      <Heading as='h2' paddingTop={10}>
-        Projects
-        <Popover
-          popoverText={popoverText}
-          buttonContent={<InfoIcon boxSize={5} color='green.400' />}
-        />
-      </Heading>
+      <Stack
+        width='full'
+        paddingTop={10}
+        direction={['column', 'column', 'row']}
+        alignItems={['flex-start', 'flex-start', 'center']}
+        justifyContent='space-between'
+      >
+        <Heading as='h2'>
+          Projects
+          <Popover
+            popoverText={popoverText}
+            buttonContent={<InfoIcon boxSize={5} color='green.400' />}
+          />
+        </Heading>
+
+        <ProjectFilters setTitle={setTitle} transformedStack={transformedStack} />
+      </Stack>
 
       <SimpleGrid
         as='ul'
@@ -42,7 +59,7 @@ export function ProjectsList ({ projects }: ProjectsListProps) {
         columns={[1, null, 2]}
       >
         {
-          data.map(({
+          (data ?? []).map(({
             title,
             stack,
             liveUrl,
@@ -73,11 +90,15 @@ export function ProjectsList ({ projects }: ProjectsListProps) {
         }
       </SimpleGrid>
 
-      <PaginationButton
-        showMore={hasMoreItems}
-        onClick={handlePagination}
-        alignSelf='center'
-      />
+      {
+        shouldShowPagination && (
+          <PaginationButton
+            showMore={hasMoreItems}
+            onClick={handlePagination}
+            alignSelf='center'
+          />
+        )
+      }
     </VStack>
   )
 }

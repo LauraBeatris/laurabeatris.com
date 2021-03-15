@@ -1,5 +1,5 @@
-import { Project } from 'graphql/schema'
+import { TransformedStack } from 'graphql/schema'
 
 export type ProjectsListProps = {
-  projects: Array<Project>;
+  transformedStack: TransformedStack
 }
