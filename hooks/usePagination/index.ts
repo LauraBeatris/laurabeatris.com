@@ -28,7 +28,7 @@ export function usePagination<Timeline> ({
 
   const offset = page * itemsPerPage
   const data = (list ?? []).slice(0, offset)
-  const hasMoreItems = offset < list.length
+  const hasMoreItems = offset < list?.length
 
   const handlePagination = () => {
     if (!hasMoreItems) {
