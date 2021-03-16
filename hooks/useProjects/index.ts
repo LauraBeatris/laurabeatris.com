@@ -1,7 +1,11 @@
-import { useQuery } from 'react-query'
+import { useQuery, UseQueryOptions } from 'react-query'
 
-import { getProjects } from 'graphql/queries/getProjects'
+import { getProjects, GetProjectsQueryFilters } from 'graphql/queries/getProjects'
+import { Project } from 'graphql/schema'
 
-export function useProjects (filters) {
-  return useQuery(['projects', filters], getProjects)
+export function useProjects (
+  filters: GetProjectsQueryFilters,
+  options?: UseQueryOptions<Array<Project>>
+) {
+  return useQuery<Array<Project>>(['projects', filters], getProjects, options)
 }
