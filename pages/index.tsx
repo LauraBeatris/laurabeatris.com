@@ -10,6 +10,7 @@ import { links } from 'constants/links'
 import { getDayOfWeek } from 'utils/getDayOfWeek'
 import { getTimelineList } from 'graphql/queries/getTimelineList'
 import { getStack } from 'graphql/queries/getStack'
+import { getProjects } from 'graphql/queries/getProjects'
 
 const now = new Date()
 const dayOfWeek = getDayOfWeek(now.getDate(), now.getMonth(), now.getFullYear())
@@ -18,10 +19,12 @@ export async function getServerSideProps () {
   try {
     const timelineList = await getTimelineList()
     const transformedStack = await getStack()
+    const initialProjects = await getProjects()
 
     return {
       props: {
         timelineList,
+        initialProjects,
         transformedStack
       }
     }
@@ -37,6 +40,7 @@ export async function getServerSideProps () {
 
 export default function Home ({
   timelineList,
+  initialProjects,
   transformedStack
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
@@ -57,7 +61,10 @@ export default function Home ({
         Teaching and creating solutions are my favorite things in the world. <span role='img' aria-hidden='true'>🚀</span>
       </Paragraph>
 
-      <ProjectsList transformedStack={transformedStack} />
+      <ProjectsList
+        initialProjects={initialProjects}
+        transformedStack={transformedStack}
+      />
       <Timeline timelineList={timelineList} />
     </VStack>
   )

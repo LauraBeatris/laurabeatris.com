@@ -15,9 +15,14 @@ import { ProjectsListProps } from './types'
 
 const popoverText = 'Click on the projects to see more details about it'
 
-export function ProjectsList ({ transformedStack }: ProjectsListProps) {
+export function ProjectsList ({
+  initialProjects,
+  transformedStack
+}: ProjectsListProps) {
   const [title, setTitle] = useState('')
-  const { data: projects, isLoading } = useProjects({ title })
+  const { data: projects, isLoading } = useProjects({ title }, {
+    initialData: initialProjects
+  })
 
   const {
     data,

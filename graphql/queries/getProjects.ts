@@ -41,7 +41,7 @@ export type GetProjectsQueryKey = [
   filters: GetProjectsQueryFilters
 ]
 
-export async function getProjects (context: QueryFunctionContext<GetProjectsQueryKey>) {
+export async function getProjects (context?: QueryFunctionContext<GetProjectsQueryKey>) {
   const [, filters = {}] = context?.queryKey ?? []
 
   const { projects } = await graphQLClient.request(
