@@ -66,25 +66,27 @@ export function ProjectFilters ({
           Filters
         </MenuButton>
         <MenuList css={projectFiltersBackgroundCss}>
-          {filters.map(({ title, items }) => (
-            <MenuOptionGroup
-              key={title}
-              type='checkbox'
-              title={title}
-              bgClip='text'
-              bgGradient='linear(to-r, green.400, green.500, blue.100)'
-            >
-              {items.map((item) => (
-                <MenuItemOption
-                  key={item}
-                  css={projectFiltersColorCss}
-                  value={item}
-                >
-                  {item}
-                </MenuItemOption>
-              ))}
-            </MenuOptionGroup>
-          ))}
+          {
+            filters.map(({ title, items }) => (
+              <MenuOptionGroup
+                key={title}
+                type='checkbox'
+                title={title}
+                bgClip='text'
+                bgGradient='linear(to-r, green.400, green.500, blue.100)'
+              >
+                {items.map((item) => (
+                  <MenuItemOption
+                    key={item}
+                    css={projectFiltersColorCss}
+                    value={item}
+                  >
+                    {item}
+                  </MenuItemOption>
+                ))}
+              </MenuOptionGroup>
+            ))
+          }
         </MenuList>
       </Menu>
     </HStack>
