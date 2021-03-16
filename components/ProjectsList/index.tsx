@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Flex, SimpleGrid, Stack, VStack } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
+import { useDebounce } from 'use-debounce'
 
 import { Project } from 'components/Project'
 import { Heading } from 'components/Base/Heading'
@@ -20,7 +21,8 @@ export function ProjectsList ({
   transformedStack
 }: ProjectsListProps) {
   const [title, setTitle] = useState('')
-  const { data: projects, isLoading } = useProjects({ title }, {
+  const [debouncedTitle] = useDebounce(title, 500)
+  const { data: projects, isLoading } = useProjects({ title: debouncedTitle }, {
     initialData: initialProjects
   })
 
