@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Flex, SimpleGrid, Stack, VStack } from '@chakra-ui/react'
+import { Flex, HStack, SimpleGrid, Spinner, Stack, VStack } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
 import { useDebounce } from 'use-debounce'
 
@@ -22,7 +22,7 @@ export function ProjectsList ({
 }: ProjectsListProps) {
   const [title, setTitle] = useState('')
   const [debouncedTitle] = useDebounce(title, 500)
-  const { data: projects, isLoading } = useProjects({ title: debouncedTitle }, {
+  const { data: projects, isLoading, isFetching } = useProjects({ title: debouncedTitle }, {
     initialData: initialProjects
   })
 
@@ -55,7 +55,16 @@ export function ProjectsList ({
           />
         </Heading>
 
-        <ProjectFilters setTitle={setTitle} transformedStack={transformedStack} />
+        <Stack
+          spacing={4}
+          direction={['row-reverse', null, 'row']}
+          alignItems='center'
+        >
+          {
+            isFetching && <Spinner speed='2s' size='sm' />
+          }
+          <ProjectFilters setTitle={setTitle} transformedStack={transformedStack} />
+        </Stack>
       </Stack>
 
       <SimpleGrid
