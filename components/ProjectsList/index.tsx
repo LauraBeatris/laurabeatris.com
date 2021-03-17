@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Flex, HStack, SimpleGrid, Spinner, Stack, VStack } from '@chakra-ui/react'
+import { Flex, SimpleGrid, Spinner, Stack, VStack } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
 import { useDebounce } from 'use-debounce'
 
@@ -11,6 +11,7 @@ import { ProjectFilters } from 'components/ProjectFilters'
 import { usePagination } from 'hooks/usePagination'
 import { Project as ProjectType } from 'graphql/schema'
 import { useProjects } from 'hooks/useProjects'
+import { Paragraph } from 'components/Base/Paragraph'
 
 import { ProjectsListProps } from './types'
 
@@ -33,6 +34,7 @@ export function ProjectsList ({
   } = usePagination<ProjectType>({ list: projects })
 
   const shouldShowPagination = !isLoading && projects?.length > 1
+  const shouldShowEmptyListMessage = !isLoading && !isFetching && projects?.length === 0
 
   return (
     <VStack
@@ -59,6 +61,7 @@ export function ProjectsList ({
           spacing={4}
           direction={['row-reverse', null, 'row']}
           alignItems='center'
+          justifyContent={['flex-start', null, 'flex-end']}
         >
           {
             isFetching && <Spinner speed='2s' size='sm' />
@@ -105,6 +108,18 @@ export function ProjectsList ({
           })
         }
       </SimpleGrid>
+
+      {
+        shouldShowEmptyListMessage && (
+          <Paragraph
+            size='sm'
+            variant='regular'
+            alignSelf='center'
+          >
+            No projects were found
+          </Paragraph>
+        )
+      }
 
       {
         shouldShowPagination && (
