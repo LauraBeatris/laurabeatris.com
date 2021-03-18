@@ -15,7 +15,7 @@ import { Paragraph } from 'components/Base/Paragraph'
 
 import { ProjectsListProps } from './types'
 
-const PROJECTS_POPOVER_TEXT = <p>Click on the projects to see more details about it.<br /> There are filters to explore projects according to certain technologies, titles, or categories.</p>
+const PROJECTS_POPOVER_TEXT = <p>Click on the projects to see more details about it.<br /> Also, there are filters to explore projects according to certain titles, technologies, or categories.</p>
 
 const DEFAULT_DEBOUNCE_DELAY_MILLISECONDS = 500
 
