@@ -1,4 +1,4 @@
-import { Button, HStack, Input, InputGroup, InputLeftElement, Menu, MenuButton, MenuItemOption, MenuList, MenuOptionGroup } from '@chakra-ui/react'
+import { Button, HStack, Input, InputGroup, InputLeftElement, Menu, MenuButton, MenuItemOption, MenuList, MenuOptionGroup, Spinner } from '@chakra-ui/react'
 import useSound from 'use-sound'
 import { Search2Icon, SettingsIcon } from '@chakra-ui/icons'
 
@@ -15,18 +15,16 @@ const projectFiltersColorCss = {
 }
 
 export function ProjectFilters ({
-  setTitle,
+  isFetching,
   transformedStack,
+  onTitleFilterChange,
+  onCategoriesFilterChange,
   ...rest
 }: ProjectFiltersProps) {
   const [play] = useSound(menuOpenSound, { volume: 0.2 })
 
   const handleClick = () => {
     play()
-  }
-
-  const handleChange = (event) => {
-    setTitle(event.target.value)
   }
 
   const filters = [
@@ -37,15 +35,21 @@ export function ProjectFilters ({
   ]
 
   return (
-    <HStack spacing={2}>
+    <HStack spacing={2} alignItems='stretch' margin={0}>
       <InputGroup>
         <InputLeftElement pointerEvents='none'>
-          <Search2Icon color='gray.300' />
+          {
+            isFetching
+              ? (
+                <Spinner size='sm' speed='2s' />
+                )
+              : (<Search2Icon color='gray.300' />)
+            }
         </InputLeftElement>
         <Input
           type='text'
-          onChange={handleChange}
-          placeholder='Search by project title'
+          onChange={onTitleFilterChange}
+          placeholder='Project title or technology'
         />
       </InputGroup>
 
@@ -73,6 +77,7 @@ export function ProjectFilters ({
                 type='checkbox'
                 title={title}
                 bgClip='text'
+                onChange={onCategoriesFilterChange}
                 bgGradient='linear(to-r, green.400, green.500, blue.100)'
               >
                 {items.map((item) => (

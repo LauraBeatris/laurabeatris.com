@@ -1,10 +1,11 @@
+import { ChangeEvent } from 'react'
 import { MenuOptionGroupProps } from '@chakra-ui/menu'
-
-import { Dispatch, SetStateAction } from 'react'
 
 import { TransformedStack } from 'graphql/schema'
 
 export type ProjectFiltersProps = MenuOptionGroupProps & {
-  setTitle: Dispatch<SetStateAction<string>>;
+  isFetching: boolean;
   transformedStack: TransformedStack
+  onTitleFilterChange: (event: ChangeEvent) => void;
+  onCategoriesFilterChange: (categories: string | Array<string>) => void;
 }

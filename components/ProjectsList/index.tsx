@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Flex, SimpleGrid, Spinner, Stack, VStack } from '@chakra-ui/react'
+import { ChangeEvent, useCallback, useState } from 'react'
+import { Flex, SimpleGrid, Stack, VStack } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
 import { useDebounce } from 'use-debounce'
 
@@ -8,22 +8,31 @@ import { Heading } from 'components/Base/Heading'
 import { Popover } from 'components/Base/Popover'
 import { PaginationButton } from 'components/PaginationButton'
 import { ProjectFilters } from 'components/ProjectFilters'
-import { usePagination } from 'hooks/usePagination'
+import { PAGINATION_ITEMS_PER_PAGE, usePagination } from 'hooks/usePagination'
 import { Project as ProjectType } from 'graphql/schema'
 import { useProjects } from 'hooks/useProjects'
 import { Paragraph } from 'components/Base/Paragraph'
 
 import { ProjectsListProps } from './types'
 
-const popoverText = 'Click on the projects to see more details about it'
+const PROJECTS_POPOVER_TEXT = <p>Click on the projects to see more details about it.<br /> There are filters to explore projects according to certain technologies, titles, or categories.</p>
+
+const DEFAULT_DEBOUNCE_DELAY_MILLISECONDS = 500
 
 export function ProjectsList ({
   initialProjects,
   transformedStack
 }: ProjectsListProps) {
   const [title, setTitle] = useState('')
-  const [debouncedTitle] = useDebounce(title, 500)
-  const { data: projects, isLoading, isFetching } = useProjects({ title: debouncedTitle }, {
+  const [categories, setCategories] = useState<Array<string>>(undefined)
+
+  const [debouncedTitle] = useDebounce(title, DEFAULT_DEBOUNCE_DELAY_MILLISECONDS)
+  const [debouncedCategories] = useDebounce(categories, DEFAULT_DEBOUNCE_DELAY_MILLISECONDS)
+
+  const { data: projects, isLoading, isFetching } = useProjects({
+    title: debouncedTitle,
+    categories: debouncedCategories
+  }, {
     initialData: initialProjects
   })
 
@@ -33,7 +42,21 @@ export function ProjectsList ({
     handlePagination
   } = usePagination<ProjectType>({ list: projects })
 
-  const shouldShowPagination = !isLoading && projects?.length > 1
+  const handleTitleFilterChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value)
+  }, [])
+
+  const handleCategoriesFilterChange = useCallback((
+    categoryOrCategories: string | Array<string>
+  ) => {
+    setCategories(
+      Array.isArray(categoryOrCategories)
+        ? categoryOrCategories
+        : [categoryOrCategories]
+    )
+  }, [])
+
+  const shouldShowPagination = !isLoading && projects?.length > PAGINATION_ITEMS_PER_PAGE
   const shouldShowEmptyListMessage = !isLoading && !isFetching && projects?.length === 0
 
   return (
@@ -52,22 +75,17 @@ export function ProjectsList ({
         <Heading as='h2'>
           Projects
           <Popover
-            popoverText={popoverText}
+            popoverText={PROJECTS_POPOVER_TEXT}
             buttonContent={<InfoIcon boxSize={5} color='green.400' />}
           />
         </Heading>
 
-        <Stack
-          spacing={4}
-          direction={['row-reverse', null, 'row']}
-          alignItems='center'
-          justifyContent={['flex-start', null, 'flex-end']}
-        >
-          {
-            isFetching && <Spinner speed='2s' size='sm' />
-          }
-          <ProjectFilters setTitle={setTitle} transformedStack={transformedStack} />
-        </Stack>
+        <ProjectFilters
+          isFetching={isFetching}
+          transformedStack={transformedStack}
+          onTitleFilterChange={handleTitleFilterChange}
+          onCategoriesFilterChange={handleCategoriesFilterChange}
+        />
       </Stack>
 
       <SimpleGrid
@@ -100,8 +118,8 @@ export function ProjectsList ({
                   stack={stack}
                   liveUrl={liveUrl}
                   githubUrl={githubUrl}
-                  mainImageUrl={url}
                   description={description}
+                  mainImageUrl={url}
                 />
               </Flex>
             )
