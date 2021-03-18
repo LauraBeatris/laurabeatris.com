@@ -1,4 +1,4 @@
-import { Button, HStack, Input, InputGroup, InputLeftElement, Menu, MenuButton, MenuItemOption, MenuList, MenuOptionGroup, Spinner } from '@chakra-ui/react'
+import { Button, Flex, HStack, Input, InputGroup, InputLeftElement, Menu, MenuButton, MenuItemOption, MenuList, MenuOptionGroup, Spinner } from '@chakra-ui/react'
 import useSound from 'use-sound'
 import { Search2Icon, SettingsIcon } from '@chakra-ui/icons'
 
@@ -39,20 +39,26 @@ export function ProjectFilters ({
   ]
 
   return (
-    <HStack spacing={2} alignItems='center' margin={0}>
-      {
-        isFetching
-          ? (
-            <Spinner
-              size='sm'
-              display={['none', null, 'initial']}
-              marginRight={2}
-            />
-            )
-          : null
-      }
+    <HStack
+      flex={1}
+      spacing={2}
+      minWidth={['100%', '100%', 'initial']}
+      maxWidth={[null, null, '60%']}
+      alignItems='center'
+    >
+      <Flex
+        width='5%'
+        marginRight={2}
+        display={['none', null, 'initial']}
+      >
+        {
+          isFetching
+            ? <Spinner size='sm' />
+            : null
+        }
+      </Flex>
 
-      <InputGroup>
+      <InputGroup flex={1} css={{ margin: 0 }}>
         <InputLeftElement pointerEvents='none'>
           <Search2Icon color='gray.300' />
         </InputLeftElement>
@@ -67,11 +73,10 @@ export function ProjectFilters ({
         <MenuButton
           as={Button}
           color='white.100'
-          padding={5}
+          padding={3}
           display='flex'
           variant='unstyled'
           onClick={handleClick}
-          flexGrow={1}
           leftIcon={<SettingsIcon display='flex' />}
           bgGradient='linear(to-r, green.400, green.500, blue.100)'
           alignItems='center'
@@ -91,15 +96,17 @@ export function ProjectFilters ({
                 onChange={onCategoriesFilterChange}
                 bgGradient='linear(to-r, green.400, green.500, blue.100)'
               >
-                {items.map((item) => (
-                  <MenuItemOption
-                    key={item}
-                    css={projectFiltersColorCss}
-                    value={item}
-                  >
-                    {item}
-                  </MenuItemOption>
-                ))}
+                {
+                  items.map((item) => (
+                    <MenuItemOption
+                      key={item}
+                      css={projectFiltersColorCss}
+                      value={item}
+                    >
+                      {item}
+                    </MenuItemOption>
+                  ))
+                }
               </MenuOptionGroup>
             ))
           }
