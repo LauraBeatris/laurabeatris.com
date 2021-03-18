@@ -20,9 +20,11 @@ const paginationReducer = (page, action) => {
   }
 }
 
+export const PAGINATION_ITEMS_PER_PAGE = 4
+
 export function usePagination<Timeline> ({
   list,
-  itemsPerPage = 4
+  itemsPerPage = PAGINATION_ITEMS_PER_PAGE
 }: Pagination<Timeline>) {
   const [page, dispatch] = useReducer(paginationReducer, INITIAL_PAGE)
 
