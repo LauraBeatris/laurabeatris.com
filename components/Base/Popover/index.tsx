@@ -22,7 +22,7 @@ const popoverColorCss = {
   color: 'var(--popover-color)'
 }
 
-export function Popover ({ buttonContent, popoverText, ...rest }: PopoverProps) {
+export function Popover ({ buttonContent, popoverTextElement, ...rest }: PopoverProps) {
   const [play] = useSound(menuOpenSound, { volume: 0.2 })
 
   const handleClick = () => {
@@ -31,7 +31,7 @@ export function Popover ({ buttonContent, popoverText, ...rest }: PopoverProps) 
 
   return (
     <ChakraPopover
-      aria-label={popoverText}
+      aria-label={popoverTextElement}
       placement='top'
       {...rest}
     >
@@ -54,7 +54,7 @@ export function Popover ({ buttonContent, popoverText, ...rest }: PopoverProps) 
             css={popoverColorCss}
             size='sm'
           >
-            {popoverText}
+            {popoverTextElement}
           </Paragraph>
         </PopoverBody>
       </PopoverContent>

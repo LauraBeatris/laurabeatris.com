@@ -75,7 +75,7 @@ export function ProjectsList ({
         <Heading as='h2'>
           Projects
           <Popover
-            popoverText={PROJECTS_POPOVER_TEXT}
+            popoverTextElement={PROJECTS_POPOVER_TEXT}
             buttonContent={<InfoIcon boxSize={5} color='green.400' />}
           />
         </Heading>
