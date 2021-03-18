@@ -5,7 +5,10 @@ import { graphQLClient } from 'config/graphQLClient'
 import { Project } from 'graphql/schema'
 
 export const GET_PROJECTS_BY_STACKS = gql`
- query GetProjectsByStacks($title: String = "", $categories: [StackCategory!] = [Frontend, Backend, Package, Mobile]) {
+ query GetProjectsByStacks(
+   $title: String = "",
+   $categories: [StackCategory!] = [Frontend, Backend, Package, Mobile]
+  ) {
     stacks(where: {categories_contains_some: $categories}) {
       id
       projects(where: {title_contains: $title}) {

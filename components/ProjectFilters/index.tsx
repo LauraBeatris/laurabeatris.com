@@ -65,7 +65,7 @@ export function ProjectFilters ({
         <Input
           type='text'
           onChange={onTitleFilterChange}
-          placeholder='Project title or technology'
+          placeholder='Search for project title'
         />
       </InputGroup>
 
