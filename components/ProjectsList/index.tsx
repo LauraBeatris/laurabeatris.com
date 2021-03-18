@@ -1,5 +1,5 @@
 import { ChangeEvent, useCallback, useState } from 'react'
-import { Flex, SimpleGrid, Stack, VStack } from '@chakra-ui/react'
+import { Flex, SimpleGrid, Spinner, Stack, VStack } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
 import { useDebounce } from 'use-debounce'
 
@@ -29,7 +29,7 @@ export function ProjectsList ({
   const [debouncedTitle] = useDebounce(title, DEFAULT_DEBOUNCE_DELAY_MILLISECONDS)
   const [debouncedCategories] = useDebounce(categories, DEFAULT_DEBOUNCE_DELAY_MILLISECONDS)
 
-  const { data: projects, isLoading, isFetching } = useProjects({
+  const { data: projects, isFetching, isLoading } = useProjects({
     title: debouncedTitle,
     categories: debouncedCategories
   }, {
@@ -57,7 +57,7 @@ export function ProjectsList ({
   }, [])
 
   const shouldShowPagination = !isLoading && projects?.length > PAGINATION_ITEMS_PER_PAGE
-  const shouldShowEmptyListMessage = !isLoading && !isFetching && projects?.length === 0
+  const shouldShowEmptyListMessage = !isLoading && projects?.length === 0
 
   return (
     <VStack
@@ -72,16 +72,31 @@ export function ProjectsList ({
         alignItems={['flex-start', 'flex-start', 'center']}
         justifyContent='space-between'
       >
-        <Heading as='h2'>
+        <Heading
+          as='h2'
+          display='flex'
+          alignItems='center'
+        >
           Projects
           <Popover
             popoverTextElement={PROJECTS_POPOVER_TEXT}
             buttonContent={<InfoIcon boxSize={5} color='green.400' />}
           />
+
+          {
+            isFetching
+              ? (
+                <Spinner
+                  size='sm'
+                  display={['initial', null, 'none']}
+                  marginLeft={4}
+                />
+                )
+              : null
+          }
         </Heading>
 
         <ProjectFilters
-          isFetching={isFetching}
           transformedStack={transformedStack}
           onTitleFilterChange={handleTitleFilterChange}
           onCategoriesFilterChange={handleCategoriesFilterChange}

@@ -2,7 +2,11 @@ import { Button, HStack, Input, InputGroup, InputLeftElement, Menu, MenuButton, 
 import useSound from 'use-sound'
 import { Search2Icon, SettingsIcon } from '@chakra-ui/icons'
 
+import { useIsFetching } from 'react-query'
+
 import menuOpenSound from 'public/sounds/menu-open.mp3'
+
+import { GET_PROJECTS_QUERY_KEY } from 'hooks/useProjects'
 
 import { ProjectFiltersProps } from './types'
 
@@ -15,13 +19,13 @@ const projectFiltersColorCss = {
 }
 
 export function ProjectFilters ({
-  isFetching,
   transformedStack,
   onTitleFilterChange,
   onCategoriesFilterChange,
   ...rest
 }: ProjectFiltersProps) {
   const [play] = useSound(menuOpenSound, { volume: 0.2 })
+  const isFetching = useIsFetching([GET_PROJECTS_QUERY_KEY])
 
   const handleClick = () => {
     play()
@@ -35,16 +39,22 @@ export function ProjectFilters ({
   ]
 
   return (
-    <HStack spacing={2} alignItems='stretch' margin={0}>
+    <HStack spacing={2} alignItems='center' margin={0}>
+      {
+        isFetching
+          ? (
+            <Spinner
+              size='sm'
+              display={['none', null, 'initial']}
+              marginRight={2}
+            />
+            )
+          : null
+      }
+
       <InputGroup>
         <InputLeftElement pointerEvents='none'>
-          {
-            isFetching
-              ? (
-                <Spinner size='sm' speed='2s' />
-                )
-              : (<Search2Icon color='gray.300' />)
-            }
+          <Search2Icon color='gray.300' />
         </InputLeftElement>
         <Input
           type='text'
@@ -69,6 +79,7 @@ export function ProjectFilters ({
         >
           Filters
         </MenuButton>
+
         <MenuList css={projectFiltersBackgroundCss}>
           {
             filters.map(({ title, items }) => (
