@@ -72,16 +72,14 @@ export function ProjectsList ({
         alignItems={['flex-start', 'flex-start', 'center']}
         justifyContent='space-between'
       >
-        <Heading
-          as='h2'
-          display='flex'
-          alignItems='center'
-        >
-          Projects
-          <Popover
-            popoverTextElement={PROJECTS_POPOVER_TEXT}
-            buttonContent={<InfoIcon boxSize={5} color='green.400' />}
-          />
+        <Stack alignItems='center'>
+          <Heading as='h2'>
+            Projects
+            <Popover
+              popoverTextElement={PROJECTS_POPOVER_TEXT}
+              buttonContent={<InfoIcon boxSize={5} color='green.400' />}
+            />
+          </Heading>
 
           {
             isFetching
@@ -93,8 +91,8 @@ export function ProjectsList ({
                 />
                 )
               : null
-          }
-        </Heading>
+            }
+        </Stack>
 
         <ProjectFilters
           transformedStack={transformedStack}
