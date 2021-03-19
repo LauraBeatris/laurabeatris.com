@@ -18,6 +18,14 @@ const projectFiltersColorCss = {
   color: 'var(--project-filters-color)'
 }
 
+const inputGroupCss = {
+  margin: '0 !important'
+}
+
+const inputCss = {
+  '&:hover': { borderColor: 'initial' }
+}
+
 export function ProjectFilters ({
   transformedStack,
   onTitleFilterChange,
@@ -58,11 +66,12 @@ export function ProjectFilters ({
         }
       </Flex>
 
-      <InputGroup flex={1} css={{ margin: 0 }}>
+      <InputGroup flex={1} css={inputGroupCss}>
         <InputLeftElement pointerEvents='none'>
           <Search2Icon color='gray.300' />
         </InputLeftElement>
         <Input
+          css={inputCss}
           type='text'
           onChange={onTitleFilterChange}
           placeholder='Search for project title'
