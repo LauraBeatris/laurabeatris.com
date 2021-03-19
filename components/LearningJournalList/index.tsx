@@ -1,4 +1,4 @@
-import { List, ListIcon, ListItem } from '@chakra-ui/react'
+import { List, ListItem } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
 
