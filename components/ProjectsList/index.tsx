@@ -49,6 +49,22 @@ export function ProjectsList ({
   const handleCategoriesFilterChange = useCallback((
     categoryOrCategories: string | Array<string>
   ) => {
+    const shouldResetCategories = (
+      Array.isArray(categoryOrCategories) &&
+      categoryOrCategories.length === 0
+    )
+
+    if (shouldResetCategories) {
+      setCategories([
+        'Backend',
+        'Frontend',
+        'Package',
+        'Mobile'
+      ])
+
+      return
+    }
+
     setCategories(
       Array.isArray(categoryOrCategories)
         ? categoryOrCategories
