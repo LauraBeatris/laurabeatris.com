@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { ChangeEvent, useCallback, useState } from 'react'
 import { Flex, SimpleGrid, Spinner, Stack, VStack } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
@@ -10,7 +9,7 @@ import { Popover } from 'components/Base/Popover'
 import { PaginationButton } from 'components/PaginationButton'
 import { ProjectFilters } from 'components/ProjectFilters'
 import { PAGINATION_ITEMS_PER_PAGE, usePagination } from 'hooks/usePagination'
-import { Project as ProjectType, StackCategory } from 'graphql/schema'
+import { Project as ProjectType, StackCategory, StackCategoryEnum } from 'graphql/schema'
 import { useProjects } from 'hooks/useProjects'
 import { Paragraph } from 'components/Base/Paragraph'
 
@@ -21,10 +20,10 @@ const PROJECTS_POPOVER_TEXT = <p>Click on the projects to see more details about
 const DEFAULT_DEBOUNCE_DELAY_MILLISECONDS = 500
 
 const INITIAL_STACK_CATEGORIES = [
-  StackCategory.Backend,
-  StackCategory.Frontend,
-  StackCategory.Package,
-  StackCategory.Mobile
+  StackCategoryEnum.Backend,
+  StackCategoryEnum.Frontend,
+  StackCategoryEnum.Package,
+  StackCategoryEnum.Mobile
 ]
 
 export function ProjectsList ({
@@ -118,7 +117,6 @@ export function ProjectsList ({
           initialCategories={INITIAL_STACK_CATEGORIES}
           transformedStack={transformedStack}
           onTitleFilterChange={handleTitleFilterChange}
-          // @ts-ignore
           onCategoriesFilterChange={handleCategoriesFilterChange}
         />
       </Stack>

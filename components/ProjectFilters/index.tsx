@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Button, Flex, HStack, Input, InputGroup, InputLeftElement, Menu, MenuButton, MenuItemOption, MenuList, MenuOptionGroup, Spinner } from '@chakra-ui/react'
 import useSound from 'use-sound'
 import { Search2Icon, SettingsIcon } from '@chakra-ui/icons'
@@ -106,7 +105,6 @@ export function ProjectFilters ({
                 type='checkbox'
                 onChange={onCategoriesFilterChange}
                 bgGradient='linear(to-r, green.400, green.500, blue.100)'
-                // @ts-ignore
                 defaultValue={initialCategories}
               >
                 {

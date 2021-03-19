@@ -65,9 +65,11 @@ export type TransformedStack = {
   frameworks: Array<string>
 }
 
-export enum StackCategory {
-  'Backend',
-  'Mobile',
-  'Package',
-  'Frontend',
-}
+export const StackCategoryEnum = {
+  Backend: 'Backend',
+  Mobile: 'Mobile',
+  Package: 'Package',
+  Frontend: 'Frontend'
+} as const
+
+export type StackCategory = keyof typeof StackCategoryEnum;

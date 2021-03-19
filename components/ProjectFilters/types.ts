@@ -7,5 +7,5 @@ export type ProjectFiltersProps = MenuOptionGroupProps & {
   transformedStack: TransformedStack
   initialCategories: StackCategory[];
   onTitleFilterChange: (event: ChangeEvent) => void;
-  onCategoriesFilterChange: (categories: string | Array<string>) => void;
+  onCategoriesFilterChange: (categories: StackCategory | Array<StackCategory>) => void;
 }
