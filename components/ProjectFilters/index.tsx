@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Button, Flex, HStack, Input, InputGroup, InputLeftElement, Menu, MenuButton, MenuItemOption, MenuList, MenuOptionGroup, Spinner } from '@chakra-ui/react'
 import useSound from 'use-sound'
 import { Search2Icon, SettingsIcon } from '@chakra-ui/icons'
@@ -28,6 +29,7 @@ const inputCss = {
 
 export function ProjectFilters ({
   transformedStack,
+  initialCategories,
   onTitleFilterChange,
   onCategoriesFilterChange,
   ...rest
@@ -99,11 +101,13 @@ export function ProjectFilters ({
             filters.map(({ title, items }) => (
               <MenuOptionGroup
                 key={title}
-                type='checkbox'
                 title={title}
                 bgClip='text'
+                type='checkbox'
                 onChange={onCategoriesFilterChange}
                 bgGradient='linear(to-r, green.400, green.500, blue.100)'
+                // @ts-ignore
+                defaultValue={initialCategories}
               >
                 {
                   items.map((item) => (

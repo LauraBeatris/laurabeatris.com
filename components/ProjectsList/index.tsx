@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { ChangeEvent, useCallback, useState } from 'react'
 import { Flex, SimpleGrid, Spinner, Stack, VStack } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
@@ -9,7 +10,7 @@ import { Popover } from 'components/Base/Popover'
 import { PaginationButton } from 'components/PaginationButton'
 import { ProjectFilters } from 'components/ProjectFilters'
 import { PAGINATION_ITEMS_PER_PAGE, usePagination } from 'hooks/usePagination'
-import { Project as ProjectType } from 'graphql/schema'
+import { Project as ProjectType, StackCategory } from 'graphql/schema'
 import { useProjects } from 'hooks/useProjects'
 import { Paragraph } from 'components/Base/Paragraph'
 
@@ -19,12 +20,19 @@ const PROJECTS_POPOVER_TEXT = <p>Click on the projects to see more details about
 
 const DEFAULT_DEBOUNCE_DELAY_MILLISECONDS = 500
 
+const INITIAL_STACK_CATEGORIES = [
+  StackCategory.Backend,
+  StackCategory.Frontend,
+  StackCategory.Package,
+  StackCategory.Mobile
+]
+
 export function ProjectsList ({
   initialProjects,
   transformedStack
 }: ProjectsListProps) {
   const [title, setTitle] = useState('')
-  const [categories, setCategories] = useState<Array<string>>(undefined)
+  const [categories, setCategories] = useState(INITIAL_STACK_CATEGORIES)
 
   const [debouncedTitle] = useDebounce(title, DEFAULT_DEBOUNCE_DELAY_MILLISECONDS)
   const [debouncedCategories] = useDebounce(categories, DEFAULT_DEBOUNCE_DELAY_MILLISECONDS)
@@ -47,7 +55,7 @@ export function ProjectsList ({
   }, [])
 
   const handleCategoriesFilterChange = useCallback((
-    categoryOrCategories: string | Array<string>
+    categoryOrCategories: StackCategory | Array<StackCategory>
   ) => {
     const shouldResetCategories = (
       Array.isArray(categoryOrCategories) &&
@@ -55,12 +63,7 @@ export function ProjectsList ({
     )
 
     if (shouldResetCategories) {
-      setCategories([
-        'Backend',
-        'Frontend',
-        'Package',
-        'Mobile'
-      ])
+      setCategories(INITIAL_STACK_CATEGORIES)
 
       return
     }
@@ -112,8 +115,10 @@ export function ProjectsList ({
         </Stack>
 
         <ProjectFilters
+          initialCategories={INITIAL_STACK_CATEGORIES}
           transformedStack={transformedStack}
           onTitleFilterChange={handleTitleFilterChange}
+          // @ts-ignore
           onCategoriesFilterChange={handleCategoriesFilterChange}
         />
       </Stack>

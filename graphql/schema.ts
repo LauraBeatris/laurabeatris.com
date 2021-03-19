@@ -64,3 +64,10 @@ export type TransformedStack = {
   categories: Array<string>,
   frameworks: Array<string>
 }
+
+export enum StackCategory {
+  'Backend',
+  'Mobile',
+  'Package',
+  'Frontend',
+}

@@ -2,7 +2,7 @@ import { gql } from 'graphql-request'
 import { QueryFunctionContext } from 'react-query'
 
 import { graphQLClient } from 'config/graphQLClient'
-import { Project } from 'graphql/schema'
+import { Project, StackCategory } from 'graphql/schema'
 
 export const GET_PROJECTS_BY_STACKS = gql`
  query GetProjectsByStacks(
@@ -36,7 +36,7 @@ export const GET_PROJECTS_BY_STACKS = gql`
 
 export type GetProjectsQueryFilters = {
   title: string;
-  categories: Array<string>;
+  categories: Array<StackCategory>;
 }
 
 export type GetProjectsQueryKey = [
