@@ -65,11 +65,15 @@ export function HeaderNavigation () {
                   navigationItems.map(({ name, href }) => (
                     <MenuItem
                       key={name}
+                      padding={0}
                       _focus={{ backgroundColor: 'none' }}
                       _hover={{ backgroundColor: 'unset' }}
                     >
                       <Link
+                        flex={1}
                         href={href}
+                        paddingX={4}
+                        paddingY={2}
                         _hover={{ textDecoration: 'none', color: 'green.400' }}
                       >
                         {name}
