@@ -22,11 +22,15 @@
     "graphql": "^15.4.0",
     "graphql-request": "^3.4.0",
     "hex-to-rgba": "^2.0.1",
+    "lodash.union": "^4.6.0",
+    "lodash.uniq": "^4.5.0",
     "next": "10.0.5",
     "next-seo": "^4.17.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-icons": "^4.1.0",
+    "react-query": "^3.12.2",
+    "use-debounce": "^6.0.0",
     "use-sound": "^2.0.1"
   },
   "devDependencies": {

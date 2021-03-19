@@ -1,6 +1,6 @@
 import { PopoverProps as ChakraPopoverProps } from '@chakra-ui/react'
 
 export type PopoverProps = ChakraPopoverProps & {
-  popoverText: string;
+  popoverTextElement: JSX.Element;
   buttonContent: React.ReactNode,
 }

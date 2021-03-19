@@ -20,15 +20,17 @@ const paginationReducer = (page, action) => {
   }
 }
 
+export const PAGINATION_ITEMS_PER_PAGE = 4
+
 export function usePagination<Timeline> ({
   list,
-  itemsPerPage = 4
+  itemsPerPage = PAGINATION_ITEMS_PER_PAGE
 }: Pagination<Timeline>) {
   const [page, dispatch] = useReducer(paginationReducer, INITIAL_PAGE)
 
   const offset = page * itemsPerPage
   const data = (list ?? []).slice(0, offset)
-  const hasMoreItems = offset < list.length
+  const hasMoreItems = offset < list?.length
 
   const handlePagination = () => {
     if (!hasMoreItems) {

@@ -15,5 +15,7 @@ export const colorModeVariables: Types.Variables = {
   '--popover-background-color': [colors.dark, colors.white['100']],
   '--gray-paragraph-variant-color': [colors.gray['300'], colors.white['100']],
   '--header-active-link-color': [colors.dark, colors.green['400']],
-  '--header-mobile-menu-color': [colors.white['100'], colors.dark]
+  '--header-mobile-menu-color': [colors.white['100'], colors.dark],
+  '--project-filters-background-color': [colors.dark, colors.white['100']],
+  '--project-filters-color': [colors.white['100'], colors.dark]
 }

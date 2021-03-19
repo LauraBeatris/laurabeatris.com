@@ -23,8 +23,6 @@ export function HeaderNavigation () {
     play()
   }
 
-  const menuBackgroundColor = useColorModeValue('white.100', 'dark')
-
   return (
     <>
       <HStack

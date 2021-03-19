@@ -1,4 +1,4 @@
-import { Heading as ChakraHeading, HeadingProps, useColorModeValue, useStyleConfig } from '@chakra-ui/react'
+import { Heading as ChakraHeading, HeadingProps, useStyleConfig } from '@chakra-ui/react'
 
 import { HEADING_THEME_KEY } from './styles'
 

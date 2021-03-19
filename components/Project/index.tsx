@@ -130,14 +130,14 @@ export function Project ({
 
               <Wrap spacing={1} marginBottom='auto'>
                 {
-                categories.map((technology) => (
-                  <WrapItem key={technology}>
-                    <Badge variant='subtle' colorScheme='green'>
-                      {technology}
-                    </Badge>
-                  </WrapItem>
-                ))
-              }
+                  categories.map((technology) => (
+                    <WrapItem key={technology}>
+                      <Badge variant='subtle' colorScheme='green'>
+                        {technology}
+                      </Badge>
+                    </WrapItem>
+                  ))
+                }
               </Wrap>
             </Stack>
 

@@ -1,36 +1,61 @@
 import { gql } from 'graphql-request'
+import { QueryFunctionContext } from 'react-query'
 
 import { graphQLClient } from 'config/graphQLClient'
-import { Project } from 'graphql/schema'
+import { Project, StackCategory } from 'graphql/schema'
 
-const GET_PROJECTS_QUERY = gql`
-  query GetProjects {
-    projects {
+export const GET_PROJECTS_BY_STACKS = gql`
+ query GetProjectsByStacks(
+   $title: String = "",
+   $categories: [StackCategory!] = [Frontend, Backend, Package, Mobile]
+  ) {
+    stacks(where: {categories_contains_some: $categories}) {
       id
-      title
-      liveUrl
-      githubUrl
-      description
-      mainImage {
+      projects(where: {title_contains: $title}) {
         id
-        url
-      }
-      stack {
-        id
-        framework
-        language
-        libraries
-        databases
-        categories
+        title
+        liveUrl
+        githubUrl
+        description
+        stack {
+          id
+          framework
+          language
+          libraries
+          databases
+          categories
+        }
+        mainImage {
+          id
+          url
+        }
       }
     }
   }
 `
 
-export async function getProjects () {
-  const { projects } = await graphQLClient.request(
-    GET_PROJECTS_QUERY
+export type GetProjectsQueryFilters = {
+  title: string;
+  categories: Array<StackCategory>;
+}
+
+export type GetProjectsQueryKey = [
+  queryIdentifier: string,
+  filters: GetProjectsQueryFilters
+]
+
+export async function getProjects (context?: QueryFunctionContext<GetProjectsQueryKey>) {
+  const [, filters = {}] = context?.queryKey ?? []
+
+  const { stacks } = await graphQLClient.request(
+    GET_PROJECTS_BY_STACKS,
+    filters
   )
+
+  const projects = stacks.reduce((currentProjects, { projects }) => [
+    ...currentProjects,
+    ...projects
+  ], [])
 
   return projects as Array<Project>
 }

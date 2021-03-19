@@ -56,3 +56,20 @@ export type LearningJournal = {
   curiosity?: Array<string>;
   programming?: Array<string>;
 }
+
+export type TransformedStack = {
+  languages: Array<string>,
+  libraries: Array<string>,
+  databases: Array<string>,
+  categories: Array<string>,
+  frameworks: Array<string>
+}
+
+export const StackCategoryEnum = {
+  Backend: 'Backend',
+  Mobile: 'Mobile',
+  Package: 'Package',
+  Frontend: 'Frontend'
+} as const
+
+export type StackCategory = keyof typeof StackCategoryEnum;
