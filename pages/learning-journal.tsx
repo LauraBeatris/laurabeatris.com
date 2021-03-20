@@ -65,6 +65,7 @@ export default function LearningJournal ({
       </Paragraph>
 
       <HydrationSkeleton
+        width='full'
         endColor='transparent'
         startColor='transparent'
       >
