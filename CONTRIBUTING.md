@@ -10,10 +10,6 @@ If you encounter bugs, please **do** open an issue describing the bug and includ
 
 If you have an idea for an enhancement, go ahead and share it via an issue, but please don't expect a timely response.
 
-## Code Style
-
-[Husky](https://github.com/typicode/husky) execute scrips according to git hooks in order to test if a developer is following the [ESLint Lint Rules](https://github.com/LauraBeatris/floripa-mais/blob/master/.eslintrc.js).
-
 ## Bug reports
 
 If you encounter a problem with this project, please open an issue. Be sure to include:
