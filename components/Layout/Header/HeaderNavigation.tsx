@@ -5,8 +5,7 @@ import {
   HStack,
   MenuList,
   MenuItem,
-  MenuButton,
-  useColorModeValue
+  MenuButton
 } from '@chakra-ui/react'
 import useSound from 'use-sound'
 
