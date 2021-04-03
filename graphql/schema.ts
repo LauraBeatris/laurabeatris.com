@@ -48,9 +48,11 @@ export type Resource = {
   label: string;
 }
 
+type ISOStringDate = string;
+
 export type LearningJournal = {
   id: string;
-  date: Date;
+  date: ISOStringDate;
   work: Array<string>;
   resources?: Array<Resource>;
   curiosity?: Array<string>;
