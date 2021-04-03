@@ -20,7 +20,7 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     'react/prop-types': 'off',
     '@typescript-eslint/no-var-requires': 'off',
-    'no-console': 1,
+    'no-console': ['error', { allow: ['warn', 'error'] }],
     'import/order': ['error', {
       groups: ['builtin', 'external', 'internal'],
       'newlines-between': 'always-and-inside-groups'
