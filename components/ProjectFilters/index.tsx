@@ -1,12 +1,11 @@
 import { Button, Flex, HStack, Input, InputGroup, InputLeftElement, Menu, MenuButton, MenuItemOption, MenuList, MenuOptionGroup, Spinner } from '@chakra-ui/react'
-import useSound from 'use-sound'
 import { Search2Icon, SettingsIcon } from '@chakra-ui/icons'
-
 import { useIsFetching } from 'react-query'
+import useSound from 'use-sound'
 
 import menuOpenSound from 'public/sounds/menu-open.mp3'
-
 import { GET_PROJECTS_QUERY_KEY } from 'hooks/useProjects'
+import { INITIAL_STACK_CATEGORIES } from 'components/ProjectsList'
 
 import { ProjectFiltersProps } from './types'
 
@@ -27,10 +26,10 @@ const inputCss = {
 }
 
 export function ProjectFilters ({
+  stackCategories,
   transformedStack,
-  initialCategories,
-  onTitleFilterChange,
-  onCategoriesFilterChange,
+  onTitleInputChange,
+  onStackCategoryOptionsChange,
   ...rest
 }: ProjectFiltersProps) {
   const [play] = useSound(menuOpenSound, { volume: 0.2 })
@@ -74,7 +73,7 @@ export function ProjectFilters ({
         <Input
           css={inputCss}
           type='text'
-          onChange={onTitleFilterChange}
+          onChange={onTitleInputChange}
           placeholder='Search for project title'
         />
       </InputGroup>
@@ -103,9 +102,10 @@ export function ProjectFilters ({
                 title={title}
                 bgClip='text'
                 type='checkbox'
-                onChange={onCategoriesFilterChange}
+                onChange={onStackCategoryOptionsChange}
                 bgGradient='linear(to-r, green.400, green.500, blue.100)'
-                defaultValue={initialCategories}
+                defaultValue={INITIAL_STACK_CATEGORIES}
+                value={stackCategories}
               >
                 {
                   items.map((item) => (

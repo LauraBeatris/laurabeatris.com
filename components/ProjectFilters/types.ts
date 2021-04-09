@@ -4,8 +4,8 @@ import { MenuOptionGroupProps } from '@chakra-ui/menu'
 import { StackCategory, TransformedStack } from 'graphql/schema'
 
 export type ProjectFiltersProps = MenuOptionGroupProps & {
+  stackCategories: StackCategory[],
   transformedStack: TransformedStack
-  initialCategories: StackCategory[];
-  onTitleFilterChange: (event: ChangeEvent) => void;
-  onCategoriesFilterChange: (categories: StackCategory | Array<StackCategory>) => void;
+  onTitleInputChange: (event: ChangeEvent) => void;
+  onStackCategoryOptionsChange: (categories: StackCategory | Array<StackCategory>) => void;
 }

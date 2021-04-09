@@ -19,7 +19,7 @@ const PROJECTS_POPOVER_TEXT = <p>Click on the projects to see more details about
 
 const DEFAULT_DEBOUNCE_DELAY_MILLISECONDS = 500
 
-const INITIAL_STACK_CATEGORIES = [
+export const INITIAL_STACK_CATEGORIES = [
   StackCategoryEnum.Backend,
   StackCategoryEnum.Frontend,
   StackCategoryEnum.Package,
@@ -31,14 +31,14 @@ export function ProjectsList ({
   transformedStack
 }: ProjectsListProps) {
   const [title, setTitle] = useState('')
-  const [categories, setCategories] = useState(INITIAL_STACK_CATEGORIES)
+  const [stackCategories, setStackCategories] = useState(INITIAL_STACK_CATEGORIES)
 
   const [debouncedTitle] = useDebounce(title, DEFAULT_DEBOUNCE_DELAY_MILLISECONDS)
-  const [debouncedCategories] = useDebounce(categories, DEFAULT_DEBOUNCE_DELAY_MILLISECONDS)
+  const [debouncedStackCategories] = useDebounce(stackCategories, DEFAULT_DEBOUNCE_DELAY_MILLISECONDS)
 
   const { data: projects, isFetching, isLoading } = useProjects({
     title: debouncedTitle,
-    categories: debouncedCategories
+    categories: debouncedStackCategories
   }, {
     initialData: initialProjects
   })
@@ -49,25 +49,25 @@ export function ProjectsList ({
     handlePagination
   } = usePagination<ProjectType>({ list: projects })
 
-  const handleTitleFilterChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+  const handleTitleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value)
   }, [])
 
-  const handleCategoriesFilterChange = useCallback((
+  const handleStackCategoryOptionsChange = useCallback((
     categoryOrCategories: StackCategory | Array<StackCategory>
   ) => {
-    const shouldResetCategories = (
+    const shouldResetStackCategories = (
       Array.isArray(categoryOrCategories) &&
       categoryOrCategories.length === 0
     )
 
-    if (shouldResetCategories) {
-      setCategories(INITIAL_STACK_CATEGORIES)
+    if (shouldResetStackCategories) {
+      setStackCategories(INITIAL_STACK_CATEGORIES)
 
       return
     }
 
-    setCategories(
+    setStackCategories(
       Array.isArray(categoryOrCategories)
         ? categoryOrCategories
         : [categoryOrCategories]
@@ -114,10 +114,10 @@ export function ProjectsList ({
         </Stack>
 
         <ProjectFilters
-          initialCategories={INITIAL_STACK_CATEGORIES}
+          stackCategories={stackCategories}
           transformedStack={transformedStack}
-          onTitleFilterChange={handleTitleFilterChange}
-          onCategoriesFilterChange={handleCategoriesFilterChange}
+          onTitleInputChange={handleTitleInputChange}
+          onStackCategoryOptionsChange={handleStackCategoryOptionsChange}
         />
       </Stack>
 
