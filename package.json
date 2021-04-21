@@ -24,6 +24,7 @@
     "hex-to-rgba": "^2.0.1",
     "lodash.union": "^4.6.0",
     "lodash.uniq": "^4.5.0",
+    "luxon": "^1.26.0",
     "next": "10.0.5",
     "next-seo": "^4.17.0",
     "react": "17.0.1",

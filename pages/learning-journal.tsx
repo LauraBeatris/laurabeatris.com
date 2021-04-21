@@ -1,6 +1,7 @@
 import { InferGetStaticPropsType } from 'next'
 import { Link, List, ListIcon, ListItem, Text, VStack } from '@chakra-ui/react'
 import { LinkIcon } from '@chakra-ui/icons'
+import { DateTime } from 'luxon'
 
 import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
@@ -39,7 +40,8 @@ export default function LearningJournal ({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const formattedLearningJournals = learningJournals.map(({ date, ...rest }) => ({
     ...rest,
-    dateTitle: new Date(date.replace('-', '/')).toDateString()
+    dateTitle: DateTime.fromISO('2014-08-06T13:07:04.054')
+      .toFormat('DD')
   }))
 
   const {
