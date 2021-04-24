@@ -40,7 +40,7 @@ export default function LearningJournal ({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const formattedLearningJournals = learningJournals.map(({ date, ...rest }) => ({
     ...rest,
-    dateTitle: DateTime.fromISO('2014-08-06T13:07:04.054')
+    dateTitle: DateTime.fromISO(date)
       .toFormat('DD')
   }))
 
