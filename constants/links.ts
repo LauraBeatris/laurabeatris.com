@@ -4,5 +4,6 @@ export const links = {
   youtube: 'https://www.youtube.com/c/LauraBeatris',
   linkedin: 'https://www.linkedin.com/in/laurabeatris/',
   podcast: 'https://anchor.fm/usepodcast',
-  github: 'https://github.com/LauraBeatris'
+  github: 'https://github.com/LauraBeatris',
+  blog: 'https://dev.to/laurabeatris'
 }

@@ -31,9 +31,9 @@ export function HeaderNavigation () {
         css={{ listStyle: 'none' }}
       >
         {
-          navigationItems.map(({ name, href }) => (
+          navigationItems.map(({ name, href, isExternal }) => (
             <li key={name}>
-              <Link href={href}>{name}</Link>
+              <Link href={href} isExternal={isExternal}>{name}</Link>
             </li>
           ))
         }
@@ -61,7 +61,7 @@ export function HeaderNavigation () {
               </MenuButton>
               <MenuList backgroundColor='var(--header-mobile-menu-color)'>
                 {
-                  navigationItems.map(({ name, href }) => (
+                  navigationItems.map(({ name, ...rest }) => (
                     <MenuItem
                       key={name}
                       padding={0}
@@ -70,10 +70,10 @@ export function HeaderNavigation () {
                     >
                       <Link
                         flex={1}
-                        href={href}
                         paddingX={4}
                         paddingY={2}
                         _hover={{ textDecoration: 'none', color: 'green.400' }}
+                        {...rest}
                       >
                         {name}
                       </Link>
