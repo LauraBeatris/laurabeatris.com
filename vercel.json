@@ -28,6 +28,10 @@
     {
       "source": "/twitter",
       "destination": "https://twitter.com/lauradotjs"
+    },
+    {
+      "source": "/blog",
+      "destination": "https://dev.to/laurabeatris"
     }
   ]
 }

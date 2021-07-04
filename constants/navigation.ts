@@ -1,3 +1,5 @@
+import { links } from './links'
+
 export const navigationItems = [
   {
     name: 'Home',
@@ -14,5 +16,10 @@ export const navigationItems = [
   {
     name: 'Learning Journal',
     href: '/learning-journal'
+  },
+  {
+    name: 'Blog',
+    href: links.blog,
+    isExternal: true
   }
 ]

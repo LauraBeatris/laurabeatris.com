@@ -3,5 +3,4 @@ import { LinkProps as ChakraLinkProps } from '@chakra-ui/react'
 
 export type LinkProps = ChakraLinkProps & PropsWithChildren<{
   href: string;
-  activeColor?: string;
 }>
