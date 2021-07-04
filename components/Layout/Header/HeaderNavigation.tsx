@@ -15,7 +15,24 @@ import menuOpenSound from 'public/sounds/menu-open.mp3'
 
 const iconProps = { boxSize: '2em', color: 'white.100' }
 
-export function HeaderNavigation () {
+const HeaderNavigationDesktop = () => (
+  <HStack
+    as='ul'
+    display={['none', null, 'flex']}
+    spacing={4}
+    css={{ listStyle: 'none' }}
+  >
+    {
+          navigationItems.map(({ name, href, isExternal }) => (
+            <li key={name}>
+              <Link href={href} isExternal={isExternal}>{name}</Link>
+            </li>
+          ))
+        }
+  </HStack>
+)
+
+const HeaderNavigationMobile = () => {
   const [play] = useSound(menuOpenSound)
 
   const handleMenuClick = () => {
@@ -23,24 +40,8 @@ export function HeaderNavigation () {
   }
 
   return (
-    <>
-      <HStack
-        as='ul'
-        display={['none', null, 'flex']}
-        spacing={4}
-        css={{ listStyle: 'none' }}
-      >
-        {
-          navigationItems.map(({ name, href, isExternal }) => (
-            <li key={name}>
-              <Link href={href} isExternal={isExternal}>{name}</Link>
-            </li>
-          ))
-        }
-      </HStack>
-
-      <Menu>
-        {
+    <Menu>
+      {
           ({ isOpen }) => (
             <>
               <MenuButton
@@ -84,7 +85,15 @@ export function HeaderNavigation () {
             </>
           )
         }
-      </Menu>
+    </Menu>
+  )
+}
+
+export function HeaderNavigation () {
+  return (
+    <>
+      <HeaderNavigationDesktop />
+      <HeaderNavigationMobile />
     </>
   )
 }
