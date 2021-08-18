@@ -1,5 +1,5 @@
 export const links = {
-  yld: 'https://yld.io',
+  reaktor: 'reaktor.com',
   twitter: 'https://twitter.com/lauradotjs',
   youtube: 'https://www.youtube.com/c/LauraBeatris',
   linkedin: 'https://www.linkedin.com/in/laurabeatris/',

@@ -57,7 +57,7 @@ export default function Home ({
       </Heading>
 
       <Paragraph variant='regular'>
-        I'm a Software Engineer at  <HighlightLink href={links.yld}>YLD</HighlightLink> and Content Creator.
+        I'm a Software Developer at <HighlightLink href={links.reaktor}>Reaktor</HighlightLink> and Content Creator.
         Teaching and creating solutions are my favorite things in the world. <span role='img' aria-hidden='true'>🚀</span>
       </Paragraph>
 
