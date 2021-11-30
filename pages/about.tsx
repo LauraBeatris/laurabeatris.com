@@ -46,7 +46,7 @@ export default function About () {
       >
         <Heading as='h2'>Hobbies 🎶🎮</Heading>
         <Paragraph variant='regular'>
-          Since children, I love to express my feeling with music.
+          Since I was a child, I love expressing my feelings with music.
           I started to play violin when I was 12 years old and I'm currently learning piano. 🎹
         </Paragraph>
         <Paragraph variant='regular'>
@@ -61,12 +61,12 @@ export default function About () {
       >
         <Heading as='h2'>Programming Journey 💻</Heading>
         <Paragraph variant='regular'>
-          When I was on high school, wondering what would be my major,
-          I've saw on technology a opportunity to meet people from all over the world and that's why I decided to start studying Python and programming fundamentals even before starting college.
+          When I was in high school, wondering what would be my major,
+          I saw in technology an opportunity to meet people from all over the world and that's why I decided to start studying Python and programming fundamentals even before starting college.
         </Paragraph>
         <Paragraph variant='regular'>
           When I started a Bachelor's Degree in Analysis and Systems Development, I
-          often would get home everyday and put everything that I learned on my GitHub profile, and this helped a lot to land my first job as a Full Stack Developer.
+          would often get home everyday and put everything that I learned on my GitHub profile, and this helped me land my first job as a Full Stack Developer.
         </Paragraph>
         <Paragraph variant='regular'>
           Since I started to program, I'm a real believer in learning in public and
