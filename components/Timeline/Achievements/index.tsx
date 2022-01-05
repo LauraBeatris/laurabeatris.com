@@ -2,6 +2,7 @@ import { List, HStack, ListItem, VStack, Box, Flex } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
+import { gradients } from 'styles/theme/gradients'
 
 import { AchievementsProps } from './types'
 
@@ -46,7 +47,7 @@ export function Achievements ({ achievements }: AchievementsProps) {
                   height='14px'
                   marginTop={1}
                   borderRadius='full'
-                  bgGradient='linear(to-r, green.400, green.500, blue.100)'
+                  bgGradient={gradients.greenToBlue}
                 />
 
                 <VStack

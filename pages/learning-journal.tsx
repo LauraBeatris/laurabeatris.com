@@ -11,6 +11,7 @@ import { getLearningJournals } from 'graphql/queries/getLearningJournals'
 import { usePagination } from 'hooks/usePagination'
 import { LearningJournal as LearningJournalType } from 'graphql/schema'
 import { HydrationSkeleton } from 'components/Base/HydrationSkeleton'
+import { gradients } from 'styles/theme/gradients'
 
 export async function getStaticProps () {
   try {
@@ -103,7 +104,7 @@ export default function LearningJournal ({
                     bgClip='text'
                     fontSize={22}
                     fontWeight='bold'
-                    bgGradient='linear(to-r, green.400, green.500, blue.100)'
+                    bgGradient={gradients.greenToBlue}
                   >
                     {dateTitle}
                   </Text>
@@ -128,7 +129,7 @@ export default function LearningJournal ({
                                     bgClip='text'
                                     isExternal
                                     fontWeight='bold'
-                                    bgGradient='linear(to-r, green.400, green.500, blue.100)'
+                                    bgGradient={gradients.greenToBlue}
                                     borderBottomWidth={1}
                                     borderBottomColor='gray.100'
                                   >
