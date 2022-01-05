@@ -1,5 +1,7 @@
 import { InferGetServerSidePropsType } from 'next'
-import { VStack } from '@chakra-ui/react'
+import { Text, VStack } from '@chakra-ui/react'
+
+import { ArrowRightIcon } from '@chakra-ui/icons'
 
 import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
@@ -11,9 +13,11 @@ import { getDayOfWeek } from 'utils/getDayOfWeek'
 import { getTimelineList } from 'graphql/queries/getTimelineList'
 import { getStack } from 'graphql/queries/getStack'
 import { getProjects } from 'graphql/queries/getProjects'
+import { gradients } from 'styles/theme/gradients'
 
 const now = new Date()
 const dayOfWeek = getDayOfWeek(now.getDate(), now.getMonth(), now.getFullYear())
+const GreenArrowRightIcon = () => <ArrowRightIcon color='green.400' style={{ width: 10 }} />
 
 export async function getServerSideProps () {
   try {
@@ -57,8 +61,16 @@ export default function Home ({
       </Heading>
 
       <Paragraph variant='regular'>
-        I'm a Software Developer at <HighlightLink href={links.reaktor}>Reaktor</HighlightLink> and Content Creator.
-        Teaching and creating solutions are my favorite things in the world. <span role='img' aria-hidden='true'>🚀</span>
+        I'm a Software Developer at <HighlightLink href={links.reaktor}>Reaktor</HighlightLink> and Content Creator
+        <br />
+        Following the flow of {' '}
+        <Text
+          bgClip='text'
+          display='inline'
+          bgGradient={gradients.greenToBlue}
+        >
+          learning <GreenArrowRightIcon /> creating <GreenArrowRightIcon /> teaching 🚀
+        </Text>
       </Paragraph>
 
       <ProjectsList
