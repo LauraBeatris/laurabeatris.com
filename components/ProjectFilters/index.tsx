@@ -6,6 +6,7 @@ import useSound from 'use-sound'
 import menuOpenSound from 'public/sounds/menu-open.mp3'
 import { GET_PROJECTS_QUERY_KEY } from 'hooks/useProjects'
 import { INITIAL_STACK_CATEGORIES } from 'components/ProjectsList'
+import { gradients } from 'styles/theme/gradients'
 
 import { ProjectFiltersProps } from './types'
 
@@ -87,7 +88,7 @@ export function ProjectFilters ({
           variant='unstyled'
           onClick={handleClick}
           leftIcon={<SettingsIcon display='flex' />}
-          bgGradient='linear(to-r, green.400, green.500, blue.100)'
+          bgGradient={gradients.greenToBlue}
           alignItems='center'
           justifyContent='center'
         >
@@ -100,12 +101,12 @@ export function ProjectFilters ({
               <MenuOptionGroup
                 key={title}
                 title={title}
-                bgClip='text'
                 type='checkbox'
-                onChange={onStackCategoryOptionsChange}
-                bgGradient='linear(to-r, green.400, green.500, blue.100)'
-                defaultValue={INITIAL_STACK_CATEGORIES}
                 value={stackCategories}
+                bgClip='text'
+                onChange={onStackCategoryOptionsChange}
+                bgGradient={gradients.greenToBlue}
+                defaultValue={INITIAL_STACK_CATEGORIES}
               >
                 {
                   items.map((item) => (
