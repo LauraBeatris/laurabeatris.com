@@ -61,7 +61,7 @@ export default function Home ({
       </Heading>
 
       <Paragraph variant='regular'>
-        I'm a Software Developer at <HighlightLink href={links.reaktor}>Reaktor</HighlightLink> and Content Creator
+        Software Developer at <HighlightLink href={links.reaktor}>Reaktor</HighlightLink>
         <br />
         Following the flow of {' '}
         <Text
