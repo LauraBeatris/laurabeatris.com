@@ -83,6 +83,7 @@ export type Image = {
 }
 
 export type Section = {
+  id: string;
   title: string;
   images: Array<Image>
   description: string;

@@ -7,6 +7,7 @@ const GET_ABOUT_ME_PAGE_QUERY = gql`
   query getAboutMePageSections($id: ID!){
     aboutMePage(where: { id: $id }){
       sections {
+        id
         title
       }
     }

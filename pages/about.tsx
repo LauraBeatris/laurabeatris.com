@@ -26,7 +26,7 @@ export const getStaticProps = async () => {
   }
 }
 
-export default function About () {
+export default function About ({ sections }) {
   return (
     <VStack
       width='full'
@@ -35,65 +35,16 @@ export default function About () {
       paddingBottom={10}
       alignItems='flex-start'
     >
-      <VStack
-        width='full'
-        spacing={5}
-        alignItems='flex-start'
-      >
-        <Heading as='h2'>About my life 🏝</Heading>
-        <Paragraph variant='regular'>
-          I was born in <HighlightLink href='https://pt.wikipedia.org/wiki/Rio_Grande_(Rio_Grande_do_Sul)'>Rio Grande</HighlightLink>{' '}
-          and have been living in <HighlightLink href='https://pt.wikipedia.org/wiki/Florian%C3%B3polis'>Florianópolis</HighlightLink> for 15 years.
-        </Paragraph>
-
-        <PlaceImage
-          name='Florianópolis'
-          imageSrc='/images/florianopolis.jpg'
-          startYear={2008}
-        />
-
-        <PlaceImage
-          name='Rio Grande'
-          endYear={2008}
-          imageSrc='/images/rio-grande.jpg'
-          startYear={2002}
-        />
-      </VStack>
-
-      <VStack
-        width='full'
-        spacing={5}
-        alignItems='flex-start'
-      >
-        <Heading as='h2'>Hobbies 🎶🎮</Heading>
-        <Paragraph variant='regular'>
-          Since I was a child, I love expressing my feelings with music.
-          I started to play violin when I was 12 years old and I'm currently learning piano. 🎹
-        </Paragraph>
-        <Paragraph variant='regular'>
-          I also love video games because of the possibility of interacting with people from all over the worlds.
-        </Paragraph>
-      </VStack>
-
-      <VStack
-        width='full'
-        spacing={5}
-        alignItems='flex-start'
-      >
-        <Heading as='h2'>Programming Journey 💻</Heading>
-        <Paragraph variant='regular'>
-          When I was in high school, wondering what would be my major,
-          I saw in technology an opportunity to meet people from all over the world and that's why I decided to start studying Python and programming fundamentals even before starting college.
-        </Paragraph>
-        <Paragraph variant='regular'>
-          When I started a Bachelor's Degree in Analysis and Systems Development, I
-          would often get home everyday and put everything that I learned on my GitHub profile, and this helped me land my first job as a Full Stack Developer.
-        </Paragraph>
-        <Paragraph variant='regular'>
-          Since I started to program, I'm a real believer in learning in public and
-          I always try to share the knowledge that I gained throughout my journey with the community.
-        </Paragraph>
-      </VStack>
+      {sections.map(({ id, title }) => (
+        <VStack
+          key={id}
+          width='full'
+          spacing={5}
+          alignItems='flex-start'
+        >
+          <Heading as='h2'>{title}</Heading>
+        </VStack>
+      ))}
     </VStack>
   )
 }
