@@ -3,32 +3,31 @@ import { Text, Stack } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
 
-import { PlaceImageProps } from './types'
+import { ImageWithCaptionsProps } from './types'
 
-export function PlaceImage ({
-  name,
-  endYear,
+export function ImageWithCaptions ({
   imageSrc,
-  startYear,
+  subCaption,
+  mainCaption,
   ...rest
-}: PlaceImageProps) {
+}: ImageWithCaptionsProps) {
   return (
     <Stack direction='column' spacing={4} {...rest}>
       <Image
         src={imageSrc}
-        alt={`Picture of ${name} city`}
-        quality={100}
+        alt={mainCaption}
         width={734}
         height={300}
+        quality={100}
         className='next-image'
       />
 
       <Stack spacing={0.5} direction='column'>
         <Heading size='xs' as='strong'>
-          {name}
+          {mainCaption}
         </Heading>
         <Text as='small' color='gray.300'>
-          {startYear} - {endYear ?? 'Present'}
+          {subCaption}
         </Text>
       </Stack>
     </Stack>

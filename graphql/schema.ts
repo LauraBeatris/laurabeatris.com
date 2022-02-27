@@ -1,3 +1,5 @@
+import { Element } from '@graphcms/rich-text-types'
+
 export type Stack = {
   id: string;
   language: string;
@@ -75,3 +77,25 @@ export const StackCategoryEnum = {
 } as const
 
 export type StackCategory = keyof typeof StackCategoryEnum;
+
+export type Image = {
+  id: string;
+  asset: Asset;
+  subCaption: string;
+  mainCaption: string;
+}
+
+export type RichText = {
+  raw: Element[];
+}
+
+export type Section = {
+  id: string;
+  title: string;
+  images: Array<Image>
+  description: RichText;
+}
+
+export type AboutMePage = {
+  sections: Array<Section>
+}
