@@ -9,6 +9,9 @@ const GET_ABOUT_ME_PAGE_QUERY = gql`
       sections {
         id
         title
+        description {
+          raw
+        }
         images(orderBy: createdAt_DESC) {
           id
           subCaption

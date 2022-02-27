@@ -1,12 +1,10 @@
 import { VStack } from '@chakra-ui/react'
-
 import { InferGetStaticPropsType } from 'next'
-
-import { ImageWithCaptions } from 'components/ImageWithCaptions'
-
-import { getAboutMePage } from 'graphql/queries/getAboutMePage'
+import { RichText } from '@graphcms/rich-text-react-renderer'
 
 import { Heading } from 'components/Base/Heading'
+import { ImageWithCaptions } from 'components/ImageWithCaptions'
+import { getAboutMePage } from 'graphql/queries/getAboutMePage'
 
 export const getStaticProps = async () => {
   try {
@@ -38,7 +36,7 @@ export default function About ({
       paddingBottom={10}
       alignItems='flex-start'
     >
-      {sections.map(({ id, title, images }) => (
+      {sections.map(({ id, title, description, images }) => (
         <VStack
           key={id}
           width='full'
@@ -46,6 +44,7 @@ export default function About ({
           alignItems='flex-start'
         >
           <Heading as='h2'>{title}</Heading>
+          <RichText content={description.raw} />
 
           {images.map(({ id, mainCaption, subCaption, asset }) => (
             <ImageWithCaptions

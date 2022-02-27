@@ -1,3 +1,5 @@
+import { Element } from '@graphcms/rich-text-types'
+
 export type Stack = {
   id: string;
   language: string;
@@ -83,11 +85,15 @@ export type Image = {
   mainCaption: string;
 }
 
+export type RichText = {
+  raw: Element[];
+}
+
 export type Section = {
   id: string;
   title: string;
   images: Array<Image>
-  description: string;
+  description: RichText;
 }
 
 export type AboutMePage = {
