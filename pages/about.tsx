@@ -5,6 +5,8 @@ import { RichText } from '@graphcms/rich-text-react-renderer'
 import { Heading } from 'components/Base/Heading'
 import { ImageWithCaptions } from 'components/ImageWithCaptions'
 import { getAboutMePage } from 'graphql/queries/getAboutMePage'
+import { Paragraph } from 'components/Base/Paragraph'
+import { HighlightLink } from 'components/Base/HighlightLink'
 
 export const getStaticProps = async () => {
   try {
@@ -23,6 +25,13 @@ export const getStaticProps = async () => {
       props: {}
     }
   }
+}
+
+const RichTextParagraph = ({ children }) => <Paragraph variant='regular'>{children}</Paragraph>
+const RichTextAnchor = ({ children, href }) => <HighlightLink href={href}>{children}</HighlightLink>
+const richTextCustomElements = {
+  p: RichTextParagraph,
+  a: RichTextAnchor
 }
 
 export default function About ({
@@ -44,7 +53,10 @@ export default function About ({
           alignItems='flex-start'
         >
           <Heading as='h2'>{title}</Heading>
-          <RichText content={description.raw} />
+          <RichText
+            content={description.raw}
+            renderers={richTextCustomElements}
+          />
 
           {images.map(({ id, mainCaption, subCaption, asset }) => (
             <ImageWithCaptions
