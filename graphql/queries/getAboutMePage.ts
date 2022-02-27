@@ -29,6 +29,7 @@ const GET_ABOUT_ME_PAGE_QUERY = gql`
 /**
  * Since "aboutMePage" is a contextual model, there should be
  * only one content entry for it, which at the moment relies on this ID
+ * @see {@link https://graphcms.com/academy/what-is-content-modeling} for more info regarding contextual models
  */
 const pageIDFromCMS = 'cl04asq370z7o0ewwt2726r7t'
 
