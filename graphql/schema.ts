@@ -75,3 +75,19 @@ export const StackCategoryEnum = {
 } as const
 
 export type StackCategory = keyof typeof StackCategoryEnum;
+
+export type Image = {
+  asset: Asset;
+  mainCaption: string;
+  subCaption: string;
+}
+
+export type Section = {
+  title: string;
+  images: Array<Image>
+  description: string;
+}
+
+export type AboutMePage = {
+  sections: Array<Section>
+}
