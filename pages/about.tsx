@@ -1,11 +1,12 @@
 import { VStack } from '@chakra-ui/react'
 
+import { InferGetStaticPropsType } from 'next'
+
+import { ImageWithCaptions } from 'components/ImageWithCaptions'
+
 import { getAboutMePage } from 'graphql/queries/getAboutMePage'
 
 import { Heading } from 'components/Base/Heading'
-import { HighlightLink } from 'components/Base/HighlightLink'
-import { Paragraph } from 'components/Base/Paragraph'
-import { PlaceImage } from 'components/PlaceImage'
 
 export const getStaticProps = async () => {
   try {
@@ -26,7 +27,9 @@ export const getStaticProps = async () => {
   }
 }
 
-export default function About ({ sections }) {
+export default function About ({
+  sections
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <VStack
       width='full'
@@ -35,7 +38,7 @@ export default function About ({ sections }) {
       paddingBottom={10}
       alignItems='flex-start'
     >
-      {sections.map(({ id, title }) => (
+      {sections.map(({ id, title, images }) => (
         <VStack
           key={id}
           width='full'
@@ -43,6 +46,15 @@ export default function About ({ sections }) {
           alignItems='flex-start'
         >
           <Heading as='h2'>{title}</Heading>
+
+          {images.map(({ id, mainCaption, subCaption, asset }) => (
+            <ImageWithCaptions
+              key={id}
+              imageSrc={asset.url}
+              subCaption={subCaption}
+              mainCaption={mainCaption}
+            />
+          ))}
         </VStack>
       ))}
     </VStack>

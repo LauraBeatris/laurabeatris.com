@@ -9,6 +9,15 @@ const GET_ABOUT_ME_PAGE_QUERY = gql`
       sections {
         id
         title
+        images(orderBy: createdAt_DESC) {
+          id
+          subCaption
+          mainCaption
+          asset {
+            id
+            url
+          }
+        }
       }
     }
   }
