@@ -9,7 +9,7 @@ export const GET_PROJECTS_BY_STACKS = gql`
    $title: String = "",
    $categories: [StackCategory!] = [Frontend, Backend, Package, Mobile]
   ) {
-    stacks(where: {categories_contains_some: $categories}) {
+    stacks(where: {categories_contains_some: $categories}, orderBy: createdAt_DESC) {
       id
       projects(where: {title_contains: $title}) {
         id
