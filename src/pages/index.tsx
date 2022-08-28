@@ -61,7 +61,7 @@ export default function Home ({
       </Heading>
 
       <Paragraph variant='regular'>
-        Software Developer at <HighlightLink href={links.reaktor}>WorkOS</HighlightLink>
+        Software Developer at <HighlightLink href={links.reaktor}>Reaktor</HighlightLink>
         <br />
         Following the flow of {' '}
         <Text
