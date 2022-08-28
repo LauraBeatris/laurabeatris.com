@@ -20,7 +20,7 @@ const GET_LEARNING_JOURNAL_PAGE_QUERY = gql`
   }
 `
 
-export async function getLearningJournalPage (date: string) {
+export async function getLearningJournalPage (date?: string) {
   return graphQLClient.request(
     GET_LEARNING_JOURNAL_PAGE_QUERY,
     date
