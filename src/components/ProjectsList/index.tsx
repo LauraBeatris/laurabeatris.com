@@ -16,15 +16,15 @@ import { Paragraph } from 'components/Base/Paragraph'
 import { ProjectsListProps } from './types'
 
 const PROJECTS_POPOVER_TEXT = <p>Click on the projects to see more details about it.<br /> Also, there are filters to explore projects according to certain titles and technologies.</p>
-
 const DEFAULT_DEBOUNCE_DELAY_MILLISECONDS = 500
-
 export const INITIAL_STACK_CATEGORIES = [
   StackCategoryEnum.Backend,
   StackCategoryEnum.Frontend,
   StackCategoryEnum.Package,
   StackCategoryEnum.Mobile
 ]
+
+const isWorkInProgressFeatureFlag = process.env.NEXT_PUBLIC_WORK_IN_PROGRESS_FEATURE_FLAG
 
 export function ProjectsList ({
   initialProjects,
@@ -75,7 +75,7 @@ export function ProjectsList ({
   }, [])
 
   const shouldShowPagination = !isLoading && projects?.length > PAGINATION_ITEMS_PER_PAGE
-  const shouldShowEmptyListMessage = !isLoading && projects?.length === 0
+  const shouldShowEmptyListMessage = !isLoading && !isWorkInProgressFeatureFlag && projects?.length === 0
 
   return (
     <VStack
@@ -159,6 +159,18 @@ export function ProjectsList ({
           })
         }
       </SimpleGrid>
+
+      {
+        isWorkInProgressFeatureFlag && (
+          <Paragraph
+            size='sm'
+            variant='medium'
+            alignSelf='center'
+          >
+            🚧 Currently building/baking new projects 🚧
+          </Paragraph>
+        )
+      }
 
       {
         shouldShowEmptyListMessage && (
