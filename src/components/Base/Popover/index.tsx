@@ -10,8 +10,8 @@ import {
 import useSound from 'use-sound'
 
 import { Paragraph } from 'components/Base/Paragraph'
-import menuOpenSound from 'public/sounds/menu-open.mp3'
 
+import menuOpenSound from '../../../../public/sounds/menu-open.mp3'
 import { PopoverProps } from './types'
 
 const popoverBackgroundCss = {

@@ -1,12 +1,13 @@
-import { Button, ButtonProps } from '@chakra-ui/react'
 import useSound from 'use-sound'
+import { Button, ButtonProps } from '@chakra-ui/react'
 import { useColorMode } from '@laurabeatris/chakra-ui-flashless'
 
-import switchOnSound from 'public/sounds/switch-on.mp3'
-import switchOffSound from 'public/sounds/switch-off.mp3'
 import { ToggleThemeIcon } from 'components/ToggleThemeIcon'
 import { HydrationSkeleton } from 'components/Base/HydrationSkeleton'
 import { useHasMounted } from 'hooks/useHasMounted'
+
+import switchOffSound from '../../../public/sounds/switch-off.mp3'
+import switchOnSound from '../../../public/sounds/switch-on.mp3'
 
 export function ToggleThemeButton (props: ButtonProps) {
   const { colorMode, toggleColorMode } = useColorMode()

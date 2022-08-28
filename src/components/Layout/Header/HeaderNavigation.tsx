@@ -9,9 +9,10 @@ import {
 } from '@chakra-ui/react'
 import useSound from 'use-sound'
 
-import { Link } from 'components/Base/Link'
 import { navigationItems } from 'constants/navigation'
-import menuOpenSound from 'public/sounds/menu-open.mp3'
+import { Link } from 'components/Base/Link'
+
+import menuOpenSound from '../../../../public/sounds/menu-open.mp3'
 
 const iconProps = { boxSize: '2em', color: 'white.100' }
 
