@@ -1,5 +1,5 @@
-import { InferGetStaticPropsType } from 'next'
-import { Link, List, ListIcon, ListItem, Text, VStack } from '@chakra-ui/react'
+import type { InferGetStaticPropsType } from 'next'
+import { Flex, Link, List, ListIcon, ListItem, Text, VStack } from '@chakra-ui/react'
 import { LinkIcon } from '@chakra-ui/icons'
 import { DateTime } from 'luxon'
 
@@ -7,10 +7,11 @@ import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
 import { PaginationButton } from 'components/PaginationButton'
 import { LearningJournalList } from 'components/LearningJournalList'
+import { SingleDateSelector } from 'components/SingleDateSelector'
+import { HydrationSkeleton } from 'components/Base/HydrationSkeleton'
 import { getLearningJournals } from 'graphql/queries/getLearningJournals'
 import { usePagination } from 'hooks/usePagination'
 import { LearningJournal as LearningJournalType } from 'graphql/schema'
-import { HydrationSkeleton } from 'components/Base/HydrationSkeleton'
 import { gradients } from 'styles/theme/gradients'
 
 export async function getStaticProps () {
@@ -56,16 +57,23 @@ export default function LearningJournal ({
 
   return (
     <VStack
+      as='section'
       width='full'
       paddingTop={5}
       paddingBottom={10}
       alignItems='flex-start'
     >
-      <Heading as='h2'>Learning Journal</Heading>
+      <VStack as='header' width='full' alignItems='flex-start'>
+        <Heading as='h2'>Learning Journal</Heading>
 
-      <Paragraph variant='regular'>
-        Documenting my learning journey throughout the years.
-      </Paragraph>
+        <Paragraph variant='regular'>
+          Documenting my learning journey throughout the years.
+        </Paragraph>
+
+        <Flex paddingTop='2'>
+          <SingleDateSelector />
+        </Flex>
+      </VStack>
 
       <HydrationSkeleton
         width='full'
@@ -75,7 +83,7 @@ export default function LearningJournal ({
         <List
           width='full'
           spacing={6}
-          paddingTop={5}
+          paddingTop={2}
           marginBottom={5}
         >
           {
