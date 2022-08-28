@@ -40,7 +40,7 @@ git clone https://github.com/LauraBeatris/laurabeatris.com.git
 cp .env.local.example .env.local
 ```
 
-#### Execute web application in development mode
+#### Install dependencies & execute web application in development mode
 ```bash
 yarn
 yarn dev
