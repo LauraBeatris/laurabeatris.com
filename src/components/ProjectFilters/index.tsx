@@ -3,11 +3,11 @@ import { Search2Icon, SettingsIcon } from '@chakra-ui/icons'
 import { useIsFetching } from 'react-query'
 import useSound from 'use-sound'
 
-import menuOpenSound from 'public/sounds/menu-open.mp3'
 import { GET_PROJECTS_QUERY_KEY } from 'hooks/useProjects'
 import { INITIAL_STACK_CATEGORIES } from 'components/ProjectsList'
 import { gradients } from 'styles/theme/gradients'
 
+import menuOpenSound from '../../../public/sounds/menu-open.mp3'
 import { ProjectFiltersProps } from './types'
 
 const projectFiltersBackgroundCss = {

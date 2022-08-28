@@ -1,9 +1,11 @@
 import { List, ListItem, VStack } from '@chakra-ui/react'
 
+import { usePagination } from 'hooks/usePagination'
+
+import { Timeline as TimelineType } from 'graphql/schema'
+
 import { Heading } from 'components/Base/Heading'
 import { PaginationButton } from 'components/PaginationButton'
-import { usePagination } from 'hooks/usePagination'
-import { Timeline as TimelineType } from 'graphql/schema'
 
 import { TimelineProps } from './types'
 import { Achievements } from './Achievements'
