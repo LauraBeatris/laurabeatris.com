@@ -28,12 +28,22 @@
 
 ## :construction_worker: Running Locally
 
+Disclaimer: This project fetches data from my personal [GraphCMS](https://graphcms.com/) workspace, thus it's necessary to define the CMS endpoint as a environment variable, otherwise it's not possible to fully execute the scripts bellow
+
+#### Clone repository
+```bash
+git clone https://github.com/LauraBeatris/laurabeatris.com.git
 ```
-$ git clone https://github.com/LauraBeatris/laurabeatris.com.git
-$ cd laurabeatris.com
-$ cp .env.local.example .env.local
-$ yarn
-$ yarn dev
+
+#### Define environment variables
+```bash
+cp .env.local.example .env.local
+```
+
+#### Execute web application in development mode
+```bash
+yarn
+yarn dev
 ```
 
 Define the environment variables by creating a .env.local file similar to [.env.local.example](https://github.com/LauraBeatris/laurabeatris.com/blob/master/.env.local.example)
@@ -42,11 +52,11 @@ Define the environment variables by creating a .env.local file similar to [.env.
 
 **Question:** What are the technologies used in this project?
 
-**Answer:** [Next.js](https://nextjs.org/), [Chakra UI](https://chakra-ui.com/) and [GraphCMS](https://graphcms.com/).
+**Answer:** [Next.js](https://nextjs.org/), [Chakra UI](https://chakra-ui.com/) and [GraphCMS](https://graphcms.com/)
 
 **Question** Why Next.js instead of other frameworks of React out there?
 
-**Answer** I chose Next.js in order to opt out for different rendering strategies.
+**Answer** I chose Next.js in order to opt out for different rendering strategies
 
 # :bug: Issues
 
@@ -54,4 +64,4 @@ Feel free to **file a new issue** with a respective title and description. If yo
 
 # :tada: Contributing
 
-Check out the [contributing](https://github.com/LauraBeatris/laurabeatris.com/blob/master/CONTRIBUTING.md) page to see the best places to file issues, start discussions and begin contributing.
+Check out the [contributing](https://github.com/LauraBeatris/laurabeatris.com/blob/master/CONTRIBUTING.md) page to see the best places to file issues, start discussions and begin contributing
