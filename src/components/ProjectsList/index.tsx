@@ -166,8 +166,9 @@ export function ProjectsList ({
             size='sm'
             variant='medium'
             alignSelf='center'
+            textAlign='center'
           >
-            🚧 Currently building/baking new projects 🚧
+            🚧 Currently building/baking new projects
           </Paragraph>
         )
       }
