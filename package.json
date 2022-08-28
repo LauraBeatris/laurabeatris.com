@@ -33,6 +33,7 @@
     "react-icons": "^4.1.0",
     "react-query": "^3.12.2",
     "use-debounce": "^6.0.0",
+    "use-lilius": "^2.0.3",
     "use-sound": "^2.0.1"
   },
   "devDependencies": {
