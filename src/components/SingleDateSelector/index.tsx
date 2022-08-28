@@ -35,7 +35,11 @@ import { useLilius } from 'use-lilius'
 
 import { SINGLE_DATE_SELECTOR_THEME_KEY } from './styles'
 
-export function SingleDateSelector () {
+type SingleDateSelectorProps = {
+  onInputValueChange: (inputValue: string) => void
+}
+
+export function SingleDateSelector ({ onInputValueChange }: SingleDateSelectorProps) {
   const {
     calendar,
     clearSelected,
@@ -56,6 +60,10 @@ export function SingleDateSelector () {
 
   const [isOpen, setIsOpen] = useState(false)
   const [inputValue, setInputValue] = useState('')
+
+  useEffect(() => {
+    onInputValueChange?.(inputValue)
+  }, [inputValue])
 
   // Only accept digits and forward slash as input.
   const onInputChange = (input: string) => {

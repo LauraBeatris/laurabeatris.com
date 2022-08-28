@@ -1,7 +1,9 @@
-import type { InferGetStaticPropsType } from 'next'
+
+import { useState } from 'react'
 import { Flex, Link, List, ListIcon, ListItem, Text, VStack } from '@chakra-ui/react'
 import { LinkIcon } from '@chakra-ui/icons'
 import { DateTime } from 'luxon'
+import useSWR, { SWRConfig, unstable_serialize } from 'swr'
 
 import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
@@ -9,18 +11,18 @@ import { PaginationButton } from 'components/PaginationButton'
 import { LearningJournalList } from 'components/LearningJournalList'
 import { SingleDateSelector } from 'components/SingleDateSelector'
 import { HydrationSkeleton } from 'components/Base/HydrationSkeleton'
-import { getLearningJournals } from 'graphql/queries/getLearningJournals'
 import { usePagination } from 'hooks/usePagination'
 import { LearningJournal as LearningJournalType } from 'graphql/schema'
 import { gradients } from 'styles/theme/gradients'
+import { getLearningJournalPage } from 'graphql/queries/getLearningJournalPage'
 
 export async function getStaticProps () {
   try {
-    const learningJournals = await getLearningJournals()
-
     return {
       props: {
-        learningJournals
+        fallback: {
+          [unstable_serialize(['learning-journal-page', undefined])]: await getLearningJournalPage()
+        }
       }
     }
   } catch (error) {
@@ -37,21 +39,26 @@ type FormattedLearningJournal = Omit<LearningJournalType, 'date'> & {
   dateTitle: string;
 }
 
-export default function LearningJournal ({
-  learningJournals
-}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const formattedLearningJournals = learningJournals.map(({ date, ...rest }) => ({
+function LearningJournalContent () {
+  const [date, setDate] = useState<string>()
+  const { data: { entries } = {} } = useSWR(['learning-journal-page', date], () => getLearningJournalPage(date))
+
+  const formattedEntries = entries?.map(({ date, ...rest }) => ({
     ...rest,
     dateTitle: DateTime.fromISO(date)
       .toFormat('DD')
   }))
+
+  const handleInputValueChange = (inputValue: string) => {
+    setDate(inputValue)
+  }
 
   const {
     data,
     hasMoreItems,
     handlePagination
   } = usePagination<FormattedLearningJournal>({
-    list: formattedLearningJournals,
+    list: formattedEntries,
     itemsPerPage: 2
   })
 
@@ -71,7 +78,7 @@ export default function LearningJournal ({
         </Paragraph>
 
         <Flex paddingTop='2'>
-          <SingleDateSelector />
+          <SingleDateSelector onInputValueChange={handleInputValueChange} />
         </Flex>
       </VStack>
 
@@ -164,5 +171,13 @@ export default function LearningJournal ({
         alignSelf='center'
       />
     </VStack>
+  )
+}
+
+export default function LearningJournalContainer ({ fallback }) {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <LearningJournalContent />
+    </SWRConfig>
   )
 }
