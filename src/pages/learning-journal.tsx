@@ -33,6 +33,8 @@ export async function getStaticProps () {
         fallback: {
           [unstable_serialize([
             'learning-journal-page',
+            undefined,
+            undefined,
             undefined
           ])]: await getLearningJournalPage()
         }
