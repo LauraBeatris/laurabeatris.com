@@ -32,6 +32,7 @@ import {
 } from 'date-fns'
 import { IoCalendarClearSharp, IoChevronBackSharp, IoChevronForwardSharp } from 'react-icons/io5'
 import { useLilius } from 'use-lilius'
+import { MdClose } from 'react-icons/md'
 
 import { SINGLE_DATE_SELECTOR_THEME_KEY } from './styles'
 
@@ -146,7 +147,20 @@ export function SingleDateSelector ({ onInputValueChange }: SingleDateSelectorPr
               value={inputValue}
             />
 
-            <InputRightElement>
+            <InputRightElement width='unset' paddingRight='2'>
+              <IconButton
+                minWidth='auto'
+                variant='link'
+                _focus={{
+                  outline: 'none'
+                }}
+                marginRight='1'
+                sx={styles.icon}
+                icon={<MdClose />}
+                onClick={() => setInputValue('')}
+                aria-label='Clean input'
+              />
+
               <IconButton
                 aria-label='Open Calendar'
                 icon={<IoCalendarClearSharp />}
