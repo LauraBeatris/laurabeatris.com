@@ -44,7 +44,7 @@ export async function getLearningJournalPage ({
   date,
   after,
   before
-} = {}) {
+}: Partial<{ date: string, after: string, before: string }> = {}) {
   const variables = {
     first: 2,
     after,

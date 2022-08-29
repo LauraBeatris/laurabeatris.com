@@ -53,8 +53,7 @@ export function SingleDateSelector ({ onInputValueChange }: SingleDateSelectorPr
     toggle,
     viewing,
     viewNextMonth,
-    viewPreviousMonth,
-    viewToday
+    viewPreviousMonth
   } = useLilius()
 
   const styles = useMultiStyleConfig(SINGLE_DATE_SELECTOR_THEME_KEY, {})
@@ -248,14 +247,6 @@ export function SingleDateSelector ({ onInputValueChange }: SingleDateSelectorPr
                 </Box>
               ))}
             </Box>
-
-            <Divider sx={styles.divider} />
-
-            <ButtonGroup sx={styles.todayButtonGroup}>
-              <Button onClick={viewToday} size='sm' sx={styles.todayButton}>
-                Today
-              </Button>
-            </ButtonGroup>
           </PopoverBody>
         </PopoverContent>
       </Popover>
