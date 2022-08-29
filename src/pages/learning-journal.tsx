@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {
+  Box,
   Button,
   Flex,
   HStack,
@@ -7,7 +8,8 @@ import {
   List,
   ListIcon,
   ListItem,
-  Skeleton,
+  SkeletonCircle,
+  SkeletonText,
   Stack,
   Text,
   VStack
@@ -49,10 +51,11 @@ export async function getStaticProps () {
 function LearningJournalContent () {
   const [date, setDate] = useState<string>()
   const [endCursor, setEndCursor] = useState()
+  const [beforeCursor, setBeforeCursor] = useState()
 
   const { data: { edges, pageInfo } = {}, isValidating } = useSWR(
     ['learning-journal-page', date, endCursor],
-    () => getLearningJournalPage({ date, after: endCursor, before: undefined })
+    () => getLearningJournalPage({ date, after: endCursor, before: beforeCursor })
   )
 
   const formattedEntries = edges?.map(({ node: { date, ...rest } }) => ({
@@ -66,9 +69,11 @@ function LearningJournalContent () {
 
   const handleNextPage = () => {
     setEndCursor(pageInfo.endCursor)
+    setBeforeCursor(pageInfo.startCursor)
   }
 
   const hasEntries = formattedEntries?.length > 0 && !isValidating
+  const { hasPreviousPage, hasNextPage } = pageInfo ?? {}
 
   return (
     <VStack
@@ -90,14 +95,16 @@ function LearningJournalContent () {
 
           <HStack justifyContent={['center', 'flex-start']}>
             <Button
-              leftIcon={<ChevronLeftIcon />}
               onClick={handleNextPage}
+              leftIcon={<ChevronLeftIcon />}
+              disabled={!hasPreviousPage}
               aria-label='Previous page'
             >
               Prev
             </Button>
             <Button
               onClick={handleNextPage}
+              disabled={!hasNextPage}
               rightIcon={<ChevronRightIcon />}
               aria-label='Next page'
             >
@@ -107,103 +114,112 @@ function LearningJournalContent () {
         </Stack>
       </VStack>
 
-      <Skeleton
+      {isValidating && (
+        <VStack width='full'>
+          <Box padding='6' boxShadow='lg' bg='white' w='full'>
+            <SkeletonCircle size='10' />
+            <SkeletonText mt='4' noOfLines={4} spacing='4' />
+          </Box>
+          <Box padding='6' boxShadow='lg' bg='white' w='full'>
+            <SkeletonCircle size='10' />
+            <SkeletonText mt='4' noOfLines={4} spacing='4' />
+          </Box>
+          <Box padding='6' boxShadow='lg' bg='white' w='full'>
+            <SkeletonCircle size='10' />
+            <SkeletonText mt='4' noOfLines={4} spacing='4' />
+          </Box>
+        </VStack>
+      )}
+
+      <HydrationSkeleton
         width='full'
-        flexGrow={1}
-        minHeight='400px'
-        borderRadius={4}
-        isLoaded={!isValidating}
+        endColor='transparent'
+        startColor='transparent'
       >
-        <HydrationSkeleton
-          width='full'
-          endColor='transparent'
-          startColor='transparent'
-        >
-          {hasEntries
-            ? (
-              <VStack>
-                <List width='full' spacing={6} paddingTop={2} marginBottom={5}>
-                  {(formattedEntries ?? []).map(
-                    ({ id, work, resources, dateTitle, curiosity, programming }) => {
-                      const shouldShowResources = (resources ?? []).length > 0
+        {hasEntries
+          ? (
+            <VStack>
+              <List width='full' spacing={6} paddingTop={2} marginBottom={5}>
+                {(formattedEntries ?? []).map(
+                  ({ id, work, resources, dateTitle, curiosity, programming }) => {
+                    const shouldShowResources = (resources ?? []).length > 0
 
-                      return (
-                        <VStack
-                          as='li'
-                          key={id}
-                          width='full'
-                          spacing={5}
-                          alignItems='flex-start'
-                          paddingTop={5}
-                          borderTopWidth={1}
+                    return (
+                      <VStack
+                        as='li'
+                        key={id}
+                        width='full'
+                        spacing={5}
+                        alignItems='flex-start'
+                        paddingTop={5}
+                        borderTopWidth={1}
+                      >
+                        <Text
+                          as='h3'
+                          bgClip='text'
+                          fontSize={22}
+                          fontWeight='bold'
+                          bgGradient={gradients.greenToBlue}
                         >
-                          <Text
-                            as='h3'
-                            bgClip='text'
-                            fontSize={22}
-                            fontWeight='bold'
-                            bgGradient={gradients.greenToBlue}
-                          >
-                            {dateTitle}
-                          </Text>
+                          {dateTitle}
+                        </Text>
 
-                          <LearningJournalList title='Work' list={work} />
-                          <LearningJournalList
-                            title='Programming'
-                            list={programming}
-                          />
-                          <LearningJournalList title='Curiosity' list={curiosity} />
+                        <LearningJournalList title='Work' list={work} />
+                        <LearningJournalList
+                          title='Programming'
+                          list={programming}
+                        />
+                        <LearningJournalList title='Curiosity' list={curiosity} />
 
-                          {shouldShowResources
-                            ? (
-                              <>
-                                <Heading size='xs'>Resources</Heading>
-                                <List spacing={2}>
-                                  {resources.map(({ url, label }) => (
-                                    <ListItem key={label}>
-                                      <ListIcon as={LinkIcon} />
+                        {shouldShowResources
+                          ? (
+                            <>
+                              <Heading size='xs'>Resources</Heading>
+                              <List spacing={2}>
+                                {resources.map(({ url, label }) => (
+                                  <ListItem key={label}>
+                                    <ListIcon as={LinkIcon} />
 
-                                      <Link
-                                        href={url}
-                                        bgClip='text'
-                                        isExternal
-                                        fontWeight='bold'
-                                        bgGradient={gradients.greenToBlue}
-                                        borderBottomWidth={1}
-                                        borderBottomColor='gray.100'
-                                      >
-                                        {label}
-                                      </Link>
-                                    </ListItem>
-                                  ))}
-                                </List>
-                              </>
-                              )
-                            : null}
-                        </VStack>
-                      )
-                    }
-                  )}
-                </List>
-              </VStack>
-              )
-            : (
-              <Flex
-                width='full'
-                paddingTop='4'
-                justifyContent='center'
+                                    <Link
+                                      href={url}
+                                      bgClip='text'
+                                      isExternal
+                                      fontWeight='bold'
+                                      bgGradient={gradients.greenToBlue}
+                                      borderBottomWidth={1}
+                                      borderBottomColor='gray.100'
+                                    >
+                                      {label}
+                                    </Link>
+                                  </ListItem>
+                                ))}
+                              </List>
+                            </>
+                            )
+                          : null}
+                      </VStack>
+                    )
+                  }
+                )}
+              </List>
+            </VStack>
+            )
+          : (
+            <Flex
+              width='full'
+              paddingTop='4'
+              justifyContent='center'
+            >
+              <Paragraph
+                size='sm'
+                variant='medium'
+                textAlign='center'
               >
-                <Paragraph
-                  size='sm'
-                  variant='medium'
-                  textAlign='center'
-                >
-                  No entries found
-                </Paragraph>
-              </Flex>
-              )}
-        </HydrationSkeleton>
-      </Skeleton>
+                No entries found
+              </Paragraph>
+            </Flex>
+            )}
+      </HydrationSkeleton>
     </VStack>
   )
 }
