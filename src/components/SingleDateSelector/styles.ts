@@ -30,7 +30,7 @@ export const singleDateSelectorStyles: ComponentMultiStyleConfig = {
         borderColor: colorMode === 'light' ? 'gray.300' : 'gray.700'
       },
       icon: {
-        color: colorMode === 'light' ? 'gray.300' : 'gray.700'
+        color: 'green.400'
       },
       placeholder: {
         color: colorMode === 'light' ? 'gray.300' : 'gray.700'
