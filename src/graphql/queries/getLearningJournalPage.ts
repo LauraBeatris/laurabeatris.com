@@ -5,7 +5,11 @@ import { graphQLClient } from 'config/graphQLClient'
 
 const GET_LEARNING_JOURNAL_PAGE_QUERY = gql`
   query GetLearningJournalPage($where: LearningJournalWhereInput) {
-    entries: learningJournals(orderBy: date_DESC, where: $where) {
+    entries: learningJournals(
+      orderBy: date_DESC
+      where: $where
+      first: 2
+    ) {
       id
       work
       date
