@@ -5,27 +5,38 @@ import { graphQLClient } from 'config/graphQLClient'
 
 const GET_LEARNING_JOURNAL_PAGE_QUERY = gql`
   query GetLearningJournalPage($where: LearningJournalWhereInput) {
-    entries: learningJournals(
+    learningJournalsConnection(
       orderBy: date_DESC
       where: $where
       first: 2
     ) {
-      id
-      work
-      date
-      curiosity
-      programming
-      resources {
-        id
-        url
-        label
+      edges {
+        node {
+          id
+          work
+          date
+          curiosity
+          programming
+          resources {
+            id
+            url
+            label
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+        pageSize
       }
     }
   }
 `
 
 export async function getLearningJournalPage (date?: string) {
-  return graphQLClient.request(
+  const { learningJournalsConnection } = await graphQLClient.request(
     GET_LEARNING_JOURNAL_PAGE_QUERY,
     date
       ? {
@@ -33,4 +44,6 @@ export async function getLearningJournalPage (date?: string) {
         }
       : undefined
   )
+
+  return learningJournalsConnection
 }

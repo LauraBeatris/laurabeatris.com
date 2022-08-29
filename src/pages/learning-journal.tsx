@@ -49,12 +49,12 @@ type FormattedLearningJournal = Omit<LearningJournalType, 'date'> & {
 
 function LearningJournalContent () {
   const [date, setDate] = useState<string>()
-  const { data: { entries } = {} } = useSWR(
+  const { data: { edges } = {} } = useSWR(
     ['learning-journal-page', date],
     () => getLearningJournalPage(date)
   )
 
-  const formattedEntries = entries?.map(({ date, ...rest }) => ({
+  const formattedEntries = edges?.map(({ node: { date, ...rest } }) => ({
     ...rest,
     dateTitle: DateTime.fromISO(date).toFormat('DD')
   }))
