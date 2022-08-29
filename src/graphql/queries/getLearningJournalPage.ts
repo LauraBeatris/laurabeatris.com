@@ -3,17 +3,22 @@ import { formatRFC3339 } from 'date-fns'
 
 import { graphQLClient } from 'config/graphQLClient'
 
+const CURSOR_PAGE_SIZE = 2
 const GET_LEARNING_JOURNAL_PAGE_QUERY = gql`
   query GetLearningJournalPage(
     $where: LearningJournalWhereInput
     $first: Int
+    $last: Int
     $after: String
+    $before: String
   ) {
     learningJournalsConnection(
       orderBy: date_DESC
       where: $where
       first: $first
+      last: $last
       after: $after
+      before: $before
     ) {
       edges {
         node {
@@ -46,10 +51,16 @@ export async function getLearningJournalPage ({
   before
 }: Partial<{ date: string, after: string, before: string }> = {}) {
   const variables = {
-    first: 2,
     after,
     before,
-    ...(date ? { where: { date: formatRFC3339(new Date(date)) } } : {})
+    ...(before ? { last: CURSOR_PAGE_SIZE } : { first: CURSOR_PAGE_SIZE }),
+    ...(date
+      ? {
+          where: {
+            date: formatRFC3339(new Date(date))
+          }
+        }
+      : {})
   }
 
   const { learningJournalsConnection } = await graphQLClient.request(

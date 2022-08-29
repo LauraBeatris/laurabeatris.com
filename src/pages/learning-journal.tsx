@@ -50,12 +50,12 @@ export async function getStaticProps () {
 
 function LearningJournalContent () {
   const [date, setDate] = useState<string>()
-  const [endCursor, setEndCursor] = useState()
-  const [beforeCursor, setBeforeCursor] = useState()
+  const [afterCursor, setAfterCursor] = useState<string>()
+  const [beforeCursor, setBeforeCursor] = useState<string>()
 
   const { data: { edges, pageInfo } = {}, isValidating } = useSWR(
-    ['learning-journal-page', date, endCursor],
-    () => getLearningJournalPage({ date, after: endCursor, before: beforeCursor })
+    ['learning-journal-page', date, afterCursor, beforeCursor],
+    () => getLearningJournalPage({ date, after: afterCursor, before: beforeCursor })
   )
 
   const formattedEntries = edges?.map(({ node: { date, ...rest } }) => ({
@@ -67,13 +67,19 @@ function LearningJournalContent () {
     setDate(inputValue)
   }
 
+  const { hasPreviousPage, hasNextPage, startCursor, endCursor } = pageInfo ?? {}
+
   const handleNextPage = () => {
-    setEndCursor(pageInfo.endCursor)
-    setBeforeCursor(pageInfo.startCursor)
+    setAfterCursor(endCursor)
+    setBeforeCursor(undefined)
+  }
+
+  const handlePrevPage = () => {
+    setAfterCursor(undefined)
+    setBeforeCursor(startCursor)
   }
 
   const hasEntries = formattedEntries?.length > 0 && !isValidating
-  const { hasPreviousPage, hasNextPage } = pageInfo ?? {}
 
   return (
     <VStack
@@ -95,7 +101,7 @@ function LearningJournalContent () {
 
           <HStack justifyContent={['center', 'flex-start']}>
             <Button
-              onClick={handleNextPage}
+              onClick={handlePrevPage}
               leftIcon={<ChevronLeftIcon />}
               disabled={!hasPreviousPage}
               aria-label='Previous page'
