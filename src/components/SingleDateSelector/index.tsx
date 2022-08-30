@@ -40,6 +40,10 @@ type SingleDateSelectorProps = {
   onInputValueChange: (inputValue: string) => void
 }
 
+const dateSelectorBackgroundColor = {
+  backgroundColor: 'var(--date-selector-background-color)'
+}
+
 export function SingleDateSelector ({ onInputValueChange }: SingleDateSelectorProps) {
   const {
     calendar,
@@ -175,7 +179,7 @@ export function SingleDateSelector ({ onInputValueChange }: SingleDateSelectorPr
           </InputGroup>
         </PopoverTrigger>
 
-        <PopoverContent sx={styles.popContent}>
+        <PopoverContent sx={styles.popContent} css={dateSelectorBackgroundColor}>
           <PopoverBody sx={styles.popBody}>
             <ButtonGroup sx={styles.shortcutButtonGroup}>
               <Button onClick={() => select(clearTime(new Date()), true)} size='sm' sx={styles.shortcutButton}>

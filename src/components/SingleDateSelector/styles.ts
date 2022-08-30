@@ -24,7 +24,7 @@ export const singleDateSelectorStyles: ComponentMultiStyleConfig = {
     'todayButton'
   ],
 
-  baseStyle: ({ colorMode, colorScheme = 'blue', theme }) => {
+  baseStyle: ({ colorMode, colorScheme = 'green', theme }) => {
     return {
       input: {
         borderColor: colorMode === 'light' ? 'gray.300' : 'gray.700'
@@ -64,8 +64,6 @@ export const singleDateSelectorStyles: ComponentMultiStyleConfig = {
         marginBottom: 2
       },
       navigationButton: {
-        backgroundColor: colorMode === 'light' ? 'white' : 'gray.700',
-        borderColor: colorMode === 'light' ? 'gray.200' : 'gray.500',
         borderWidth: 1,
         shadow: 'sm',
         _active: {
@@ -162,6 +160,6 @@ export const singleDateSelectorStyles: ComponentMultiStyleConfig = {
     }
   },
   defaultProps: {
-    colorScheme: 'blue'
+    colorScheme: 'green'
   }
 }
