@@ -39,7 +39,6 @@ const GET_LEARNING_JOURNAL_PAGE_QUERY = gql`
         hasPreviousPage
         startCursor
         endCursor
-        pageSize
       }
     }
   }
