@@ -24,7 +24,10 @@ import { LearningJournalList } from 'components/LearningJournalList'
 import { SingleDateSelector } from 'components/SingleDateSelector'
 import { HydrationSkeleton } from 'components/Base/HydrationSkeleton'
 import { gradients } from 'styles/theme/gradients'
-import { getLearningJournalPage, Cursors } from 'graphql/queries/getLearningJournalPage'
+import {
+  Cursors,
+  getLearningJournalPage
+} from 'graphql/queries/getLearningJournalPage'
 
 const initialDate = null
 const initialCursors = {
@@ -55,18 +58,140 @@ export async function getStaticProps () {
   }
 }
 
+function LearningJournalSkeleton () {
+  return (
+    <VStack width='full'>
+      <Box padding='6' boxShadow='lg' bg='white' w='full'>
+        <SkeletonCircle size='10' />
+        <SkeletonText mt='4' noOfLines={4} spacing='4' />
+      </Box>
+      <Box padding='6' boxShadow='lg' bg='white' w='full'>
+        <SkeletonCircle size='10' />
+        <SkeletonText mt='4' noOfLines={4} spacing='4' />
+      </Box>
+      <Box padding='6' boxShadow='lg' bg='white' w='full'>
+        <SkeletonCircle size='10' />
+        <SkeletonText mt='4' noOfLines={4} spacing='4' />
+      </Box>
+    </VStack>
+  )
+}
+
+function LearningJournalEntries ({ isLoading, entries }) {
+  if (isLoading) {
+    return <LearningJournalSkeleton />
+  }
+
+  if (!entries?.length) {
+    return (
+      <Flex
+        width='full'
+        paddingTop='4'
+        justifyContent='center'
+      >
+        <Paragraph
+          size='sm'
+          variant='medium'
+          textAlign='center'
+        >
+          No entries found
+        </Paragraph>
+      </Flex>
+    )
+  }
+
+  return (
+    <VStack>
+      <List width='full' spacing={6} paddingTop={2} marginBottom={5}>
+        {entries.map(
+          ({
+            id,
+            work,
+            resources,
+            dateTitle,
+            curiosity,
+            programming
+          }) => {
+            const shouldShowResources = (resources ?? []).length > 0
+
+            return (
+              <VStack
+                as='li'
+                key={id}
+                width='full'
+                spacing={5}
+                alignItems='flex-start'
+                paddingTop={5}
+                borderTopWidth={1}
+              >
+                <Text
+                  as='h3'
+                  bgClip='text'
+                  fontSize={22}
+                  fontWeight='bold'
+                  bgGradient={gradients.greenToBlue}
+                >
+                  {dateTitle}
+                </Text>
+
+                <LearningJournalList title='Work' list={work} />
+                <LearningJournalList
+                  title='Programming'
+                  list={programming}
+                />
+                <LearningJournalList title='Curiosity' list={curiosity} />
+
+                {shouldShowResources
+                  ? (
+                    <>
+                      <Heading size='xs'>Resources</Heading>
+                      <List spacing={2}>
+                        {resources.map(({ url, label }) => (
+                          <ListItem key={label}>
+                            <ListIcon as={LinkIcon} />
+
+                            <Link
+                              href={url}
+                              bgClip='text'
+                              isExternal
+                              fontWeight='bold'
+                              bgGradient={gradients.greenToBlue}
+                              borderBottomWidth={1}
+                              borderBottomColor='gray.100'
+                            >
+                              {label}
+                            </Link>
+                          </ListItem>
+                        ))}
+                      </List>
+                    </>
+                    )
+                  : null}
+              </VStack>
+            )
+          }
+        )}
+      </List>
+    </VStack>
+  )
+}
+
 function LearningJournalContent () {
   const [date, setDate] = useState<string>(initialDate)
   const [cursors, setCursors] = useState<Cursors>(initialCursors)
 
-  const { data: { edges, pageInfo } = {}, mutate, isValidating } = useSWR(
-    getSWRKey(date, cursors),
-    () => getLearningJournalPage(date, cursors)
+  const {
+    data: { edges, pageInfo } = {},
+    mutate,
+    isValidating
+  } = useSWR(getSWRKey(date, cursors), () =>
+    getLearningJournalPage(date, cursors)
   )
 
-  const { hasPreviousPage, hasNextPage, startCursor, endCursor } = pageInfo ?? {}
+  const { hasPreviousPage, hasNextPage, startCursor, endCursor } =
+    pageInfo ?? {}
 
-  const formattedEntries = edges?.map(({ node }) => ({
+  const entries = edges?.map(({ node }) => ({
     ...node,
     dateTitle: DateTime.fromISO(node.date).toFormat('DD')
   }))
@@ -85,7 +210,8 @@ function LearningJournalContent () {
     mutate()
   }
 
-  const shouldShowEntries = formattedEntries?.length > 0 && !isValidating
+  const hasEntries = entries?.length > 0
+  const isLoading = !hasEntries && isValidating
 
   return (
     <VStack
@@ -126,111 +252,12 @@ function LearningJournalContent () {
         </Stack>
       </VStack>
 
-      {isValidating && (
-        <VStack width='full'>
-          <Box padding='6' boxShadow='lg' bg='white' w='full'>
-            <SkeletonCircle size='10' />
-            <SkeletonText mt='4' noOfLines={4} spacing='4' />
-          </Box>
-          <Box padding='6' boxShadow='lg' bg='white' w='full'>
-            <SkeletonCircle size='10' />
-            <SkeletonText mt='4' noOfLines={4} spacing='4' />
-          </Box>
-          <Box padding='6' boxShadow='lg' bg='white' w='full'>
-            <SkeletonCircle size='10' />
-            <SkeletonText mt='4' noOfLines={4} spacing='4' />
-          </Box>
-        </VStack>
-      )}
-
       <HydrationSkeleton
         width='full'
         endColor='transparent'
         startColor='transparent'
       >
-        {shouldShowEntries
-          ? (
-            <VStack>
-              <List width='full' spacing={6} paddingTop={2} marginBottom={5}>
-                {(formattedEntries ?? []).map(
-                  ({ id, work, resources, dateTitle, curiosity, programming }) => {
-                    const shouldShowResources = (resources ?? []).length > 0
-
-                    return (
-                      <VStack
-                        as='li'
-                        key={id}
-                        width='full'
-                        spacing={5}
-                        alignItems='flex-start'
-                        paddingTop={5}
-                        borderTopWidth={1}
-                      >
-                        <Text
-                          as='h3'
-                          bgClip='text'
-                          fontSize={22}
-                          fontWeight='bold'
-                          bgGradient={gradients.greenToBlue}
-                        >
-                          {dateTitle}
-                        </Text>
-
-                        <LearningJournalList title='Work' list={work} />
-                        <LearningJournalList
-                          title='Programming'
-                          list={programming}
-                        />
-                        <LearningJournalList title='Curiosity' list={curiosity} />
-
-                        {shouldShowResources
-                          ? (
-                            <>
-                              <Heading size='xs'>Resources</Heading>
-                              <List spacing={2}>
-                                {resources.map(({ url, label }) => (
-                                  <ListItem key={label}>
-                                    <ListIcon as={LinkIcon} />
-
-                                    <Link
-                                      href={url}
-                                      bgClip='text'
-                                      isExternal
-                                      fontWeight='bold'
-                                      bgGradient={gradients.greenToBlue}
-                                      borderBottomWidth={1}
-                                      borderBottomColor='gray.100'
-                                    >
-                                      {label}
-                                    </Link>
-                                  </ListItem>
-                                ))}
-                              </List>
-                            </>
-                            )
-                          : null}
-                      </VStack>
-                    )
-                  }
-                )}
-              </List>
-            </VStack>
-            )
-          : (
-            <Flex
-              width='full'
-              paddingTop='4'
-              justifyContent='center'
-            >
-              <Paragraph
-                size='sm'
-                variant='medium'
-                textAlign='center'
-              >
-                No entries found
-              </Paragraph>
-            </Flex>
-            )}
+        <LearningJournalEntries isLoading={isLoading} entries={entries} />
       </HydrationSkeleton>
     </VStack>
   )
