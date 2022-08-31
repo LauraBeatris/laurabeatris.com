@@ -44,11 +44,18 @@ const GET_LEARNING_JOURNAL_PAGE_QUERY = gql`
   }
 `
 
-export async function getLearningJournalPage ({
-  date,
-  after,
-  before
-}: Partial<{ date: string, after: string, before: string }> = {}) {
+export type Cursors = {
+  after: string;
+  before: string;
+}
+
+export async function getLearningJournalPage (
+  _cacheKey?: string,
+  date?: string,
+  cursors?: Cursors
+) {
+  const { before, after } = cursors ?? {}
+
   const variables = {
     after,
     before,

@@ -24,19 +24,24 @@ import { LearningJournalList } from 'components/LearningJournalList'
 import { SingleDateSelector } from 'components/SingleDateSelector'
 import { HydrationSkeleton } from 'components/Base/HydrationSkeleton'
 import { gradients } from 'styles/theme/gradients'
-import { getLearningJournalPage } from 'graphql/queries/getLearningJournalPage'
+import { getLearningJournalPage, Cursors } from 'graphql/queries/getLearningJournalPage'
+
+const initialDate = null
+const initialCursors = {
+  after: null,
+  before: null
+}
+
+function getSWRKey (date?: string, cursors?: Cursors) {
+  return ['learning-journal', date, cursors]
+}
 
 export async function getStaticProps () {
   try {
     return {
       props: {
         fallback: {
-          [unstable_serialize([
-            'learning-journal-page',
-            undefined,
-            undefined,
-            undefined
-          ])]: await getLearningJournalPage()
+          [unstable_serialize(getSWRKey(initialDate, initialCursors))]: await getLearningJournalPage()
         }
       }
     }
@@ -51,37 +56,34 @@ export async function getStaticProps () {
 }
 
 function LearningJournalContent () {
-  const [date, setDate] = useState<string>()
-  const [afterCursor, setAfterCursor] = useState<string>()
-  const [beforeCursor, setBeforeCursor] = useState<string>()
+  const [date, setDate] = useState<string>(initialDate)
+  const [cursors, setCursors] = useState<Cursors>(initialCursors)
 
   const { data: { edges, pageInfo } = {}, isValidating } = useSWR(
-    ['learning-journal-page', date, afterCursor, beforeCursor],
-    () => getLearningJournalPage({ date, after: afterCursor, before: beforeCursor })
+    getSWRKey(date, cursors),
+    getLearningJournalPage
   )
 
-  const formattedEntries = edges?.map(({ node: { date, ...rest } }) => ({
-    ...rest,
-    dateTitle: DateTime.fromISO(date).toFormat('DD')
+  const { hasPreviousPage, hasNextPage, startCursor, endCursor } = pageInfo ?? {}
+
+  const formattedEntries = edges?.map(({ node }) => ({
+    ...node,
+    dateTitle: DateTime.fromISO(node.date).toFormat('DD')
   }))
 
   const handleInputValueChange = (inputValue: string) => {
     setDate(inputValue)
   }
 
-  const { hasPreviousPage, hasNextPage, startCursor, endCursor } = pageInfo ?? {}
-
   const handleNextPage = () => {
-    setAfterCursor(endCursor)
-    setBeforeCursor(undefined)
+    setCursors({ after: endCursor, before: null })
   }
 
   const handlePrevPage = () => {
-    setAfterCursor(undefined)
-    setBeforeCursor(startCursor)
+    setCursors({ before: startCursor, after: null })
   }
 
-  const hasEntries = formattedEntries?.length > 0 && !isValidating
+  const shouldShowEntries = formattedEntries?.length > 0 && !isValidating
 
   return (
     <VStack
@@ -144,7 +146,7 @@ function LearningJournalContent () {
         endColor='transparent'
         startColor='transparent'
       >
-        {hasEntries
+        {shouldShowEntries
           ? (
             <VStack>
               <List width='full' spacing={6} paddingTop={2} marginBottom={5}>
