@@ -24,19 +24,12 @@ import { LearningJournalList } from 'components/LearningJournalList'
 import { SingleDateSelector } from 'components/SingleDateSelector'
 import { HydrationSkeleton } from 'components/Base/HydrationSkeleton'
 import { gradients } from 'styles/theme/gradients'
-import {
-  Cursors,
-  getLearningJournalPage
-} from 'graphql/queries/getLearningJournalPage'
+import { getLearningJournalPage, LEARNING_JOURNAL_PAGE_SIZE } from 'graphql/queries/getLearningJournalPage'
 
-const initialDate = null
-const initialCursors = {
-  after: null,
-  before: null
-}
-
-function getSWRKey (date?: string, cursors?: Cursors) {
-  return `learning-journal/date:${date}/after:${cursors?.after}/before:${cursors?.before}`
+const initialDate = ''
+const initialPage = 1
+function getSWRKey (page: number, date: string) {
+  return `learning-journal/date:${date}/page:${page}`
 }
 
 export async function getStaticProps () {
@@ -44,7 +37,7 @@ export async function getStaticProps () {
     return {
       props: {
         fallback: {
-          [getSWRKey()]: await getLearningJournalPage()
+          [getSWRKey(initialPage, initialDate)]: await getLearningJournalPage(initialPage, initialDate)
         }
       }
     }
@@ -176,38 +169,38 @@ function LearningJournalEntries ({ isLoading, entries }) {
   )
 }
 
+function calculatePagesCount (pageSize, totalCount) {
+  return totalCount < pageSize ? 1 : Math.ceil(totalCount / pageSize)
+}
+
 function LearningJournalContent () {
-  const [date, setDate] = useState<string>(initialDate)
-  const [cursors, setCursors] = useState<Cursors>(initialCursors)
+  const [page, setPage] = useState(initialPage)
+  const [date, setDate] = useState(initialDate)
 
   const {
-    data: { edges, pageInfo } = {},
-    mutate,
+    data: { edges, pageInfo, aggregate } = {},
     isValidating
-  } = useSWR(getSWRKey(date, cursors), () =>
-    getLearningJournalPage(date, cursors)
+  } = useSWR(getSWRKey(page, date), () =>
+    getLearningJournalPage(page, date)
   )
 
-  const { hasPreviousPage, hasNextPage, startCursor, endCursor } =
-    pageInfo ?? {}
-
+  const { hasPreviousPage, hasNextPage } = pageInfo ?? {}
   const entries = edges?.map(({ node }) => ({
     ...node,
     dateTitle: DateTime.fromISO(node.date).toFormat('DD')
   }))
+  const pagesCount = calculatePagesCount(LEARNING_JOURNAL_PAGE_SIZE, aggregate?.count)
 
-  const handleInputValueChange = (inputValue: string) => {
+  const handleDateInputValueChange = (inputValue: string) => {
     setDate(inputValue)
   }
 
   const handleNextPage = () => {
-    setCursors({ after: endCursor, before: null })
-    mutate()
+    setPage(prev => Math.min(prev + 1, pagesCount))
   }
 
   const handlePrevPage = () => {
-    setCursors({ before: startCursor, after: null })
-    mutate()
+    setPage(prev => Math.max(prev - 1, 1))
   }
 
   const hasEntries = entries?.length > 0
@@ -229,7 +222,7 @@ function LearningJournalContent () {
         </Paragraph>
 
         <Stack direction={['column', 'row']} paddingTop='2'>
-          <SingleDateSelector onInputValueChange={handleInputValueChange} />
+          <SingleDateSelector onInputValueChange={handleDateInputValueChange} />
 
           <HStack justifyContent={['center', 'flex-start']}>
             <Button

@@ -3,23 +3,21 @@ import { formatRFC3339 } from 'date-fns'
 
 import { graphQLClient } from 'config/graphQLClient'
 
-const CURSOR_PAGE_SIZE = 2
 const GET_LEARNING_JOURNAL_PAGE_QUERY = gql`
   query GetLearningJournalPage(
     $where: LearningJournalWhereInput
-    $first: Int
-    $last: Int
-    $after: String
-    $before: String
+    $limit: Int!
+    $offset: Int!
   ) {
     learningJournalsConnection(
       orderBy: date_DESC
       where: $where
-      first: $first
-      last: $last
-      after: $after
-      before: $before
+      first: $limit
+      skip: $offset
     ) {
+      aggregate {
+        count
+      }
       edges {
         node {
           id
@@ -37,28 +35,19 @@ const GET_LEARNING_JOURNAL_PAGE_QUERY = gql`
       pageInfo {
         hasNextPage
         hasPreviousPage
-        startCursor
-        endCursor
       }
     }
   }
 `
 
-export type Cursors = {
-  after: string;
-  before: string;
-}
-
+export const LEARNING_JOURNAL_PAGE_SIZE = 2
 export async function getLearningJournalPage (
-  date?: string,
-  cursors?: Cursors
+  page: number,
+  date: string
 ) {
-  const { before, after } = cursors ?? {}
-
   const variables = {
-    after,
-    before,
-    ...(before ? { last: CURSOR_PAGE_SIZE } : { first: CURSOR_PAGE_SIZE }),
+    limit: LEARNING_JOURNAL_PAGE_SIZE,
+    offset: Number((page - 1) * LEARNING_JOURNAL_PAGE_SIZE),
     ...(date
       ? {
           where: {
