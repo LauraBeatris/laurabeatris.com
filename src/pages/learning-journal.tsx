@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react'
 import { ChevronLeftIcon, ChevronRightIcon, LinkIcon } from '@chakra-ui/icons'
 import { DateTime } from 'luxon'
-import useSWR, { SWRConfig, unstable_serialize } from 'swr'
+import useSWR, { SWRConfig } from 'swr'
 
 import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
@@ -33,7 +33,7 @@ const initialCursors = {
 }
 
 function getSWRKey (date?: string, cursors?: Cursors) {
-  return ['learning-journal', date, cursors]
+  return `learning-journal/date:${date}/after:${cursors?.after}/before:${cursors?.before}`
 }
 
 export async function getStaticProps () {
@@ -41,7 +41,7 @@ export async function getStaticProps () {
     return {
       props: {
         fallback: {
-          [unstable_serialize(getSWRKey(initialDate, initialCursors))]: await getLearningJournalPage()
+          [getSWRKey()]: await getLearningJournalPage()
         }
       }
     }
@@ -59,9 +59,9 @@ function LearningJournalContent () {
   const [date, setDate] = useState<string>(initialDate)
   const [cursors, setCursors] = useState<Cursors>(initialCursors)
 
-  const { data: { edges, pageInfo } = {}, isValidating } = useSWR(
+  const { data: { edges, pageInfo } = {}, mutate, isValidating } = useSWR(
     getSWRKey(date, cursors),
-    getLearningJournalPage
+    () => getLearningJournalPage(date, cursors)
   )
 
   const { hasPreviousPage, hasNextPage, startCursor, endCursor } = pageInfo ?? {}
@@ -77,10 +77,12 @@ function LearningJournalContent () {
 
   const handleNextPage = () => {
     setCursors({ after: endCursor, before: null })
+    mutate()
   }
 
   const handlePrevPage = () => {
     setCursors({ before: startCursor, after: null })
+    mutate()
   }
 
   const shouldShowEntries = formattedEntries?.length > 0 && !isValidating

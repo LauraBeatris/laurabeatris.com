@@ -50,7 +50,6 @@ export type Cursors = {
 }
 
 export async function getLearningJournalPage (
-  _cacheKey?: string,
   date?: string,
   cursors?: Cursors
 ) {
