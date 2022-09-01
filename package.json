@@ -9,7 +9,8 @@
     "lint:style": "eslint . --ext=.js,.ts,.tsx --fix",
     "lint:types": "tsc --noemit",
     "lint:unused-exports": "./node_modules/.bin/ts-unused-exports tsconfig.json --allowUnusedTypes --excludePathsFromReport=pages",
-    "lint": "run-p lint:*"
+    "lint": "run-p lint:*",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.3",
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "@graphcms/rich-text-types": "^0.3.1",
+    "@graphql-codegen/cli": "2.12.0",
     "@types/node": "^14.14.22",
     "@types/react": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^4.14.0",
@@ -61,6 +63,9 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "ts-unused-exports": "^7.0.1",
-    "typescript": "^4.1.3"
+    "typescript": "^4.1.3",
+    "@graphql-codegen/typescript": "2.7.3",
+    "@graphql-codegen/typescript-operations": "2.5.3",
+    "@graphql-codegen/introspection": "2.2.1"
   }
 }
