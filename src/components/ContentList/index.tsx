@@ -2,7 +2,11 @@ import { Flex, SimpleGrid } from '@chakra-ui/react'
 
 import { ContentBox } from 'components/ContentBox'
 
-import { ContentListProps } from './types'
+import { Content } from 'graphql/schema'
+
+type ContentListProps = {
+  contentList: Array<Content>
+}
 
 export function ContentList ({ contentList }: ContentListProps) {
   return (

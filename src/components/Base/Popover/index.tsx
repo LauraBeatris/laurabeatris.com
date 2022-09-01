@@ -6,13 +6,18 @@ import {
   PopoverTrigger,
   PopoverContent,
   PopoverCloseButton
+  , PopoverProps as ChakraPopoverProps
 } from '@chakra-ui/react'
 import useSound from 'use-sound'
 
 import { Paragraph } from 'components/Base/Paragraph'
 
 import menuOpenSound from '../../../../public/sounds/menu-open.mp3'
-import { PopoverProps } from './types'
+
+type PopoverProps = ChakraPopoverProps & {
+  popoverTextElement: JSX.Element;
+  buttonContent: React.ReactNode,
+}
 
 const popoverBackgroundCss = {
   backgroundColor: 'var(--popover-background-color)'

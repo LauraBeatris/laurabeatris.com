@@ -4,7 +4,11 @@ import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
 import { gradients } from 'styles/theme/gradients'
 
-import { AchievementsProps } from './types'
+import { Achievement } from 'graphql/schema'
+
+type AchievementsProps = {
+  achievements: Array<Achievement>
+}
 
 export function Achievements ({ achievements }: AchievementsProps) {
   return (

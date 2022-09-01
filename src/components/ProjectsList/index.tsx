@@ -9,11 +9,14 @@ import { Popover } from 'components/Base/Popover'
 import { PaginationButton } from 'components/PaginationButton'
 import { ProjectFilters } from 'components/ProjectFilters'
 import { PAGINATION_ITEMS_PER_PAGE, usePagination } from 'hooks/usePagination'
-import { Project as ProjectType, StackCategory, StackCategoryEnum } from 'graphql/schema'
+import { Project as ProjectSchema, StackCategory, StackCategoryEnum, TransformedStack } from 'graphql/schema'
 import { useProjects } from 'hooks/useProjects'
 import { Paragraph } from 'components/Base/Paragraph'
 
-import { ProjectsListProps } from './types'
+type ProjectsListProps = {
+  initialProjects: Array<ProjectSchema>;
+  transformedStack: TransformedStack
+}
 
 const PROJECTS_POPOVER_TEXT = <p>Click on the projects to see more details about it.<br /> Also, there are filters to explore projects according to certain titles and technologies.</p>
 const DEFAULT_DEBOUNCE_DELAY_MILLISECONDS = 500
@@ -47,7 +50,7 @@ export function ProjectsList ({
     data,
     hasMoreItems,
     handlePagination
-  } = usePagination<ProjectType>({ list: projects })
+  } = usePagination<ProjectSchema>({ list: projects })
 
   const handleTitleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value)

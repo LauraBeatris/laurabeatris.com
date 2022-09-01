@@ -6,6 +6,7 @@ import {
   Stack,
   WrapItem,
   useDisclosure
+  , BoxProps
 } from '@chakra-ui/react'
 import Image from 'next/image'
 import { AiFillGithub, AiOutlineLink } from 'react-icons/ai'
@@ -14,8 +15,23 @@ import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
 import { HydrationSkeleton } from 'components/Base/HydrationSkeleton'
 
-import { ProjectProps } from './types'
 import { ProjectDetailsModal } from './ProjectDetailsModal'
+
+type ProjectProps = BoxProps & {
+  title: string;
+  liveUrl: string;
+  githubUrl: string;
+  description: string;
+  mainImageUrl: string;
+  stack: {
+    id: string;
+    language: string;
+    framework?: string;
+    libraries?: Array<string>;
+    databases?: Array<string>;
+    categories: Array<string>;
+  };
+}
 
 export function Project ({
   stack,

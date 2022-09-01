@@ -4,7 +4,7 @@ import { QueryFunctionContext } from 'react-query'
 import { graphQLClient } from 'config/graphQLClient'
 import { Project, StackCategory } from 'graphql/schema'
 
-export const GET_PROJECTS_BY_STACKS = gql`
+const GET_PROJECTS_BY_STACKS_QUERY = gql`
  query GetProjectsByStacks(
    $title: String = "",
    $categories: [StackCategory!] = [Frontend, Backend, Package, Mobile]
@@ -48,7 +48,7 @@ export async function getProjects (context?: QueryFunctionContext<GetProjectsQue
   const [, filters = {}] = context?.queryKey ?? []
 
   const { stacks } = await graphQLClient.request(
-    GET_PROJECTS_BY_STACKS,
+    GET_PROJECTS_BY_STACKS_QUERY,
     filters
   )
 

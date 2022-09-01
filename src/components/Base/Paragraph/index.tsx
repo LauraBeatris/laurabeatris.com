@@ -1,7 +1,10 @@
-import { Text, useStyleConfig } from '@chakra-ui/react'
+import { Text, useStyleConfig, TextProps } from '@chakra-ui/react'
 
-import { ParagraphProps } from './types'
 import { PARAGRAPH_THEME_KEY } from './styles'
+
+type ParagraphProps = TextProps & {
+  useColorModeVariant?: boolean;
+}
 
 export function Paragraph ({
   size,

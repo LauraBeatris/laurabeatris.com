@@ -1,9 +1,13 @@
 import Image from 'next/image'
-import { Text, Stack } from '@chakra-ui/react'
+import { StackProps, Text, Stack } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
 
-import { ImageWithCaptionsProps } from './types'
+type ImageWithCaptionsProps = StackProps & {
+  imageSrc: string;
+  subCaption: string;
+  mainCaption: string;
+}
 
 export function ImageWithCaptions ({
   imageSrc,

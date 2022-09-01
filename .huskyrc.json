@@ -1,5 +1,5 @@
 {
   "hooks": {
-    "pre-push": "yarn linter"
+    "pre-push": "yarn lint"
   }
 }

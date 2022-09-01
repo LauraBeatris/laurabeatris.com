@@ -1,10 +1,13 @@
-import { Flex } from '@chakra-ui/react'
+import { Flex, FlexProps } from '@chakra-ui/react'
 
 import { theme } from 'styles/theme'
 
-import { ToggleThemeIconProps } from './types'
-
 const { colors } = theme
+
+type ToggleThemeIconProps = FlexProps & {
+  title: string;
+  isDarkMode?: boolean;
+}
 
 export function ToggleThemeIcon ({
   title,

@@ -1,7 +1,9 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
-import { Button, Text } from '@chakra-ui/react'
+import { Button, Text, ButtonProps } from '@chakra-ui/react'
 
-import { PaginationButtonProps } from './types'
+export type PaginationButtonProps = ButtonProps & {
+  showMore: boolean;
+}
 
 export function PaginationButton ({
   showMore,

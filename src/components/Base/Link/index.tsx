@@ -1,8 +1,11 @@
 import NextLink from 'next/link'
 import { useRouter } from 'next/dist/client/router'
-import { Link as ChakraLink } from '@chakra-ui/react'
+import { Link as ChakraLink, LinkProps as ChakraLinkProps } from '@chakra-ui/react'
+import { PropsWithChildren } from 'react'
 
-import { LinkProps } from './types'
+type LinkProps = ChakraLinkProps & PropsWithChildren<{
+  href: string;
+}>
 
 export function Link ({
   href,
@@ -10,7 +13,6 @@ export function Link ({
   ...rest
 }: LinkProps) {
   const router = useRouter()
-
   const isActive = router.pathname === href
 
   return (
