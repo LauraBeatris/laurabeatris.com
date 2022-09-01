@@ -130,7 +130,7 @@ export const singleDateSelectorStyles: ComponentMultiStyleConfig = {
         '&[data-today="true"]': {
           borderColor: theme.colors[colorScheme][400],
           borderWidth: 1,
-          color: 'gray.700'
+          color: 'white'
         },
         '&[data-dont-round="true"]': {
           borderRadius: 0,
