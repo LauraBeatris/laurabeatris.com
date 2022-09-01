@@ -10,7 +10,8 @@
 
 ---
 <p align="center">
-   <img src="./.github/docs/images/homepage.png" width="500"/>
+   <img src="./.github/docs/images/main-page-mobile.png" width="200"/>
+   <img src="./.github/docs/images/learning-journal-page-mobile.png" width="200"/>
 </p>
 
 <p align="center">
