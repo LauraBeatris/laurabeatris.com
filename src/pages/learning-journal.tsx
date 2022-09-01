@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react'
 import { ChevronLeftIcon, ChevronRightIcon, LinkIcon } from '@chakra-ui/icons'
 import { DateTime } from 'luxon'
-import useSWR, { SWRConfig } from 'swr'
+import { SWRConfig } from 'swr'
 
 import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
@@ -24,20 +24,21 @@ import { LearningJournalList } from 'components/LearningJournalList'
 import { SingleDateSelector } from 'components/SingleDateSelector'
 import { HydrationSkeleton } from 'components/Base/HydrationSkeleton'
 import { gradients } from 'styles/theme/gradients'
-import { getLearningJournalPage, LEARNING_JOURNAL_PAGE_SIZE } from 'graphql/queries/getLearningJournalPage'
+import { getLearningJournalPage } from 'graphql/queries/getLearningJournalPage'
+import { SWRCacheKeyGetters } from 'hooks/SWRCacheKeyGetters'
+import { useLearningJournalQuery } from 'hooks/useLearningJournalQuery'
 
 const initialDate = null
 const initialPage = 1
-function getSWRKey (page: number, date: string) {
-  return `learning-journal/date:${date}/page:${page}`
-}
 
 export async function getStaticProps () {
   try {
     return {
       props: {
         fallback: {
-          [getSWRKey(initialPage, initialDate)]: await getLearningJournalPage(initialPage, initialDate)
+          [SWRCacheKeyGetters.learningJournal(initialPage, initialDate)]: (
+            await getLearningJournalPage(initialPage, initialDate)
+          )
         }
       }
     }
@@ -70,7 +71,17 @@ function LearningJournalSkeleton () {
   )
 }
 
-function LearningJournalEntries ({ isLoading, entries }) {
+type LearningJournalEntriesProps = {
+  isLoading: boolean;
+  // TODO - Fix type definition from learning journal entries using types from GraphQL Codegen
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  entries: any;
+}
+
+function LearningJournalEntries ({
+  entries,
+  isLoading
+}: LearningJournalEntriesProps) {
   if (isLoading) {
     return <LearningJournalSkeleton />
   }
@@ -169,42 +180,28 @@ function LearningJournalEntries ({ isLoading, entries }) {
   )
 }
 
-function calculatePagesCount (pageSize, totalCount) {
-  return totalCount < pageSize ? 1 : Math.ceil(totalCount / pageSize)
-}
-
-function LearningJournalContent () {
-  const [page, setPage] = useState(initialPage)
-  const [date, setDate] = useState(initialDate)
-
-  const {
-    data: { edges, pageInfo, aggregate } = {},
-    isValidating
-  } = useSWR(getSWRKey(page, date), () =>
-    getLearningJournalPage(page, date)
-  )
-
-  const { hasPreviousPage, hasNextPage } = pageInfo ?? {}
-  const entries = edges?.map(({ node }) => ({
+function transformLearningJournalEdges (edges) {
+  return edges?.map(({ node }) => ({
     ...node,
     dateTitle: DateTime.fromISO(node.date).toFormat('DD')
   }))
-  const pagesCount = calculatePagesCount(LEARNING_JOURNAL_PAGE_SIZE, aggregate?.count)
+}
+
+function LearningJournalContent () {
+  const [date, setDate] = useState(initialDate)
+  const {
+    data: { edges, pageInfo } = {},
+    isLoading,
+    handleNextPage,
+    handlePrevPage
+  } = useLearningJournalQuery({ date, initialPage })
+
+  const { hasPreviousPage, hasNextPage } = pageInfo ?? {}
+  const entries = transformLearningJournalEdges(edges)
 
   const handleDateInputValueChange = (inputValue: string) => {
     setDate(inputValue)
   }
-
-  const handleNextPage = () => {
-    setPage(prev => Math.min(prev + 1, pagesCount))
-  }
-
-  const handlePrevPage = () => {
-    setPage(prev => Math.max(prev - 1, 1))
-  }
-
-  const hasEntries = entries?.length > 0
-  const isLoading = !hasEntries && isValidating
 
   return (
     <VStack
