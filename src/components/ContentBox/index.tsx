@@ -1,10 +1,19 @@
 import Image from 'next/image'
-import { Link, Stack } from '@chakra-ui/react'
+import { PropsWithChildren } from 'react'
+import { Link, Stack, StackProps } from '@chakra-ui/react'
+
+import { Content } from 'graphql/schema'
 
 import { Paragraph } from 'components/Base/Paragraph'
 import { Heading } from 'components/Base/Heading'
 
-import { ContentBoxProps } from './types'
+type ContentBoxProps = StackProps
+  & Omit<Content, 'id' | 'image'>
+  & PropsWithChildren<{
+    title: string;
+    imageSrc: string;
+    subtitle: string;
+  }>
 
 export function ContentBox ({
   url,

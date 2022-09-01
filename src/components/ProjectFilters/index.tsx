@@ -3,12 +3,24 @@ import { Search2Icon, SettingsIcon } from '@chakra-ui/icons'
 import { useIsFetching } from 'react-query'
 import useSound from 'use-sound'
 
+import { ChangeEvent } from 'react'
+
+import { MenuOptionGroupProps } from '@chakra-ui/menu'
+
 import { GET_PROJECTS_QUERY_KEY } from 'hooks/useProjects'
 import { INITIAL_STACK_CATEGORIES } from 'components/ProjectsList'
 import { gradients } from 'styles/theme/gradients'
 
+import { StackCategory, TransformedStack } from 'graphql/schema'
+
 import menuOpenSound from '../../../public/sounds/menu-open.mp3'
-import { ProjectFiltersProps } from './types'
+
+type ProjectFiltersProps = MenuOptionGroupProps & {
+  stackCategories: StackCategory[],
+  transformedStack: TransformedStack
+  onTitleInputChange: (event: ChangeEvent) => void;
+  onStackCategoryOptionsChange: (categories: StackCategory | Array<StackCategory>) => void;
+}
 
 const projectFiltersBackgroundCss = {
   backgroundColor: 'var(--project-filters-background-color)'
