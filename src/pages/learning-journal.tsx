@@ -26,7 +26,7 @@ import { HydrationSkeleton } from 'components/Base/HydrationSkeleton'
 import { gradients } from 'styles/theme/gradients'
 import { getLearningJournalPage, LEARNING_JOURNAL_PAGE_SIZE } from 'graphql/queries/getLearningJournalPage'
 
-const initialDate = ''
+const initialDate = null
 const initialPage = 1
 function getSWRKey (page: number, date: string) {
   return `learning-journal/date:${date}/page:${page}`

@@ -144,32 +144,32 @@ export function SingleDateSelector ({ onInputValueChange }: SingleDateSelectorPr
         <PopoverTrigger>
           <InputGroup>
             <Input
+              value={inputValue}
               onBlur={() => onInputBlur()}
               onChange={(e) => onInputChange(e.target.value)}
               placeholder='Select a Date'
-              value={inputValue}
             />
 
             <InputRightElement width='unset' paddingRight='2'>
               <IconButton
+                sx={styles.icon}
+                icon={<MdClose />}
+                onClick={() => setInputValue('')}
                 minWidth='auto'
                 variant='link'
                 _focus={{
                   outline: 'none'
                 }}
                 marginRight='1'
-                sx={styles.icon}
-                icon={<MdClose />}
-                onClick={() => setInputValue('')}
                 aria-label='Clean input'
               />
 
               <IconButton
-                aria-label='Open Calendar'
+                sx={styles.icon}
                 icon={<IoCalendarClearSharp />}
                 minWidth='auto'
+                aria-label='Open Calendar'
                 onClick={() => setIsOpen(!isOpen)}
-                sx={styles.icon}
                 variant='link'
                 _focus={{
                   outline: 'none'
@@ -182,22 +182,26 @@ export function SingleDateSelector ({ onInputValueChange }: SingleDateSelectorPr
         <PopoverContent sx={styles.popContent} css={dateSelectorBackgroundColor}>
           <PopoverBody sx={styles.popBody}>
             <ButtonGroup sx={styles.shortcutButtonGroup}>
-              <Button onClick={() => select(clearTime(new Date()), true)} size='sm' sx={styles.shortcutButton}>
+              <Button
+                sx={styles.shortcutButton}
+                size='sm'
+                onClick={() => select(clearTime(new Date()), true)}
+              >
                 Today
               </Button>
 
               <Button
-                onClick={() => select(addDays(clearTime(new Date()), 1), true)}
-                size='sm'
                 sx={styles.shortcutButton}
+                size='sm'
+                onClick={() => select(addDays(clearTime(new Date()), 1), true)}
               >
                 Tomorrow
               </Button>
 
               <Button
-                onClick={() => select(nextMonday(clearTime(new Date())), true)}
-                size='sm'
                 sx={styles.shortcutButton}
+                size='sm'
+                onClick={() => select(nextMonday(clearTime(new Date())), true)}
               >
                 Next Monday
               </Button>
@@ -207,21 +211,21 @@ export function SingleDateSelector ({ onInputValueChange }: SingleDateSelectorPr
 
             <Box sx={styles.navigationContainer}>
               <IconButton
-                aria-label='Previous Month'
-                icon={<IoChevronBackSharp />}
-                onClick={viewPreviousMonth}
-                size='sm'
                 sx={styles.navigationButton}
+                icon={<IoChevronBackSharp />}
+                size='sm'
+                onClick={viewPreviousMonth}
+                aria-label='Previous Month'
               />
 
               <Text sx={styles.navigationLabel}>{format(viewing, 'MMMM yyyy')}</Text>
 
               <IconButton
-                aria-label='Next Month'
+                sx={styles.navigationButton}
+                size='sm'
                 icon={<IoChevronForwardSharp />}
                 onClick={viewNextMonth}
-                size='sm'
-                sx={styles.navigationButton}
+                aria-label='Next Month'
               />
             </Box>
 
@@ -235,15 +239,19 @@ export function SingleDateSelector ({ onInputValueChange }: SingleDateSelectorPr
               </Box>
 
               {calendar[0].map((week) => (
-                <Box key={`week-${week[0]}`} sx={styles.calendarMatrixContainer}>
+                <Box
+                  key={`week-${week[0]}`}
+                  sx={styles.calendarMatrixContainer}
+                  userSelect='none'
+                >
                   {week.map((day) => (
                     <Box
+                      sx={styles.calendarMatrixDay}
+                      key={`${day}`}
+                      onClick={() => toggle(day, true)}
                       data-in-range={inRange(day, startOfMonth(viewing), endOfMonth(viewing))}
                       data-selected={isSelected(day)}
                       data-today={isToday(day)}
-                      key={`${day}`}
-                      onClick={() => toggle(day, true)}
-                      sx={styles.calendarMatrixDay}
                     >
                       <Text>{format(day, 'dd')}</Text>
                     </Box>

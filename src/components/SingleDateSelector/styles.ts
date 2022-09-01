@@ -118,7 +118,7 @@ export const singleDateSelectorStyles: ComponentMultiStyleConfig = {
         },
         '&[data-selected="true"]': {
           backgroundColor: theme.colors[colorScheme][400],
-          color: colorMode === 'light' ? 'white' : 'gray.700',
+          color: 'gray.700',
           shadow: 'md',
           _hover: {
             backgroundColor: 'none'
@@ -130,7 +130,7 @@ export const singleDateSelectorStyles: ComponentMultiStyleConfig = {
         '&[data-today="true"]': {
           borderColor: theme.colors[colorScheme][400],
           borderWidth: 1,
-          color: theme.colors[colorScheme][400]
+          color: 'gray.700'
         },
         '&[data-dont-round="true"]': {
           borderRadius: 0,
