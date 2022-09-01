@@ -8,13 +8,14 @@ import { ContentBoxProps } from './types'
 
 export function ContentBox ({
   url,
+  width,
   title,
   children,
   imageSrc,
   subtitle
 }: ContentBoxProps) {
   return (
-    <Link href={url} isExternal>
+    <Link href={url} width={width} isExternal>
       <Stack direction='column' spacing={3}>
         <Image
           src={imageSrc}

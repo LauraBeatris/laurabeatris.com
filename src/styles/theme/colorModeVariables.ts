@@ -17,5 +17,6 @@ export const colorModeVariables: Types.Variables = {
   '--header-active-link-color': [colors.dark, colors.green['400']],
   '--header-mobile-menu-color': [colors.white['100'], colors.dark],
   '--project-filters-background-color': [colors.dark, colors.white['100']],
-  '--project-filters-color': [colors.white['100'], colors.dark]
+  '--project-filters-color': [colors.white['100'], colors.dark],
+  '--date-selector-background-color': [colors.white['100'], colors.dark]
 }

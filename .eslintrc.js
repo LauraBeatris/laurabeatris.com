@@ -24,7 +24,8 @@ module.exports = {
     'import/order': ['error', {
       groups: ['builtin', 'external', 'internal'],
       'newlines-between': 'always-and-inside-groups'
-    }]
+    }],
+    camelcase: 'off'
   },
   globals: {
     React: 'writable'
