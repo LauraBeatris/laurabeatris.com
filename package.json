@@ -6,10 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint-code-style": "eslint . --ext=.js,.ts,.tsx --fix",
-    "lint-check-types": "tsc --noemit",
-    "lint-unused-exports": "./node_modules/.bin/ts-unused-exports tsconfig.json --allowUnusedTypes --excludePathsFromReport=pages",
-    "linter": "yarn lint-code-style && yarn lint-check-types"
+    "lint:style": "eslint . --ext=.js,.ts,.tsx --fix",
+    "lint:types": "tsc --noemit",
+    "lint:unused-exports": "./node_modules/.bin/ts-unused-exports tsconfig.json --allowUnusedTypes --excludePathsFromReport=pages",
+    "lint": "run-p lint:*"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.3",
@@ -58,6 +58,7 @@
     "eslint-plugin-react-hooks": "^4.0.8",
     "globby": "^11.0.2",
     "husky": "^4.3.8",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "ts-unused-exports": "^7.0.1",
     "typescript": "^4.1.3"
