@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "run-p dev:*",
+    "dev:server": "next dev",
+    "dev:codegen-watch": "graphql-codegen --watch --config codegen.yml",
     "build": "next build",
     "start": "next start",
     "lint:style": "eslint . --ext=.js,.ts,.tsx --fix",
