@@ -2,10 +2,9 @@ import Image from 'next/image'
 import { PropsWithChildren } from 'react'
 import { Link, Stack, StackProps } from '@chakra-ui/react'
 
-import { Content } from 'graphql/schema'
-
 import { Paragraph } from 'components/Base/Paragraph'
 import { Heading } from 'components/Base/Heading'
+import { Content } from 'generated/graphql'
 
 type ContentBoxProps = StackProps
   & Omit<Content, 'id' | 'image'>

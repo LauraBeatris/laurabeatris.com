@@ -9,32 +9,32 @@ import { Popover } from 'components/Base/Popover'
 import { PaginationButton } from 'components/PaginationButton'
 import { ProjectFilters } from 'components/ProjectFilters'
 import { PAGINATION_ITEMS_PER_PAGE, usePagination } from 'hooks/usePagination'
-import { Project as ProjectSchema, StackCategory, StackCategoryEnum, TransformedStack } from 'graphql/schema'
 import { useProjects } from 'hooks/useProjects'
 import { Paragraph } from 'components/Base/Paragraph'
+import { Project as ProjectSchema, StackCategory } from 'generated/graphql'
 
 type ProjectsListProps = {
   initialProjects: Array<ProjectSchema>;
-  transformedStack: TransformedStack
+  stackCategories: Array<StackCategory>;
 }
 
 const PROJECTS_POPOVER_TEXT = <p>Click on the projects to see more details about it.<br /> Also, there are filters to explore projects according to certain titles and technologies.</p>
 const DEFAULT_DEBOUNCE_DELAY_MILLISECONDS = 500
 export const INITIAL_STACK_CATEGORIES = [
-  StackCategoryEnum.Backend,
-  StackCategoryEnum.Frontend,
-  StackCategoryEnum.Package,
-  StackCategoryEnum.Mobile
+  StackCategory.Backend,
+  StackCategory.Frontend,
+  StackCategory.Package,
+  StackCategory.Mobile
 ]
 
 const isWorkInProgressFeatureFlag = process.env.NEXT_PUBLIC_WORK_IN_PROGRESS_FEATURE_FLAG
 
 export function ProjectsList ({
   initialProjects,
-  transformedStack
+  stackCategories
 }: ProjectsListProps) {
   const [title, setTitle] = useState('')
-  const [stackCategories, setStackCategories] = useState(INITIAL_STACK_CATEGORIES)
+  const [selectedStackCategories, setSelectedStackCategories] = useState(INITIAL_STACK_CATEGORIES)
 
   const [debouncedTitle] = useDebounce(title, DEFAULT_DEBOUNCE_DELAY_MILLISECONDS)
   const [debouncedStackCategories] = useDebounce(stackCategories, DEFAULT_DEBOUNCE_DELAY_MILLISECONDS)
@@ -65,12 +65,11 @@ export function ProjectsList ({
     )
 
     if (shouldResetStackCategories) {
-      setStackCategories(INITIAL_STACK_CATEGORIES)
-
+      setSelectedStackCategories(INITIAL_STACK_CATEGORIES)
       return
     }
 
-    setStackCategories(
+    setSelectedStackCategories(
       Array.isArray(categoryOrCategories)
         ? categoryOrCategories
         : [categoryOrCategories]
@@ -118,8 +117,8 @@ export function ProjectsList ({
 
         <ProjectFilters
           stackCategories={stackCategories}
-          transformedStack={transformedStack}
           onTitleInputChange={handleTitleInputChange}
+          selectedStackCategories={selectedStackCategories}
           onStackCategoryOptionsChange={handleStackCategoryOptionsChange}
         />
       </Stack>

@@ -2,9 +2,8 @@ import { InferGetStaticPropsType } from 'next'
 import { VStack } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
-import { getTalks } from 'graphql/queries/getTalks'
-import { getPodcastParticipations } from 'graphql/queries/getPodcastParticipations'
 import { ContentList } from 'components/ContentList'
+import { getTalksPage } from 'graphql/queries/getTalksPage'
 
 function ContentSection ({ title, contentList }) {
   return (
@@ -22,13 +21,12 @@ function ContentSection ({ title, contentList }) {
 
 export async function getStaticProps () {
   try {
-    const talks = await getTalks()
-    const podcastParticipations = await getPodcastParticipations()
+    const { talks, podcasts } = await getTalksPage()
 
     return {
       props: {
         talks,
-        podcastParticipations
+        podcasts
       }
     }
   } catch (error) {
@@ -43,7 +41,7 @@ export async function getStaticProps () {
 
 export default function Talks ({
   talks,
-  podcastParticipations
+  podcasts
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <VStack
@@ -59,8 +57,8 @@ export default function Talks ({
       />
 
       <ContentSection
-        title='Podcast Participations'
-        contentList={podcastParticipations}
+        title='Podcasts'
+        contentList={podcasts}
       />
     </VStack>
   )

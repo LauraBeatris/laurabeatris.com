@@ -10,10 +10,8 @@ import { ProjectsList } from 'components/ProjectsList'
 import { Timeline } from 'components/Timeline'
 import { links } from 'constants/links'
 import { getDayOfWeek } from 'utils/getDayOfWeek'
-import { getTimelineList } from 'graphql/queries/getTimelineList'
-import { getStack } from 'graphql/queries/getStack'
-import { getProjects } from 'graphql/queries/getProjects'
 import { gradients } from 'styles/theme/gradients'
+import { getHomePage } from 'graphql/queries/getHomePage'
 
 const now = new Date()
 const dayOfWeek = getDayOfWeek(now.getDate(), now.getMonth(), now.getFullYear())
@@ -21,15 +19,17 @@ const GreenArrowRightIcon = () => <ArrowRightIcon color='green.400' style={{ wid
 
 export async function getServerSideProps () {
   try {
-    const timelineList = await getTimelineList()
-    const transformedStack = await getStack()
-    const initialProjects = await getProjects()
+    const {
+      timelineList,
+      initialProjects,
+      stackCategories
+    } = await getHomePage()
 
     return {
       props: {
         timelineList,
         initialProjects,
-        transformedStack
+        stackCategories
       }
     }
   } catch (error) {
@@ -45,7 +45,7 @@ export async function getServerSideProps () {
 export default function Home ({
   timelineList,
   initialProjects,
-  transformedStack
+  stackCategories
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <VStack
@@ -75,7 +75,7 @@ export default function Home ({
 
       <ProjectsList
         initialProjects={initialProjects}
-        transformedStack={transformedStack}
+        stackCategories={stackCategories}
       />
       <Timeline timelineList={timelineList} />
     </VStack>

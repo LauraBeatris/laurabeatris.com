@@ -2,22 +2,19 @@ import { Button, Flex, HStack, Input, InputGroup, InputLeftElement, Menu, MenuBu
 import { Search2Icon, SettingsIcon } from '@chakra-ui/icons'
 import { useIsFetching } from 'react-query'
 import useSound from 'use-sound'
-
 import { ChangeEvent } from 'react'
-
 import { MenuOptionGroupProps } from '@chakra-ui/menu'
 
 import { GET_PROJECTS_QUERY_KEY } from 'hooks/useProjects'
 import { INITIAL_STACK_CATEGORIES } from 'components/ProjectsList'
 import { gradients } from 'styles/theme/gradients'
-
-import { StackCategory, TransformedStack } from 'graphql/schema'
+import { StackCategory } from 'generated/graphql'
 
 import menuOpenSound from '../../../public/sounds/menu-open.mp3'
 
 type ProjectFiltersProps = MenuOptionGroupProps & {
   stackCategories: StackCategory[],
-  transformedStack: TransformedStack
+  selectedStackCategories: StackCategory[],
   onTitleInputChange: (event: ChangeEvent) => void;
   onStackCategoryOptionsChange: (categories: StackCategory | Array<StackCategory>) => void;
 }
@@ -40,8 +37,8 @@ const inputCss = {
 
 export function ProjectFilters ({
   stackCategories,
-  transformedStack,
   onTitleInputChange,
+  selectedStackCategories,
   onStackCategoryOptionsChange,
   ...rest
 }: ProjectFiltersProps) {
@@ -55,7 +52,7 @@ export function ProjectFilters ({
   const filters = [
     {
       title: 'Categories',
-      items: transformedStack.categories
+      items: stackCategories
     }
   ]
 
@@ -114,7 +111,7 @@ export function ProjectFilters ({
                 key={title}
                 title={title}
                 type='checkbox'
-                value={stackCategories}
+                value={selectedStackCategories}
                 bgClip='text'
                 onChange={onStackCategoryOptionsChange}
                 bgGradient={gradients.greenToBlue}

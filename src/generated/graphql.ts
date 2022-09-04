@@ -10938,6 +10938,14 @@ export type GetAboutMePageQueryVariables = Exact<{
 
 export type GetAboutMePageQuery = { __typename?: 'Query', aboutMePage?: { __typename?: 'AboutMePage', sections: Array<{ __typename?: 'Section', id: string, title: string, description?: { __typename?: 'RichText', raw: any } | null, images: Array<{ __typename?: 'Image', id: string, subCaption?: string | null, mainCaption: string, asset: { __typename?: 'Asset', id: string, url: string } }> }> } | null };
 
+export type GetHomePageQueryVariables = Exact<{
+  title?: InputMaybe<Scalars['String']>;
+  categories?: InputMaybe<Array<StackCategory> | StackCategory>;
+}>;
+
+
+export type GetHomePageQuery = { __typename?: 'Query', initialProjects: Array<{ __typename?: 'Stack', id: string, projects: Array<{ __typename?: 'Project', id: string, title: string, liveUrl?: string | null, githubUrl?: string | null, description?: string | null, stack?: { __typename?: 'Stack', id: string, framework?: string | null, language: string, libraries: Array<string>, databases: Array<string>, categories: Array<StackCategory> } | null, mainImage: { __typename?: 'Asset', id: string, url: string } }> }>, timelineList: Array<{ __typename?: 'Timeline', id: string, year: number, achievements: Array<{ __typename?: 'Achievement', id: string, title: string, description?: string | null }> }>, stacks: Array<{ __typename?: 'Stack', id: string, categories: Array<StackCategory> }> };
+
 export type GetLearningJournalPageQueryVariables = Exact<{
   where?: InputMaybe<LearningJournalWhereInput>;
   limit: Scalars['Int'];
@@ -10947,30 +10955,7 @@ export type GetLearningJournalPageQueryVariables = Exact<{
 
 export type GetLearningJournalPageQuery = { __typename?: 'Query', learningJournalsConnection: { __typename?: 'LearningJournalConnection', aggregate: { __typename?: 'Aggregate', count: number }, edges: Array<{ __typename?: 'LearningJournalEdge', node: { __typename?: 'LearningJournal', id: string, work: Array<string>, date: any, curiosity: Array<string>, programming: Array<string>, resources: Array<{ __typename?: 'Resource', id: string, url: string, label: string }> } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean } } };
 
-export type GetPodcastParticipationsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetTalksPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPodcastParticipationsQuery = { __typename?: 'Query', podcastParticipations: Array<{ __typename?: 'Content', id: string, url?: string | null, title: string, subtitle?: string | null, image?: { __typename?: 'Asset', id: string, url: string } | null }> };
-
-export type GetProjectsByStacksQueryVariables = Exact<{
-  title?: InputMaybe<Scalars['String']>;
-  categories?: InputMaybe<Array<StackCategory> | StackCategory>;
-}>;
-
-
-export type GetProjectsByStacksQuery = { __typename?: 'Query', stacks: Array<{ __typename?: 'Stack', id: string, projects: Array<{ __typename?: 'Project', id: string, title: string, liveUrl?: string | null, githubUrl?: string | null, description?: string | null, stack?: { __typename?: 'Stack', id: string, framework?: string | null, language: string, libraries: Array<string>, databases: Array<string>, categories: Array<StackCategory> } | null, mainImage: { __typename?: 'Asset', id: string, url: string } }> }> };
-
-export type GetStacksQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetStacksQuery = { __typename?: 'Query', stacks: Array<{ __typename?: 'Stack', id: string, categories: Array<StackCategory> }> };
-
-export type GetTalksQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetTalksQuery = { __typename?: 'Query', talks: Array<{ __typename?: 'Content', id: string, url?: string | null, title: string, subtitle?: string | null, image?: { __typename?: 'Asset', id: string, url: string } | null }> };
-
-export type GetTimelineListQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetTimelineListQuery = { __typename?: 'Query', timelineList: Array<{ __typename?: 'Timeline', id: string, year: number, achievements: Array<{ __typename?: 'Achievement', id: string, title: string, description?: string | null }> }> };
+export type GetTalksPageQuery = { __typename?: 'Query', talks: Array<{ __typename?: 'Content', id: string, url?: string | null, title: string, subtitle?: string | null, image?: { __typename?: 'Asset', id: string, url: string } | null }>, podcasts: Array<{ __typename?: 'Content', id: string, url?: string | null, title: string, subtitle?: string | null, image?: { __typename?: 'Asset', id: string, url: string } | null }> };
