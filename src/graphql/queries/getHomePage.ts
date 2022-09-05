@@ -6,8 +6,10 @@ import { QueryFunctionContext } from 'react-query'
 
 import { graphQLClient } from 'config/graphQLClient'
 import { GetHomePageQuery, StackCategory } from 'generated/graphql'
+import { STACK_FRAGMENT } from 'graphql/fragments/stackFragment'
 
 const GET_HOME_PAGE_QUERY = gql`
+  ${STACK_FRAGMENT}
   query GetHomePage(
     $title: String = ""
     $categories: [StackCategory!] = [Frontend, Backend, Package, Mobile]
@@ -16,26 +18,7 @@ const GET_HOME_PAGE_QUERY = gql`
       where: { categories_contains_some: $categories }
       orderBy: createdAt_DESC
     ) {
-      id
-      projects(where: { title_contains: $title }) {
-        id
-        title
-        liveUrl
-        githubUrl
-        description
-        stack {
-          id
-          framework
-          language
-          libraries
-          databases
-          categories
-        }
-        mainImage {
-          id
-          url
-        }
-      }
+      ...StackFields
     }
     timelineList: timelines(orderBy: year_DESC) {
       id

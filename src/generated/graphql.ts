@@ -10931,6 +10931,8 @@ export type VersionWhereInput = {
 
 export type ContentFieldsFragment = { __typename?: 'Content', id: string, url?: string | null, title: string, subtitle?: string | null, image?: { __typename?: 'Asset', id: string, url: string } | null };
 
+export type StackFieldsFragment = { __typename?: 'Stack', id: string, projects: Array<{ __typename?: 'Project', id: string, title: string, liveUrl?: string | null, githubUrl?: string | null, description?: string | null, stack?: { __typename?: 'Stack', id: string, framework?: string | null, language: string, libraries: Array<string>, databases: Array<string>, categories: Array<StackCategory> } | null, mainImage: { __typename?: 'Asset', id: string, url: string } }> };
+
 export type GetAboutMePageQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -10954,6 +10956,14 @@ export type GetLearningJournalPageQueryVariables = Exact<{
 
 
 export type GetLearningJournalPageQuery = { __typename?: 'Query', learningJournalsConnection: { __typename?: 'LearningJournalConnection', aggregate: { __typename?: 'Aggregate', count: number }, edges: Array<{ __typename?: 'LearningJournalEdge', node: { __typename?: 'LearningJournal', id: string, work: Array<string>, date: any, curiosity: Array<string>, programming: Array<string>, resources: Array<{ __typename?: 'Resource', id: string, url: string, label: string }> } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean } } };
+
+export type GetProjectsByStacksQueryVariables = Exact<{
+  title?: InputMaybe<Scalars['String']>;
+  categories?: InputMaybe<Array<StackCategory> | StackCategory>;
+}>;
+
+
+export type GetProjectsByStacksQuery = { __typename?: 'Query', stacks: Array<{ __typename?: 'Stack', id: string, projects: Array<{ __typename?: 'Project', id: string, title: string, liveUrl?: string | null, githubUrl?: string | null, description?: string | null, stack?: { __typename?: 'Stack', id: string, framework?: string | null, language: string, libraries: Array<string>, databases: Array<string>, categories: Array<StackCategory> } | null, mainImage: { __typename?: 'Asset', id: string, url: string } }> }> };
 
 export type GetTalksPageQueryVariables = Exact<{ [key: string]: never; }>;
 
