@@ -10,7 +10,7 @@
     "start": "next start",
     "lint:style": "eslint . --ext=.js,.ts,.tsx --fix",
     "lint:types": "tsc --noemit",
-    "lint:unused-exports": "./node_modules/.bin/ts-unused-exports tsconfig.json --allowUnusedTypes --excludePathsFromReport='src/pages;src/generated'",
+    "lint:unused-exports": "./node_modules/.bin/ts-unused-exports tsconfig.json --allowUnusedTypes --excludePathsFromReport='src/pages;src/__generated__'",
     "lint": "run-p lint:*",
     "codegen": "graphql-codegen --config codegen.yml"
   },

@@ -8,4 +8,4 @@ node_modules/
 out/
 
 # Generated output
-generated/
+src/__generated__

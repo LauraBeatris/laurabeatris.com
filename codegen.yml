@@ -2,7 +2,7 @@ overwrite: true
 schema: "https://api-ca-central-1.hygraph.com/v2/ckk8ciiviocka01zbbn8bhetq/master"
 documents: "src/graphql/**/*.ts"
 generates:
-  src/generated/graphql.ts:
+  src/__generated__/graphql/schema.ts:
     plugins:
       - "typescript"
       - "typescript-operations"
