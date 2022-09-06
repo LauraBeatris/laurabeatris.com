@@ -1,16 +1,17 @@
 import { List, ListItem, VStack } from '@chakra-ui/react'
 
-import { usePagination } from 'hooks/usePagination'
-
-import { Timeline as TimelineType, Timeline } from 'graphql/schema'
-
 import { Heading } from 'components/Base/Heading'
 import { PaginationButton } from 'components/PaginationButton'
+import { usePagination } from 'hooks/usePagination'
+import type { Achievement, Timeline } from '__generated__/graphql/schema'
 
 import { Achievements } from './Achievements'
 
+type TimelineItem = Pick<Timeline, 'id' | 'year'> & {
+  achievements: Array<Pick<Achievement, 'id' | 'title' | 'description'>>
+}
 type TimelineProps = {
-  timelineList: Array<Timeline>
+  timelineList: Array<TimelineItem>
 }
 
 export function Timeline ({ timelineList }: TimelineProps) {
@@ -18,7 +19,7 @@ export function Timeline ({ timelineList }: TimelineProps) {
     data,
     hasMoreItems,
     handlePagination
-  } = usePagination<TimelineType>({ list: timelineList, itemsPerPage: 2 })
+  } = usePagination<TimelineItem>({ list: timelineList, itemsPerPage: 2 })
 
   return (
     <VStack

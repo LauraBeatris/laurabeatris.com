@@ -1,0 +1,8 @@
+overwrite: true
+schema: '${NEXT_PUBLIC_GRAPHQL_URL_ENDPOINT}'
+documents: "src/graphql/**/*.ts"
+generates:
+  src/__generated__/graphql/schema.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"

@@ -1,23 +1,18 @@
-import { Button, Flex, HStack, Input, InputGroup, InputLeftElement, Menu, MenuButton, MenuItemOption, MenuList, MenuOptionGroup, Spinner } from '@chakra-ui/react'
+import { Button, Flex, HStack, Input, InputGroup, InputLeftElement, Menu, MenuButton, MenuItemOption, MenuList, MenuOptionGroup } from '@chakra-ui/react'
 import { Search2Icon, SettingsIcon } from '@chakra-ui/icons'
-import { useIsFetching } from 'react-query'
 import useSound from 'use-sound'
-
 import { ChangeEvent } from 'react'
-
 import { MenuOptionGroupProps } from '@chakra-ui/menu'
 
-import { GET_PROJECTS_QUERY_KEY } from 'hooks/useProjects'
 import { INITIAL_STACK_CATEGORIES } from 'components/ProjectsList'
 import { gradients } from 'styles/theme/gradients'
-
-import { StackCategory, TransformedStack } from 'graphql/schema'
+import { StackCategory } from '__generated__/graphql/schema'
 
 import menuOpenSound from '../../../public/sounds/menu-open.mp3'
 
 type ProjectFiltersProps = MenuOptionGroupProps & {
   stackCategories: StackCategory[],
-  transformedStack: TransformedStack
+  selectedStackCategories: StackCategory[],
   onTitleInputChange: (event: ChangeEvent) => void;
   onStackCategoryOptionsChange: (categories: StackCategory | Array<StackCategory>) => void;
 }
@@ -40,13 +35,13 @@ const inputCss = {
 
 export function ProjectFilters ({
   stackCategories,
-  transformedStack,
   onTitleInputChange,
+  selectedStackCategories,
   onStackCategoryOptionsChange,
   ...rest
 }: ProjectFiltersProps) {
   const [play] = useSound(menuOpenSound, { volume: 0.2 })
-  const isFetching = useIsFetching([GET_PROJECTS_QUERY_KEY])
+  // const isFetching = useIsFetching([GET_PROJECTS_QUERY_KEY])
 
   const handleClick = () => {
     play()
@@ -55,7 +50,7 @@ export function ProjectFilters ({
   const filters = [
     {
       title: 'Categories',
-      items: transformedStack.categories
+      items: stackCategories
     }
   ]
 
@@ -72,11 +67,11 @@ export function ProjectFilters ({
         marginRight={2}
         display={['none', null, 'initial']}
       >
-        {
+        {/* {
           isFetching
             ? <Spinner size='sm' />
             : null
-        }
+        } */}
       </Flex>
 
       <InputGroup flex={1} css={inputGroupCss}>
@@ -114,7 +109,7 @@ export function ProjectFilters ({
                 key={title}
                 title={title}
                 type='checkbox'
-                value={stackCategories}
+                value={selectedStackCategories}
                 bgClip='text'
                 onChange={onStackCategoryOptionsChange}
                 bgGradient={gradients.greenToBlue}
