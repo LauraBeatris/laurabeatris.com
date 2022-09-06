@@ -2,7 +2,7 @@ import { gql } from 'graphql-request'
 import { formatRFC3339 } from 'date-fns'
 
 import { graphQLClient } from 'config/graphQLClient'
-import { GetLearningJournalPageQuery } from 'generated/graphql'
+import { GetLearningJournalPageQuery } from '__generated__/graphql/schema'
 
 const GET_LEARNING_JOURNAL_PAGE_QUERY = gql`
   query GetLearningJournalPage(

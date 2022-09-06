@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 
 import { graphQLClient } from 'config/graphQLClient'
-import { GetAboutMePageQuery } from 'generated/graphql'
+import { GetAboutMePageQuery } from '__generated__/graphql/schema'
 
 const GET_ABOUT_ME_PAGE_QUERY = gql`
   query GetAboutMePage($id: ID!){

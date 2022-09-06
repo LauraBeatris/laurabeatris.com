@@ -1,25 +1,18 @@
 import { ChangeEvent, useCallback, useState } from 'react'
-import { Flex, SimpleGrid, Spinner, Stack, VStack } from '@chakra-ui/react'
+import { Stack, VStack } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
-import { useDebounce } from 'use-debounce'
 
-import { Project } from 'components/Project'
 import { Heading } from 'components/Base/Heading'
 import { Popover } from 'components/Base/Popover'
-import { PaginationButton } from 'components/PaginationButton'
 import { ProjectFilters } from 'components/ProjectFilters'
-import { PAGINATION_ITEMS_PER_PAGE, usePagination } from 'hooks/usePagination'
-import { useProjects } from 'hooks/useProjects'
 import { Paragraph } from 'components/Base/Paragraph'
-import { Project as ProjectSchema, StackCategory } from 'generated/graphql'
+import { StackCategory } from '__generated__/graphql/schema'
 
 type ProjectsListProps = {
-  initialProjects: Array<ProjectSchema>;
   stackCategories: Array<StackCategory>;
 }
 
 const PROJECTS_POPOVER_TEXT = <p>Click on the projects to see more details about it.<br /> Also, there are filters to explore projects according to certain titles and technologies.</p>
-const DEFAULT_DEBOUNCE_DELAY_MILLISECONDS = 500
 export const INITIAL_STACK_CATEGORIES = [
   StackCategory.Backend,
   StackCategory.Frontend,
@@ -30,27 +23,13 @@ export const INITIAL_STACK_CATEGORIES = [
 const isWorkInProgressFeatureFlag = process.env.NEXT_PUBLIC_WORK_IN_PROGRESS_FEATURE_FLAG
 
 export function ProjectsList ({
-  initialProjects,
   stackCategories
 }: ProjectsListProps) {
-  const [title, setTitle] = useState('')
+  const [, setTitle] = useState('')
   const [selectedStackCategories, setSelectedStackCategories] = useState(INITIAL_STACK_CATEGORIES)
 
-  const [debouncedTitle] = useDebounce(title, DEFAULT_DEBOUNCE_DELAY_MILLISECONDS)
-  const [debouncedStackCategories] = useDebounce(stackCategories, DEFAULT_DEBOUNCE_DELAY_MILLISECONDS)
-
-  const { data: projects, isFetching, isLoading } = useProjects({
-    title: debouncedTitle,
-    categories: debouncedStackCategories
-  }, {
-    initialData: initialProjects
-  })
-
-  const {
-    data,
-    hasMoreItems,
-    handlePagination
-  } = usePagination<ProjectSchema>({ list: projects })
+  // const [debouncedTitle] = useDebounce(title, DEFAULT_DEBOUNCE_DELAY_MILLISECONDS)
+  // const [debouncedStackCategories] = useDebounce(stackCategories, DEFAULT_DEBOUNCE_DELAY_MILLISECONDS)
 
   const handleTitleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value)
@@ -76,8 +55,8 @@ export function ProjectsList ({
     )
   }, [])
 
-  const shouldShowPagination = !isLoading && projects?.length > PAGINATION_ITEMS_PER_PAGE
-  const shouldShowEmptyListMessage = !isLoading && !isWorkInProgressFeatureFlag && projects?.length === 0
+  // const shouldShowPagination = !isLoading && projects?.length > PAGINATION_ITEMS_PER_PAGE
+  const shouldShowEmptyListMessage = !isWorkInProgressFeatureFlag
 
   return (
     <VStack
@@ -106,13 +85,13 @@ export function ProjectsList ({
             buttonContent={<InfoIcon boxSize={5} color='green.400' />}
           />
 
-          <Flex paddingTop={1}>
+          {/* <Flex paddingTop={1}>
             {
               isFetching
                 ? <Spinner size='sm' display={['initial', null, 'none']} />
                 : null
             }
-          </Flex>
+          </Flex> */}
         </Stack>
 
         <ProjectFilters
@@ -123,7 +102,7 @@ export function ProjectsList ({
         />
       </Stack>
 
-      <SimpleGrid
+      {/* <SimpleGrid
         as='ul'
         css={{ listStyle: 'none' }}
         width='full'
@@ -160,7 +139,7 @@ export function ProjectsList ({
             )
           })
         }
-      </SimpleGrid>
+      </SimpleGrid> */}
 
       {
         isWorkInProgressFeatureFlag && (
@@ -187,7 +166,7 @@ export function ProjectsList ({
         )
       }
 
-      {
+      {/* {
         shouldShowPagination && (
           <PaginationButton
             showMore={hasMoreItems}
@@ -195,7 +174,7 @@ export function ProjectsList ({
             alignSelf='center'
           />
         )
-      }
+      } */}
     </VStack>
   )
 }

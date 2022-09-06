@@ -3,25 +3,24 @@ import { List, HStack, ListItem, VStack, Box, Flex } from '@chakra-ui/react'
 import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
 import { gradients } from 'styles/theme/gradients'
-
-import { Achievement } from 'graphql/schema'
+import { Achievement } from '__generated__/graphql/schema'
 
 type AchievementsProps = {
-  achievements: Array<Achievement>
+  achievements: Array<Pick<Achievement, 'id' | 'title' | 'description'>>
 }
 
 export function Achievements ({ achievements }: AchievementsProps) {
   return (
     <List paddingBottom={4}>
       {
-        (achievements ?? []).map(({ title, description }, index) => {
+        (achievements ?? []).map(({ id, title, description }, index) => {
           const isLastElement = index === achievements.length - 1
           const isFirstElement = index === 0
           const shouldConnectDots = achievements.length > 1
 
           return (
             <ListItem
-              key={title}
+              key={id}
               zIndex={1}
               paddingTop={4}
               position='relative'

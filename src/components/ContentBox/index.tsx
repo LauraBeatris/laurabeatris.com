@@ -4,10 +4,10 @@ import { Link, Stack, StackProps } from '@chakra-ui/react'
 
 import { Paragraph } from 'components/Base/Paragraph'
 import { Heading } from 'components/Base/Heading'
-import { Content } from 'generated/graphql'
+import { Content } from '__generated__/graphql/schema'
 
 type ContentBoxProps = StackProps
-  & Omit<Content, 'id' | 'image'>
+  & Pick<Content, 'url' | 'title'>
   & PropsWithChildren<{
     title: string;
     imageSrc: string;

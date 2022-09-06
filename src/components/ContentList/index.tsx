@@ -1,8 +1,7 @@
 import { Flex, SimpleGrid } from '@chakra-ui/react'
 
 import { ContentBox } from 'components/ContentBox'
-
-import { Content } from 'graphql/schema'
+import { Content } from '__generated__/graphql/schema'
 
 type ContentListProps = {
   contentList: Array<Content>

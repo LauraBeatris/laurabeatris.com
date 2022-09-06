@@ -21,14 +21,12 @@ export async function getServerSideProps () {
   try {
     const {
       timelineList,
-      initialProjects,
       stackCategories
     } = await getHomePage()
 
     return {
       props: {
         timelineList,
-        initialProjects,
         stackCategories
       }
     }
@@ -44,7 +42,6 @@ export async function getServerSideProps () {
 
 export default function Home ({
   timelineList,
-  initialProjects,
   stackCategories
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
@@ -73,10 +70,7 @@ export default function Home ({
         </Text>
       </Paragraph>
 
-      <ProjectsList
-        initialProjects={initialProjects}
-        stackCategories={stackCategories}
-      />
+      <ProjectsList stackCategories={stackCategories} />
       <Timeline timelineList={timelineList} />
     </VStack>
   )

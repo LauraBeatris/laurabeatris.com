@@ -5,7 +5,7 @@ import union from 'lodash.union'
 import { QueryFunctionContext } from 'react-query'
 
 import { graphQLClient } from 'config/graphQLClient'
-import { GetHomePageQuery, StackCategory } from 'generated/graphql'
+import { GetHomePageQuery, StackCategory } from '__generated__/graphql/schema'
 import { STACK_FRAGMENT } from 'graphql/fragments/stackFragment'
 
 const GET_HOME_PAGE_QUERY = gql`

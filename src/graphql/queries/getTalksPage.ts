@@ -2,7 +2,7 @@ import { gql } from 'graphql-request'
 
 import { graphQLClient } from 'config/graphQLClient'
 import { CONTENT_FRAGMENT } from 'graphql/fragments/contentFragment'
-import { GetTalksPageQuery } from 'generated/graphql'
+import { GetTalksPageQuery } from '__generated__/graphql/schema'
 
 const GET_TALKS_PAGE_QUERY = gql`
   ${CONTENT_FRAGMENT}
