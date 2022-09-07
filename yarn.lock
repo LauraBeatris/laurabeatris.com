@@ -1306,6 +1306,11 @@
   dependencies:
     tslib "^2.0.0"
 
+"@graphcms/utils@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@graphcms/utils/-/utils-1.1.0.tgz#b4d63fd70a393e18561d9d868b9919833ff2bcdb"
+  integrity sha512-hv2zOhCQUvePSfKoQTzyKKqvjA3f2d/ZDUHPQAKz6SUAEyAmIU5d9z4f/YjjeJ/nGCxpoL5jlB3OAYl6Xd1sqQ==
+
 "@graphql-codegen/cli@2.12.0":
   version "2.12.0"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/cli/-/cli-2.12.0.tgz#ae57ca66fac7b0b5b8cba5b26ca9ccb5885ae2d4"
