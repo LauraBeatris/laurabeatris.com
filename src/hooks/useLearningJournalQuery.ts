@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import useSWR from 'swr'
+import { useQueryParam, NumberParam, withDefault } from 'use-query-params'
 
 import { getLearningJournalPage, LEARNING_JOURNAL_PAGE_SIZE } from 'graphql/queries/getLearningJournalPage'
 
@@ -18,7 +18,7 @@ export function useLearningJournalQuery ({
   date,
   initialPage
 }: UseLearningJournalQueryParameters) {
-  const [page, setPage] = useState(initialPage)
+  const [page, setPage] = useQueryParam('page', withDefault(NumberParam, initialPage))
 
   const {
     data,

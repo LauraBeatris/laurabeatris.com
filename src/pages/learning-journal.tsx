@@ -17,6 +17,8 @@ import {
 import { ChevronLeftIcon, ChevronRightIcon, LinkIcon } from '@chakra-ui/icons'
 import { DateTime } from 'luxon'
 import { SWRConfig } from 'swr'
+import { NextAdapter } from 'next-query-params'
+import { QueryParamProvider } from 'use-query-params'
 
 import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
@@ -256,7 +258,9 @@ function LearningJournalContent () {
 export default function LearningJournalContainer ({ fallback }) {
   return (
     <SWRConfig value={{ fallback }}>
-      <LearningJournalContent />
+      <QueryParamProvider adapter={NextAdapter}>
+        <LearningJournalContent />
+      </QueryParamProvider>
     </SWRConfig>
   )
 }
