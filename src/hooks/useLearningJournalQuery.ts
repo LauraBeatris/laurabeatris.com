@@ -10,7 +10,7 @@ type UseLearningJournalQueryParameters = {
   initialPage: number;
 }
 
-function calculatePagesCount (pageSize, totalCount) {
+export function calculatePagesCount (pageSize: number, totalCount: number) {
   return totalCount < pageSize ? 1 : Math.ceil(totalCount / pageSize)
 }
 
