@@ -10957,11 +10957,6 @@ export type GetLearningJournalPageQueryVariables = Exact<{
 
 export type GetLearningJournalPageQuery = { __typename?: 'Query', learningJournalsConnection: { __typename?: 'LearningJournalConnection', aggregate: { __typename?: 'Aggregate', count: number }, edges: Array<{ __typename?: 'LearningJournalEdge', node: { __typename?: 'LearningJournal', id: string, work: Array<string>, date: any, curiosity: Array<string>, programming: Array<string>, resources: Array<{ __typename?: 'Resource', id: string, url: string, label: string }> } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean } } };
 
-export type GetLearningJournalPagesCountQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetLearningJournalPagesCountQuery = { __typename?: 'Query', learningJournalsConnection: { __typename?: 'LearningJournalConnection', aggregate: { __typename?: 'Aggregate', count: number } } };
-
 export type GetTalksPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 

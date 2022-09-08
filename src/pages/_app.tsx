@@ -13,7 +13,17 @@ import { global } from 'styles/global'
 
 const queryClient = new QueryClient()
 
+const ConditionalWrapper = ({ condition, wrapper, children }) =>
+  condition ? wrapper(children) : children
+
+/**
+ * Contains the name of page components that shouldn't be a children of Layout
+ */
+const PAGE_LAYOUT_BLACK_LIST = ['LearningJournalEntry']
+
 export default function MyApp ({ Component, pageProps }: AppProps) {
+  const shouldRenderLayout = !PAGE_LAYOUT_BLACK_LIST.includes(Component.name)
+
   return (
     <>
       <DefaultSeo {...configSEO} />
@@ -26,11 +36,14 @@ export default function MyApp ({ Component, pageProps }: AppProps) {
           theme={theme}
           customVariables={colorModeVariables}
         >
-          <Layout>
+          <ConditionalWrapper
+            condition={shouldRenderLayout}
+            wrapper={Layout}
+          >
             <QueryClientProvider client={queryClient}>
               <Component {...pageProps} />
             </QueryClientProvider>
-          </Layout>
+          </ConditionalWrapper>
         </ColorModeToggleProvider>
       </ChakraProvider>
     </>
