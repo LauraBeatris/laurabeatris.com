@@ -10948,6 +10948,13 @@ export type GetHomePageQueryVariables = Exact<{
 
 export type GetHomePageQuery = { __typename?: 'Query', initialProjects: Array<{ __typename?: 'Stack', id: string, projects: Array<{ __typename?: 'Project', id: string, title: string, liveUrl?: string | null, githubUrl?: string | null, description?: string | null, stack?: { __typename?: 'Stack', id: string, framework?: string | null, language: string, libraries: Array<string>, databases: Array<string>, categories: Array<StackCategory> } | null, mainImage: { __typename?: 'Asset', id: string, url: string } }> }>, timelineList: Array<{ __typename?: 'Timeline', id: string, year: number, achievements: Array<{ __typename?: 'Achievement', id: string, title: string, description?: string | null }> }>, stacks: Array<{ __typename?: 'Stack', id: string, categories: Array<StackCategory> }> };
 
+export type GetLearningJournalEntryQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetLearningJournalEntryQuery = { __typename?: 'Query', learningJournal?: { __typename?: 'LearningJournal', id: string, work: Array<string>, date: any, curiosity: Array<string>, programming: Array<string> } | null };
+
 export type GetLearningJournalPageQueryVariables = Exact<{
   where?: InputMaybe<LearningJournalWhereInput>;
   limit: Scalars['Int'];
