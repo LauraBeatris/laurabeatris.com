@@ -37,13 +37,28 @@ export default function LearningJournalEntry () {
             {formattedDate}
           </Text>
           <VStack as='section' alignItems='flex-start'>
-            <LearningJournalList title='🏗 Work' list={work} />
+            <LearningJournalList
+              title='🏗 Work'
+              list={work}
+              listSize='xl'
+              headingSize='md'
+            />
           </VStack>
           <VStack as='section' alignItems='flex-start'>
-            <LearningJournalList title='💫 Programming' list={programming} />
+            <LearningJournalList
+              title='💫 Programming'
+              list={programming}
+              listSize='xl'
+              headingSize='md'
+            />
           </VStack>
           <VStack as='section' alignItems='flex-start'>
-            <LearningJournalList title='😮 Curiosity' list={curiosity} />
+            <LearningJournalList
+              title='😮 Curiosity'
+              list={curiosity}
+              listSize='xl'
+              headingSize='md'
+            />
           </VStack>
         </>
       )}

@@ -1,8 +1,20 @@
-import { List, ListItem } from '@chakra-ui/react'
+import { HeadingProps, List, ListItem, ListProps } from '@chakra-ui/react'
 
 import { Heading } from 'components/Base/Heading'
 
-export function LearningJournalList ({ title, list }) {
+type LearningJournalListProps = {
+  title: string;
+  list: Array<string>;
+  listSize?: ListProps['size'];
+  headingSize?: HeadingProps['size'];
+}
+
+export function LearningJournalList ({
+  title,
+  list,
+  listSize,
+  headingSize = 'xs'
+}: LearningJournalListProps) {
   const shouldShowLearningJournalList = (list ?? []).length > 0
 
   if (!shouldShowLearningJournalList) {
@@ -11,9 +23,12 @@ export function LearningJournalList ({ title, list }) {
 
   return (
     <>
-      <Heading size='xs'>{title}</Heading>
+      <Heading size={headingSize}>
+        {title}
+      </Heading>
       <List
         spacing={2}
+        fontSize={listSize}
         styleType='initial'
         paddingLeft={4}
       >
