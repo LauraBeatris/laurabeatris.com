@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { verifyWebhookSignature } from '@graphcms/utils'
+import { DateTime } from 'luxon'
 
 import { getScreenshot } from 'config/chromium'
 import { twitterClient } from 'config/twitterClient'
@@ -26,7 +27,8 @@ export default async function handler (
     return response.status(403).send('Invalid webhook request')
   }
 
-  const ticketImageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/learning-journal/${body.data.id}`
+  const { id, date } = body.data
+  const ticketImageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/learning-journal/${id}`
   if (isHtmlDebug) {
     return response.redirect(ticketImageUrl)
   }
@@ -37,7 +39,11 @@ export default async function handler (
   })
 
   const mediaId = await twitterClient.v1.uploadMedia(file, { mimeType: 'image/png' })
-  const twitterResponse = await twitterClient.v2.tweet('test', {
+  const twitterResponse = await twitterClient.v2.tweet(`
+📝 Learning Journal, ${DateTime.fromISO(date).toFormat('DDD')}:
+
+https://laurabeatris.com/learning-journal
+  `, {
     media: { media_ids: [mediaId] }
   })
 
