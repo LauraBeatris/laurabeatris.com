@@ -1,10 +1,10 @@
+import { ReactNode } from 'react'
 import type { AppProps } from 'next/app'
 import { Global } from '@emotion/react'
 import { DefaultSeo } from 'next-seo'
 import { ChakraProvider } from '@chakra-ui/react'
 import { ColorModeToggleProvider } from '@laurabeatris/chakra-ui-flashless'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import { PropsWithChildren, ReactNode } from 'react'
 
 import { Layout } from 'components/Layout'
 import { configSEO } from 'config/SEO'
@@ -14,17 +14,18 @@ import { global } from 'styles/global'
 
 const queryClient = new QueryClient()
 
-type ConditionalWrapperProps = PropsWithChildren<{
+type ConditionalWrapperProps = {
+  wrapper: (children: ReactNode) => JSX.Element;
   condition: boolean;
-  wrapper: ReactNode;
-}>
-const ConditionalWrapper = ({ condition, wrapper, children }: ConditionalWrapperProps) =>
-  condition ? wrapper(children) : children
+  children: JSX.Element;
+}
 
 /**
  * Contains the name of page components that shouldn't be a children of Layout
  */
 const PAGE_LAYOUT_BLACK_LIST = ['LearningJournalEntry']
+const ConditionalWrapper = ({ condition, wrapper, children }: ConditionalWrapperProps) =>
+  condition ? wrapper(children) : children
 
 export default function MyApp ({ Component, pageProps }: AppProps) {
   const shouldRenderLayout = !PAGE_LAYOUT_BLACK_LIST.includes(Component.name)
@@ -42,8 +43,8 @@ export default function MyApp ({ Component, pageProps }: AppProps) {
           customVariables={colorModeVariables}
         >
           <ConditionalWrapper
+            wrapper={(children) => <Layout>{children}</Layout>}
             condition={shouldRenderLayout}
-            wrapper={Layout}
           >
             <QueryClientProvider client={queryClient}>
               <Component {...pageProps} />
