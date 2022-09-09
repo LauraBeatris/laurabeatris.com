@@ -1,4 +1,4 @@
-import { Text, VStack } from '@chakra-ui/react'
+import { HStack, Text, VStack } from '@chakra-ui/react'
 import useSWR from 'swr'
 import { DateTime } from 'luxon'
 import { useRouter } from 'next/router'
@@ -23,19 +23,44 @@ export default function LearningJournalEntry () {
   const isLoading = isValidating && !data
 
   return (
-    <VStack padding='10' as='main' alignItems='flex-start'>
+    <VStack padding='10' as='main' alignItems='flex-start' width={1000}>
       {!isLoading && (
         <>
-          <Text
-            id='learning-journal-date'
-            as='h1'
-            bgClip='text'
-            fontSize={32}
-            fontWeight='bold'
-            bgGradient={gradients.greenToBlue}
-          >
-            {formattedDate}
-          </Text>
+          <HStack as='header' width='full' justifyContent='space-between'>
+            <Text
+              id='learning-journal-date'
+              as='h1'
+              bgClip='text'
+              fontSize={32}
+              fontWeight='bold'
+              bgGradient={gradients.greenToBlue}
+            >
+              {formattedDate}
+            </Text>
+
+            <HStack>
+              <Text
+                id='learning-journal-date'
+                as='h2'
+                display='inline'
+                fontSize={24}
+                fontWeight='bold'
+              >
+                Learning Journal
+              </Text>
+              <Text
+                id='learning-journal-date'
+                as='h2'
+                bgClip='text'
+                display='inline'
+                fontSize={24}
+                fontWeight='bold'
+                bgGradient={gradients.greenToBlue}
+              >
+                @lauradotjs
+              </Text>
+            </HStack>
+          </HStack>
           <VStack as='section' alignItems='flex-start'>
             <LearningJournalList
               title='🏗 Work'

@@ -29,7 +29,7 @@ export async function getScreenshot ({
   const page = await getPage(isDev)
 
   await page.setDefaultNavigationTimeout(0)
-  await page.setViewport({ width: 1200, height: 630 })
+  await page.setViewport({ width: 1000, height: 630 })
   await page.goto(url)
   await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: 'dark' }])
   await page.evaluateHandle('document.fonts.ready')
