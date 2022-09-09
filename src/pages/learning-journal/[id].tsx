@@ -13,34 +13,40 @@ export default function LearningJournalEntry () {
   const id = query.id as string
 
   const {
-    data
+    data, isValidating
   } = useSWR(SWRCacheKeyGetters.learningJournalEntry(id),
     () => getLearningJournalEntry(id)
   )
 
   const { date, work, curiosity, programming } = data ?? {}
   const formattedDate = DateTime.fromISO(date).toFormat('DD')
+  const isLoading = isValidating && !data
 
   return (
-    <VStack padding='10' as='main'>
-      <Text
-        as='h1'
-        bgClip='text'
-        fontSize={32}
-        fontWeight='bold'
-        bgGradient={gradients.greenToBlue}
-      >
-        {formattedDate}
-      </Text>
-      <VStack as='section' alignItems='flex-start'>
-        <LearningJournalList title='Work' list={work} />
-      </VStack>
-      <VStack as='section' alignItems='flex-start'>
-        <LearningJournalList title='Programming' list={programming} />
-      </VStack>
-      <VStack as='section' alignItems='flex-start'>
-        <LearningJournalList title='Curiosity' list={curiosity} />
-      </VStack>
+    <VStack padding='10' as='main' alignItems='flex-start'>
+      {!isLoading && (
+        <>
+          <Text
+            id='learning-journal-date'
+            as='h1'
+            bgClip='text'
+            fontSize={32}
+            fontWeight='bold'
+            bgGradient={gradients.greenToBlue}
+          >
+            {formattedDate}
+          </Text>
+          <VStack as='section' alignItems='flex-start'>
+            <LearningJournalList title='🏗 Work' list={work} />
+          </VStack>
+          <VStack as='section' alignItems='flex-start'>
+            <LearningJournalList title='💫 Programming' list={programming} />
+          </VStack>
+          <VStack as='section' alignItems='flex-start'>
+            <LearningJournalList title='😮 Curiosity' list={curiosity} />
+          </VStack>
+        </>
+      )}
     </VStack>
   )
 }
