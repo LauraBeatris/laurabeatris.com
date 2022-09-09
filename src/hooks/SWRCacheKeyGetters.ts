@@ -5,7 +5,8 @@
  * @example useSWR(SWRCacheKeyGetters.learningJournal(1, '01-01-2022'))
  */
 export const SWRCacheKeyGetters = {
-  learningJournal: (page: number, date?: string) => {
+  learningJournalPage: (page: number, date?: string) => {
     return `learning-journal-${page}-${date}`
-  }
+  },
+  learningJournalEntry: (id: string) => `learning-journal-entry-${id}`
 }

@@ -4,6 +4,7 @@ import { DefaultSeo } from 'next-seo'
 import { ChakraProvider } from '@chakra-ui/react'
 import { ColorModeToggleProvider } from '@laurabeatris/chakra-ui-flashless'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { PropsWithChildren, ReactNode } from 'react'
 
 import { Layout } from 'components/Layout'
 import { configSEO } from 'config/SEO'
@@ -13,7 +14,11 @@ import { global } from 'styles/global'
 
 const queryClient = new QueryClient()
 
-const ConditionalWrapper = ({ condition, wrapper, children }) =>
+type ConditionalWrapperProps = PropsWithChildren<{
+  condition: boolean;
+  wrapper: ReactNode;
+}>
+const ConditionalWrapper = ({ condition, wrapper, children }: ConditionalWrapperProps) =>
   condition ? wrapper(children) : children
 
 /**

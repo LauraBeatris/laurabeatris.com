@@ -24,7 +24,7 @@ export function useLearningJournalQuery ({
     data,
     error,
     isValidating
-  } = useSWR(SWRCacheKeyGetters.learningJournal(page, date), () =>
+  } = useSWR(SWRCacheKeyGetters.learningJournalPage(page, date), () =>
     getLearningJournalPage(page, date)
   )
 

@@ -38,7 +38,7 @@ export async function getStaticProps () {
     return {
       props: {
         fallback: {
-          [SWRCacheKeyGetters.learningJournal(initialPage, initialDate)]: (
+          [SWRCacheKeyGetters.learningJournalPage(initialPage, initialDate)]: (
             await getLearningJournalPage(initialPage, initialDate)
           )
         }
