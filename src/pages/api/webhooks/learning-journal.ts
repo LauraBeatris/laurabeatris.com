@@ -13,9 +13,12 @@ export default async function handler (
   response: NextApiResponse
 ) {
   const { body, headers } = request
+  const { id, date } = body.data
+  const ticketImageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/learning-journal/${id}`
 
-  const signature = headers['gcms-signature']
-  const hasValidSignature =
+  try {
+    const signature = headers['gcms-signature']
+    const hasValidSignature =
     signature &&
     verifyWebhookSignature({
       body,
@@ -23,27 +26,29 @@ export default async function handler (
       signature
     })
 
-  if (!hasValidSignature) {
-    return response.status(403).send('Invalid webhook request')
-  }
+    if (!hasValidSignature) {
+      return response.status(403).send('Invalid webhook request')
+    }
 
-  const { id, date } = body.data
-  const ticketImageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/learning-journal/${id}`
-  if (isHtmlDebug) {
-    return response.redirect(ticketImageUrl)
-  }
+    if (isHtmlDebug) {
+      return response.redirect(ticketImageUrl)
+    }
 
-  const file = await getScreenshot({
-    url: ticketImageUrl
-  })
-  const mediaId = await twitterClient.v1.uploadMedia(file, { mimeType: 'image/png' })
-  const twitterResponse = await twitterClient.v2.tweet(`
+    const file = await getScreenshot({
+      url: ticketImageUrl
+    })
+    const mediaId = await twitterClient.v1.uploadMedia(file, { mimeType: 'image/png' })
+    const twitterResponse = await twitterClient.v2.tweet(`
 📝 Learning Journal, ${DateTime.fromISO(date).toFormat('DDD')}:
 
 https://laurabeatris.com/learning-journal
   `, {
-    media: { media_ids: [mediaId] }
-  })
+      media: { media_ids: [mediaId] }
+    })
 
-  response.json(twitterResponse)
+    response.json(twitterResponse)
+  } catch (error) {
+    console.error(error)
+    response.status(500).json({ ticketImageUrl, error })
+  }
 }
