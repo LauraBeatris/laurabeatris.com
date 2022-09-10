@@ -1,30 +1,12 @@
-import axios from 'axios'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { verifyWebhookSignature } from '@graphcms/utils'
 import { DateTime } from 'luxon'
 
 import { twitterClient } from 'config/twitterClient'
+import { getScreenshot } from 'config/chromium'
 
 const secret = process.env.CMS_WEBHOOK_SECRET
 const isHtmlDebug = process.env.OG_HTML_DEBUG === '1'
-
-async function getScreenshot ({ url, selectorToWait }) {
-  const { data } = await axios.post(
-    `https://chrome.browserless.io/screenshot?token=${process.env.BROWSERLESS_API_KEY}`,
-    {
-      url,
-      waitFor: selectorToWait,
-      options: {
-        type: 'png',
-        clip: {
-          height: 630,
-          width: 1000
-        }
-      }
-    })
-
-  return data
-}
 
 export default async function handler (
   request: NextApiRequest,
@@ -55,7 +37,6 @@ export default async function handler (
     url: ticketImageUrl,
     selectorToWait: '#learning-journal-date'
   })
-  console.log({ file })
 
   const mediaId = await twitterClient.v1.uploadMedia(file, { mimeType: 'image/png' })
   const twitterResponse = await twitterClient.v2.tweet(`
