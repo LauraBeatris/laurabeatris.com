@@ -1,3 +1,4 @@
+import { ReactNode } from 'react'
 import type { AppProps } from 'next/app'
 import { Global } from '@emotion/react'
 import { DefaultSeo } from 'next-seo'
@@ -11,9 +12,26 @@ import { colorModeVariables } from 'styles/theme/colorModeVariables'
 import { theme } from 'styles/theme'
 import { global } from 'styles/global'
 
+import LearningJournalEntry from './learning-journal/[id]'
+
 const queryClient = new QueryClient()
 
+type ConditionalWrapperProps = {
+  wrapper: (children: ReactNode) => JSX.Element;
+  condition: boolean;
+  children: JSX.Element;
+}
+
+/**
+ * Contains the name of page components that shouldn't be a children of Layout
+ */
+const PAGE_LAYOUT_BLACK_LIST = [LearningJournalEntry.name]
+const ConditionalWrapper = ({ condition, wrapper, children }: ConditionalWrapperProps) =>
+  condition ? wrapper(children) : children
+
 export default function MyApp ({ Component, pageProps }: AppProps) {
+  const shouldRenderLayout = !PAGE_LAYOUT_BLACK_LIST.includes(Component.name)
+
   return (
     <>
       <DefaultSeo {...configSEO} />
@@ -26,11 +44,14 @@ export default function MyApp ({ Component, pageProps }: AppProps) {
           theme={theme}
           customVariables={colorModeVariables}
         >
-          <Layout>
+          <ConditionalWrapper
+            wrapper={(children) => <Layout>{children}</Layout>}
+            condition={shouldRenderLayout}
+          >
             <QueryClientProvider client={queryClient}>
               <Component {...pageProps} />
             </QueryClientProvider>
-          </Layout>
+          </ConditionalWrapper>
         </ColorModeToggleProvider>
       </ChakraProvider>
     </>

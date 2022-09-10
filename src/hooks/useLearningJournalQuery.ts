@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import useSWR from 'swr'
+import { useQueryParam, NumberParam, withDefault } from 'use-query-params'
 
 import { getLearningJournalPage, LEARNING_JOURNAL_PAGE_SIZE } from 'graphql/queries/getLearningJournalPage'
 
@@ -10,7 +10,7 @@ type UseLearningJournalQueryParameters = {
   initialPage: number;
 }
 
-function calculatePagesCount (pageSize, totalCount) {
+function calculatePagesCount (pageSize: number, totalCount: number) {
   return totalCount < pageSize ? 1 : Math.ceil(totalCount / pageSize)
 }
 
@@ -18,13 +18,13 @@ export function useLearningJournalQuery ({
   date,
   initialPage
 }: UseLearningJournalQueryParameters) {
-  const [page, setPage] = useState(initialPage)
+  const [page, setPage] = useQueryParam('page', withDefault(NumberParam, initialPage))
 
   const {
     data,
     error,
     isValidating
-  } = useSWR(SWRCacheKeyGetters.learningJournal(page, date), () =>
+  } = useSWR(SWRCacheKeyGetters.learningJournalPage(page, date), () =>
     getLearningJournalPage(page, date)
   )
 
