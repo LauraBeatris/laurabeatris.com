@@ -46,7 +46,7 @@ https://laurabeatris.com/learning-journal
       media: { media_ids: [mediaId] }
     })
 
-    response.json(twitterResponse)
+    response.status(200).json(twitterResponse)
   } catch (error) {
     console.error(error)
     response.status(500).json({ ticketImageUrl, error })
