@@ -34,8 +34,7 @@ export default async function handler (
   }
 
   const file = await getScreenshot({
-    url: ticketImageUrl,
-    selectorToWait: '#learning-journal-date'
+    url: ticketImageUrl
   })
 
   const mediaId = await twitterClient.v1.uploadMedia(file, { mimeType: 'image/png' })
