@@ -12,6 +12,8 @@ import { colorModeVariables } from 'styles/theme/colorModeVariables'
 import { theme } from 'styles/theme'
 import { global } from 'styles/global'
 
+import LearningJournalEntry from './learning-journal/[id]'
+
 const queryClient = new QueryClient()
 
 type ConditionalWrapperProps = {
@@ -23,7 +25,7 @@ type ConditionalWrapperProps = {
 /**
  * Contains the name of page components that shouldn't be a children of Layout
  */
-const PAGE_LAYOUT_BLACK_LIST = ['LearningJournalEntry']
+const PAGE_LAYOUT_BLACK_LIST = [LearningJournalEntry.name]
 const ConditionalWrapper = ({ condition, wrapper, children }: ConditionalWrapperProps) =>
   condition ? wrapper(children) : children
 

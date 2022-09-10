@@ -3,7 +3,7 @@ import { verifyWebhookSignature } from '@graphcms/utils'
 import { DateTime } from 'luxon'
 
 import { twitterClient } from 'config/twitterClient'
-import { getScreenshot } from 'config/chromium'
+import { getScreenshot } from 'config/puppeteer'
 
 const secret = process.env.CMS_WEBHOOK_SECRET
 const isHtmlDebug = process.env.OG_HTML_DEBUG === '1'
@@ -36,7 +36,6 @@ export default async function handler (
   const file = await getScreenshot({
     url: ticketImageUrl
   })
-
   const mediaId = await twitterClient.v1.uploadMedia(file, { mimeType: 'image/png' })
   const twitterResponse = await twitterClient.v2.tweet(`
 📝 Learning Journal, ${DateTime.fromISO(date).toFormat('DDD')}:
