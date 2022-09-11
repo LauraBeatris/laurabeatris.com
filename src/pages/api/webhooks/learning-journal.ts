@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { verifyWebhookSignature } from '@graphcms/utils'
-// import { DateTime } from 'luxon'
-
+import { DateTime } from 'luxon'
+import mql from '@microlink/mql'
 import axios from 'axios'
 
-// import { twitterClient } from 'config/twitterClient'
+import { twitterClient } from 'config/twitterClient'
 
 const secret = process.env.CMS_WEBHOOK_SECRET
 const isHtmlDebug = process.env.OG_HTML_DEBUG === '1'
@@ -14,7 +14,7 @@ export default async function handler (
   response: NextApiResponse
 ) {
   const { body, headers } = request
-  const { id } = body.data ?? {}
+  const { id, date } = body.data ?? {}
   const url = `${process.env.NEXT_PUBLIC_APP_URL}/learning-journal/${id}`
 
   try {
@@ -35,21 +35,38 @@ export default async function handler (
       return response.redirect(url)
     }
 
-    const { data } = await axios.post(`${process.env.NEXT_PUBLIC_APP_URL}/api/screenshot`, { url })
-    const fileBuffer = Buffer.from(data.result, 'base64')
+    const { status, data } = await mql(url, {
+      colorScheme: 'dark',
+      viewport: {
+        width: 1000,
+        height: 630
+      },
+      screenshot: {
+        type: 'png'
+      }
+    })
 
-    // const mediaId = await twitterClient.v1.uploadMedia(fileBuffer, {
-    //   mimeType: 'image/png'
-    // })
-    // const twitterResponse = await twitterClient.v2.tweet(`
-    // 📝 Learning Journal, ${DateTime.fromISO(date).toFormat('DDD')}:
+    if (status === 'fail') {
+      return response.status(400).json({ message: 'Failed taking screenshot', data })
+    }
 
-    // https://laurabeatris.com/learning-journal
-    //   `, {
-    //   media: { media_ids: [mediaId] }
-    // })
+    const { data: fileDownload } = await axios.get(data.screenshot.url, {
+      responseType: 'arraybuffer'
+    })
+    const buffer = Buffer.from(fileDownload, 'utf-8')
 
-    response.status(200).json(fileBuffer)
+    const mediaId = await twitterClient.v1.uploadMedia(buffer, {
+      mimeType: 'image/png'
+    })
+    const twitterResponse = await twitterClient.v2.tweet(`
+📝 Learning Journal, ${DateTime.fromISO(date).toFormat('DDD')}:
+
+https://laurabeatris.com/learning-journal
+      `, {
+      media: { media_ids: [mediaId] }
+    })
+
+    response.status(200).json(twitterResponse)
   } catch (error) {
     console.error(error)
     response

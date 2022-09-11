@@ -31,7 +31,7 @@ const GET_ABOUT_ME_PAGE_QUERY = gql`
  * entry for it, which at the moment relies on this ID
  * @see {@link https://graphcms.com/academy/what-is-content-modeling} for more info regarding subject models
  */
-const pageIDFromCMS = 'cl7w6kilbejiq0bstcskdt9w4'
+const pageIDFromCMS = 'cl7xkroo4ll3t0bu5m2vmo69c'
 
 export async function getAboutMePage () {
   const { aboutMePage } = await graphQLClient.request<GetAboutMePageQuery>(
