@@ -1,9 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { verifyWebhookSignature } from '@graphcms/utils'
-import { DateTime } from 'luxon'
+// import { DateTime } from 'luxon'
 
-import { getScreenshot } from 'config/puppeteer'
-import { twitterClient } from 'config/twitterClient'
+import axios from 'axios'
+
+// import { twitterClient } from 'config/twitterClient'
 
 const secret = process.env.CMS_WEBHOOK_SECRET
 const isHtmlDebug = process.env.OG_HTML_DEBUG === '1'
@@ -13,8 +14,8 @@ export default async function handler (
   response: NextApiResponse
 ) {
   const { body, headers } = request
-  const { id, date } = body.data ?? {}
-  const ticketImageUrl = `${process.env.NEXT_PUBLIC_APP_URL}/learning-journal/${id}`
+  const { id } = body.data ?? {}
+  const url = `${process.env.NEXT_PUBLIC_APP_URL}/learning-journal/${id}`
 
   try {
     const signature = headers['gcms-signature']
@@ -31,23 +32,24 @@ export default async function handler (
     }
 
     if (isHtmlDebug) {
-      return response.redirect(ticketImageUrl)
+      return response.redirect(url)
     }
 
-    const file = await getScreenshot({
-      url: ticketImageUrl
-    })
+    const { data } = await axios.post(`${process.env.NEXT_PUBLIC_APP_URL}/api/screenshot`, { url })
+    const fileBuffer = Buffer.from(data.result, 'base64')
 
-    const mediaId = await twitterClient.v1.uploadMedia(file, { mimeType: 'image/png' })
-    const twitterResponse = await twitterClient.v2.tweet(`
-    📝 Learning Journal, ${DateTime.fromISO(date).toFormat('DDD')}:
+    // const mediaId = await twitterClient.v1.uploadMedia(fileBuffer, {
+    //   mimeType: 'image/png'
+    // })
+    // const twitterResponse = await twitterClient.v2.tweet(`
+    // 📝 Learning Journal, ${DateTime.fromISO(date).toFormat('DDD')}:
 
-    https://laurabeatris.com/learning-journal
-      `, {
-      media: { media_ids: [mediaId] }
-    })
+    // https://laurabeatris.com/learning-journal
+    //   `, {
+    //   media: { media_ids: [mediaId] }
+    // })
 
-    response.status(200).json(twitterResponse)
+    response.status(200).json(fileBuffer)
   } catch (error) {
     console.error(error)
     response

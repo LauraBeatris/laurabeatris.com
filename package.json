@@ -22,7 +22,7 @@
     "@graphcms/rich-text-react-renderer": "^0.4.2",
     "@graphcms/utils": "^1.1.0",
     "@laurabeatris/chakra-ui-flashless": "^0.2.11",
-    "chrome-aws-lambda": "^10.1.0",
+    "axios": "^0.27.2",
     "file-loader": "^6.2.0",
     "framer-motion": "^3.2.2-rc.1",
     "graphql": "^15.4.0",
