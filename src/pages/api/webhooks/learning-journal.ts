@@ -9,6 +9,39 @@ import { twitterClient } from 'config/twitterClient'
 const secret = process.env.CMS_WEBHOOK_SECRET
 const isHtmlDebug = process.env.OG_HTML_DEBUG === '1'
 
+async function getScreenshotBuffer (url: string) {
+  const { data } = await mql(url, {
+    colorScheme: 'dark',
+    viewport: {
+      width: 1000,
+      height: 630
+    },
+    screenshot: {
+      type: 'png'
+    }
+  })
+
+  const { data: fileDownload } = await axios.get(data.screenshot.url, {
+    responseType: 'arraybuffer'
+  })
+  return Buffer.from(fileDownload, 'utf-8')
+}
+
+async function sendTweetWithScreenshot (date: string, screenshotBuffer: Buffer) {
+  const mediaId = await twitterClient.v1.uploadMedia(screenshotBuffer, {
+    mimeType: 'image/png'
+  })
+  const twitterResponse = await twitterClient.v2.tweet(`
+📝 Learning Journal, ${DateTime.fromISO(date).toFormat('DDD')}:
+
+https://laurabeatris.com/learning-journal
+    `, {
+    media: { media_ids: [mediaId] }
+  })
+
+  return twitterResponse
+}
+
 export default async function handler (
   request: NextApiRequest,
   response: NextApiResponse
@@ -35,36 +68,8 @@ export default async function handler (
       return response.redirect(url)
     }
 
-    const { status, data } = await mql(url, {
-      colorScheme: 'dark',
-      viewport: {
-        width: 1000,
-        height: 630
-      },
-      screenshot: {
-        type: 'png'
-      }
-    })
-
-    if (status === 'fail') {
-      return response.status(400).json({ message: 'Failed taking screenshot', data })
-    }
-
-    const { data: fileDownload } = await axios.get(data.screenshot.url, {
-      responseType: 'arraybuffer'
-    })
-    const buffer = Buffer.from(fileDownload, 'utf-8')
-
-    const mediaId = await twitterClient.v1.uploadMedia(buffer, {
-      mimeType: 'image/png'
-    })
-    const twitterResponse = await twitterClient.v2.tweet(`
-📝 Learning Journal, ${DateTime.fromISO(date).toFormat('DDD')}:
-
-https://laurabeatris.com/learning-journal
-      `, {
-      media: { media_ids: [mediaId] }
-    })
+    const screenshotBuffer = await getScreenshotBuffer(url)
+    const twitterResponse = await sendTweetWithScreenshot(date, screenshotBuffer)
 
     response.status(200).json(twitterResponse)
   } catch (error) {
