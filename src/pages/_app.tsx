@@ -4,7 +4,6 @@ import { Global } from '@emotion/react'
 import { DefaultSeo } from 'next-seo'
 import { ChakraProvider } from '@chakra-ui/react'
 import { ColorModeToggleProvider } from '@laurabeatris/chakra-ui-flashless'
-import { QueryClient, QueryClientProvider } from 'react-query'
 
 import { Layout } from 'components/Layout'
 import { configSEO } from 'config/SEO'
@@ -13,8 +12,6 @@ import { theme } from 'styles/theme'
 import { global } from 'styles/global'
 
 import LearningJournalEntry from './learning-journal/[id]'
-
-const queryClient = new QueryClient()
 
 type ConditionalWrapperProps = {
   wrapper: (children: ReactNode) => JSX.Element;
@@ -48,9 +45,7 @@ export default function MyApp ({ Component, pageProps }: AppProps) {
             wrapper={(children) => <Layout>{children}</Layout>}
             condition={shouldRenderLayout}
           >
-            <QueryClientProvider client={queryClient}>
-              <Component {...pageProps} />
-            </QueryClientProvider>
+            <Component {...pageProps} />
           </ConditionalWrapper>
         </ColorModeToggleProvider>
       </ChakraProvider>
