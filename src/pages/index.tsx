@@ -1,6 +1,6 @@
-import { InferGetServerSidePropsType } from 'next'
+import { InferGetStaticPropsType } from 'next'
 import { Text, VStack } from '@chakra-ui/react'
-
+import useSWR, { SWRConfig } from 'swr'
 import { ArrowRightIcon } from '@chakra-ui/icons'
 
 import { Heading } from 'components/Base/Heading'
@@ -9,24 +9,28 @@ import { HighlightLink } from 'components/Base/HighlightLink'
 import { ProjectsList } from 'components/ProjectsList'
 import { Timeline } from 'components/Timeline'
 import { links } from 'constants/links'
+import { SWRCacheKeyGetters } from 'hooks/SWRCacheKeyGetters'
 import { getDayOfWeek } from 'utils/getDayOfWeek'
 import { gradients } from 'styles/theme/gradients'
 import { getHomePage } from 'graphql/queries/getHomePage'
+import { getTimeline } from 'graphql/queries/getTimelineList'
 
 const now = new Date()
 const dayOfWeek = getDayOfWeek(now.getDate(), now.getMonth(), now.getFullYear())
 const GreenArrowRightIcon = () => <ArrowRightIcon color='green.400' style={{ width: 10 }} />
 
-export async function getServerSideProps () {
+type HomeContainerProps = InferGetStaticPropsType<typeof getStaticProps>
+
+export async function getStaticProps () {
   try {
-    const {
-      timelineList,
-      stackCategories
-    } = await getHomePage()
+    const { stackCategories } = await getHomePage()
+    const timeline = await getTimeline()
 
     return {
       props: {
-        timelineList,
+        fallback: {
+          [SWRCacheKeyGetters.timeline]: timeline
+        },
         stackCategories
       }
     }
@@ -40,16 +44,13 @@ export async function getServerSideProps () {
   }
 }
 
-export default function Home ({
-  timelineList,
-  stackCategories
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+function HomeContent ({ stackCategories }: Pick<HomeContainerProps, 'stackCategories'>) {
   return (
     <VStack
       width='full'
+      alignItems='flex-start'
       paddingTop={5}
       paddingBottom={10}
-      alignItems='flex-start'
     >
       <Heading as='h1'>
         Happy {dayOfWeek}!
@@ -71,7 +72,15 @@ export default function Home ({
       </Paragraph>
 
       <ProjectsList stackCategories={stackCategories} />
-      <Timeline timelineList={timelineList} />
+      <Timeline />
     </VStack>
+  )
+}
+
+export default function HomeContainer ({ fallback, stackCategories }: HomeContainerProps) {
+  return (
+    <SWRConfig value={{ fallback }}>
+      <HomeContent stackCategories={stackCategories} />
+    </SWRConfig>
   )
 }

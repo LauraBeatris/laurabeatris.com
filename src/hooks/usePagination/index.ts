@@ -2,8 +2,8 @@ import { useReducer } from 'react'
 
 import { Pagination } from './types'
 
+export const PAGINATION_ITEMS_PER_PAGE = 4
 const INITIAL_PAGE = 1
-
 const ACTION_TYPES = {
   NEXT: 'NEXT',
   RESET: 'RESET'
@@ -20,8 +20,6 @@ const paginationReducer = (page, action) => {
   }
 }
 
-export const PAGINATION_ITEMS_PER_PAGE = 4
-
 export function usePagination<Timeline> ({
   list,
   itemsPerPage = PAGINATION_ITEMS_PER_PAGE
@@ -35,7 +33,6 @@ export function usePagination<Timeline> ({
   const handlePagination = () => {
     if (!hasMoreItems) {
       dispatch(ACTION_TYPES.RESET)
-
       return
     }
 

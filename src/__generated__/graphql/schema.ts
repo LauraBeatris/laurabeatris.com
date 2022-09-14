@@ -10946,7 +10946,7 @@ export type GetHomePageQueryVariables = Exact<{
 }>;
 
 
-export type GetHomePageQuery = { __typename?: 'Query', initialProjects: Array<{ __typename?: 'Stack', id: string, projects: Array<{ __typename?: 'Project', id: string, title: string, liveUrl?: string | null, githubUrl?: string | null, description?: string | null, stack?: { __typename?: 'Stack', id: string, framework?: string | null, language: string, libraries: Array<string>, databases: Array<string>, categories: Array<StackCategory> } | null, mainImage: { __typename?: 'Asset', id: string, url: string } }> }>, timelineList: Array<{ __typename?: 'Timeline', id: string, year: number, achievements: Array<{ __typename?: 'Achievement', id: string, title: string, description?: string | null }> }>, stacks: Array<{ __typename?: 'Stack', id: string, categories: Array<StackCategory> }> };
+export type GetHomePageQuery = { __typename?: 'Query', initialProjects: Array<{ __typename?: 'Stack', id: string, projects: Array<{ __typename?: 'Project', id: string, title: string, liveUrl?: string | null, githubUrl?: string | null, description?: string | null, stack?: { __typename?: 'Stack', id: string, framework?: string | null, language: string, libraries: Array<string>, databases: Array<string>, categories: Array<StackCategory> } | null, mainImage: { __typename?: 'Asset', id: string, url: string } }> }>, stacks: Array<{ __typename?: 'Stack', id: string, categories: Array<StackCategory> }> };
 
 export type GetLearningJournalEntryQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -10968,3 +10968,10 @@ export type GetTalksPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetTalksPageQuery = { __typename?: 'Query', talks: Array<{ __typename?: 'Content', id: string, url?: string | null, title: string, subtitle?: string | null, image?: { __typename?: 'Asset', id: string, url: string } | null }>, podcasts: Array<{ __typename?: 'Content', id: string, url?: string | null, title: string, subtitle?: string | null, image?: { __typename?: 'Asset', id: string, url: string } | null }> };
+
+export type GetTimelineQueryVariables = Exact<{
+  title?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetTimelineQuery = { __typename?: 'Query', timeline: Array<{ __typename?: 'Timeline', id: string, year: number, achievements: Array<{ __typename?: 'Achievement', id: string, title: string, description?: string | null }> }> };

@@ -8,5 +8,6 @@ export const SWRCacheKeyGetters = {
   learningJournalPage: (page: number, date?: string) => {
     return `learning-journal-${page}-${date}`
   },
-  learningJournalEntry: (id: string) => `learning-journal-entry-${id}`
+  learningJournalEntry: (id: string) => `learning-journal-entry-${id}`,
+  timeline: 'timeline'
 }
