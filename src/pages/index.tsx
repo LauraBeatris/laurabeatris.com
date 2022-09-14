@@ -1,6 +1,6 @@
 import { InferGetStaticPropsType } from 'next'
 import { Text, VStack } from '@chakra-ui/react'
-import useSWR, { SWRConfig } from 'swr'
+import { SWRConfig, unstable_serialize } from 'swr'
 import { ArrowRightIcon } from '@chakra-ui/icons'
 
 import { Heading } from 'components/Base/Heading'
@@ -13,7 +13,7 @@ import { SWRCacheKeyGetters } from 'hooks/SWRCacheKeyGetters'
 import { getDayOfWeek } from 'utils/getDayOfWeek'
 import { gradients } from 'styles/theme/gradients'
 import { getHomePage } from 'graphql/queries/getHomePage'
-import { getTimeline } from 'graphql/queries/getTimelineList'
+import { getTimeline } from 'graphql/queries/getTimeline'
 
 const now = new Date()
 const dayOfWeek = getDayOfWeek(now.getDate(), now.getMonth(), now.getFullYear())
@@ -29,7 +29,7 @@ export async function getStaticProps () {
     return {
       props: {
         fallback: {
-          [SWRCacheKeyGetters.timeline]: timeline
+          [unstable_serialize(SWRCacheKeyGetters.timeline())]: timeline
         },
         stackCategories
       }
