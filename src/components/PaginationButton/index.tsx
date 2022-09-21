@@ -1,5 +1,5 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
-import { Button, Text, ButtonProps } from '@chakra-ui/react'
+import { Button, Text, ButtonProps, Spinner } from '@chakra-ui/react'
 
 export type PaginationButtonProps = ButtonProps & {
   showMore: boolean;
@@ -7,6 +7,8 @@ export type PaginationButtonProps = ButtonProps & {
 
 export function PaginationButton ({
   showMore,
+  isLoading,
+  disabled,
   ...rest
 }: PaginationButtonProps) {
   const text = showMore ? 'Show more' : 'Show less'
@@ -17,12 +19,13 @@ export function PaginationButton ({
     <Button
       display='flex'
       variant='unstyled'
+      disabled={disabled}
       flexDirection='column'
       {...rest}
     >
       <Text>{text}</Text>
 
-      <Icon />
+      {isLoading ? <Spinner size='xs' /> : <Icon />}
     </Button>
   )
 }

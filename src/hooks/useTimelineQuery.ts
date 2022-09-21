@@ -29,6 +29,7 @@ export function useTimelineQuery () {
   return {
     timeline,
     isLoading,
+    isValidating,
     handleNextPage,
     resetPagination
   }

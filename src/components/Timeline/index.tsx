@@ -24,9 +24,15 @@ function TimelineSkeleton () {
 }
 
 export function Timeline () {
-  const { timeline, isLoading, handleNextPage, resetPagination } = useTimelineQuery()
-  const hasNextPage = timeline[timeline?.length - 1]?.hasNextPage
+  const {
+    timeline,
+    isLoading,
+    isValidating,
+    handleNextPage,
+    resetPagination
+  } = useTimelineQuery()
 
+  const hasNextPage = timeline[timeline?.length - 1]?.hasNextPage
   const onPaginationClick = () => {
     if (!hasNextPage) {
       resetPagination()
@@ -68,6 +74,8 @@ export function Timeline () {
         onClick={onPaginationClick}
         showMore={hasNextPage}
         alignSelf='center'
+        disabled={isLoading || isValidating}
+        isLoading={isLoading || isValidating}
       />
     </VStack>
   )
