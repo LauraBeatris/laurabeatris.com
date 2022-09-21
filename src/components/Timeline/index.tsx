@@ -9,7 +9,17 @@ import { useTimelineQuery } from 'hooks/useTimelineQuery'
 import { Achievements } from './Achievements'
 
 export function Timeline () {
-  const { timeline, handleNextPage } = useTimelineQuery()
+  const { timeline, handleNextPage, resetPagination } = useTimelineQuery()
+  const hasNextPage = timeline[timeline?.length - 1]?.hasNextPage
+
+  const onPaginationClick = () => {
+    if (!hasNextPage) {
+      resetPagination()
+      return
+    }
+
+    handleNextPage()
+  }
 
   return (
     <VStack
@@ -36,8 +46,8 @@ export function Timeline () {
       </List>
 
       <PaginationButton
-        onClick={handleNextPage}
-        showMore
+        onClick={onPaginationClick}
+        showMore={hasNextPage}
         alignSelf='center'
       />
     </VStack>

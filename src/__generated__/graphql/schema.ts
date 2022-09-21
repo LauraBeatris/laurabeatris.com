@@ -10975,4 +10975,4 @@ export type GetTimelineQueryVariables = Exact<{
 }>;
 
 
-export type GetTimelineQuery = { __typename?: 'Query', timeline: Array<{ __typename?: 'Timeline', id: string, year: number, achievements: Array<{ __typename?: 'Achievement', id: string, title: string, description?: string | null }> }> };
+export type GetTimelineQuery = { __typename?: 'Query', timeline: Array<{ __typename?: 'Timeline', id: string, year: number, achievements: Array<{ __typename?: 'Achievement', id: string, title: string, description?: string | null }> }>, timelinesConnection: { __typename?: 'TimelineConnection', pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean } } };

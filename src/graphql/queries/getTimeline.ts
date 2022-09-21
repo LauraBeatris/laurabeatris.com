@@ -21,18 +21,24 @@ const GET_TIMELINE_QUERY = gql`
         description
       }
     }
+    timelinesConnection(first: $first, skip: $skip) {
+      pageInfo {
+        hasNextPage
+      }
+    }
   }
 `
 
 export const TIMELINE_PAGE_SIZE = 2
 export async function getTimeline (pageIndex = 0) {
   const skip = pageIndex * TIMELINE_PAGE_SIZE
-  const { timeline } = await graphQLClient.request<GetTimelineQuery, GetTimelineQueryVariables>(
+  const { timeline, timelinesConnection } = await graphQLClient.request<GetTimelineQuery, GetTimelineQueryVariables>(
     GET_TIMELINE_QUERY,
     {
       skip,
       first: TIMELINE_PAGE_SIZE
     })
 
-  return timeline
+  const { pageInfo: { hasNextPage } } = timelinesConnection
+  return timeline.map((item) => ({ ...item, hasNextPage }))
 }

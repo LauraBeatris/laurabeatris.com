@@ -22,9 +22,14 @@ export function useTimelineQuery () {
     setSize(size + 1)
   }
 
+  const resetPagination = () => {
+    setSize(1)
+  }
+
   return {
     timeline,
     isLoading,
-    handleNextPage
+    handleNextPage,
+    resetPagination
   }
 }
