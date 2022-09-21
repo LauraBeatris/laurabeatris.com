@@ -4,7 +4,7 @@ import { getTimeline } from 'graphql/queries/getTimeline'
 
 import { SWRCacheKeyGetters } from './SWRCacheKeyGetters'
 
-export function useTimelineQuery () {
+export function useTimelineQuery ({ fallbackData }) {
   const {
     data,
     size,
@@ -12,7 +12,9 @@ export function useTimelineQuery () {
     isValidating
   } = useSWRInfinite(
     SWRCacheKeyGetters.timeline,
-    (_cacheString, pageIndex: number) => getTimeline(pageIndex ?? 1))
+    (_cacheString, pageIndex: number) => getTimeline(pageIndex ?? 1), {
+      fallbackData
+    })
 
   const hasEntries = data?.length > 0
   const isLoading = !hasEntries && isValidating

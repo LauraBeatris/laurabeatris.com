@@ -1,6 +1,6 @@
 import { InferGetStaticPropsType } from 'next'
 import { Text, VStack } from '@chakra-ui/react'
-import { SWRConfig, unstable_serialize } from 'swr'
+import { SWRConfig } from 'swr'
 import { ArrowRightIcon } from '@chakra-ui/icons'
 
 import { Heading } from 'components/Base/Heading'
@@ -9,7 +9,6 @@ import { HighlightLink } from 'components/Base/HighlightLink'
 import { ProjectsList } from 'components/ProjectsList'
 import { Timeline } from 'components/Timeline'
 import { links } from 'constants/links'
-import { SWRCacheKeyGetters } from 'hooks/SWRCacheKeyGetters'
 import { getDayOfWeek } from 'utils/getDayOfWeek'
 import { gradients } from 'styles/theme/gradients'
 import { getHomePage } from 'graphql/queries/getHomePage'
@@ -28,9 +27,7 @@ export async function getStaticProps () {
 
     return {
       props: {
-        fallback: {
-          [unstable_serialize(SWRCacheKeyGetters.timeline())]: timeline
-        },
+        timeline,
         stackCategories
       }
     }
@@ -44,7 +41,8 @@ export async function getStaticProps () {
   }
 }
 
-function HomeContent ({ stackCategories }: Pick<HomeContainerProps, 'stackCategories'>) {
+type HomeContentProps = Pick<HomeContainerProps, 'timeline' | 'stackCategories'>
+function HomeContent ({ timeline, stackCategories }: HomeContentProps) {
   return (
     <VStack
       width='full'
@@ -72,15 +70,18 @@ function HomeContent ({ stackCategories }: Pick<HomeContainerProps, 'stackCatego
       </Paragraph>
 
       <ProjectsList stackCategories={stackCategories} />
-      <Timeline />
+      <Timeline fallbackData={timeline} />
     </VStack>
   )
 }
 
-export default function HomeContainer ({ fallback, stackCategories }: HomeContainerProps) {
+export default function HomeContainer ({
+  timeline,
+  stackCategories
+}: HomeContainerProps) {
   return (
-    <SWRConfig value={{ fallback }}>
-      <HomeContent stackCategories={stackCategories} />
+    <SWRConfig>
+      <HomeContent timeline={timeline} stackCategories={stackCategories} />
     </SWRConfig>
   )
 }
