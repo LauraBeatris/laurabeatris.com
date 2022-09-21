@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 
 import { graphQLClient } from 'config/graphQLClient'
-import { GetAboutMePageQuery } from '__generated__/graphql/schema'
+import { GetAboutMePageQuery, GetAboutMePageQueryVariables } from '__generated__/graphql/schema'
 
 const GET_ABOUT_ME_PAGE_QUERY = gql`
   query GetAboutMePage($id: ID!){
@@ -34,7 +34,7 @@ const GET_ABOUT_ME_PAGE_QUERY = gql`
 const pageIDFromCMS = 'cl7xkroo4ll3t0bu5m2vmo69c'
 
 export async function getAboutMePage () {
-  const { aboutMePage } = await graphQLClient.request<GetAboutMePageQuery>(
+  const { aboutMePage } = await graphQLClient.request<GetAboutMePageQuery, GetAboutMePageQueryVariables>(
     GET_ABOUT_ME_PAGE_QUERY,
     { id: pageIDFromCMS }
   )

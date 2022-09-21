@@ -2,7 +2,7 @@ import { gql } from 'graphql-request'
 import { formatRFC3339 } from 'date-fns'
 
 import { graphQLClient } from 'config/graphQLClient'
-import { GetLearningJournalPageQuery } from '__generated__/graphql/schema'
+import { GetLearningJournalPageQuery, GetLearningJournalPageQueryVariables } from '__generated__/graphql/schema'
 
 const GET_LEARNING_JOURNAL_PAGE_QUERY = gql`
   query GetLearningJournalPage(
@@ -58,7 +58,7 @@ export async function getLearningJournalPage (
       : {})
   }
 
-  const { learningJournalsConnection } = await graphQLClient.request<GetLearningJournalPageQuery>(
+  const { learningJournalsConnection } = await graphQLClient.request<GetLearningJournalPageQuery, GetLearningJournalPageQueryVariables>(
     GET_LEARNING_JOURNAL_PAGE_QUERY,
     variables
   )
