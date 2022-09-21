@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 
 import { graphQLClient } from 'config/graphQLClient'
-import { GetLearningJournalEntryQuery } from '__generated__/graphql/schema'
+import { GetLearningJournalEntryQuery, GetLearningJournalEntryQueryVariables } from '__generated__/graphql/schema'
 
 const GET_LEARNING_JOURNAL_ENTRY_QUERY = gql`
   query GetLearningJournalEntry($id: ID!) {
@@ -16,7 +16,7 @@ const GET_LEARNING_JOURNAL_ENTRY_QUERY = gql`
 `
 
 export async function getLearningJournalEntry (id: string) {
-  const { learningJournal } = await graphQLClient.request<GetLearningJournalEntryQuery>(
+  const { learningJournal } = await graphQLClient.request<GetLearningJournalEntryQuery, GetLearningJournalEntryQueryVariables>(
     GET_LEARNING_JOURNAL_ENTRY_QUERY,
     { id }
   )

@@ -2,8 +2,6 @@ import { gql } from 'graphql-request'
 import uniq from 'lodash.uniq'
 import union from 'lodash.union'
 
-import { QueryFunctionContext } from 'react-query'
-
 import { graphQLClient } from 'config/graphQLClient'
 import { GetHomePageQuery, StackCategory } from '__generated__/graphql/schema'
 import { STACK_FRAGMENT } from 'graphql/fragments/stackFragment'
@@ -20,15 +18,6 @@ const GET_HOME_PAGE_QUERY = gql`
     ) {
       ...StackFields
     }
-    timelineList: timelines(orderBy: year_DESC) {
-      id
-      year
-      achievements(orderBy: createdAt_DESC) {
-        id
-        title
-        description
-      }
-    }
     stacks {
       id
       categories
@@ -36,22 +25,11 @@ const GET_HOME_PAGE_QUERY = gql`
   }
 `
 
-type GetHomePageQueryFilters = {
-  title: string;
-  categories: Array<StackCategory>;
-}
-
-type GetHomePageQueryKey = [
-  queryIdentifier: string,
-  filters: GetHomePageQueryFilters
-]
-
-export async function getHomePage (context?: QueryFunctionContext<GetHomePageQueryKey>) {
+export async function getHomePage (context?) {
   const [, filters = {}] = context?.queryKey ?? []
 
   let {
     stacks,
-    timelineList,
     initialProjects
   } = await graphQLClient.request<GetHomePageQuery>(GET_HOME_PAGE_QUERY, {
     filters
@@ -67,5 +45,5 @@ export async function getHomePage (context?: QueryFunctionContext<GetHomePageQue
     []
   )
 
-  return { timelineList, stackCategories, initialProjects }
+  return { stackCategories, initialProjects }
 }
