@@ -10970,7 +10970,8 @@ export type GetTalksPageQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetTalksPageQuery = { __typename?: 'Query', talks: Array<{ __typename?: 'Content', id: string, url?: string | null, title: string, subtitle?: string | null, image?: { __typename?: 'Asset', id: string, url: string } | null }>, podcasts: Array<{ __typename?: 'Content', id: string, url?: string | null, title: string, subtitle?: string | null, image?: { __typename?: 'Asset', id: string, url: string } | null }> };
 
 export type GetTimelineQueryVariables = Exact<{
-  title?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
 }>;
 
 
