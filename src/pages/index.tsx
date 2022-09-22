@@ -1,5 +1,5 @@
 import { InferGetStaticPropsType } from 'next'
-import { Text, VStack } from '@chakra-ui/react'
+import { HStack, Text, VStack } from '@chakra-ui/react'
 import { SWRConfig } from 'swr'
 import { ArrowRightIcon } from '@chakra-ui/icons'
 
@@ -56,18 +56,25 @@ function HomeContent ({ timeline, stackCategories }: HomeContentProps) {
         I'm Laura Beatris
       </Heading>
 
-      <Paragraph variant='regular'>
-        Software Developer at <HighlightLink href={links.reaktor}>Reaktor</HighlightLink>
-        <br />
-        Following the flow of {' '}
-        <Text
-          bgClip='text'
-          display='inline'
-          bgGradient={gradients.greenToBlue}
-        >
-          learning <GreenArrowRightIcon /> creating <GreenArrowRightIcon /> teaching 🚀
-        </Text>
-      </Paragraph>
+      <VStack spacing={0} width='full' alignItems='flex-start'>
+        <Paragraph variant='regular'>
+          Software Developer at <HighlightLink href={links.reaktor}>Reaktor</HighlightLink>
+        </Paragraph>
+
+        <HStack spacing={1}>
+          <Paragraph variant='regular'>
+            Following the flow of
+          </Paragraph>
+          <Paragraph>
+            <Text
+              bgClip='text'
+              bgGradient={gradients.greenToBlue}
+            >
+              learning <GreenArrowRightIcon /> creating <GreenArrowRightIcon /> teaching 🚀
+            </Text>
+          </Paragraph>
+        </HStack>
+      </VStack>
 
       <ProjectsList stackCategories={stackCategories} />
       <Timeline fallbackData={timeline} />
