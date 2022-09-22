@@ -69,7 +69,7 @@ function HomeContent ({ timeline, stackCategories }: HomeContentProps) {
         </Text>
       </Paragraph>
 
-      <ProjectsList stackCategories={stackCategories} />
+      {/* <ProjectsList stackCategories={stackCategories} /> */}
       <Timeline fallbackData={timeline} />
     </VStack>
   )
