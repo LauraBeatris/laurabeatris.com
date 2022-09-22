@@ -56,18 +56,22 @@ function HomeContent ({ timeline, stackCategories }: HomeContentProps) {
         I'm Laura Beatris
       </Heading>
 
-      <Paragraph variant='regular'>
-        Software Developer at <HighlightLink href={links.reaktor}>Reaktor</HighlightLink>
-        <br />
-        Following the flow of {' '}
-        <Text
-          bgClip='text'
-          display='inline'
-          bgGradient={gradients.greenToBlue}
-        >
-          learning <GreenArrowRightIcon /> creating <GreenArrowRightIcon /> teaching 🚀
-        </Text>
-      </Paragraph>
+      <VStack spacing={0} width='full' alignItems='flex-start'>
+        <Paragraph variant='regular'>
+          Software Developer at <HighlightLink href={links.reaktor}>Reaktor</HighlightLink>
+        </Paragraph>
+        {/*
+        <Paragraph variant='regular'>
+          Following the flow of {' '}
+          <Text
+            bgClip='text'
+            display='inline'
+            bgGradient={gradients.greenToBlue}
+          >
+            learning <GreenArrowRightIcon /> creating <GreenArrowRightIcon /> teaching 🚀
+          </Text>
+        </Paragraph> */}
+      </VStack>
 
       <ProjectsList stackCategories={stackCategories} />
       <Timeline fallbackData={timeline} />
