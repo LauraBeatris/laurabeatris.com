@@ -1,5 +1,5 @@
 import { InferGetStaticPropsType } from 'next'
-import { HStack, Text, VStack } from '@chakra-ui/react'
+import { HStack, Stack, Text, VStack } from '@chakra-ui/react'
 import { SWRConfig } from 'swr'
 import { ArrowRightIcon } from '@chakra-ui/icons'
 
@@ -63,11 +63,11 @@ function HomeContent ({ timeline, stackCategories }: HomeContentProps) {
           Software Developer at <HighlightLink href={workos.href}>{workos.label}</HighlightLink>
         </Paragraph>
 
-        <HStack spacing={1}>
+        <Stack direction={['column', 'row']} spacing={[-1, 1]}>
           <Paragraph variant='regular'>
             Following the flow of
           </Paragraph>
-          <Paragraph>
+          <Paragraph display='inline'>
             <Text
               bgClip='text'
               bgGradient={gradients.greenToBlue}
@@ -75,7 +75,7 @@ function HomeContent ({ timeline, stackCategories }: HomeContentProps) {
               learning <GreenArrowRightIcon /> creating <GreenArrowRightIcon /> teaching 🚀
             </Text>
           </Paragraph>
-        </HStack>
+        </Stack>
       </VStack>
 
       <ProjectsList stackCategories={stackCategories} />
