@@ -1,5 +1,7 @@
 import { links } from './links'
 
+const { blog } = links
+
 export const navigationItems = [
   {
     name: 'Home',
@@ -19,7 +21,7 @@ export const navigationItems = [
   },
   {
     name: 'Blog',
-    href: links.blog,
+    href: blog.href,
     isExternal: true
   }
 ]
