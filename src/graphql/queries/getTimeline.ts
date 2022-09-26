@@ -29,7 +29,7 @@ const GET_TIMELINE_QUERY = gql`
   }
 `
 
-export const TIMELINE_PAGE_SIZE = 2
+const TIMELINE_PAGE_SIZE = 2
 export async function getTimeline (pageIndex = 0) {
   const skip = pageIndex * TIMELINE_PAGE_SIZE
   const { timeline, timelinesConnection } = await graphQLClient.request<GetTimelineQuery, GetTimelineQueryVariables>(
