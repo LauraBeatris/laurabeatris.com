@@ -24,12 +24,12 @@ const HeaderNavigationDesktop = () => (
     css={{ listStyle: 'none' }}
   >
     {
-          navigationItems.map(({ name, href, isExternal }) => (
-            <li key={name}>
-              <Link href={href} isExternal={isExternal}>{name}</Link>
-            </li>
-          ))
-        }
+      navigationItems.map(({ name, href, isExternal }) => (
+        <li key={name}>
+          <Link href={href} isExternal={isExternal}>{name}</Link>
+        </li>
+      ))
+     }
   </HStack>
 )
 

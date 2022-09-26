@@ -14,6 +14,8 @@ import { gradients } from 'styles/theme/gradients'
 import { getHomePage } from 'graphql/queries/getHomePage'
 import { getTimeline } from 'graphql/queries/getTimeline'
 
+const { workos } = links
+
 const now = new Date()
 const dayOfWeek = getDayOfWeek(now.getDate(), now.getMonth(), now.getFullYear())
 const GreenArrowRightIcon = () => <ArrowRightIcon color='green.400' style={{ width: 10 }} />
@@ -58,7 +60,7 @@ function HomeContent ({ timeline, stackCategories }: HomeContentProps) {
 
       <VStack spacing={0} width='full' alignItems='flex-start'>
         <Paragraph variant='regular'>
-          Software Developer at <HighlightLink href={links.reaktor}>Reaktor</HighlightLink>
+          Software Developer at <HighlightLink href={workos.href}>{workos.label}</HighlightLink>
         </Paragraph>
 
         <HStack spacing={1}>
