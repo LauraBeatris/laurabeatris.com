@@ -6,25 +6,27 @@ import { Heading } from 'components/Base/Heading'
 import { Container } from 'components/Layout/Container'
 import { GradientLine } from 'components/GradientLine'
 
+const { github, linkedin, youtube, twitter } = links
+
 const footerLinks = [
   {
     name: 'GitHub',
-    href: links.github,
+    href: github.href,
     icon: AiFillGithub
   },
   {
     name: 'Linkedin',
-    href: links.linkedin,
+    href: linkedin.href,
     icon: AiFillLinkedin
   },
   {
     name: 'Youtube',
-    href: links.youtube,
+    href: youtube.href,
     icon: AiFillYoutube
   },
   {
     name: 'Twitter',
-    href: links.twitter,
+    href: twitter.href,
     icon: AiFillTwitterCircle
   }
 ]
