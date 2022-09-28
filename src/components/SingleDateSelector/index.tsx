@@ -67,7 +67,7 @@ export function SingleDateSelector ({ onInputValueChange }: SingleDateSelectorPr
 
   useEffect(() => {
     onInputValueChange?.(inputValue)
-  }, [inputValue])
+  }, [inputValue, onInputValueChange])
 
   // Only accept digits and forward slash as input.
   const onInputChange = (input: string) => {

@@ -1,5 +1,5 @@
 import { InferGetStaticPropsType } from 'next'
-import { HStack, Stack, Text, VStack } from '@chakra-ui/react'
+import { Stack, Text, VStack } from '@chakra-ui/react'
 import { SWRConfig } from 'swr'
 import { ArrowRightIcon } from '@chakra-ui/icons'
 

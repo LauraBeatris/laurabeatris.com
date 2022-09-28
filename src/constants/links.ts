@@ -6,21 +6,21 @@ export const links: Links = {
     label: 'WorkOS'
   },
   twitter: {
-    href: 'https://twitter.com/lauradotjs'
+    href: 'https://laurabeatris.com/twitter'
   },
   youtube: {
-    href: 'https://twitter.com/lauradotjs'
+    href: 'https://laurabeatris.com/youtube'
   },
   linkedin: {
-    href: 'https://www.linkedin.com/in/laurabeatris/'
+    href: 'https://laurabeatris.com/linkedin'
   },
   podcast: {
     href: 'https://anchor.fm/usepodcast'
   },
   github: {
-    href: 'https://github.com/LauraBeatris'
+    href: 'https://laurabeatris.com/github'
   },
   blog: {
-    href: 'https://dev.to/laurabeatris'
+    href: 'https://laurabeatris.com/blog'
   }
 }
