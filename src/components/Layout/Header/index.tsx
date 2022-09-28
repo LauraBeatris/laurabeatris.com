@@ -38,6 +38,7 @@ export function Header () {
               issue of next/link https://github.com/vercel/next.js/issues/7915 */}
             <div>
               <Image
+                alt='Laura Beatris Logo'
                 src='/images/logo.png'
                 width={45}
                 height={59}
