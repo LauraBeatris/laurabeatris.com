@@ -7,11 +7,10 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:import/errors',
     'plugin:import/warnings',
-    'plugin:import/typescript'
+    'plugin:import/typescript',
+    'next'
   ],
   plugins: [
-    'react-hooks',
-    'jsx-a11y',
     'import'
   ],
   rules: {
