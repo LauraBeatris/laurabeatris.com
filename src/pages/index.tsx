@@ -24,12 +24,13 @@ type HomeContainerProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export async function getStaticProps () {
   try {
-    const { stackCategories } = await getHomePage()
+    const { stackCategories, initialProjects } = await getHomePage()
     const timeline = await getTimeline()
 
     return {
       props: {
         timeline,
+        initialProjects,
         stackCategories
       }
     }
@@ -43,8 +44,8 @@ export async function getStaticProps () {
   }
 }
 
-type HomeContentProps = Pick<HomeContainerProps, 'timeline' | 'stackCategories'>
-function HomeContent ({ timeline, stackCategories }: HomeContentProps) {
+type HomeContentProps = Pick<HomeContainerProps, 'timeline' | 'stackCategories' | 'initialProjects'>
+function HomeContent ({ timeline, initialProjects }: HomeContentProps) {
   return (
     <VStack
       width='full'
@@ -78,7 +79,9 @@ function HomeContent ({ timeline, stackCategories }: HomeContentProps) {
         </Stack>
       </VStack>
 
-      <ProjectsList stackCategories={stackCategories} />
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/* @ts-ignore-error */}
+      <ProjectsList initialProjects={initialProjects} />
       <Timeline fallbackData={timeline} />
     </VStack>
   )
@@ -86,11 +89,12 @@ function HomeContent ({ timeline, stackCategories }: HomeContentProps) {
 
 export default function HomeContainer ({
   timeline,
+  initialProjects,
   stackCategories
 }: HomeContainerProps) {
   return (
     <SWRConfig>
-      <HomeContent timeline={timeline} stackCategories={stackCategories} />
+      <HomeContent initialProjects={initialProjects} timeline={timeline} stackCategories={stackCategories} />
     </SWRConfig>
   )
 }

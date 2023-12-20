@@ -1,58 +1,29 @@
 import { ChangeEvent, useCallback, useState } from 'react'
-import { Stack, VStack } from '@chakra-ui/react'
+import { Flex, SimpleGrid, Stack, VStack } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
 
 import { Heading } from 'components/Base/Heading'
 import { Popover } from 'components/Base/Popover'
 import { ProjectFilters } from 'components/ProjectFilters'
+import { Project as ProjectType } from '__generated__/graphql/schema'
+import { Project } from 'components/Project'
 import { Paragraph } from 'components/Base/Paragraph'
-import { StackCategory } from '__generated__/graphql/schema'
 
 type ProjectsListProps = {
-  stackCategories: Array<StackCategory>;
+  initialProjects: Array<ProjectType>;
 }
 
 const PROJECTS_POPOVER_TEXT = <p>Click on the projects to see more details about it.<br /> Also, there are filters to explore projects according to certain titles and technologies.</p>
-export const INITIAL_STACK_CATEGORIES = [
-  StackCategory.Backend,
-  StackCategory.Frontend,
-  StackCategory.Package,
-  StackCategory.Mobile
-]
 
 const isWorkInProgressFeatureFlag = process.env.NEXT_PUBLIC_WORK_IN_PROGRESS_FEATURE_FLAG
 
 export function ProjectsList ({
-  stackCategories
+  initialProjects
 }: ProjectsListProps) {
   const [, setTitle] = useState('')
-  const [selectedStackCategories, setSelectedStackCategories] = useState(INITIAL_STACK_CATEGORIES)
-
-  // const [debouncedTitle] = useDebounce(title, DEFAULT_DEBOUNCE_DELAY_MILLISECONDS)
-  // const [debouncedStackCategories] = useDebounce(stackCategories, DEFAULT_DEBOUNCE_DELAY_MILLISECONDS)
 
   const handleTitleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value)
-  }, [])
-
-  const handleStackCategoryOptionsChange = useCallback((
-    categoryOrCategories: StackCategory | Array<StackCategory>
-  ) => {
-    const shouldResetStackCategories = (
-      Array.isArray(categoryOrCategories) &&
-      categoryOrCategories.length === 0
-    )
-
-    if (shouldResetStackCategories) {
-      setSelectedStackCategories(INITIAL_STACK_CATEGORIES)
-      return
-    }
-
-    setSelectedStackCategories(
-      Array.isArray(categoryOrCategories)
-        ? categoryOrCategories
-        : [categoryOrCategories]
-    )
   }, [])
 
   // const shouldShowPagination = !isLoading && projects?.length > PAGINATION_ITEMS_PER_PAGE
@@ -95,14 +66,11 @@ export function ProjectsList ({
         </Stack>
 
         <ProjectFilters
-          stackCategories={stackCategories}
           onTitleInputChange={handleTitleInputChange}
-          selectedStackCategories={selectedStackCategories}
-          onStackCategoryOptionsChange={handleStackCategoryOptionsChange}
         />
       </Stack>
 
-      {/* <SimpleGrid
+      <SimpleGrid
         as='ul'
         css={{ listStyle: 'none' }}
         width='full'
@@ -110,7 +78,7 @@ export function ProjectsList ({
         columns={[1, null, 2]}
       >
         {
-          (data ?? []).map(({
+          (initialProjects ?? []).map(({
             title,
             stack,
             liveUrl,
@@ -139,20 +107,7 @@ export function ProjectsList ({
             )
           })
         }
-      </SimpleGrid> */}
-
-      {
-        isWorkInProgressFeatureFlag && (
-          <Paragraph
-            size='sm'
-            variant='medium'
-            alignSelf='center'
-            textAlign='center'
-          >
-            🚧 Currently building/baking new projects
-          </Paragraph>
-        )
-      }
+      </SimpleGrid>
 
       {
         shouldShowEmptyListMessage && (
