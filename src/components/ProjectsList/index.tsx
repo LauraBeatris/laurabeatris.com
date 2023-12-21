@@ -7,15 +7,12 @@ import { Popover } from 'components/Base/Popover'
 import { ProjectFilters } from 'components/ProjectFilters'
 import { Project as ProjectType } from '__generated__/graphql/schema'
 import { Project } from 'components/Project'
-import { Paragraph } from 'components/Base/Paragraph'
 
 type ProjectsListProps = {
   initialProjects: Array<ProjectType>;
 }
 
 const PROJECTS_POPOVER_TEXT = <p>Click on the projects to see more details about it.<br /> Also, there are filters to explore projects according to certain titles and technologies.</p>
-
-const isWorkInProgressFeatureFlag = process.env.NEXT_PUBLIC_WORK_IN_PROGRESS_FEATURE_FLAG
 
 export function ProjectsList ({
   initialProjects
@@ -25,9 +22,6 @@ export function ProjectsList ({
   const handleTitleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value)
   }, [])
-
-  // const shouldShowPagination = !isLoading && projects?.length > PAGINATION_ITEMS_PER_PAGE
-  const shouldShowEmptyListMessage = !isWorkInProgressFeatureFlag
 
   return (
     <VStack
@@ -108,28 +102,6 @@ export function ProjectsList ({
           })
         }
       </SimpleGrid>
-
-      {
-        shouldShowEmptyListMessage && (
-          <Paragraph
-            size='sm'
-            variant='regular'
-            alignSelf='center'
-          >
-            No projects were found
-          </Paragraph>
-        )
-      }
-
-      {/* {
-        shouldShowPagination && (
-          <PaginationButton
-            showMore={hasMoreItems}
-            onClick={handlePagination}
-            alignSelf='center'
-          />
-        )
-      } */}
     </VStack>
   )
 }
