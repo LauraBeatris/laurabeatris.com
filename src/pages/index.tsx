@@ -61,7 +61,7 @@ function HomeContent ({ timeline, initialProjects }: HomeContentProps) {
 
       <VStack spacing={0} width='full' alignItems='flex-start'>
         <Paragraph variant='regular'>
-          Software Developer at <HighlightLink href={workos.href}>{workos.label}</HighlightLink>
+          Software Engineer at <HighlightLink href={workos.href}>{workos.label}</HighlightLink>
         </Paragraph>
 
         <Stack direction={['column', 'row']} spacing={[-1, 1]}>
