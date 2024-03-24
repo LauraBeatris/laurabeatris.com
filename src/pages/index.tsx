@@ -7,7 +7,6 @@ import { Heading } from 'components/Base/Heading'
 import { Paragraph } from 'components/Base/Paragraph'
 import { HighlightLink } from 'components/Base/HighlightLink'
 import { ProjectsList } from 'components/ProjectsList'
-import { Timeline } from 'components/Timeline'
 import { links } from 'constants/links'
 import { getDayOfWeek } from 'utils/getDayOfWeek'
 import { gradients } from 'styles/theme/gradients'
@@ -61,7 +60,7 @@ function HomeContent ({ timeline, initialProjects }: HomeContentProps) {
 
       <VStack spacing={0} width='full' alignItems='flex-start'>
         <Paragraph variant='regular'>
-          Software Engineer at <HighlightLink href={workos.href}>{workos.label}</HighlightLink>
+          Product Engineer at <HighlightLink href={workos.href}>{workos.label}</HighlightLink>
         </Paragraph>
 
         <Stack direction={['column', 'row']} spacing={[-1, 1]}>
@@ -82,7 +81,6 @@ function HomeContent ({ timeline, initialProjects }: HomeContentProps) {
       {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
       {/* @ts-ignore-error */}
       <ProjectsList initialProjects={initialProjects} />
-      <Timeline fallbackData={timeline} />
     </VStack>
   )
 }
