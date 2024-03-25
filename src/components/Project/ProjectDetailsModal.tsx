@@ -17,6 +17,10 @@ import { MdLanguage, MdLibraryBooks } from 'react-icons/md'
 import { colors } from 'styles/theme/colors'
 
 function ProjectDetailsListItem ({ icon, title, value }) {
+  if (!value) {
+    return null
+  }
+
   return (
     <ListItem color='dark'>
       <ListIcon as={icon} color='green.400' />
