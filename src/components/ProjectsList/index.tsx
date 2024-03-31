@@ -1,10 +1,8 @@
-import { ChangeEvent, useCallback, useState } from 'react'
 import { Flex, SimpleGrid, Stack, VStack } from '@chakra-ui/react'
 import { InfoIcon } from '@chakra-ui/icons'
 
 import { Heading } from 'components/Base/Heading'
 import { Popover } from 'components/Base/Popover'
-import { ProjectFilters } from 'components/ProjectFilters'
 import { Project as ProjectType } from '__generated__/graphql/schema'
 import { Project } from 'components/Project'
 
@@ -17,12 +15,6 @@ const PROJECTS_POPOVER_TEXT = <p>Click on the projects to see more details about
 export function ProjectsList ({
   initialProjects
 }: ProjectsListProps) {
-  const [, setTitle] = useState('')
-
-  const handleTitleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value)
-  }, [])
-
   return (
     <VStack
       width='full'
@@ -58,10 +50,6 @@ export function ProjectsList ({
             }
           </Flex> */}
         </Stack>
-
-        <ProjectFilters
-          onTitleInputChange={handleTitleInputChange}
-        />
       </Stack>
 
       <SimpleGrid
