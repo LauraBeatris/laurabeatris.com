@@ -1,9 +1,9 @@
 type Links = Record<string, { href: string, label?: string }>
 
 export const links: Links = {
-  workos: {
-    href: 'https://workos.com/',
-    label: 'WorkOS'
+  clerk: {
+    href: 'https://clerk.com//',
+    label: 'Clerk'
   },
   twitter: {
     href: 'https://laurabeatris.com/twitter'

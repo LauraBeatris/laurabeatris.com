@@ -1,19 +1,19 @@
-import { InferGetStaticPropsType } from 'next'
-import { Stack, Text, VStack } from '@chakra-ui/react'
-import { SWRConfig } from 'swr'
 import { ArrowRightIcon } from '@chakra-ui/icons'
+import { Stack, Text, VStack } from '@chakra-ui/react'
+import { InferGetStaticPropsType } from 'next'
+import { SWRConfig } from 'swr'
 
 import { Heading } from 'components/Base/Heading'
-import { Paragraph } from 'components/Base/Paragraph'
 import { HighlightLink } from 'components/Base/HighlightLink'
+import { Paragraph } from 'components/Base/Paragraph'
 import { ProjectsList } from 'components/ProjectsList'
 import { links } from 'constants/links'
-import { getDayOfWeek } from 'utils/getDayOfWeek'
-import { gradients } from 'styles/theme/gradients'
 import { getHomePage } from 'graphql/queries/getHomePage'
 import { getTimeline } from 'graphql/queries/getTimeline'
+import { gradients } from 'styles/theme/gradients'
+import { getDayOfWeek } from 'utils/getDayOfWeek'
 
-const { workos } = links
+const { clerk } = links
 
 const now = new Date()
 const dayOfWeek = getDayOfWeek(now.getDate(), now.getMonth(), now.getFullYear())
@@ -60,7 +60,7 @@ function HomeContent ({ timeline, initialProjects }: HomeContentProps) {
 
       <VStack spacing={0} width='full' alignItems='flex-start'>
         <Paragraph variant='regular'>
-          Product Engineer at <HighlightLink href={workos.href}>{workos.label}</HighlightLink>
+          Product Engineer at <HighlightLink href={clerk.href}>{clerk.label}</HighlightLink>
         </Paragraph>
 
         <Stack direction={['column', 'row']} spacing={[-1, 1]}>
