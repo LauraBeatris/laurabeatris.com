@@ -1,68 +1,36 @@
-<p align="left">
-   <img src="./.github/docs/images/logo.png" />
-</p>
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-# laurabeatris.com
+## Getting Started
 
-[![Author](https://img.shields.io/badge/author-LauraBeatris-43CEA2?style=flat-square)](https://github.com/LauraBeatris)
-[![Languages](https://img.shields.io/github/languages/count/LauraBeatris/laurabeatris.com?color=%2343CEA2&style=flat-square)](#)
-[![Stars](https://img.shields.io/github/stars/LauraBeatris/laurabeatris.com?color=43CEA2&style=flat-square)](https://github.com/LauraBeatris/laurabeatris.com/stargazers)
+First, run the development server:
 
----
-<p align="center">
-   <img src="./.github/docs/images/main-page-mobile.png" width="200"/>
-   <img src="./.github/docs/images/learning-journal-page-mobile.png" width="200"/>
-</p>
-
-<p align="center">
-   <a href="https://laurabeatris.com">Go check it out 🎉</a>
-</p>
-
----
-
-# :pushpin: Table of Contents
-
-* [Running Locally](#construction_worker-running-locally)
-* [FAQ](#postbox-faq)
-* [Issues](#bug-issues)
-* [Contributing](#tada-contributing)
-
-## :construction_worker: Running Locally
-
-Disclaimer: This project fetches data from my personal [GraphCMS](https://graphcms.com/) workspace, thus it's necessary to define the CMS endpoint as a environment variable, otherwise it's not possible to fully execute the scripts bellow
-
-#### Clone repository
 ```bash
-git clone https://github.com/LauraBeatris/laurabeatris.com.git
-```
-
-#### Define environment variables
-```bash
-cp .env.local.example .env.local
-```
-
-#### Install dependencies & execute web application in development mode
-```bash
-yarn
+npm run dev
+# or
 yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-Define the environment variables by creating a .env.local file similar to [.env.local.example](https://github.com/LauraBeatris/laurabeatris.com/blob/master/.env.local.example)
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-# :postbox: Faq
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-**Question:** What are the technologies used in this project?
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-**Answer:** [Next.js](https://nextjs.org/), [Chakra UI](https://chakra-ui.com/) and [GraphCMS](https://graphcms.com/)
+## Learn More
 
-**Question** Why Next.js instead of other frameworks of React out there?
+To learn more about Next.js, take a look at the following resources:
 
-**Answer** I chose Next.js in order to opt out for different rendering strategies
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-# :bug: Issues
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-Feel free to **file a new issue** with a respective title and description. If you already found a solution to your problem, **I would love to review your pull request**!
+## Deploy on Vercel
 
-# :tada: Contributing
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out the [contributing](https://github.com/LauraBeatris/laurabeatris.com/blob/master/CONTRIBUTING.md) page to see the best places to file issues, start discussions and begin contributing
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
