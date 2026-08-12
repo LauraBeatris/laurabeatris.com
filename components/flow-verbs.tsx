@@ -27,7 +27,7 @@ export function FlowVerbs() {
       </span>
       <span
         key={index}
-        className="animate-flow-in col-start-1 row-start-1 bg-gradient-to-r from-muted-foreground to-foreground bg-clip-text font-semibold text-transparent"
+        className="animate-flow-in col-start-1 row-start-1 bg-gradient-to-r from-muted to-foreground bg-clip-text font-semibold text-transparent"
       >
         {VERBS[index]}
       </span>
