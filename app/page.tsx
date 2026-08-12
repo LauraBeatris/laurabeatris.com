@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Greeting } from "@/components/greeting";
 import { FlowVerbs } from "@/components/flow-verbs";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -48,6 +49,16 @@ export default function Home() {
           <p className="flex flex-wrap items-baseline gap-x-1.5">
             <span className="text-muted">Following the flow of</span>
             <FlowVerbs />
+          </p>
+          <p className="text-muted">
+            Along the way I&apos;ve given{" "}
+            <Link
+              href="/talks"
+              className="font-medium text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
+            >
+              talks and podcasts
+            </Link>{" "}
+            about React, TypeScript, and learning in the open.
           </p>
         </div>
       </main>
