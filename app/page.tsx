@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Greeting } from "@/components/greeting";
 import { FlowVerbs } from "@/components/flow-verbs";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -28,26 +29,36 @@ export default function Home() {
         <p className="mt-4 text-lg text-muted">
           Product Engineer at{" "}
           <a
-            href="https://clerk.com"
+            href="https://resend.com"
             target="_blank"
             rel="noopener noreferrer"
             className="font-medium text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
           >
-            Clerk
+            Resend
           </a>
         </p>
 
         <div className="mt-10 space-y-5 text-pretty text-lg leading-relaxed">
           <p>
-            I build authentication and identity tools for developers — the kind
-            of infrastructure that stays out of the way so people can ship. I
-            care about <span className="font-medium">immersion</span> and{" "}
+            I build developer tools — the kind of infrastructure that stays out
+            of the way so people can ship. I care about{" "}
+            <span className="font-medium">immersion</span> and{" "}
             <span className="font-medium">freedom</span> as expressions of art,
             and I try to bring that same intention into the software I make.
           </p>
           <p className="flex flex-wrap items-baseline gap-x-1.5">
             <span className="text-muted">Following the flow of</span>
             <FlowVerbs />
+          </p>
+          <p className="text-muted">
+            Along the way I&apos;ve given{" "}
+            <Link
+              href="/talks"
+              className="font-medium text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
+            >
+              talks and podcasts
+            </Link>{" "}
+            about React, TypeScript, and learning in the open.
           </p>
         </div>
       </main>
