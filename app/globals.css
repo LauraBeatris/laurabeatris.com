@@ -1,3 +1,61 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 10%;
+    --muted: 0 0% 44%;
+    --border: 0 0% 89%;
+    --accent: 256 52% 52%;
+  }
+
+  .dark {
+    --background: 0 0% 7%;
+    --foreground: 0 0% 95%;
+    --muted: 0 0% 58%;
+    --border: 0 0% 17%;
+    --accent: 256 72% 76%;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  ::selection {
+    background-color: hsl(var(--accent) / 0.22);
+  }
+}
+
+@layer utilities {
+  /* Signature: the cycling flow verbs fade/slide as they change */
+  @keyframes flow-in {
+    0% {
+      opacity: 0;
+      transform: translateY(0.35em);
+      filter: blur(2px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  .animate-flow-in {
+    animation: flow-in 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-flow-in {
+      animation: none;
+    }
+  }
+}
