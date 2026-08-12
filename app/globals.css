@@ -62,8 +62,8 @@
   /* Signature: a little cup of coffee pours in when you hover the day */
   .coffee-cup {
     opacity: 0;
-    transform: translateY(6px) scale(0.8) rotate(-6deg);
-    transform-origin: bottom center;
+    transform: translateX(-6px) scale(0.8) rotate(-6deg);
+    transform-origin: left center;
     transition:
       opacity 0.25s ease,
       transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -72,7 +72,7 @@
   .group:hover .coffee-cup,
   .group:focus-visible .coffee-cup {
     opacity: 1;
-    transform: translateY(0) scale(1) rotate(0deg);
+    transform: translateX(0) scale(1) rotate(0deg);
   }
 
   @keyframes steam-rise {

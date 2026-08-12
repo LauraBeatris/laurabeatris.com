@@ -30,7 +30,7 @@ export function Greeting() {
         tabIndex={day ? 0 : -1}
       >
         <span
-          className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2"
+          className="pointer-events-none absolute bottom-full left-full mb-0.5 ml-1"
           aria-hidden="true"
         >
           <svg
