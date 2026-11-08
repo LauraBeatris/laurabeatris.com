@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { BackHeader } from "@/components/back-header";
 import { SiteFooter } from "@/components/site-footer";
-import { getTalksPage, type Content } from "@/lib/cms";
+import { podcasts, talks, type Appearance } from "@/content/talks";
 
 export const metadata: Metadata = {
   title: "Talks & Podcasts — Laura Beatris",
@@ -14,10 +14,8 @@ function ContentSection({
   items,
 }: {
   title: string;
-  items: Content[];
+  items: Appearance[];
 }) {
-  if (items.length === 0) return null;
-
   return (
     <section className="w-full">
       <h2 className="font-mono text-sm uppercase tracking-widest text-muted">
@@ -25,7 +23,7 @@ function ContentSection({
       </h2>
       <ul className="mt-6 flex flex-col">
         {items.map((item) => (
-          <li key={item.id} className="border-t border-border">
+          <li key={item.url} className="border-t border-border">
             <a
               href={item.url}
               target="_blank"
@@ -46,9 +44,7 @@ function ContentSection({
   );
 }
 
-export default async function TalksPage() {
-  const { talks, podcasts } = await getTalksPage();
-
+export default function TalksPage() {
   return (
     <div className="mx-auto flex min-h-dvh max-w-[640px] flex-col px-6">
       <BackHeader href="/" label="@lauradotjs" />
