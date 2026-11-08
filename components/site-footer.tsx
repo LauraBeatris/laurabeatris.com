@@ -1,3 +1,5 @@
+import { Signature } from "@/components/signature";
+
 const socials = [
   { label: "X", href: "https://x.com/lauradotjs" },
   { label: "GitHub", href: "https://github.com/LauraBeatris" },
@@ -6,10 +8,13 @@ const socials = [
 
 export function SiteFooter() {
   return (
-    <footer className="flex flex-col gap-4 border-t border-border py-8 sm:flex-row sm:items-center sm:justify-between">
-      <p className="font-mono text-sm text-muted">
-        © {new Date().getFullYear()} Laura Beatris
-      </p>
+    <footer className="flex flex-col gap-4 border-t border-border py-8 sm:flex-row sm:items-end sm:justify-between">
+      <div className="flex flex-col gap-3">
+        <Signature className="w-28" />
+        <p className="font-mono text-sm text-muted">
+          © {new Date().getFullYear()} Laura Beatris
+        </p>
+      </div>
       <nav aria-label="Social links">
         <ul className="flex items-center gap-5">
           {socials.map((s) => (
