@@ -3,11 +3,8 @@ import { Greeting } from "@/components/greeting";
 import { ResendLink } from "@/components/resend-link";
 import { SiteFooter } from "@/components/site-footer";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { getPosts } from "@/lib/blog";
 
-export default async function Home() {
-  const posts = await getPosts();
-
+export default function Home() {
   return (
     <div className="mx-auto flex min-h-dvh max-w-[640px] flex-col overflow-x-clip px-6">
       <header className="flex items-center justify-between py-8">
@@ -38,7 +35,14 @@ export default async function Home() {
           </p>
           <p className="text-muted">
             When I&apos;m not building, I&apos;m usually learning in the open
-            and sharing what I find in{" "}
+            through{" "}
+            <Link
+              href="/blog"
+              className="font-medium text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
+            >
+              writing
+            </Link>
+            ,{" "}
             <Link
               href="/talks"
               className="font-medium text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
@@ -47,18 +51,6 @@ export default async function Home() {
             </Link>
             .
           </p>
-          {posts.length > 0 && (
-            <p className="text-muted">
-              I also write on my{" "}
-              <Link
-                href="/blog"
-                className="font-medium text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
-              >
-                blog
-              </Link>
-              .
-            </p>
-          )}
         </div>
       </main>
 
