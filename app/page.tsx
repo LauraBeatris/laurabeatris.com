@@ -10,7 +10,7 @@ export default async function Home() {
   const posts = await getPosts();
 
   return (
-    <div className="mx-auto flex min-h-dvh max-w-[640px] flex-col overflow-x-clip px-6">
+    <div className="mx-auto flex min-h-dvh max-w-[640px] flex-col px-6">
       <header className="flex items-center justify-between py-8">
         <span className="font-mono text-sm text-muted">@lauradotjs</span>
         <ThemeToggle />
