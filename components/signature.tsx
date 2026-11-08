@@ -113,8 +113,6 @@ export function Signature({ className }: { className: string }) {
             path
           );
         })}
-        {/* Invisible hover target over the whole face: the strokes are too thin */}
-        <circle cx={217} cy={117} r={38} className="handwriting-face" />
       </svg>
       <noscript className="hidden">
         <style>{`.handwriting{opacity:1}.handwriting-stroke{stroke-dashoffset:0}`}</style>

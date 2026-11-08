@@ -155,12 +155,7 @@
     animation: handwriting-draw 1s linear forwards;
   }
 
-  /* Signature: the face in the autograph blinks while you hover it */
-  .handwriting-face {
-    fill: none;
-    pointer-events: all;
-  }
-
+  /* Signature: the face in the autograph blinks while you hover the autograph */
   .handwriting-eye {
     transform-box: fill-box;
     transform-origin: center;
@@ -179,7 +174,7 @@
   }
 
   @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-    .handwriting:has(.handwriting-face:hover) .handwriting-eye {
+    .handwriting:hover .handwriting-eye {
       animation: handwriting-blink 3.2s cubic-bezier(0.23, 1, 0.32, 1) infinite;
     }
   }
