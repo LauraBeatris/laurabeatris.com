@@ -57,7 +57,7 @@ export function ResendLink() {
       onPointerEnter={handlePointerEnter}
       onPointerLeave={handlePointerLeave}
       onAnimationEnd={handleAnimationEnd}
-      className="relative font-medium text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
+      className="relative font-medium text-foreground"
     >
       {/* Painted before the word, so the half ring passes behind the letters. */}
       <svg
