@@ -183,7 +183,7 @@
   .plane {
     pointer-events: none;
     offset-rotate: auto;
-    offset-distance: 17.71%;
+    offset-distance: 16.13%;
   }
 
   [data-plane="perched"] .plane {
@@ -228,7 +228,7 @@
   }
 
   .plane-trail-reveal {
-    stroke-dashoffset: 0.8229;
+    stroke-dashoffset: 0.8387;
   }
 
   /* Just past 1 so no sliver of the eraser shows before it starts */
@@ -238,7 +238,7 @@
 
   @keyframes plane-fly {
     from {
-      offset-distance: 17.71%;
+      offset-distance: 16.13%;
     }
     to {
       offset-distance: 100%;
@@ -247,7 +247,7 @@
 
   @keyframes plane-trail-reveal {
     from {
-      stroke-dashoffset: 0.8229;
+      stroke-dashoffset: 0.8387;
     }
     to {
       stroke-dashoffset: 0;
@@ -288,19 +288,19 @@
     0% {
       transform: rotateX(34deg) rotateY(-16deg);
     }
-    10.3% {
+    9.6% {
       transform: rotateX(10deg) rotateY(-12deg);
     }
-    34.2% {
+    33.6% {
       transform: rotateX(-46deg) rotateY(-8deg);
     }
-    51.1% {
+    50.7% {
       transform: rotateX(-14deg) rotateY(-8deg);
     }
-    59.1% {
+    58.8% {
       transform: rotateX(46deg) rotateY(-8deg);
     }
-    72.2% {
+    71.9% {
       transform: rotateX(18deg) rotateY(-14deg);
     }
     100% {
@@ -324,7 +324,7 @@
   [data-plane="flying"] .plane,
   [data-plane="flying"] .plane-trail-reveal,
   [data-plane="flying"] .plane-trail-erase {
-    animation-timing-function: linear(0,0.009,0.019,0.032,0.046,0.07,0.099,0.127,0.151,0.178,0.207,0.239,0.269,0.292,0.314,0.337,0.36,0.382,0.406,0.436,0.467,0.497,0.527,0.549,0.565,0.581,0.602,0.629,0.658,0.69,0.722,0.756,0.79,0.823,0.855,0.884,0.912,0.937,0.961,0.982,1);
+    animation-timing-function: linear(0,0.011,0.023,0.036,0.052,0.078,0.107,0.133,0.158,0.185,0.215,0.247,0.275,0.297,0.319,0.342,0.364,0.386,0.411,0.442,0.472,0.502,0.531,0.551,0.567,0.583,0.605,0.632,0.661,0.693,0.725,0.759,0.792,0.825,0.857,0.885,0.913,0.938,0.961,0.982,1);
   }
 
   [data-plane="flying"] .plane-body {
@@ -342,13 +342,13 @@
     opacity: 0;
   }
 
-  /* Coming back it glides in along the half ring to the perch */
+  /* Coming back it glides in along the swoop to the perch */
   @keyframes plane-return {
     from {
       offset-distance: 0%;
     }
     to {
-      offset-distance: 17.71%;
+      offset-distance: 16.13%;
     }
   }
 
@@ -357,7 +357,7 @@
       stroke-dashoffset: 1.001;
     }
     to {
-      stroke-dashoffset: 0.8229;
+      stroke-dashoffset: 0.8387;
     }
   }
 

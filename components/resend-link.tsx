@@ -6,18 +6,18 @@ import type { AnimationEvent, CSSProperties, PointerEvent } from "react";
 type Phase = "perched" | "flying" | "away" | "returning";
 
 /**
- * One continuous line, traced from a pen sketch, in CSS pixels from the word's
- * top-left corner. It starts as the half ring around the word: above the R, round
- * its left side and across the word to the perch. From there it's the way out, up
- * over a hump, down into a valley and off to the top right.
+ * One continuous line, in CSS pixels from the word's top-left corner. It starts
+ * as a swoop under the word, from below the R up to the perch. From there it's
+ * the way out, traced from a pen sketch: up over a hump, down into a valley and
+ * off to the top right.
  * The plane rides this exact path, so its trail can't drift out of sync.
- * The perch sits 17.71% along it (see `.plane` in globals.css).
+ * The perch sits 16.13% along it (see `.plane` in globals.css).
  */
 const FLIGHT_PATH =
-  "M2.5 1.5C1.8 1.9 -0.5 2.9 -1.5 4C-2.5 5.1 -3.4 6.7 -3.6 8C-3.8 9.3 -3.4 10.8 -2.6 11.8C-1.8 12.8 -1.1 13.4 1 13.8C3.1 14.2 6 14.1 10 14.2C14 14.3 20 14.3 25 14.3C30 14.3 35 14.3 40 14.2C45 14.1 50.8 14.2 55 14C59.2 13.8 62.3 13.6 65 13.1C67.7 12.6 69.3 12 71 11C72.7 10 73.6 9 75 7C76.4 5 78.5 2.3 79.5 -1C80.5 -4.3 79.1 -4.3 81 -13C82.9 -21.7 84.5 -41.3 91 -53C97.5 -64.7 111 -75.7 120 -83C129 -90.3 135.8 -95.8 145 -97C154.2 -98.3 165.3 -97.2 175 -90.5C184.7 -83.8 193.8 -66.2 203 -57C212.2 -47.8 221.8 -37.4 230 -35.5C238.3 -33.6 245.4 -40.3 252.5 -45.5C259.6 -50.8 265.8 -58.7 272.5 -67C279.2 -75.3 284.9 -84.2 292.5 -95.5C300.1 -106.8 308.1 -121.3 318 -135C327.9 -148.8 346.3 -170.8 352 -178";
+  "M1 25.5C2.5 26.1 6.2 28.1 10 29C13.8 29.9 19 30.8 24 31C29 31.3 35 31.3 40 30.5C45 29.8 50.2 28 54 26.5C57.8 25 60.4 23.3 63 21.5C65.6 19.7 67.5 17.9 69.5 15.5C71.5 13.1 73.3 9.8 75 7C76.7 4.3 78.5 2.3 79.5 -1C80.5 -4.3 79.1 -4.3 81 -13C82.9 -21.7 84.5 -41.3 91 -53C97.5 -64.7 111 -75.7 120 -83C129 -90.3 135.8 -95.8 145 -97C154.2 -98.3 165.3 -97.2 175 -90.5C184.7 -83.8 193.8 -66.2 203 -57C212.2 -47.8 221.8 -37.4 230 -35.5C238.3 -33.6 245.4 -40.3 252.5 -45.5C259.6 -50.8 265.8 -58.7 272.5 -67C279.2 -75.3 284.9 -84.2 292.5 -95.5C300.1 -106.8 308.1 -121.3 318 -135C327.9 -148.8 346.3 -170.8 352 -178";
 
-const FLIGHT_LENGTH = 529.2;
-const PERCH_DISTANCE = 93.7;
+const FLIGHT_LENGTH = 519.3;
+const PERCH_DISTANCE = 83.7;
 const TRAIL_MASK_ID = "resend-plane-trail";
 
 /**
@@ -109,7 +109,6 @@ export function ResendLink() {
       onAnimationEnd={handleAnimationEnd}
       className="relative font-medium text-foreground"
     >
-      {/* Painted before the word, so the half ring passes behind the letters. */}
       <svg
         aria-hidden="true"
         fill="none"
@@ -158,7 +157,7 @@ export function ResendLink() {
         </g>
       </svg>
 
-      <span className="relative">Resend</span>
+      Resend
 
       <span
         aria-hidden="true"
