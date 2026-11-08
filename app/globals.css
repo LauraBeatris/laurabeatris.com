@@ -165,6 +165,12 @@
   }
 
   /* Signature: a paper plane perches on Resend and flies away when hovered */
+  [data-plane] {
+    --plane-flight: 1.7s;
+    --plane-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --plane-ease-sine: cubic-bezier(0.37, 0, 0.63, 1);
+  }
+
   .plane {
     pointer-events: none;
     offset-rotate: auto;
@@ -176,8 +182,10 @@
   }
 
   /* Three vector faces folded in real 3D, banked and nose-up at rest */
+  /* Drawn at its largest and scaled down, so it stays crisp as it grows */
   .plane-body {
-    perspective: 90px;
+    perspective: 150px;
+    transform: scale(0.38);
   }
 
   .plane-model {
@@ -246,25 +254,23 @@
     }
   }
 
-  /* Shrinks into the distance as it leaves */
-  @keyframes plane-depth {
-    0% {
+  /* Small on the word, growing the whole way out, as if it's coming toward you */
+  @keyframes plane-grow {
+    from {
+      transform: scale(0.38);
+    }
+    to {
+      transform: scale(1.12);
+    }
+  }
+
+  @keyframes plane-fade {
+    0%,
+    84% {
       opacity: 1;
-      transform: scale(1);
-    }
-    33.5% {
-      transform: scale(1.14);
-    }
-    58.7% {
-      transform: scale(1);
-    }
-    78.1% {
-      opacity: 1;
-      transform: scale(0.74);
     }
     100% {
       opacity: 0;
-      transform: scale(0.45);
     }
   }
 
@@ -273,19 +279,19 @@
     0% {
       transform: rotateX(34deg) rotateY(-16deg);
     }
-    9.5% {
+    10.3% {
       transform: rotateX(10deg) rotateY(-12deg);
     }
-    33.5% {
+    34.2% {
       transform: rotateX(-46deg) rotateY(-8deg);
     }
-    50.6% {
+    51.1% {
       transform: rotateX(-14deg) rotateY(-8deg);
     }
-    58.7% {
+    59.1% {
       transform: rotateX(46deg) rotateY(-8deg);
     }
-    71.9% {
+    72.2% {
       transform: rotateX(18deg) rotateY(-14deg);
     }
     100% {
@@ -294,11 +300,11 @@
   }
 
   [data-plane="flying"] .plane {
-    animation: plane-fly 1.7s both;
+    animation: plane-fly var(--plane-flight) both;
   }
 
   [data-plane="flying"] .plane-trail-reveal {
-    animation: plane-trail-reveal 1.7s 50ms both;
+    animation: plane-trail-reveal var(--plane-flight) 50ms both;
   }
 
   [data-plane="flying"] .plane-trail-erase {
@@ -313,11 +319,13 @@
   }
 
   [data-plane="flying"] .plane-body {
-    animation: plane-depth 1.7s cubic-bezier(0.37, 0, 0.63, 1) both;
+    animation:
+      plane-grow var(--plane-flight) var(--plane-ease-sine) both,
+      plane-fade var(--plane-flight) linear both;
   }
 
   [data-plane="flying"] .plane-model {
-    animation: plane-roll 1.7s cubic-bezier(0.37, 0, 0.63, 1) both;
+    animation: plane-roll var(--plane-flight) var(--plane-ease-sine) both;
   }
 
   [data-plane="away"] .plane,
@@ -347,24 +355,63 @@
   @keyframes plane-land {
     from {
       opacity: 0;
-      transform: scale(0.9);
+      transform: scale(0.34);
     }
     to {
       opacity: 1;
-      transform: scale(1);
+      transform: scale(0.38);
     }
   }
 
   [data-plane="returning"] .plane {
-    animation: plane-return 0.5s cubic-bezier(0.23, 1, 0.32, 1) both;
+    animation: plane-return 0.5s var(--plane-ease-out) both;
   }
 
   [data-plane="returning"] .plane-trail-reveal {
-    animation: plane-trail-return 0.5s cubic-bezier(0.23, 1, 0.32, 1) both;
+    animation: plane-trail-return 0.5s var(--plane-ease-out) both;
   }
 
   [data-plane="returning"] .plane-body {
-    animation: plane-land 0.25s cubic-bezier(0.23, 1, 0.32, 1) both;
+    animation: plane-land 0.25s var(--plane-ease-out) both;
+  }
+
+  /* Takeoff sparkles: each one drifts out while it twinkles on and off */
+  .plane-twinkle {
+    opacity: 0;
+  }
+
+  @keyframes plane-sparkle-drift {
+    from {
+      transform: translate(0, 0);
+    }
+    to {
+      transform: translate(var(--sparkle-x), var(--sparkle-y));
+    }
+  }
+
+  @keyframes plane-twinkle {
+    0% {
+      opacity: 0;
+      transform: scale(0.5) rotate(0deg);
+    }
+    35% {
+      opacity: 1;
+      transform: scale(1) rotate(calc(var(--sparkle-spin) * 0.6));
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.5) rotate(var(--sparkle-spin));
+    }
+  }
+
+  [data-plane="flying"] .plane-sparkle {
+    animation: plane-sparkle-drift 0.65s var(--plane-ease-out) both;
+    animation-delay: var(--sparkle-delay);
+  }
+
+  [data-plane="flying"] .plane-twinkle {
+    animation: plane-twinkle 0.65s var(--plane-ease-sine) both;
+    animation-delay: var(--sparkle-delay);
   }
 
   /* No flight with reduced motion: the trail just brightens on hover */
@@ -374,8 +421,10 @@
       transition: opacity 0.2s ease;
     }
 
-    [data-plane]:hover .plane-trail {
-      opacity: 1;
+    @media (hover: hover) and (pointer: fine) {
+      [data-plane]:hover .plane-trail {
+        opacity: 1;
+      }
     }
   }
 }
