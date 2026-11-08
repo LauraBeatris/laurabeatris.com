@@ -1,24 +1,37 @@
 "use client";
 
-import { useLayoutEffect, useMemo, useRef, useState } from "react";
-import { buildScene, centerAt, headingAt, RIVER_TOP, RIVER_WIDTH } from "./river-scene";
+import Image from "next/image";
+import { useLayoutEffect, useRef } from "react";
+import boatImage from "./boat.webp";
+import riverDay from "./river-day.webp";
+import riverNight from "./river-night.webp";
+import { centerAt, headingAt, RIVER_WIDTH, TILE_HEIGHT } from "./river-path";
+import wakeImage from "./wake.webp";
 
-/** Only drawn when the gutter beside the text is wide enough to hold it. */
+/** Only shown when the gutter beside the text is wide enough to hold it. */
 const WIDE_ENOUGH = "(min-width: 1100px)";
+/** Until the post is measured, tall enough to reach past the first screen. */
 const INITIAL_HEIGHT = 6000;
 const BOAT_BOX = { width: 100, height: 110 };
+const WAKE_BOX = { width: 140, height: 220 };
+const RIVER_START = 150;
+const RIVER_END_MARGIN = 125;
 
 /** Critically damped, so the boat catches up to the scroll and never overshoots. */
 const STIFFNESS = 90;
 const DAMPING = 2 * Math.sqrt(STIFFNESS);
 const FULL_WAKE_SPEED = 700;
 
+const tile = (src: string) => ({
+  backgroundImage: `url(${src})`,
+  backgroundRepeat: "repeat-y",
+  backgroundSize: `${RIVER_WIDTH}px ${TILE_HEIGHT}px`,
+});
+
 export function River() {
   const rootRef = useRef<HTMLDivElement>(null);
   const boatRef = useRef<HTMLDivElement>(null);
-  const wakeRef = useRef<SVGSVGElement>(null);
-  const [height, setHeight] = useState(INITIAL_HEIGHT);
-  const scene = useMemo(() => buildScene(height), [height]);
+  const wakeRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     const root = rootRef.current;
@@ -49,7 +62,6 @@ export function River() {
         document.documentElement.scrollHeight - viewportHeight,
         1,
       );
-      setHeight(riverEnd);
     }
 
     /** The boat's place depends only on scroll, so scrolling back retraces it. */
@@ -57,7 +69,10 @@ export function River() {
       const progress = Math.min(Math.max(window.scrollY / scrollRange, 0), 1);
       const anchored = window.scrollY + viewportHeight * (0.3 + 0.45 * progress);
 
-      return Math.min(Math.max(anchored, RIVER_TOP + 110), riverEnd - 125);
+      return Math.min(
+        Math.max(anchored, RIVER_START),
+        riverEnd - RIVER_END_MARGIN,
+      );
     }
 
     function draw() {
@@ -137,111 +152,40 @@ export function River() {
     <div
       ref={rootRef}
       aria-hidden
-      className="river pointer-events-none absolute left-1/2 top-0 ml-[-536px] hidden select-none overflow-hidden min-[1100px]:block"
-      style={{ width: RIVER_WIDTH, height }}
+      className="pointer-events-none absolute left-1/2 top-0 ml-[-536px] hidden select-none overflow-hidden min-[1100px]:block"
+      style={{ width: RIVER_WIDTH, height: INITIAL_HEIGHT }}
     >
-      <svg width={RIVER_WIDTH} height={height} className="absolute inset-0">
-        <defs>
-          <clipPath id="river-water">
-            <path d={scene.water} />
-          </clipPath>
-          {/* Sesame speckle: the grain a woodblock leaves in flat color */}
-          <pattern id="river-grain" width="46" height="46" patternUnits="userSpaceOnUse">
-            <g className="river-grain">
-              <circle cx="4" cy="7" r="0.7" />
-              <circle cx="17" cy="3" r="0.5" />
-              <circle cx="31" cy="11" r="0.8" />
-              <circle cx="42" cy="4" r="0.5" />
-              <circle cx="11" cy="20" r="0.6" />
-              <circle cx="25" cy="25" r="0.5" />
-              <circle cx="38" cy="22" r="0.7" />
-              <circle cx="6" cy="35" r="0.5" />
-              <circle cx="19" cy="40" r="0.8" />
-              <circle cx="34" cy="38" r="0.5" />
-            </g>
-          </pattern>
-          <linearGradient id="river-fade-top" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0.3" className="river-fade-solid" />
-            <stop offset="1" className="river-fade-clear" />
-          </linearGradient>
-          <linearGradient id="river-fade-bottom" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" className="river-fade-clear" />
-            <stop offset="0.7" className="river-fade-solid" />
-          </linearGradient>
-        </defs>
+      {/* Stops short of the end so no sliver shows past the solid part of the fade */}
+      <div className="absolute inset-x-0 bottom-2 top-0 dark:hidden" style={tile(riverDay.src)} />
+      <div className="absolute inset-x-0 bottom-2 top-0 hidden dark:block" style={tile(riverNight.src)} />
 
-        <path d={scene.water} className="river-water" />
-        {/* Flat bands that deepen toward the banks, the way a print grades color */}
-        <g clipPath="url(#river-water)" fill="none" strokeLinecap="round">
-          <path d={scene.leftBank} className="river-band-wide" />
-          <path d={scene.rightBank} className="river-band-wide" />
-          <path d={scene.leftBank} className="river-band-narrow" />
-          <path d={scene.rightBank} className="river-band-narrow" />
-          <rect width={RIVER_WIDTH} height={height} fill="url(#river-grain)" />
-        </g>
-
-        <g fill="none" strokeLinecap="round" strokeLinejoin="round">
-          <path d={scene.currents} className="river-foam" strokeWidth="1.2" />
-          <path d={scene.eddies} className="river-foam" strokeWidth="1" />
-          <path d={scene.ticks} className="river-tick" strokeWidth="1.3" />
-        </g>
-        <path d={scene.petals} className="river-petal" />
-
-        <path d={scene.leftBrush} className="river-ink-fill" />
-        <path d={scene.rightBrush} className="river-ink-fill" />
-
-        {scene.rocks.map((rock) => (
-          <g key={rock.anchor.join()} transform={rock.transform}>
-            <path d={rock.fill} className="river-rock" />
-            <path
-              d={rock.ink}
-              className="river-ink-line"
-              strokeWidth="8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </g>
-        ))}
-
-        <rect width={RIVER_WIDTH} height="130" fill="url(#river-fade-top)" />
-        {/* Runs past the water's edge so no sliver of it shows at the end */}
-        <rect y={height - 110} width={RIVER_WIDTH} height="114" fill="url(#river-fade-bottom)" />
-      </svg>
+      {/* The river comes out of the page and sinks back into it */}
+      <div className="absolute inset-x-0 top-0 h-[130px] bg-gradient-to-b from-background from-30% to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-[110px] bg-gradient-to-t from-background from-30% to-transparent" />
 
       <div
         ref={boatRef}
         className="absolute left-0 top-0 opacity-0 transition-opacity duration-200 [transition-timing-function:var(--ease-out)] will-change-transform"
         style={BOAT_BOX}
       >
-        <svg
+        <div
           ref={wakeRef}
-          viewBox="-50 -55 100 110"
-          className="absolute inset-0 overflow-visible opacity-0 will-change-[opacity,transform]"
+          className="absolute opacity-0 will-change-[opacity,transform]"
+          style={{
+            ...WAKE_BOX,
+            left: (BOAT_BOX.width - WAKE_BOX.width) / 2,
+            top: (BOAT_BOX.height - WAKE_BOX.height) / 2,
+          }}
         >
-          <g className="river-wake" fill="none" strokeLinecap="round" strokeWidth="1.4">
-            <path d="M-7-37C-12-52-17-62-25-76" />
-            <path d="M7-37C12-52 17-62 25-76" />
-            <path d="M-13-44c-3-5-6-8-11-11M13-44c3-5 6-8 11-11" />
-            <ellipse cx="0" cy="-50" rx="5" ry="2.4" />
-            <ellipse cx="1" cy="-64" rx="7.5" ry="3.2" />
-            <ellipse cx="-1" cy="-80" rx="10" ry="4" />
-          </g>
-        </svg>
-
-        {/* Traced from the paper sketch, then turned so its long axis is upright */}
-        <svg viewBox="-50 -55 100 110" className="absolute inset-0 overflow-visible">
-          <g transform="rotate(-17.4) scale(0.114) translate(-215 -400)">
-            <path d="M290 155L335 385L285 570L115 735L95 490L130 385Z" className="river-hull" />
-            <path d="M325 65L160 200L225 245L290 155Z" className="river-flag" />
-            <path
-              className="river-boat-line"
-              strokeWidth="13"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M325 65C260 105 205 150 160 200L225 245M325 65L300 160L335 375M335 395L308 480L270 568M290 155L230 240L135 380L95 490M95 490L105 640L115 735L200 650L285 570M170 290L155 460L175 470M235 245L230 395M290 160L260 260M170 575L180 470C195 440 225 410 240 402C270 375 295 355 320 345M205 550L290 410"
-            />
-          </g>
-        </svg>
+          <Image src={wakeImage} alt="" unoptimized draggable={false} />
+        </div>
+        <Image
+          src={boatImage}
+          alt=""
+          unoptimized
+          draggable={false}
+          className="absolute inset-0 dark:brightness-[0.72] dark:saturate-[0.8]"
+        />
       </div>
     </div>
   );
