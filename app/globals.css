@@ -191,7 +191,7 @@
   .plane {
     pointer-events: none;
     offset-rotate: auto;
-    offset-distance: 16.13%;
+    offset-distance: 14.03%;
   }
 
   [data-plane="perched"] .plane {
@@ -262,7 +262,7 @@
   .plane-shadow {
     color: var(--plane-shadow);
     offset-rotate: auto;
-    offset-distance: 16.13%;
+    offset-distance: 14.03%;
     translate: 1.5px 3px;
   }
 
@@ -298,7 +298,7 @@
   }
 
   .plane-trail-reveal {
-    stroke-dashoffset: 0.8387;
+    stroke-dashoffset: 0.8597;
   }
 
   /* Just past 1 so no sliver of the eraser shows before it starts */
@@ -308,7 +308,7 @@
 
   @keyframes plane-fly {
     from {
-      offset-distance: 16.13%;
+      offset-distance: 14.03%;
     }
     to {
       offset-distance: 100%;
@@ -317,7 +317,7 @@
 
   @keyframes plane-trail-reveal {
     from {
-      stroke-dashoffset: 0.8387;
+      stroke-dashoffset: 0.8597;
     }
     to {
       stroke-dashoffset: 0;
@@ -358,19 +358,19 @@
     0% {
       transform: rotateX(26deg) rotateY(-16deg);
     }
-    9.6% {
+    18.3% {
       transform: rotateX(10deg) rotateY(-12deg);
     }
-    33.6% {
+    39.5% {
       transform: rotateX(-46deg) rotateY(-8deg);
     }
-    50.7% {
+    55% {
       transform: rotateX(-14deg) rotateY(-8deg);
     }
-    58.8% {
+    62.4% {
       transform: rotateX(46deg) rotateY(-8deg);
     }
-    71.9% {
+    74.3% {
       transform: rotateX(18deg) rotateY(-14deg);
     }
     100% {
@@ -407,7 +407,7 @@
   [data-plane="flying"] .plane-shadow,
   [data-plane="flying"] .plane-trail-reveal,
   [data-plane="flying"] .plane-trail-erase {
-    animation-timing-function: linear(0,0.011,0.023,0.036,0.052,0.078,0.107,0.133,0.158,0.185,0.215,0.247,0.275,0.297,0.319,0.342,0.364,0.386,0.411,0.442,0.472,0.502,0.531,0.551,0.567,0.583,0.605,0.632,0.661,0.693,0.725,0.759,0.792,0.825,0.857,0.885,0.913,0.938,0.961,0.982,1);
+    animation-timing-function: linear(0,0.011,0.021,0.031,0.042,0.056,0.075,0.1,0.131,0.162,0.19,0.215,0.244,0.276,0.308,0.333,0.355,0.379,0.402,0.425,0.45,0.482,0.513,0.545,0.571,0.589,0.605,0.625,0.653,0.683,0.715,0.749,0.783,0.818,0.851,0.881,0.909,0.936,0.96,0.981,1);
   }
 
   [data-plane="flying"] .plane-body {
@@ -426,13 +426,13 @@
     opacity: 0;
   }
 
-  /* Coming back it glides in along the swoop to the perch */
+  /* Coming back it glides in along the line to the perch */
   @keyframes plane-return {
     from {
       offset-distance: 0%;
     }
     to {
-      offset-distance: 16.13%;
+      offset-distance: 14.03%;
     }
   }
 
@@ -441,7 +441,7 @@
       stroke-dashoffset: 1.001;
     }
     to {
-      stroke-dashoffset: 0.8387;
+      stroke-dashoffset: 0.8597;
     }
   }
 
