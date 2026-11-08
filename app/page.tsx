@@ -38,16 +38,16 @@ export default function Home() {
             through{" "}
             <Link
               href="/blog"
-              className="font-medium text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
+              className="font-normal text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
             >
-              writing
+              <span className="paper-word">writing</span>
             </Link>
             ,{" "}
             <Link
               href="/talks"
-              className="font-medium text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
+              className="font-normal text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
             >
-              talks and podcasts
+              <span className="paper-word">talks and podcasts</span>
             </Link>
             .
           </p>
