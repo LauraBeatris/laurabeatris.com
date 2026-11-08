@@ -1,34 +1,12 @@
 # laurabeatris.com
 
-[![Author](https://img.shields.io/badge/author-LauraBeatris-000000?style=flat-square)](https://github.com/LauraBeatris)
-[![Languages](https://img.shields.io/github/languages/count/LauraBeatris/laurabeatris.com?color=%23000000&style=flat-square)](#)
-[![Stars](https://img.shields.io/github/stars/LauraBeatris/laurabeatris.com?color=000000&style=flat-square)](https://github.com/LauraBeatris/laurabeatris.com/stargazers)
+My personal portfolio, built with Next.js, React, and Tailwind CSS.
 
----
-# :pushpin: Table of Contents
+## Running locally
 
-* [Running Locally](#construction_worker-running-locally)
-* [Issues](#bug-issues)
-* [Contributing](#tada-contributing)
-
-## :construction_worker: Running Locally
-
-Disclaimer: This project fetches data from my personal [GraphCMS](https://graphcms.com/) workspace, thus it's necessary to define the CMS endpoint as a environment variable, otherwise it's not possible to fully execute the scripts bellow
-
-#### Clone repository
 ```bash
-git clone https://github.com/LauraBeatris/laurabeatris.com.git
+pnpm install
+pnpm dev
 ```
 
-#### Define environment variables
-```bash
-cp .env.local.example .env.local
-```
-
-#### Install dependencies & execute web application in development mode
-```bash
-yarn
-yarn dev
-```
-
-Define the environment variables by creating a .env.local file similar to [.env.local.example](https://github.com/LauraBeatris/laurabeatris.com/blob/master/.env.local.example)
+Talks and podcasts come from my personal CMS. To load them, set `NEXT_PUBLIC_GRAPHQL_URL_ENDPOINT` in `.env.local`. Without it, the rest of the site still works and those lists are empty.
