@@ -22,6 +22,41 @@ const STROKES = [
     easing:
       "linear(0,0.026,0.069,0.121,0.167,0.181,0.192,0.233,0.276,0.322,0.361,0.4,0.442,0.483,0.504,0.551,0.6,0.641,0.668,0.681,0.722,0.764,0.789,0.817,0.857,0.905,0.953,0.988,1)",
   },
+  {
+    d: "M188.4 113Q191.6 110.8 194.8 109.5",
+    delayMs: 2330,
+    durationMs: 60,
+    easing:
+      "linear",
+  },
+  {
+    d: "M201.6 122.3a1.8 1.8 0 1 1 -3.6 0a1.8 1.8 0 1 1 3.6 0",
+    delayMs: 2435,
+    durationMs: 80,
+    easing:
+      "linear",
+  },
+  {
+    d: "M211.6 98.9Q215.9 95.6 220.2 93",
+    delayMs: 2560,
+    durationMs: 60,
+    easing:
+      "linear",
+  },
+  {
+    d: "M219.8 110.3a1.8 1.8 0 1 1 -3.6 0a1.8 1.8 0 1 1 3.6 0",
+    delayMs: 2665,
+    durationMs: 80,
+    easing:
+      "linear",
+  },
+  {
+    d: "M187.2 139.8C212.5 146.1 240.8 130.4 248.8 105.6",
+    delayMs: 2815,
+    durationMs: 300,
+    easing:
+      "linear(0,0.028,0.07,0.145,0.233,0.322,0.411,0.502,0.592,0.682,0.771,0.859,0.932,0.972,1)",
+  },
 ];
 
 export function Signature({ className }: { className: string }) {
@@ -49,7 +84,7 @@ export function Signature({ className }: { className: string }) {
       <svg
         ref={ref}
         aria-hidden
-        viewBox="0 0 240 121.1"
+        viewBox="0 0 257.1 145.5"
         data-writing={isWriting}
         className={`handwriting ${className}`}
       >
