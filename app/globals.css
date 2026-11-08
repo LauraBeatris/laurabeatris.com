@@ -178,13 +178,13 @@
   [data-plane] {
     --plane-flight: 1.7s;
     --plane-shadow: rgb(0 0 0 / 0.38);
-    --word-paper-1: hsl(0 0% 50%);
-    --word-paper-2: hsl(0 0% 32%);
-    --word-paper-3: hsl(0 0% 46%);
-    --word-paper-4: hsl(0 0% 26%);
-    --word-paper-5: hsl(0 0% 40%);
-    --word-edge: hsl(0 0% 14%);
-    --word-shadow: rgb(0 0 0 / 0.2);
+    --word-paper-1: hsl(0 0% 34%);
+    --word-paper-2: hsl(0 0% 18%);
+    --word-paper-3: hsl(0 0% 30%);
+    --word-paper-4: hsl(0 0% 13%);
+    --word-paper-5: hsl(0 0% 25%);
+    --word-edge: hsl(0 0% 10%);
+    --word-shadow: rgb(0 0 0 / 0.1);
     --paper-50: hsl(0 0% 98%);
     --paper-100: hsl(0 0% 90%);
     --paper-200: hsl(0 0% 78%);
@@ -207,13 +207,13 @@
 
   .dark [data-plane] {
     --plane-shadow: rgb(0 0 0 / 0.65);
-    --word-paper-1: hsl(0 0% 100%);
-    --word-paper-2: hsl(0 0% 78%);
-    --word-paper-3: hsl(0 0% 94%);
-    --word-paper-4: hsl(0 0% 68%);
-    --word-paper-5: hsl(0 0% 88%);
+    --word-paper-1: hsl(0 0% 90%);
+    --word-paper-2: hsl(0 0% 68%);
+    --word-paper-3: hsl(0 0% 84%);
+    --word-paper-4: hsl(0 0% 60%);
+    --word-paper-5: hsl(0 0% 78%);
     --word-edge: transparent;
-    --word-shadow: rgb(0 0 0 / 0.65);
+    --word-shadow: rgb(0 0 0 / 0.35);
   }
 
   /* The word is cut from the same paper: folded bands under a fine grain */
@@ -233,7 +233,7 @@
       background-clip: text;
       color: transparent;
       -webkit-text-stroke: 0.22px var(--word-edge);
-      filter: drop-shadow(0.6px 1.2px 0.8px var(--word-shadow));
+      filter: drop-shadow(0.4px 0.8px 0.6px var(--word-shadow));
     }
   }
 
