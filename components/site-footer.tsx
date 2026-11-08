@@ -8,29 +8,29 @@ const socials = [
 
 export function SiteFooter() {
   return (
-    <footer className="flex flex-col gap-4 border-t border-border py-8 sm:flex-row sm:items-end sm:justify-between">
-      <div className="flex flex-col gap-3">
-        <Signature className="w-28" />
+    <footer>
+      <Signature className="mb-8 w-28" />
+      <div className="flex flex-col gap-4 border-t border-border py-8 sm:flex-row sm:items-center sm:justify-between">
         <p className="font-mono text-sm text-muted">
           © {new Date().getFullYear()} Laura Beatris
         </p>
+        <nav aria-label="Social links">
+          <ul className="flex items-center gap-5">
+            {socials.map((s) => (
+              <li key={s.label}>
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-muted transition-colors hover:text-foreground"
+                >
+                  {s.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
-      <nav aria-label="Social links">
-        <ul className="flex items-center gap-5">
-          {socials.map((s) => (
-            <li key={s.label}>
-              <a
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-muted transition-colors hover:text-foreground"
-              >
-                {s.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
     </footer>
   );
 }
