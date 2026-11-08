@@ -178,11 +178,13 @@
   [data-plane] {
     --plane-flight: 1.7s;
     --plane-shadow: rgb(0 0 0 / 0.38);
-    --word-paper-1: hsl(0 0% 34%);
+    --word-paper-1: hsl(0 0% 50%);
+    --word-paper-2: hsl(0 0% 32%);
+    --word-paper-3: hsl(0 0% 46%);
+    --word-paper-4: hsl(0 0% 26%);
+    --word-paper-5: hsl(0 0% 40%);
+    --word-edge: hsl(0 0% 14%);
     --word-shadow: rgb(0 0 0 / 0.2);
-    --word-paper-2: hsl(0 0% 10%);
-    --word-paper-3: hsl(0 0% 30%);
-    --word-paper-4: hsl(0 0% 8%);
     --paper-50: hsl(0 0% 98%);
     --paper-100: hsl(0 0% 90%);
     --paper-200: hsl(0 0% 78%);
@@ -205,26 +207,32 @@
 
   .dark [data-plane] {
     --plane-shadow: rgb(0 0 0 / 0.65);
-    --word-paper-1: hsl(0 0% 98%);
+    --word-paper-1: hsl(0 0% 100%);
+    --word-paper-2: hsl(0 0% 78%);
+    --word-paper-3: hsl(0 0% 94%);
+    --word-paper-4: hsl(0 0% 68%);
+    --word-paper-5: hsl(0 0% 88%);
+    --word-edge: transparent;
     --word-shadow: rgb(0 0 0 / 0.65);
-    --word-paper-2: hsl(0 0% 74%);
-    --word-paper-3: hsl(0 0% 92%);
-    --word-paper-4: hsl(0 0% 62%);
   }
 
-  /* The word is shaded like the plane: light fading to dark, with a fold across it */
+  /* The word is cut from the same paper: folded bands under a fine grain */
   @supports (background-clip: text) or (-webkit-background-clip: text) {
     .plane-word {
-      background-image: linear-gradient(
-        172deg,
-        var(--word-paper-1) 18%,
-        var(--word-paper-2) 54%,
-        var(--word-paper-3) 56%,
-        var(--word-paper-4) 82%
-      );
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.9 0.62'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E"),
+        linear-gradient(
+          112deg,
+          var(--word-paper-1) 22%,
+          var(--word-paper-2) 22.6% 41%,
+          var(--word-paper-3) 41.6% 63%,
+          var(--word-paper-4) 63.6% 82%,
+          var(--word-paper-5) 82.6%
+        );
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      -webkit-text-stroke: 0.22px var(--word-edge);
       filter: drop-shadow(0.6px 1.2px 0.8px var(--word-shadow));
     }
   }
