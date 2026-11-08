@@ -59,6 +59,9 @@ export default async function PostPage({ params }: PostPageProps) {
             >
               {formatPostDate(post.publishedAt)}
             </time>
+            <p className="mt-4 text-pretty text-xl leading-relaxed text-muted">
+              {post.description}
+            </p>
           </header>
 
           <Content />
