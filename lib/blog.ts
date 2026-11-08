@@ -7,7 +7,7 @@ export type PostMetadata = {
   description: string;
   /** ISO date, e.g. "2026-11-08". */
   publishedAt: string;
-  /** Drafts appear in `next dev` but are left out of production builds. */
+  /** Drafts appear in `next dev` and Vercel previews, but not in production. */
   draft?: boolean;
 };
 
@@ -17,6 +17,9 @@ type PostModule = {
 };
 
 const POSTS_DIRECTORY = path.join(process.cwd(), "content/blog");
+
+const showDrafts =
+  process.env.NODE_ENV !== "production" || process.env.VERCEL_ENV === "preview";
 
 export async function getPost(slug: string) {
   const post = (await import(`@/content/blog/${slug}/post.mdx`)) as PostModule;
@@ -31,9 +34,7 @@ export async function getPosts() {
   );
 
   return posts
-    .filter(
-      (post) => process.env.NODE_ENV !== "production" || !post.metadata.draft,
-    )
+    .filter((post) => showDrafts || !post.metadata.draft)
     .sort((a, b) => b.metadata.publishedAt.localeCompare(a.metadata.publishedAt));
 }
 
