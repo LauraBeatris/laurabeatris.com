@@ -82,6 +82,51 @@
     animation: handwriting-draw 1s linear forwards;
   }
 
+  /* The Creative Act post: pen drawings that draw themselves as they appear */
+  .pen-draw {
+    stroke-dasharray: 1 2;
+    stroke-dashoffset: 1.001;
+    animation: handwriting-draw 0.45s var(--ease-out) forwards;
+  }
+
+  @keyframes pen-appear {
+    from {
+      opacity: 0;
+    }
+  }
+
+  .pen-appear {
+    animation: pen-appear 0.2s var(--ease-out);
+  }
+
+  @keyframes pen-crumbs {
+    from {
+      opacity: 0.8;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+
+  .pen-crumbs {
+    opacity: 0;
+    animation: pen-crumbs 0.5s var(--ease-out);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pen-draw {
+      stroke-dasharray: none;
+      stroke-dashoffset: 0;
+      animation: pen-appear 0.2s ease;
+    }
+
+    .pen-crumbs {
+      animation: none;
+    }
+  }
+
   /* Signature: the face in the autograph blinks while you hover the autograph */
   .handwriting-eye {
     transform-box: fill-box;

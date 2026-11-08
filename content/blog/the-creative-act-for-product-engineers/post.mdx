@@ -1,3 +1,9 @@
+import { CloudCommits } from "./cloud-commits";
+import { CommitteeChair } from "./committee-chair";
+import { EraserPanel } from "./eraser-panel";
+import { MixingBoard } from "./mixing-board";
+import { SeedRow } from "./seed-row";
+
 export const metadata = {
   title: "The Creative Act, for product engineers",
   description: "Code is cheap, taste isn't. What a music producer taught me about building software.",
@@ -19,6 +25,10 @@ Rubin has produced records for Johnny Cash, the Beastie Boys, and Adele. When An
 
 A few years ago that would have sounded like a strange thing to bring to a software conversation. Now an agent can write the first version of almost anything I ask for, and writing the code is rarely what slows me down. The hard part is everything around it: knowing which version is right, what's still missing, and when to stop.
 
+<Demo>
+  <MixingBoard />
+</Demo>
+
 That is a producer's job. I don't think product engineers should stop understanding the board. Knowing how the system works is what lets me hear when something is off. But more and more of the value is in the listening.
 
 ## Taste is trained attention
@@ -32,6 +42,10 @@ For a product engineer, this is very concrete. Use the products you admire slowl
 ## Keep ideas as seeds for longer
 
 Rubin splits the creative process into four phases: seeds, experimentation, crafting, and completion. Seeds are the small, unjudged sparks you collect before you know what they're for.
+
+<Demo>
+  <SeedRow />
+</Demo>
 
 Engineers are very good at skipping straight to crafting. We get one idea and immediately start designing the data model around it. Once there's a polished RFC, the idea feels decided, and every better idea that shows up afterwards has to argue against work that's already done.
 
@@ -51,6 +65,10 @@ Rubin's records with Johnny Cash are close to nothing: a voice and a guitar. All
 
 In software, adding is the default. Each new option looks harmless by itself, and it's easy to build, and now it's even easier. So as the cost of adding falls, the discipline of removing matters more. The setting you didn't add, the step you took out, and the feature you killed are all part of what you shipped, even though none of them appear in the changelog.
 
+<Demo>
+  <EraserPanel />
+</Demo>
+
 > **TODO, your story:** something you cut or refused to add, and what happened to the product afterwards.
 
 ## Finish so you can start again
@@ -58,6 +76,10 @@ In software, adding is the default. Each new option looks harmless by itself, an
 The part of the book I needed most is about finishing. Rubin treats a finished work as a record of who you were when you made it. You don't release it because it's perfect. You release it so you can move on and become the person who makes the next one.
 
 Software has the opposite problem from a record, because it's never really done. It's easy to hide behind one more pass and call it polish. Sometimes it is polish. Sometimes it's fear wearing polish as a costume.
+
+<Demo>
+  <CloudCommits />
+</Demo>
 
 The cloud got three commits. It did not get a fourth.
 
@@ -70,6 +92,10 @@ Rubin's argument is that this is actually in service of the audience. If you mak
 A product exists to do something for someone, though. If it doesn't solve their problem, it doesn't matter how much I love it. So here's the version I can use: **users name the problem, and taste finds the answer.**
 
 Listen as hard as you can to what hurts and why. Then be careful about asking people to design the fix, because you'll get the average of everyone's requests. The answer still has to come from someone who cares how it feels.
+
+<Demo>
+  <CommitteeChair />
+</Demo>
 
 ## What's left
 
