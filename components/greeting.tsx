@@ -13,18 +13,19 @@ const DAYS = [
 ];
 
 // Traced from a pen sketch, one path per pen stroke. The base sits right above
-// the text and carries the weight; the crest floats over it, drawn lighter.
+// the text and carries the weight; the crest floats over it, drawn lighter and
+// running parallel to the arches below.
 const CLOUD_BASE_STROKES = [
   "M0.6 13.2C4.9 7.8 11.9 9.0 15.9 14.5C22.2 9.2 28.1 9.2 33.9 15.1C40.3 10.1 45.2 8.5 50.6 16.0C53.6 10.9 62.3 10.0 65.1 15.7C69.7 9.8 76.6 12.0 81.3 16.2C86.2 11.9 91.9 9.4 96.5 15.7C99.5 11.1 112.6 9.6 113.5 17.3",
 ];
 
 const CLOUD_CREST_STROKES = [
-  "M7.1 1.7C13.9 -0.6 14.2 3.9 18.0 3.5",
-  "M25.7 4.0C30.2 2.4 29.1 3.1 32.9 4.5",
-  "M40.2 5.2C45.9 3.4 45.4 3.1 50.8 5.9",
-  "M63.9 6.7C68.8 5.4 71.1 3.3 75.7 6.8",
-  "M86.5 6.6C91.5 5.2 93.1 5.5 97.3 8.6",
-  "M102.3 6.9C106.2 6.0 107.6 4.6 110.9 7.7",
+  "M0.8 7.4C4.7 4.9 10.0 5.0 14.0 7.2",
+  "M18.0 8.1C22.2 5.9 27.4 5.8 31.6 8.1",
+  "M35.9 8.7C40.1 6.1 45.9 5.8 49.8 9.1",
+  "M65.1 10.0C69.2 7.2 74.7 7.4 79.0 9.6",
+  "M83.9 9.3C87.7 7.2 92.7 7.0 96.3 9.7",
+  "M99.1 8.9C103.3 7.4 108.2 7.1 112.3 9.1",
 ];
 
 export function Greeting() {
