@@ -157,7 +157,7 @@ export function ResendLink() {
         </g>
       </svg>
 
-      Resend
+      <span className="plane-word">Resend</span>
 
       <span
         aria-hidden="true"
