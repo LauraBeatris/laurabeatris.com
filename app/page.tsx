@@ -54,7 +54,7 @@ export default function Home() {
           </p>
         </div>
 
-        <Signature className="mt-16 w-[7.5rem]" />
+        <Signature className="mt-10 w-[7.5rem]" />
       </main>
 
       <SiteFooter showSignature={false} />
