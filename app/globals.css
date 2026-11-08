@@ -177,6 +177,14 @@
   /* Signature: a paper plane perches on Resend and flies away when hovered */
   [data-plane] {
     --plane-flight: 1.7s;
+    --plane-shadow: rgb(0 0 0 / 0.38);
+    --paper-50: hsl(0 0% 98%);
+    --paper-100: hsl(0 0% 90%);
+    --paper-200: hsl(0 0% 78%);
+    --paper-300: hsl(0 0% 62%);
+    --paper-400: hsl(0 0% 46%);
+    --paper-500: hsl(0 0% 32%);
+    --paper-edge: hsl(0 0% 30%);
     --plane-ease-sine: cubic-bezier(0.37, 0, 0.63, 1);
   }
 
@@ -190,7 +198,11 @@
     pointer-events: auto;
   }
 
-  /* Three vector faces folded in real 3D, banked and nose-up at rest */
+  .dark [data-plane] {
+    --plane-shadow: rgb(0 0 0 / 0.65);
+  }
+
+  /* Paper folded in real 3D: creased wings over a keel, banked and nose-up at rest */
   /* Drawn at its largest and scaled down, so it stays crisp as it grows */
   .plane-body {
     perspective: 150px;
@@ -198,7 +210,7 @@
   }
 
   .plane-model {
-    transform: rotateX(34deg) rotateY(-16deg);
+    transform: rotateX(26deg) rotateY(-16deg);
     transform-style: preserve-3d;
   }
 
@@ -210,16 +222,74 @@
     overflow: visible;
   }
 
+  .plane-wing {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+  }
+
   .plane-wing-left {
-    transform: rotateX(-24deg);
+    transform: rotateX(-14deg);
   }
 
   .plane-wing-right {
-    transform: rotateX(24deg);
+    transform: rotateX(14deg);
   }
 
-  .plane-keel {
-    transform: rotateX(-90deg);
+  /* Each wing creases along a line from the nose, so the tips kick up */
+  .plane-flap-left,
+  .plane-flap-right {
+    transform-origin: 98% 50%;
+  }
+
+  .plane-flap-left {
+    transform: rotate3d(-16.4, -3.6, 0, 15deg);
+  }
+
+  .plane-flap-right {
+    transform: rotate3d(-16.4, 3.6, 0, -15deg);
+  }
+
+  .plane-keel-left {
+    transform: rotateX(-82deg);
+  }
+
+  .plane-keel-right {
+    transform: rotateX(-98deg);
+  }
+
+  /* A soft shadow on the page, always cast straight down whatever the heading */
+  .plane-shadow {
+    color: var(--plane-shadow);
+    offset-rotate: auto;
+    offset-distance: 16.13%;
+    translate: 1.5px 3px;
+  }
+
+  .plane-shadow-body {
+    filter: blur(1.5px);
+    transform: scale(0.38);
+  }
+
+  @keyframes plane-shadow-lift {
+    from {
+      translate: 1.5px 3px;
+    }
+    to {
+      translate: 16px 34px;
+    }
+  }
+
+  @keyframes plane-shadow-fade {
+    0% {
+      opacity: 1;
+    }
+    84% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 0;
+    }
   }
 
   .plane-trail-reveal,
@@ -286,7 +356,7 @@
   /* Banks into each turn: right over the hump, left through the valley */
   @keyframes plane-roll {
     0% {
-      transform: rotateX(34deg) rotateY(-16deg);
+      transform: rotateX(26deg) rotateY(-16deg);
     }
     9.6% {
       transform: rotateX(10deg) rotateY(-12deg);
@@ -312,6 +382,18 @@
     animation: plane-fly var(--plane-flight) both;
   }
 
+  [data-plane="flying"] .plane-shadow {
+    animation:
+      plane-fly var(--plane-flight) both,
+      plane-shadow-lift var(--plane-flight) both;
+  }
+
+  [data-plane="flying"] .plane-shadow-body {
+    animation:
+      plane-grow var(--plane-flight) var(--plane-ease-sine) both,
+      plane-shadow-fade var(--plane-flight) linear both;
+  }
+
   [data-plane="flying"] .plane-trail-reveal {
     animation: plane-trail-reveal var(--plane-flight) 50ms both;
   }
@@ -322,6 +404,7 @@
 
   /* Pen-speed style: slower through the turns, faster along the straights */
   [data-plane="flying"] .plane,
+  [data-plane="flying"] .plane-shadow,
   [data-plane="flying"] .plane-trail-reveal,
   [data-plane="flying"] .plane-trail-erase {
     animation-timing-function: linear(0,0.011,0.023,0.036,0.052,0.078,0.107,0.133,0.158,0.185,0.215,0.247,0.275,0.297,0.319,0.342,0.364,0.386,0.411,0.442,0.472,0.502,0.531,0.551,0.567,0.583,0.605,0.632,0.661,0.693,0.725,0.759,0.792,0.825,0.857,0.885,0.913,0.938,0.961,0.982,1);
@@ -338,6 +421,7 @@
   }
 
   [data-plane="away"] .plane,
+  [data-plane="away"] .plane-shadow,
   [data-plane="away"] .plane-trail {
     opacity: 0;
   }
@@ -372,7 +456,8 @@
     }
   }
 
-  [data-plane="returning"] .plane {
+  [data-plane="returning"] .plane,
+  [data-plane="returning"] .plane-shadow {
     animation: plane-return 0.5s var(--ease-out) both;
   }
 
@@ -380,7 +465,8 @@
     animation: plane-trail-return 0.5s var(--ease-out) both;
   }
 
-  [data-plane="returning"] .plane-body {
+  [data-plane="returning"] .plane-body,
+  [data-plane="returning"] .plane-shadow-body {
     animation: plane-land 0.25s var(--ease-out) both;
   }
 

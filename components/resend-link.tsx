@@ -170,15 +170,32 @@ export function ResendLink() {
 
       <span
         aria-hidden="true"
+        className="plane-shadow pointer-events-none absolute left-0 top-0 block h-6 w-[30px]"
+        style={{ offsetPath: `path("${FLIGHT_PATH}")` }}
+      >
+        <svg viewBox="0 0 20 16" fill="currentColor" className="plane-shadow-body block size-full">
+          <path d="M19.6 8L0.8 0.8L3.2 4.4L5.2 8L3.2 11.6L0.8 15.2Z" />
+        </svg>
+      </span>
+
+      <span
+        aria-hidden="true"
         className="plane absolute left-0 top-0 block h-6 w-[30px]"
         style={{ offsetPath: `path("${FLIGHT_PATH}")` }}
       >
         <span className="plane-body block size-full">
-          {/* Real folded faces in 3D, pointing along +x, so banking looks solid. */}
+          {/* Real folds in 3D, pointing along +x: a keel, then two creased wings. */}
           <span className="plane-model block size-full">
-            <PlaneFace d="M19.6 8L4.6 8L5.8 12.8Z" className="plane-keel text-muted" />
-            <PlaneFace d="M19.6 8L0.8 0.8L4.6 8Z" className="plane-wing-left text-accent" />
-            <PlaneFace d="M19.6 8L0.8 15.2L4.6 8Z" className="plane-wing-right text-foreground" />
+            <PlaneFace id="keel-left" d="M19.6 8L5.2 8L6 12.8Z" from="--paper-400" to="--paper-500" className="plane-keel-left" />
+            <PlaneFace id="keel-right" d="M19.6 8L5.2 8L6 12.8Z" from="--paper-300" to="--paper-400" className="plane-keel-right" />
+            <span className="plane-wing plane-wing-left">
+              <PlaneFace id="left-inner" d="M19.6 8L3.2 4.4L5.2 8Z" from="--paper-100" to="--paper-300" />
+              <PlaneFace id="left-outer" d="M19.6 8L0.8 0.8L3.2 4.4Z" from="--paper-50" to="--paper-200" className="plane-flap-left" />
+            </span>
+            <span className="plane-wing plane-wing-right">
+              <PlaneFace id="right-inner" d="M19.6 8L3.2 11.6L5.2 8Z" from="--paper-300" to="--paper-200" />
+              <PlaneFace id="right-outer" d="M19.6 8L0.8 15.2L3.2 11.6Z" from="--paper-200" to="--paper-100" className="plane-flap-right" />
+            </span>
           </span>
         </span>
       </span>
@@ -219,17 +236,36 @@ function Sparkle({
   );
 }
 
-function PlaneFace({ d, className }: { d: string; className: string }) {
+function PlaneFace({
+  id,
+  d,
+  from,
+  to,
+  className = "",
+}: {
+  id: string;
+  d: string;
+  from: string;
+  to: string;
+  className?: string;
+}) {
+  const gradientId = `plane-paper-${id}`;
+
   return (
-    <svg
-      viewBox="0 0 20 16"
-      fill="currentColor"
-      stroke="currentColor"
-      strokeWidth="0.6"
-      strokeLinejoin="round"
-      className={`plane-face ${className}`}
-    >
-      <path d={d} />
+    <svg viewBox="0 0 20 16" className={`plane-face ${className}`}>
+      <defs>
+        <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" style={{ stopColor: `var(${from})` }} />
+          <stop offset="1" style={{ stopColor: `var(${to})` }} />
+        </linearGradient>
+      </defs>
+      <path
+        d={d}
+        fill={`url(#${gradientId})`}
+        stroke="var(--paper-edge)"
+        strokeWidth="0.5"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
