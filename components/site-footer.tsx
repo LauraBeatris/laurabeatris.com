@@ -9,7 +9,7 @@ const socials = [
 export function SiteFooter() {
   return (
     <footer>
-      <Signature className="mb-8 w-[7.5rem]" />
+      <Signature className="mb-6 w-[7.5rem]" />
       <div className="flex flex-col gap-4 border-t border-border py-8 sm:flex-row sm:items-center sm:justify-between">
         <p className="font-mono text-sm text-muted">
           © {new Date().getFullYear()} Laura Beatris
