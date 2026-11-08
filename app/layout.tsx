@@ -18,11 +18,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://laurabeatris.com"),
   title: "Laura Beatris — Product Engineer",
   description:
-    "Laura Beatris, a Product Engineer at Resend. Following the flow of learning, creating, and teaching — with immersion and freedom as expressions of art.",
+    "Laura Beatris, a Product Engineer at Resend building developer tools.",
   openGraph: {
     title: "Laura Beatris — Product Engineer",
     description:
-      "Product Engineer at Resend. Following the flow of learning, creating, and teaching.",
+      "Product Engineer at Resend building developer tools.",
     url: "https://laurabeatris.com",
     siteName: "Laura Beatris",
     type: "website",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Laura Beatris — Product Engineer",
     description:
-      "Product Engineer at Resend. Following the flow of learning, creating, and teaching.",
+      "Product Engineer at Resend building developer tools.",
     creator: "@lauradotjs",
   },
 };
