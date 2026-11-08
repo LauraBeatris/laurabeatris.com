@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Greeting } from "@/components/greeting";
 import { FlowVerbs } from "@/components/flow-verbs";
+import { ResendLink } from "@/components/resend-link";
 import { SiteFooter } from "@/components/site-footer";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { getPosts } from "@/lib/blog";
@@ -9,7 +10,7 @@ export default async function Home() {
   const posts = await getPosts();
 
   return (
-    <div className="mx-auto flex min-h-dvh max-w-[640px] flex-col px-6">
+    <div className="mx-auto flex min-h-dvh max-w-[640px] flex-col overflow-x-clip px-6">
       <header className="flex items-center justify-between py-8">
         <span className="font-mono text-sm text-muted">@lauradotjs</span>
         <ThemeToggle />
@@ -25,15 +26,7 @@ export default async function Home() {
         </h1>
 
         <p className="mt-4 text-lg text-muted">
-          Product Engineer at{" "}
-          <a
-            href="https://resend.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-medium text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
-          >
-            Resend
-          </a>
+          Product Engineer at <ResendLink />
         </p>
 
         <div className="mt-10 space-y-5 text-pretty text-lg leading-relaxed">
