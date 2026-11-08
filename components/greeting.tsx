@@ -15,20 +15,16 @@ const DAYS = [
 // Traced from a pen sketch, one path per pen stroke. The base sits right above
 // the text and carries the weight; the crest floats over it, drawn lighter.
 const CLOUD_BASE_STROKES = [
-  "M0.6 12.2C3.6 10.1 9.6 5.5 11.2 11.7C14.6 8.6 18.0 5.0 20.6 11.6C22.7 8.0 29.4 7.1 30.7 11.8C35.5 7.2 37.9 5.8 41.8 12.4C44.9 9.0 49.2 5.0 52.0 11.4C55.5 9.4 59.1 6.4 61.3 12.2C64.3 9.7 68.2 5.0 70.6 11.2C73.5 7.6 74.3 7.6 77.6 10.3",
-  "M79.7 9.5C83.6 7.4 86.8 5.4 89.1 11.0C90.8 8.2 95.9 6.1 97.4 10.6C97.9 9.7 98.9 9.4 99.8 9.4",
-  "M104.3 9.7C106.1 8.3 107.4 10.9 108.9 11.6",
+  "M0.6 13.2C4.9 7.8 11.9 9.0 15.9 14.5C22.2 9.2 28.1 9.2 33.9 15.1C40.3 10.1 45.2 8.5 50.6 16.0C53.6 10.9 62.3 10.0 65.1 15.7C69.7 9.8 76.6 12.0 81.3 16.2C86.2 11.9 91.9 9.4 96.5 15.7C99.5 11.1 112.6 9.6 113.5 17.3",
 ];
 
 const CLOUD_CREST_STROKES = [
-  "M0.3 5.2C3.1 3.1 5.1 2.7 8.4 3.9",
-  "M22.7 2.3C27.1 1.2 26.1 3.2 29.2 3.1",
-  "M41.3 2.1C44.1 1.3 44.4 2.2 46.7 2.8",
-  "M56.5 1.6C59.7 0.1 58.3 0.5 60.9 2.3",
-  "M68.3 1.7C72.2 0.6 71.7 -0.2 74.6 2.7",
-  "M80.9 2.1C83.7 1.4 83.9 2.0 86.2 2.4",
-  "M92.6 1.6C93.5 1.3 94.4 1.1 95.4 1.1",
-  "M103.2 3.9C105.5 3.5 106.0 5.7 107.2 6.2",
+  "M7.1 1.7C13.9 -0.6 14.2 3.9 18.0 3.5",
+  "M25.7 4.0C30.2 2.4 29.1 3.1 32.9 4.5",
+  "M40.2 5.2C45.9 3.4 45.4 3.1 50.8 5.9",
+  "M63.9 6.7C68.8 5.4 71.1 3.3 75.7 6.8",
+  "M86.5 6.6C91.5 5.2 93.1 5.5 97.3 8.6",
+  "M102.3 6.9C106.2 6.0 107.6 4.6 110.9 7.7",
 ];
 
 export function Greeting() {
@@ -43,17 +39,17 @@ export function Greeting() {
   return (
     <span className="relative inline-block text-muted">
       {day && (
-        // Waits for the day so it's never sized to the placeholder. Stretches
-        // with the day's length while the strokes keep their weight.
+        // Waits for the day so it's never sized to the placeholder. Scales
+        // evenly with the day's length, so the arches stay round and the
+        // strokes keep their weight.
         <svg
           aria-hidden="true"
-          viewBox="0 0 109.2 13.2"
-          preserveAspectRatio="none"
+          viewBox="0 0 114.8 18.2"
           fill="none"
           stroke="currentColor"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="pointer-events-none absolute -left-[0.8ch] bottom-full h-3.5 w-[calc(100%+0.6ch)] overflow-visible text-accent"
+          className="pointer-events-none absolute -left-[0.8ch] bottom-full h-auto w-[calc(100%+0.6ch)] overflow-visible text-foreground"
         >
           {CLOUD_BASE_STROKES.map((d) => (
             <path
