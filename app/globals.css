@@ -164,10 +164,11 @@
     }
   }
 
-  /* Signature: a paper plane perches on Resend and circles it when hovered */
+  /* Signature: a paper plane perches on Resend and flies away when hovered */
   .plane {
+    pointer-events: none;
     offset-rotate: auto;
-    offset-distance: 18.47%;
+    offset-distance: 17.71%;
   }
 
   [data-plane="perched"] .plane {
@@ -210,7 +211,7 @@
   }
 
   .plane-trail-reveal {
-    stroke-dashoffset: 0.8153;
+    stroke-dashoffset: 0.8229;
   }
 
   /* Just past 1 so no sliver of the eraser shows before it starts */
@@ -220,7 +221,7 @@
 
   @keyframes plane-fly {
     from {
-      offset-distance: 18.47%;
+      offset-distance: 17.71%;
     }
     to {
       offset-distance: 100%;
@@ -229,7 +230,7 @@
 
   @keyframes plane-trail-reveal {
     from {
-      stroke-dashoffset: 0.8153;
+      stroke-dashoffset: 0.8229;
     }
     to {
       stroke-dashoffset: 0;
@@ -245,30 +246,21 @@
     }
   }
 
-  /* Depth: smaller behind the word, larger in front, then gone into the distance */
+  /* Shrinks into the distance as it leaves */
   @keyframes plane-depth {
     0% {
       opacity: 1;
       transform: scale(1);
     }
-    8.7% {
-      transform: scale(0.88);
+    33.5% {
+      transform: scale(1.14);
     }
-    24.4% {
-      transform: scale(1.16);
+    58.7% {
+      transform: scale(1);
     }
-    41.1% {
-      transform: scale(0.88);
-    }
-    58.8% {
-      transform: scale(1.18);
-    }
-    75% {
-      transform: scale(0.86);
-    }
-    88.5% {
+    78.1% {
       opacity: 1;
-      transform: scale(0.68);
+      transform: scale(0.74);
     }
     100% {
       opacity: 0;
@@ -276,68 +268,56 @@
     }
   }
 
-  /* Banks hardest round the tight ends of the ring, levels out to leave */
+  /* Banks into each turn: right over the hump, left through the valley */
   @keyframes plane-roll {
     0% {
       transform: rotateX(34deg) rotateY(-16deg);
     }
-    8.7% {
-      transform: rotateX(32deg) rotateY(-8deg);
+    9.5% {
+      transform: rotateX(10deg) rotateY(-12deg);
     }
-    16.5% {
-      transform: rotateX(58deg) rotateY(-8deg);
+    33.5% {
+      transform: rotateX(-46deg) rotateY(-8deg);
     }
-    24.4% {
-      transform: rotateX(30deg) rotateY(-8deg);
+    50.6% {
+      transform: rotateX(-14deg) rotateY(-8deg);
     }
-    32.6% {
-      transform: rotateX(58deg) rotateY(-8deg);
+    58.7% {
+      transform: rotateX(46deg) rotateY(-8deg);
     }
-    41.1% {
-      transform: rotateX(30deg) rotateY(-8deg);
-    }
-    49.8% {
-      transform: rotateX(58deg) rotateY(-8deg);
-    }
-    58.8% {
-      transform: rotateX(30deg) rotateY(-8deg);
-    }
-    68.1% {
-      transform: rotateX(58deg) rotateY(-8deg);
-    }
-    88.5% {
-      transform: rotateX(16deg) rotateY(-14deg);
+    71.9% {
+      transform: rotateX(18deg) rotateY(-14deg);
     }
     100% {
-      transform: rotateX(16deg) rotateY(-14deg);
+      transform: rotateX(18deg) rotateY(-14deg);
     }
   }
 
   [data-plane="flying"] .plane {
-    animation: plane-fly 2.4s both;
+    animation: plane-fly 1.7s both;
   }
 
   [data-plane="flying"] .plane-trail-reveal {
-    animation: plane-trail-reveal 2.4s 50ms both;
+    animation: plane-trail-reveal 1.7s 50ms both;
   }
 
   [data-plane="flying"] .plane-trail-erase {
-    animation: plane-trail-erase 2.4s 450ms both;
+    animation: plane-trail-erase 1.3s 800ms both;
   }
 
-  /* Pen-speed style: slowest round the ends of the ring, like an orbit at an angle */
+  /* Pen-speed style: slower through the turns, faster along the straights */
   [data-plane="flying"] .plane,
   [data-plane="flying"] .plane-trail-reveal,
   [data-plane="flying"] .plane-trail-erase {
-    animation-timing-function: linear(0,0.01,0.023,0.038,0.058,0.079,0.102,0.122,0.139,0.156,0.176,0.199,0.222,0.246,0.268,0.287,0.304,0.322,0.343,0.367,0.39,0.414,0.437,0.457,0.475,0.492,0.513,0.536,0.56,0.584,0.607,0.63,0.649,0.667,0.686,0.703,0.722,0.746,0.773,0.799,0.826,0.852,0.878,0.903,0.926,0.948,0.967,0.984,1);
+    animation-timing-function: linear(0,0.009,0.019,0.032,0.046,0.07,0.099,0.127,0.151,0.178,0.207,0.239,0.269,0.292,0.314,0.337,0.36,0.382,0.406,0.436,0.467,0.497,0.527,0.549,0.565,0.581,0.602,0.629,0.658,0.69,0.722,0.756,0.79,0.823,0.855,0.884,0.912,0.937,0.961,0.982,1);
   }
 
   [data-plane="flying"] .plane-body {
-    animation: plane-depth 2.4s cubic-bezier(0.37, 0, 0.63, 1) both;
+    animation: plane-depth 1.7s cubic-bezier(0.37, 0, 0.63, 1) both;
   }
 
   [data-plane="flying"] .plane-model {
-    animation: plane-roll 2.4s cubic-bezier(0.37, 0, 0.63, 1) both;
+    animation: plane-roll 1.7s cubic-bezier(0.37, 0, 0.63, 1) both;
   }
 
   [data-plane="away"] .plane,
@@ -345,13 +325,13 @@
     opacity: 0;
   }
 
-  /* Coming back it circles in along the ring to the perch */
+  /* Coming back it glides in along the half ring to the perch */
   @keyframes plane-return {
     from {
       offset-distance: 0%;
     }
     to {
-      offset-distance: 18.47%;
+      offset-distance: 17.71%;
     }
   }
 
@@ -360,7 +340,7 @@
       stroke-dashoffset: 1.001;
     }
     to {
-      stroke-dashoffset: 0.8153;
+      stroke-dashoffset: 0.8229;
     }
   }
 
@@ -376,11 +356,11 @@
   }
 
   [data-plane="returning"] .plane {
-    animation: plane-return 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
+    animation: plane-return 0.5s cubic-bezier(0.23, 1, 0.32, 1) both;
   }
 
   [data-plane="returning"] .plane-trail-reveal {
-    animation: plane-trail-return 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
+    animation: plane-trail-return 0.5s cubic-bezier(0.23, 1, 0.32, 1) both;
   }
 
   [data-plane="returning"] .plane-body {
