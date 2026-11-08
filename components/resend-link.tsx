@@ -107,7 +107,7 @@ export function ResendLink() {
       onPointerEnter={handlePointerEnter}
       onPointerLeave={handlePointerLeave}
       onAnimationEnd={handleAnimationEnd}
-      className="relative font-medium text-foreground"
+      className="relative font-normal text-foreground"
     >
       <svg
         aria-hidden="true"

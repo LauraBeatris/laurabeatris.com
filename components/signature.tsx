@@ -31,6 +31,7 @@ const STROKES = [
   },
   {
     d: "M201.6 122.3a1.8 1.8 0 1 1 -3.6 0a1.8 1.8 0 1 1 3.6 0",
+    isEye: true,
     delayMs: 2435,
     durationMs: 80,
     easing:
@@ -45,6 +46,7 @@ const STROKES = [
   },
   {
     d: "M219.8 110.3a1.8 1.8 0 1 1 -3.6 0a1.8 1.8 0 1 1 3.6 0",
+    isEye: true,
     delayMs: 2665,
     durationMs: 80,
     easing:
@@ -88,19 +90,29 @@ export function Signature({ className }: { className: string }) {
         data-writing={isWriting}
         className={`handwriting ${className}`}
       >
-        {STROKES.map((stroke) => (
-          <path
-            key={stroke.d}
-            d={stroke.d}
-            pathLength={1}
-            className="handwriting-stroke"
-            style={{
-              animationDelay: `${stroke.delayMs}ms`,
-              animationDuration: `${stroke.durationMs}ms`,
-              animationTimingFunction: stroke.easing,
-            }}
-          />
-        ))}
+        {STROKES.map((stroke) => {
+          const path = (
+            <path
+              key={stroke.d}
+              d={stroke.d}
+              pathLength={1}
+              className="handwriting-stroke"
+              style={{
+                animationDelay: `${stroke.delayMs}ms`,
+                animationDuration: `${stroke.durationMs}ms`,
+                animationTimingFunction: stroke.easing,
+              }}
+            />
+          );
+          // The blink lives on a wrapper so it can't replace the draw animation
+          return stroke.isEye ? (
+            <g key={stroke.d} className="handwriting-eye">
+              {path}
+            </g>
+          ) : (
+            path
+          );
+        })}
       </svg>
       <noscript className="hidden">
         <style>{`.handwriting{opacity:1}.handwriting-stroke{stroke-dashoffset:0}`}</style>

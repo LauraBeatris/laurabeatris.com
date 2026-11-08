@@ -155,6 +155,30 @@
     animation: handwriting-draw 1s linear forwards;
   }
 
+  /* Signature: the face in the autograph blinks while you hover the autograph */
+  .handwriting-eye {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  /* The rotates squash each eye along the face's 33deg tilt, not the page's */
+  @keyframes handwriting-blink {
+    0%,
+    7%,
+    100% {
+      transform: rotate(-33deg) scaleY(1) rotate(33deg);
+    }
+    2.5% {
+      transform: rotate(-33deg) scaleY(0.2) rotate(33deg);
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .handwriting:hover .handwriting-eye {
+      animation: handwriting-blink 3.2s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .handwriting {
       opacity: 0;
