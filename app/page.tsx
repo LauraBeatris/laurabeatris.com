@@ -1,15 +1,13 @@
 import Link from "next/link";
 import { Greeting } from "@/components/greeting";
 import { FlowVerbs } from "@/components/flow-verbs";
+import { SiteFooter } from "@/components/site-footer";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { getPosts } from "@/lib/blog";
 
-const socials = [
-  { label: "X", href: "https://x.com/lauradotjs" },
-  { label: "GitHub", href: "https://github.com/LauraBeatris" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/laurabeatris" },
-];
+export default async function Home() {
+  const posts = await getPosts();
 
-export default function Home() {
   return (
     <div className="mx-auto flex min-h-dvh max-w-[640px] flex-col px-6">
       <header className="flex items-center justify-between py-8">
@@ -60,30 +58,22 @@ export default function Home() {
             </Link>{" "}
             about React, TypeScript, and learning in the open.
           </p>
+          {posts.length > 0 && (
+            <p className="text-muted">
+              I also write on my{" "}
+              <Link
+                href="/blog"
+                className="font-medium text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
+              >
+                blog
+              </Link>
+              .
+            </p>
+          )}
         </div>
       </main>
 
-      <footer className="flex flex-col gap-4 border-t border-border py-8 sm:flex-row sm:items-center sm:justify-between">
-        <p className="font-mono text-sm text-muted">
-          © {new Date().getFullYear()} Laura Beatris
-        </p>
-        <nav aria-label="Social links">
-          <ul className="flex items-center gap-5">
-            {socials.map((s) => (
-              <li key={s.label}>
-                <a
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-muted transition-colors hover:text-foreground"
-                >
-                  {s.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
