@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Greeting } from "@/components/greeting";
 import { ResendLink } from "@/components/resend-link";
+import { Signature } from "@/components/signature";
 import { SiteFooter } from "@/components/site-footer";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -52,9 +53,11 @@ export default function Home() {
             .
           </p>
         </div>
+
+        <Signature className="mt-10 w-[7.5rem]" />
       </main>
 
-      <SiteFooter />
+      <SiteFooter showSignature={false} />
     </div>
   );
 }

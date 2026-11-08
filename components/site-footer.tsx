@@ -6,10 +6,14 @@ const socials = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/laurabeatris" },
 ];
 
-export function SiteFooter() {
+export function SiteFooter({
+  showSignature = true,
+}: {
+  showSignature?: boolean;
+}) {
   return (
     <footer>
-      <Signature className="mb-6 w-[7.5rem]" />
+      {showSignature && <Signature className="mb-6 w-[7.5rem]" />}
       <div className="flex flex-col gap-4 border-t border-border py-8 sm:flex-row sm:items-center sm:justify-between">
         <p className="font-mono text-sm text-muted">
           © {new Date().getFullYear()} Laura Beatris
