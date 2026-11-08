@@ -122,4 +122,45 @@
       opacity: 0.7;
     }
   }
+
+  /* Signature: the footer autograph writes itself once, like a pen */
+  .handwriting-stroke {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 3.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1 2;
+    /* Just past 1 so round caps don't leave a dot before the pen lands */
+    stroke-dashoffset: 1.001;
+  }
+
+  @keyframes handwriting-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .handwriting[data-writing="true"] .handwriting-stroke {
+    animation: handwriting-draw 1s linear forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .handwriting {
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .handwriting[data-writing="true"] {
+      opacity: 1;
+    }
+
+    .handwriting-stroke {
+      stroke-dashoffset: 0;
+    }
+
+    .handwriting[data-writing="true"] .handwriting-stroke {
+      animation: none;
+    }
+  }
 }
