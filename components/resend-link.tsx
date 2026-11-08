@@ -7,17 +7,17 @@ type Phase = "perched" | "flying" | "away" | "returning";
 
 /**
  * One continuous line, in CSS pixels from the word's top-left corner. It starts
- * straight under the word and runs to the perch below its last letter. From there
+ * straight under the word and runs to the perch just past its last letter. From there
  * it's the way out, traced from a pen sketch: up over a hump, down into a valley
  * and off to the top right.
  * The plane rides this exact path, so its trail can't drift out of sync.
- * The perch sits 10.99% along it (see `.plane` in globals.css).
+ * The perch sits 12.01% along it (see `.plane` in globals.css).
  */
 const FLIGHT_PATH =
-  "M0 22.5C2.5 22.5 10 22.5 15 22.5C20 22.5 25 22.5 30 22.5C35 22.5 41.3 22.5 45 22.5C48.7 22.5 49.8 22.5 52 22.5C54.2 22.5 55.3 22.5 58 22.5C60.7 22.5 65 22.6 68 22.4C71 22.1 73.6 22.4 76 21C78.4 19.6 81.1 17 82.5 14C83.9 11 84.1 7.5 84.5 3C84.9 -1.5 83.3 -3.7 85 -13C86.8 -22.3 88.5 -41.3 95 -53C101.5 -64.7 115 -75.7 124 -83C133 -90.3 139.8 -95.8 149 -97C158.2 -98.3 169.3 -97.2 179 -90.5C188.7 -83.8 197.8 -66.2 207 -57C216.2 -47.8 225.8 -37.4 234 -35.5C242.3 -33.6 249.4 -40.3 256.5 -45.5C263.6 -50.8 269.8 -58.7 276.5 -67C283.2 -75.3 288.9 -84.2 296.5 -95.5C304.1 -106.8 312.1 -121.3 322 -135C331.9 -148.8 350.3 -170.8 356 -178";
+  "M0 22.5C2.5 22.5 10 22.5 15 22.5C20 22.5 25 22.5 30 22.5C35 22.5 40.3 22.5 45 22.5C49.7 22.5 54.8 22.5 58 22.5C61.2 22.5 61.3 22.5 64 22.5C66.7 22.5 71 22.6 74 22.4C77 22.1 79.8 22.4 82 21C84.3 19.6 86.3 17 87.5 14C88.7 11 88.8 7.5 89 3C89.3 -1.5 87.3 -3.7 89 -13C90.7 -22.3 92.5 -41.3 99 -53C105.5 -64.7 119 -75.7 128 -83C137 -90.3 143.8 -95.8 153 -97C162.2 -98.3 173.3 -97.2 183 -90.5C192.7 -83.8 201.8 -66.2 211 -57C220.2 -47.8 229.8 -37.4 238 -35.5C246.3 -33.6 253.4 -40.3 260.5 -45.5C267.6 -50.8 273.8 -58.7 280.5 -67C287.2 -75.3 292.9 -84.2 300.5 -95.5C308.1 -106.8 316.1 -121.3 326 -135C335.9 -148.8 354.3 -170.8 360 -178";
 
-const FLIGHT_LENGTH = 527.3;
-const PERCH_DISTANCE = 58;
+const FLIGHT_LENGTH = 532.6;
+const PERCH_DISTANCE = 64;
 const TRAIL_MASK_ID = "resend-plane-trail";
 
 /**
@@ -161,7 +161,7 @@ export function ResendLink() {
 
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute left-[58px] top-[22.5px] text-foreground"
+        className="pointer-events-none absolute left-[64px] top-[22.5px] text-foreground"
       >
         {SPARKLES.map((sparkle) => (
           <Sparkle key={`${sparkle.x},${sparkle.y}`} {...sparkle} />
