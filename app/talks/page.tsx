@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { BackHeader } from "@/components/back-header";
+import { SiteFooter } from "@/components/site-footer";
 import { getTalksPage, type Content } from "@/lib/cms";
 
 export const metadata: Metadata = {
@@ -8,12 +8,6 @@ export const metadata: Metadata = {
   description:
     "Talks and podcast appearances by Laura Beatris on React, TypeScript, GraphQL, testing, and continuous learning.",
 };
-
-const socials = [
-  { label: "X", href: "https://x.com/lauradotjs" },
-  { label: "GitHub", href: "https://github.com/LauraBeatris" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/laurabeatris" },
-];
 
 function ContentSection({
   title,
@@ -57,15 +51,7 @@ export default async function TalksPage() {
 
   return (
     <div className="mx-auto flex min-h-dvh max-w-[640px] flex-col px-6">
-      <header className="flex items-center justify-between py-8">
-        <Link
-          href="/"
-          className="font-mono text-sm text-muted transition-colors hover:text-foreground"
-        >
-          ← @lauradotjs
-        </Link>
-        <ThemeToggle />
-      </header>
+      <BackHeader href="/" label="@lauradotjs" />
 
       <main className="flex flex-1 flex-col gap-16 py-8">
         <div>
@@ -82,27 +68,7 @@ export default async function TalksPage() {
         <ContentSection title="Podcasts" items={podcasts} />
       </main>
 
-      <footer className="flex flex-col gap-4 border-t border-border py-8 sm:flex-row sm:items-center sm:justify-between">
-        <p className="font-mono text-sm text-muted">
-          © {new Date().getFullYear()} Laura Beatris
-        </p>
-        <nav aria-label="Social links">
-          <ul className="flex items-center gap-5">
-            {socials.map((s) => (
-              <li key={s.label}>
-                <a
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-muted transition-colors hover:text-foreground"
-                >
-                  {s.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
