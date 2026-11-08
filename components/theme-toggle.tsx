@@ -25,7 +25,7 @@ export function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
-      className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border text-muted transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+      className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border text-muted transition-[color,transform] duration-[160ms] ease-[var(--ease-out)] hover:text-foreground active:scale-95 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
     >
       {/* Avoid an icon flash before we know the theme */}
       <span className={mounted ? "" : "opacity-0"}>

@@ -9,6 +9,7 @@
     --muted: 0 0% 44%;
     --border: 0 0% 89%;
     --accent: 0 0% 38%;
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   .dark {
@@ -50,7 +51,7 @@
   }
 
   .animate-flow-in {
-    animation: flow-in 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: flow-in 0.5s var(--ease-out);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -66,13 +67,20 @@
     transform-origin: left center;
     transition:
       opacity 0.25s ease,
-      transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      transform 0.4s var(--ease-out);
   }
 
-  .group:hover .coffee-cup,
   .group:focus-visible .coffee-cup {
     opacity: 1;
     transform: translateX(0) scale(1) rotate(0deg);
+  }
+
+  /* Touch screens fake a hover on tap, so only a real pointer pours the coffee */
+  @media (hover: hover) and (pointer: fine) {
+    .group:hover .coffee-cup {
+      opacity: 1;
+      transform: translateX(0) scale(1) rotate(0deg);
+    }
   }
 
   @keyframes steam-rise {
@@ -94,16 +102,18 @@
     transform-origin: bottom center;
   }
 
-  .group:hover .coffee-steam {
-    animation: steam-rise 1.9s ease-in-out infinite;
-  }
+  @media (hover: hover) and (pointer: fine) {
+    .group:hover .coffee-steam {
+      animation: steam-rise 1.9s ease-in-out infinite;
+    }
 
-  .group:hover .coffee-steam:nth-child(2) {
-    animation-delay: 0.55s;
-  }
+    .group:hover .coffee-steam:nth-child(2) {
+      animation-delay: 0.55s;
+    }
 
-  .group:hover .coffee-steam:nth-child(3) {
-    animation-delay: 1.1s;
+    .group:hover .coffee-steam:nth-child(3) {
+      animation-delay: 1.1s;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -167,7 +177,6 @@
   /* Signature: a paper plane perches on Resend and flies away when hovered */
   [data-plane] {
     --plane-flight: 1.7s;
-    --plane-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
     --plane-ease-sine: cubic-bezier(0.37, 0, 0.63, 1);
   }
 
@@ -364,15 +373,15 @@
   }
 
   [data-plane="returning"] .plane {
-    animation: plane-return 0.5s var(--plane-ease-out) both;
+    animation: plane-return 0.5s var(--ease-out) both;
   }
 
   [data-plane="returning"] .plane-trail-reveal {
-    animation: plane-trail-return 0.5s var(--plane-ease-out) both;
+    animation: plane-trail-return 0.5s var(--ease-out) both;
   }
 
   [data-plane="returning"] .plane-body {
-    animation: plane-land 0.25s var(--plane-ease-out) both;
+    animation: plane-land 0.25s var(--ease-out) both;
   }
 
   /* Takeoff sparkles: each one drifts out while it twinkles on and off */
@@ -405,7 +414,7 @@
   }
 
   [data-plane="flying"] .plane-sparkle {
-    animation: plane-sparkle-drift 0.65s var(--plane-ease-out) both;
+    animation: plane-sparkle-drift 0.65s var(--ease-out) both;
     animation-delay: var(--sparkle-delay);
   }
 
