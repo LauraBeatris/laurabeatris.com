@@ -35,6 +35,107 @@
   }
 }
 
+@layer components {
+  /* The Creative Act post: woodblock colors for the river beside the text */
+  .river {
+    --river-water: #b9d4e0;
+    --river-band: #86aec6;
+    --river-deep: #41708f;
+    --river-foam: #ffffff;
+    --river-petal: #e8a6b9;
+    --river-rock: #d2cec4;
+    --river-hull: #f3e8d3;
+    --river-flag: #d64a2e;
+    --river-boat-ink: #1d2730;
+  }
+
+  .dark .river {
+    --river-water: #24475c;
+    --river-band: #1b394d;
+    --river-deep: #122a3b;
+    --river-foam: #cfe3ee;
+    --river-petal: #d68fa5;
+    --river-rock: #44474a;
+    --river-hull: #dccfb7;
+    --river-flag: #d9553a;
+  }
+
+  .river-water {
+    fill: var(--river-water);
+  }
+
+  .river-band-wide {
+    stroke: var(--river-band);
+    stroke-width: 46px;
+    opacity: 0.75;
+  }
+
+  .river-band-narrow {
+    stroke: var(--river-deep);
+    stroke-width: 18px;
+    opacity: 0.7;
+  }
+
+  .river-grain {
+    fill: var(--river-foam);
+    opacity: 0.55;
+  }
+
+  .river-foam {
+    stroke: var(--river-foam);
+    opacity: 0.9;
+  }
+
+  .river-tick,
+  .river-ink-line {
+    fill: none;
+    stroke: hsl(var(--foreground));
+  }
+
+  .river-tick {
+    opacity: 0.7;
+  }
+
+  .river-petal {
+    fill: var(--river-petal);
+  }
+
+  .river-ink-fill {
+    fill: hsl(var(--foreground));
+  }
+
+  .river-rock {
+    fill: var(--river-rock);
+  }
+
+  .river-hull {
+    fill: var(--river-hull);
+  }
+
+  .river-flag {
+    fill: var(--river-flag);
+  }
+
+  .river-boat-line {
+    fill: none;
+    stroke: var(--river-boat-ink);
+  }
+
+  .river-wake {
+    stroke: var(--river-foam);
+  }
+
+  .river-fade-solid {
+    stop-color: hsl(var(--background));
+    stop-opacity: 1;
+  }
+
+  .river-fade-clear {
+    stop-color: hsl(var(--background));
+    stop-opacity: 0;
+  }
+}
+
 @layer utilities {
   /* Signature: the cycling flow verbs fade/slide as they change */
   @keyframes flow-in {
