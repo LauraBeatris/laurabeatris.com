@@ -1,0 +1,94 @@
+import { CloudCommits } from "./cloud-commits";
+import { CommitteeChair } from "./committee-chair";
+import { EraserPanel } from "./eraser-panel";
+import { MixingBoard } from "./mixing-board";
+import { SeedRow } from "./seed-row";
+
+export const metadata = {
+  title: "The Creative Act, for product engineers",
+  description: "Code is cheap, taste isn't. What a music producer taught me about building software.",
+  publishedAt: "2026-11-09",
+};
+
+Nowadays, any decent LLM can write a good amount of code, but what differentiates the impact and vision you can bring to the world with those lines?
+
+More than ever, engineers can see themselves as closer to artists. Rick Rubin wrote *The Creative Act* for artists, and I think it can teach us a lot.
+
+## The producer who doesn't touch the board
+
+Now an agent can write the first version of almost anything I ask for, and writing the code is rarely what slows me down. The hard part is everything around it: knowing which version is right, what's still missing, and when to stop.
+
+Personally, I'm not happy shipping code unless I at least have a sane understanding of its layers. In the end, how confident we feel about it also plays into our users' experience. We should pursue taste not only on the surface, in the outcome of the code, but also in the craft of engineering.
+
+Rubin has produced records for Johnny Cash, the Beastie Boys, and Adele. When Anderson Cooper asked him on 60 Minutes whether he plays instruments or runs the soundboard, he said he barely plays and has no technical ability. What he does have, [he explained](https://www.cbsnews.com/news/rick-rubin-60-minutes-transcript-2023-05-28/), is this: "I know what I like and what I don't like."
+
+
+<Demo>
+  <MixingBoard />
+</Demo>
+
+That is a producer's job. I don't think product engineers should stop understanding the board. Knowing how the system works is what lets me hear when something is off. But more and more of the value is in the listening.
+
+## Taste is trained attention
+
+It's tempting to treat taste as something you either have or you don't. We should treat it as a practice, not something we're born with. You pay attention to the world, on purpose, for a long time, and your judgment slowly gets sharper.
+
+Use the products you admire slowly. When a flow feels good, stop and work out why. When a form annoys you, name the exact moment it did.
+
+For every bit of UI interaction we discover across the many tools out there, built by brilliant design teams, have you asked what their thought process was to arrive at that final solution? It's a habit I personally want to build into my study routine and creative journey: if I notice a product detail that amazes me, I can bookmark it, or spend some mindful time understanding why it made me react differently in the first place.
+
+## Keep ideas as seeds for longer
+
+Rubin splits the creative process into four phases: seeds, experimentation, crafting, and completion. Seeds are the small, unjudged sparks you collect before you know what they're for.
+
+<Demo>
+  <SeedRow />
+</Demo>
+
+Engineers are very good at skipping straight to crafting. We get one idea and immediately start designing the data model around it. Once there's a polished RFC, the idea feels decided, and every better idea that shows up afterwards has to argue against work that's already done.
+
+I've already found myself in situations where I started crafting a solution right after seeing a customer request. A teammate then gave me this feedback: "I don't think we have enough assurance that we're building the right thing. We need to think more about it."
+
+So I'm trying to stay in the messy phase a bit longer, and to keep a list of small ideas with no plan attached to them.
+
+## Try it instead of debating it
+
+The experimentation phase is the one that changed the most for me, because it's the one that just got cheap.
+
+Teams can spend a whole meeting debating two approaches to a flow that could each be prototyped in less time than the meeting takes. When you can feel both versions, the argument usually ends by itself. And when a prototype costs almost nothing, you can even build the version you're sure is wrong, which is sometimes how you find out you were the one who was wrong.
+
+I've been on the side of the story where a team shipped a product feature with several assumptions about the UI that could've been discussed much earlier. Feedback loops that come this late not only cost time, but also affect our creative ability to react later on. The experimentation phase is the time to think without fear: have as many ideas as possible, gather a lot of feedback, and then start crafting with much more confidence in what you're putting out there.
+
+## Subtraction is the craft
+
+Rubin's records with Johnny Cash are close to nothing: a voice and a guitar. All the work is in what's no longer there.
+
+In software, adding is the default. Each new option looks harmless by itself, and it's easy to build, and now it's even easier. So as the cost of adding falls, the discipline of removing matters more. The setting you didn't add, the step you took out, and the feature you killed are all part of what you shipped, even though none of them appear in the changelog.
+
+<Demo>
+  <EraserPanel />
+</Demo>
+
+We've just launched [Inboxes](https://resend.com/inboxes) at Resend. One of the first things our team discussed was how to make our current features more reliable before even thinking about adding more.
+
+When we start a product, in the very early days of a startup, we put a lot of attention on coming back to this "viable product" idea, but that thinking gets lost along the way. I think we should stay mindful of that same principle. Our software shouldn't feel polluted by features that lack polish or don't solve a precise goal. It should be built with intent.
+
+## Where I disagree with Rubin
+
+There's one idea from the book that doesn't fit the mentality we should have when building products: the audience comes last. That's a scary statement from our angle.
+
+Rubin's argument is that this is actually in service of the audience. If you make the thing you're chasing what other people will think of it, you end up with something worse for them too. For an album, I believe that.
+
+A product exists to do something for someone, though. If it doesn't solve their problem, it doesn't matter how much I love it. So here's the version I can use: **users name the problem, and taste finds the answer.**
+
+Listen as hard as you can to what hurts and why. Then be careful about asking people to design the fix, because you'll get the average of everyone's requests. The answer still has to come from someone who cares how it feels.
+
+<Demo>
+  <CommitteeChair />
+</Demo>
+
+## What's left
+
+With each week of work that passes, I see myself less as an engineer from a purely technical point of view, and more as an artist. This software era is in pursuit of taste.
+
+Rubin's book is really an argument that making things is a way of paying attention. I'd always thought of my job as building software. After reading it, I think a growing part of it is listening to the software, and being decisive about what I hear.
