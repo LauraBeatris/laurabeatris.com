@@ -6,6 +6,7 @@
   "engines": {
     "node": "26.x"
   },
+  "packageManager": "pnpm@11.22.0",
   "scripts": {
     "dev": "next dev",
     "build": "node scripts/og-video.ts && next build",
