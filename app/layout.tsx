@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { OG_SIZE } from "@/lib/og-card";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,6 +27,15 @@ export const metadata: Metadata = {
     url: "https://laurabeatris.com",
     siteName: "Laura Beatris",
     type: "website",
+    // Written by scripts/og-video.ts: the card, with the signature writing itself
+    videos: [
+      {
+        url: "https://laurabeatris.com/og/site.mp4",
+        type: "video/mp4",
+        width: OG_SIZE.width,
+        height: OG_SIZE.height,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",

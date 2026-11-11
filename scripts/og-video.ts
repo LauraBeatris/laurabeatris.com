@@ -1,7 +1,8 @@
 /**
- * Renders each blog post's share card as a short MP4 where the signature writes
- * itself, then blinks, into `public/og/<slug>.mp4`. Posts point `og:video` at it,
- * so link previews that play video (iMessage, Slack, Discord, Telegram) animate.
+ * Renders the site's share card and each blog post's as a short MP4 where the
+ * signature writes itself, then blinks, into `public/og/site.mp4` and
+ * `public/og/<slug>.mp4`. Pages point `og:video` at them, so link previews that
+ * play video animate.
  *
  * Runs before `next build`; run it alone with `pnpm og:video`.
  */
@@ -11,7 +12,14 @@ import path from "node:path";
 import vm from "node:vm";
 import ffmpeg from "@ffmpeg-installer/ffmpeg";
 import { ImageResponse } from "next/og.js";
-import { loadOgFonts, OG_SIZE, ogCard, type SignaturePose, signatureSvg } from "../lib/og-card.ts";
+import {
+  loadOgFonts,
+  OG_SIZE,
+  ogCard,
+  type SignaturePose,
+  SITE_CARD,
+  signatureSvg,
+} from "../lib/og-card.ts";
 import { SIGNATURE_STROKES } from "../lib/signature-strokes.ts";
 import { pathLength } from "../lib/svg-path-length.ts";
 
@@ -134,8 +142,9 @@ function cubicBezier(x1: number, y1: number, x2: number, y2: number) {
 }
 
 await mkdir(OUTPUT_DIRECTORY, { recursive: true });
-const entries = await readdir(POSTS_DIRECTORY, { withFileTypes: true });
+await renderVideo("site", SITE_CARD);
 
+const entries = await readdir(POSTS_DIRECTORY, { withFileTypes: true });
 for (const entry of entries.filter((entry) => entry.isDirectory())) {
   await renderVideo(entry.name, await readPostMetadata(entry.name));
 }

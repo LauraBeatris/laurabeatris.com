@@ -8,6 +8,12 @@ import { SIGNATURE_STROKES } from "./signature-strokes.ts";
 
 export const OG_SIZE = { width: 1200, height: 630 };
 
+/** The card for the home page and every page without its own. */
+export const SITE_CARD = {
+  title: "Laura Beatris",
+  description: "Product Engineer at Resend building developer tools.",
+};
+
 const SITE = "laurabeatris.com";
 const INK = "#1a1a1a";
 const MUTED = "#707070";
