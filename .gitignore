@@ -16,6 +16,9 @@
 # production
 /build
 
+# generated before each build by scripts/og-video.ts
+/public/og/
+
 # misc
 .DS_Store
 *.pem

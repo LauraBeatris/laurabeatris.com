@@ -2,14 +2,16 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "engines": {
     "node": "26.x"
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/og-video.ts && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "og:video": "node scripts/og-video.ts"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
@@ -21,6 +23,7 @@
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@types/node": "^20",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",

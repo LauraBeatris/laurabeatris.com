@@ -1,0 +1,4 @@
+# The ffmpeg binaries' only install script is `chmod u+x ffmpeg`
+allowBuilds:
+  '@ffmpeg-installer/darwin-arm64': true
+  '@ffmpeg-installer/linux-x64': true

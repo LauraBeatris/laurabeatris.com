@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { BackHeader } from "@/components/back-header";
 import { formatPostDate, getPost, getPosts } from "@/lib/blog";
+import { OG_SIZE } from "@/lib/og-card";
 
 type PostPageProps = {
   params: Promise<{ slug: string }>;
@@ -29,6 +30,16 @@ export async function generateMetadata({
       description: post.description,
       type: "article",
       publishedTime: post.publishedAt,
+      // Written by scripts/og-video.ts: the card, with the signature writing
+      // itself. Absolute, since Next doesn't resolve video URLs like images.
+      videos: [
+        {
+          url: `https://laurabeatris.com/og/${slug}.mp4`,
+          type: "video/mp4",
+          width: OG_SIZE.width,
+          height: OG_SIZE.height,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
