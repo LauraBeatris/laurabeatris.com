@@ -21,7 +21,8 @@
     "@types/mdx": "^2.0.14",
     "next": "16.4.5",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "resend": "^6.38.0"
   },
   "devDependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
