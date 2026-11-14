@@ -10,6 +10,7 @@
     --border: 0 0% 89%;
     --accent: 0 0% 38%;
     --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   }
 
   .dark {
@@ -597,6 +598,375 @@
       [data-plane]:hover .plane-trail {
         opacity: 1;
       }
+    }
+  }
+
+  /* Signature: "Email me" in the footer. Hovering lifts the envelope's flap and */
+  /* the heart rises out of the pocket. It stays that way while the composer is open */
+  .mail-flap,
+  .mail-heart {
+    transition: transform 0.22s var(--ease-out);
+  }
+
+  /* The flap hinges on the envelope's top edge */
+  .mail-flap {
+    transform-origin: 9px 2.2px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .mail-trigger[data-open="true"] .mail-flap {
+      transform: scaleY(-1);
+    }
+
+    .mail-trigger[data-open="true"] .mail-heart {
+      transform: translateY(-6.5px) scale(1.15);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .mail-trigger:hover .mail-flap {
+        transform: scaleY(-1);
+      }
+
+      .mail-trigger:hover .mail-heart {
+        transform: translateY(-6.5px) scale(1.15);
+      }
+    }
+  }
+
+  /* The composer: a small window that floats up out of "Email me", like a draft */
+  /* in a mail app. It leaves faster than it arrives, and stays in the page so */
+  /* a draft survives. Its origin is set to the link when it opens */
+  .composer {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px) scale(0.97);
+    transform-origin: bottom right;
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.04),
+      0 12px 32px -8px rgb(0 0 0 / 0.14),
+      0 32px 64px -24px rgb(0 0 0 / 0.16);
+    transition:
+      opacity 0.16s var(--ease-out),
+      transform 0.16s var(--ease-out),
+      visibility 0s linear 0.16s;
+  }
+
+  .dark .composer {
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.3),
+      0 16px 40px -8px rgb(0 0 0 / 0.6),
+      0 32px 64px -24px rgb(0 0 0 / 0.7);
+  }
+
+  .composer[data-open="true"] {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition:
+      opacity 0.24s var(--ease-out),
+      transform 0.24s var(--ease-out),
+      visibility 0s;
+  }
+
+  /* The field being written in is the one that's lit */
+  .composer-row,
+  .composer-message {
+    transition: background-color 0.15s ease;
+  }
+
+  .composer-row:focus-within,
+  .composer-message:focus {
+    background-color: hsl(var(--foreground) / 0.035);
+  }
+
+  /* Signature: Send folds into an envelope, tucks the letter in and seals it. */
+  /* The envelope waits for the inbox to answer, then leaves as a paper plane */
+  .send-paper {
+    fill: hsl(var(--background));
+  }
+
+  /* The pill's outline, which is also the envelope's until the envelope takes over */
+  .send-outline {
+    fill: transparent;
+    opacity: 0;
+  }
+
+  [data-stage="idle"] .send-outline,
+  [data-stage="morph"] .send-outline {
+    opacity: 1;
+  }
+
+  [data-stage="idle"] .send-outline {
+    transition:
+      opacity 0.2s ease,
+      fill 0.15s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .send-button[data-stage="idle"]:hover .send-outline {
+      fill: hsl(var(--foreground) / 0.06);
+    }
+  }
+
+  .send-label {
+    transition:
+      opacity 0.12s ease,
+      filter 0.12s ease;
+  }
+
+  .send-button:not([data-stage="idle"]) .send-label {
+    opacity: 0;
+    filter: blur(2px);
+  }
+
+  [data-stage="idle"] .send-label {
+    transition-duration: 0.2s;
+  }
+
+  /* Appears already drawn, exactly where the outline finished */
+  .send-envelope {
+    opacity: 0;
+  }
+
+  [data-stage="idle"] .send-envelope {
+    transition: opacity 0.15s ease;
+  }
+
+  .send-button:is([data-stage="open"], [data-stage="sealing"], [data-stage="waiting"])
+    .send-envelope {
+    opacity: 1;
+  }
+
+  /* Leans into the plane it's about to be */
+  .send-button:is([data-stage="plane"], [data-stage="flown"]) .send-envelope {
+    opacity: 0;
+    transform: rotate(-14deg) scale(0.88);
+    transition:
+      opacity 0.16s ease,
+      transform 0.16s ease;
+  }
+
+  /* Everything inside goes back to open only once the envelope has faded */
+  .send-letter,
+  .send-folds,
+  .send-flap-back,
+  .send-flap-front {
+    transition:
+      opacity 0s linear 0.2s,
+      transform 0s linear 0.2s;
+  }
+
+  .send-letter {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+
+  .send-folds {
+    opacity: 0;
+  }
+
+  [data-stage="open"] .send-letter {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.14s ease,
+      transform 0.24s var(--ease-out);
+  }
+
+  [data-stage="open"] .send-folds {
+    opacity: 1;
+    transition: opacity 0.14s ease;
+  }
+
+  .send-button:is(
+      [data-stage="sealing"],
+      [data-stage="waiting"],
+      [data-stage="plane"],
+      [data-stage="flown"]
+    )
+    .send-folds {
+    opacity: 1;
+  }
+
+  .send-button:is(
+      [data-stage="sealing"],
+      [data-stage="waiting"],
+      [data-stage="plane"],
+      [data-stage="flown"]
+    )
+    .send-letter {
+    opacity: 1;
+    transform: translateY(7px);
+    transition: transform 0.16s var(--ease-in-out);
+  }
+
+  /* One flap, drawn twice: behind the letter until it's edge-on, then in front. */
+  /* Each half takes a sine, so together they read as one fold at a steady turn */
+  .send-flap-back,
+  .send-flap-front {
+    transform-origin: 0 -5px;
+  }
+
+  .send-flap-front {
+    transform: scaleY(0);
+  }
+
+  .send-button:is(
+      [data-stage="sealing"],
+      [data-stage="waiting"],
+      [data-stage="plane"],
+      [data-stage="flown"]
+    )
+    .send-flap-back {
+    transform: scaleY(0);
+    transition: transform 0.12s cubic-bezier(0.12, 0, 0.39, 0) 0.11s;
+  }
+
+  .send-button:is(
+      [data-stage="sealing"],
+      [data-stage="waiting"],
+      [data-stage="plane"],
+      [data-stage="flown"]
+    )
+    .send-flap-front {
+    transform: scaleY(-1);
+    transition: transform 0.15s cubic-bezier(0.61, 1, 0.88, 1) 0.23s;
+  }
+
+  /* A slow inbox: the sealed envelope idles instead of sitting dead still */
+  @keyframes send-bob {
+    50% {
+      transform: translateY(-1.5px);
+    }
+  }
+
+  [data-stage="waiting"] .send-envelope-bob {
+    animation: send-bob 1.4s cubic-bezier(0.37, 0, 0.63, 1) 0.3s infinite;
+  }
+
+  .send-plane {
+    opacity: 0;
+    transform: rotate(16deg) scale(0.85);
+  }
+
+  [data-stage="plane"] .send-plane {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.16s ease,
+      transform 0.2s var(--ease-out);
+  }
+
+  /* Gathers itself, then goes: up and to the right, shrinking into the distance */
+  [data-stage="flown"] .send-plane {
+    opacity: 0;
+    transform: translate(58px, -50px) scale(0.4);
+    transition:
+      transform 0.72s var(--ease-in-out),
+      opacity 0.26s ease 0.4s;
+  }
+
+  .send-dash {
+    opacity: 0;
+  }
+
+  @keyframes send-dash {
+    0% {
+      opacity: 0;
+      transform: translate(3px, -3px);
+    }
+    35% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-4px, 4px);
+    }
+  }
+
+  .send-button:is([data-stage="plane"], [data-stage="flown"]) .send-dash {
+    animation: send-dash 0.36s linear 2 both;
+  }
+
+  .send-dash + .send-dash {
+    animation-delay: 0.09s;
+  }
+
+  .send-dash + .send-dash + .send-dash {
+    animation-delay: 0.18s;
+  }
+
+  .send-done {
+    opacity: 0;
+    transform: translateY(3px);
+    filter: blur(2px);
+  }
+
+  /* Comes in while the plane is still on its way out */
+  [data-stage="flown"] .send-done {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition:
+      opacity 0.4s var(--ease-out) 0.3s,
+      transform 0.4s var(--ease-out) 0.3s,
+      filter 0.4s var(--ease-out) 0.3s;
+  }
+
+  /* With reduced motion nothing travels: each step fades into the next */
+  @media (prefers-reduced-motion: reduce) {
+    .composer,
+    .composer[data-open="true"] {
+      transform: none;
+    }
+
+    .send-button .send-letter,
+    .send-button .send-plane,
+    .send-button .send-envelope,
+    .send-button .send-done {
+      transform: none;
+    }
+
+    .send-button:is(
+        [data-stage="sealing"],
+        [data-stage="waiting"],
+        [data-stage="plane"],
+        [data-stage="flown"]
+      )
+      .send-letter {
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+
+    .send-button .send-flap-back,
+    .send-button .send-flap-front {
+      transition-duration: 0s;
+    }
+
+    [data-stage="flown"] .send-plane {
+      transition: opacity 0.3s ease;
+    }
+
+    .send-button .send-envelope-bob,
+    .send-button .send-dash {
+      animation: none;
+    }
+  }
+}
+
+/* The composer's first appearance: it mounts already open, so this is where it */
+/* arrives from. Outside the layer above so Tailwind leaves the at-rule alone */
+@starting-style {
+  .composer[data-open="true"] {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @starting-style {
+    .composer[data-open="true"] {
+      transform: none;
     }
   }
 }
