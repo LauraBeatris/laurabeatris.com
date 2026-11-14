@@ -5,26 +5,110 @@ import type { AskLauraUIMessage } from "@/lib/ask/agent";
 type Part = AskLauraUIMessage["parts"][number];
 export type ToolPart = Extract<Part, { type: `tool-${string}` }>;
 
-/** What the agent is doing while a card's data is on its way. */
-export const TOOL_LABELS: Record<ToolPart["type"], string> = {
-  "tool-showTalks": "Pulling out my talks",
-  "tool-showWriting": "Finding my writing",
-  "tool-showCareer": "Sketching my career",
-  "tool-showContact": "Looking up where to find me",
-  "tool-showGithubActivity": "Checking GitHub",
+export type Source = {
+  /** What the status line says while this is being fetched. */
+  working: string;
+  /** How the source is named once the answer has used it. */
+  name: string;
+  /** Where it really lives, so a visitor can check the answer against it. */
+  origin: string;
+  href: string;
+  /** Path data for a 24×24 stroke icon. */
+  icon: string;
+  /** Questions that go one step further from an answer that used this. */
+  followUps: string[];
+};
+
+const REPOSITORY = "https://github.com/LauraBeatris/laurabeatris.com/blob/master";
+
+/** Every answer starts from the notes; a tool adds its own source on top. */
+export const NOTES_SOURCE: Source = {
+  working: "Thinking",
+  name: "My notes",
+  origin: "content/laura.ts",
+  href: `${REPOSITORY}/content/laura.ts`,
+  icon: "M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6",
+  followUps: [
+    "How do you think about taste?",
+    "Show me your talks",
+    "Where can I find you?",
+  ],
+};
+
+export const TOOL_SOURCES: Record<ToolPart["type"], Source> = {
+  "tool-showTalks": {
+    working: "Pulling out my talks",
+    name: "My talks and podcasts",
+    origin: "/talks",
+    href: "/talks",
+    icon: "M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zM6 11a6 6 0 0 0 12 0M12 17v4",
+    followUps: [
+      "Which topics do you speak about most?",
+      "Which podcasts have you been on?",
+      "What have you written?",
+    ],
+  },
+  "tool-showWriting": {
+    working: "Finding my writing",
+    name: "My blog",
+    origin: "/blog",
+    href: "/blog",
+    icon: "M4 20l1-5L16 4l4 4L9 19zM14 6l4 4",
+    followUps: [
+      "Where do you disagree with Rick Rubin?",
+      "How do you think about taste?",
+      "Show me your talks",
+    ],
+  },
+  "tool-showCareer": {
+    working: "Sketching my career",
+    name: "My career",
+    origin: "content/laura.ts",
+    href: `${REPOSITORY}/content/laura.ts`,
+    icon: "M4 8h16v11H4zM9 8V5h6v3M4 13h16",
+    followUps: [
+      "What are you building at Resend?",
+      "What did your team launch recently?",
+      "What have you been hacking on lately?",
+    ],
+  },
+  "tool-showContact": {
+    working: "Looking up where to find me",
+    name: "My links",
+    origin: "content/laura.ts",
+    href: `${REPOSITORY}/content/laura.ts`,
+    icon: "M16 12a4 4 0 1 0-1.2 2.9M16 8v5a2.5 2.5 0 0 0 5 0v-1a9 9 0 1 0-3.5 7.1",
+    followUps: [
+      "Where are you based?",
+      "What are you building at Resend?",
+      "What have you written?",
+    ],
+  },
+  "tool-showGithubActivity": {
+    working: "Checking GitHub",
+    name: "GitHub, live",
+    origin: "github.com/LauraBeatris",
+    href: "https://github.com/LauraBeatris",
+    icon: "M6 4v10M6 14a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM18 4a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM18 10c0 4-6 3-9 6",
+    followUps: [
+      "How was this agent built?",
+      "What is this site built with?",
+      "Show me your talks",
+    ],
+  },
 };
 
 export function isToolPart(part: Part): part is ToolPart {
   return part.type.startsWith("tool-");
 }
 
-/** A sheet the agent pulls out mid-answer. Its outline is drawn on, like the post sketches. */
+/** A sheet the agent pulls out mid-answer, sunk into the answer it belongs to. */
 function Card({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <section aria-label={label} className="ask-card relative mt-5 p-5 first:mt-0">
-      <svg aria-hidden className="ask-card-outline">
-        <rect pathLength={1} className="pen-draw" />
-      </svg>
+    <section
+      aria-label={label}
+      className="ask-card ask-well ask-rise rounded-[20px] px-4 py-3.5"
+    >
       {children}
     </section>
   );
@@ -33,7 +117,7 @@ function Card({ label, children }: { label: string; children: ReactNode }) {
 function CardHeading({ children, index }: { children: ReactNode; index: number }) {
   return (
     <h3
-      className="ask-rise font-mono text-xs uppercase tracking-widest text-muted [&:not(:first-child)]:mt-5"
+      className="ask-rise font-mono text-[11px] uppercase tracking-widest text-muted [&:not(:first-child)]:mt-4"
       style={{ "--item": index } as CSSProperties}
     >
       {children}
@@ -56,24 +140,26 @@ function CardRow({
 }) {
   const content = (
     <>
-      <span className="flex items-baseline justify-between gap-4">
-        <span className="text-pretty font-medium underline decoration-transparent decoration-2 underline-offset-4 transition-colors group-hover:decoration-accent">
+      <span className="flex flex-col gap-x-4 gap-y-0.5 sm:flex-row sm:items-baseline sm:justify-between">
+        <span className="text-pretty text-[15px] underline decoration-transparent decoration-2 underline-offset-4 transition-colors group-hover:decoration-accent">
           {title}
         </span>
         {detail && (
-          <span className="shrink-0 text-right font-mono text-xs text-muted">
+          <span className="shrink-0 font-mono text-xs text-muted sm:text-right">
             {detail}
           </span>
         )}
       </span>
-      {note && <span className="mt-1 block text-pretty text-sm text-muted">{note}</span>}
+      {note && (
+        <span className="mt-1 block text-pretty text-sm text-muted">{note}</span>
+      )}
     </>
   );
-  const className = "group block py-3";
+  const className = "group block py-2.5";
 
   return (
     <li
-      className="ask-rise border-t border-border first:border-t-0"
+      className="ask-rise border-t border-foreground/[0.07] first:border-t-0"
       style={{ "--item": index } as CSSProperties}
     >
       {href ? (
@@ -88,7 +174,7 @@ function CardRow({
 }
 
 export function ToolCard({ part }: { part: ToolPart }) {
-  // Until the data lands, the status line under the question says what's happening
+  // Until the data lands, the composer's status line says what's happening
   if (part.state !== "output-available") return null;
 
   switch (part.type) {
@@ -99,7 +185,7 @@ export function ToolCard({ part }: { part: ToolPart }) {
       return (
         <Card label="Talks and podcasts">
           {hasBoth && <CardHeading index={0}>Talks</CardHeading>}
-          <ul className={hasBoth ? "mt-1" : "-my-3"}>
+          <ul className={hasBoth ? "mt-1" : "-my-2.5"}>
             {talks.map((talk, index) => (
               <CardRow
                 key={talk.url}
@@ -113,7 +199,7 @@ export function ToolCard({ part }: { part: ToolPart }) {
           {hasBoth && (
             <CardHeading index={talks.length + 1}>Podcasts</CardHeading>
           )}
-          <ul className={hasBoth ? "-mb-3 mt-1" : "-my-3"}>
+          <ul className={hasBoth ? "-mb-2.5 mt-1" : "-my-2.5"}>
             {podcasts.map((podcast, index) => (
               <CardRow
                 key={podcast.url}
@@ -133,7 +219,7 @@ export function ToolCard({ part }: { part: ToolPart }) {
 
       return (
         <Card label="Writing">
-          <ul className="-my-3">
+          <ul className="-my-2.5">
             {part.output.posts.map((post, index) => (
               <CardRow
                 key={post.href}
@@ -155,14 +241,14 @@ export function ToolCard({ part }: { part: ToolPart }) {
             {part.output.career.map((entry, index) => (
               <li
                 key={entry.company}
-                className="ask-rise relative pb-5 pl-6 last:pb-0"
+                className="ask-rise relative pb-4 pl-6 last:pb-0"
                 style={{ "--item": index } as CSSProperties}
               >
                 <span aria-hidden className="ask-timeline-dot" />
-                <p className="flex items-baseline justify-between gap-4">
-                  <span className="font-medium">
+                <p className="flex items-baseline justify-between gap-4 text-[15px]">
+                  <span>
                     {entry.role}
-                    <span className="font-normal text-muted"> at </span>
+                    <span className="text-muted"> at </span>
                     {entry.url ? (
                       <AnyLink
                         href={entry.url}
@@ -180,7 +266,7 @@ export function ToolCard({ part }: { part: ToolPart }) {
                     </span>
                   )}
                 </p>
-                <p className="mt-1 text-pretty text-sm text-muted">
+                <p className="mt-0.5 text-pretty text-sm text-muted">
                   {entry.summary}
                 </p>
               </li>
@@ -192,7 +278,7 @@ export function ToolCard({ part }: { part: ToolPart }) {
     case "tool-showContact":
       return (
         <Card label="Where to find me">
-          <ul className="-my-3">
+          <ul className="-my-2.5">
             {part.output.socials.map((social, index) => (
               <CardRow
                 key={social.url}
@@ -211,7 +297,7 @@ export function ToolCard({ part }: { part: ToolPart }) {
 
       return (
         <Card label="Recent GitHub activity">
-          <ul className="-my-3">
+          <ul className="-my-2.5">
             {part.output.repos.map((repo, index) => (
               <CardRow
                 key={repo.url}

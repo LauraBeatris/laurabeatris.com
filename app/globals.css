@@ -560,7 +560,56 @@
     }
   }
 
-  /* Ask Laura: things arrive on the page one after another */
+  /* Ask Laura: surfaces. A soft tray, white things raised off it, wells sunk
+     into it. Light lifts with a hairline ring and a short drop; dark lifts by
+     getting lighter, with a thin outline, because a shadow can't show there. */
+  .ask {
+    --ask-tray: 0 0% 96%;
+    --ask-raised: 0 0% 100%;
+    --ask-well: 0 0% 92%;
+    --ask-line: 0 0% 82%;
+    --ask-shadow-tray: inset 0 0 0 1px rgb(0 0 0 / 0.04);
+    --ask-shadow-pill: 0 0 0 1px rgb(0 0 0 / 0.05), 0 1px 2px rgb(0 0 0 / 0.08);
+    --ask-shadow-raised:
+      0 0 0 1px rgb(0 0 0 / 0.05), 0 1px 2px rgb(0 0 0 / 0.08),
+      0 6px 12px -6px rgb(0 0 0 / 0.12);
+  }
+
+  .dark .ask {
+    --ask-tray: 0 0% 10.5%;
+    --ask-raised: 0 0% 15.5%;
+    --ask-well: 0 0% 7.5%;
+    --ask-line: 0 0% 26%;
+    --ask-shadow-tray: inset 0 0 0 0.5px hsl(0 0% 18%);
+    --ask-shadow-pill: 0 0 0 0.5px hsl(0 0% 29%), 0 1px 2px rgb(0 0 0 / 0.5);
+    --ask-shadow-raised:
+      0 0 0 0.5px hsl(0 0% 27%), 0 1px 2px rgb(0 0 0 / 0.5),
+      0 6px 12px -6px rgb(0 0 0 / 0.6);
+  }
+
+  .ask-tray {
+    border-radius: 28px;
+    background: hsl(var(--ask-tray));
+    box-shadow: var(--ask-shadow-tray);
+  }
+
+  .ask-raised {
+    background: hsl(var(--ask-raised));
+    box-shadow: var(--ask-shadow-raised);
+  }
+
+  .ask-pill {
+    border-radius: 9999px;
+    background: hsl(var(--ask-raised));
+    box-shadow: var(--ask-shadow-pill);
+  }
+
+  .ask-well {
+    background: hsl(var(--ask-well));
+  }
+
+  /* Ask Laura: things arrive on the page one after another.
+     The stagger stops growing after a few items, so a long list isn't a wait */
   @keyframes ask-rise {
     from {
       opacity: 0;
@@ -568,32 +617,15 @@
     }
   }
 
-  /* The stagger stops growing after a few items, so a long list isn't a wait */
   .ask-rise {
     animation: ask-rise 0.3s var(--ease-out) both;
     animation-delay: calc(min(var(--item, 0), 6) * 30ms);
   }
 
-  /* Ask Laura: the suggested questions fade where they stand, as the first
-     real one arrives in their place */
-  @keyframes ask-leave {
-    to {
-      opacity: 0;
-    }
-  }
-
-  .ask-suggestions[data-leaving] {
-    position: absolute;
-    inset: 2.5rem 0 auto;
-    pointer-events: none;
-    animation: ask-leave 0.15s var(--ease-out) forwards;
-  }
-
   /* Ask Laura: the newest question can always scroll to the top of the page.
-     9rem is the docked composer, at one line, plus the transcript's bottom
-     padding. */
+     --ask-dock is the docked composer's height, measured as it changes. */
   .ask-latest-exchange {
-    min-height: calc(100dvh - 9rem);
+    min-height: calc(100dvh - var(--ask-dock, 14rem) - 2.5rem);
   }
 
   /* Ask Laura: each word of an answer soaks into the page as it arrives */
@@ -608,32 +640,94 @@
     animation: ink-in 0.3s var(--ease-out) both;
   }
 
-  /* Ask Laura: the three dots after "Thinking" take turns */
-  @keyframes ask-dot {
-    0%,
-    60%,
-    100% {
-      opacity: 0.25;
+  /* Ask Laura: a line runs from the face down the answer and turns into the
+     pill that says where the answer came from */
+  .ask-thread-line {
+    position: absolute;
+    top: 3.25rem;
+    bottom: 1.125rem;
+    left: calc(1.25rem - 0.75px);
+    width: 1.375rem;
+    border-bottom: 1.5px solid hsl(var(--ask-line));
+    border-left: 1.5px solid hsl(var(--ask-line));
+    border-bottom-left-radius: 14px;
+    pointer-events: none;
+  }
+
+  /* Fast, so a wait reads as shorter */
+  @keyframes ask-spin {
+    to {
+      transform: rotate(360deg);
     }
-    30% {
-      opacity: 1;
+  }
+
+  .ask-spinner {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    border: 2px solid hsl(var(--ask-line));
+    border-top-color: hsl(var(--foreground));
+    border-radius: 9999px;
+    animation: ask-spin 0.6s linear infinite;
+  }
+
+  /* The dot on a sources pill nobody has opened yet */
+  .ask-unread {
+    width: 0.375rem;
+    height: 0.375rem;
+    flex-shrink: 0;
+    border-radius: 9999px;
+    background: hsl(var(--foreground));
+    transition:
+      transform 0.2s var(--ease-out),
+      opacity 0.2s var(--ease-out);
+  }
+
+  [data-read="true"] > .ask-unread {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  /* Once opened, the pill settles back into the card, like a read message */
+  .ask-sources {
+    transition:
+      background-color 0.2s var(--ease-out),
+      box-shadow 0.2s var(--ease-out),
+      color 0.2s var(--ease-out),
+      transform 0.15s var(--ease-out);
+  }
+
+  .ask-sources[data-read="true"] {
+    background: hsl(var(--ask-well));
+    box-shadow: none;
+    color: hsl(var(--muted));
+  }
+
+  /* On a touch screen, small controls keep their look and get a finger-sized
+     area to hit */
+  @media (pointer: coarse) {
+    .ask-hit {
+      position: relative;
+    }
+
+    .ask-hit::after {
+      content: "";
+      position: absolute;
+      inset: -4px;
     }
   }
 
-  .ask-dots span {
-    opacity: 0.25;
-    animation: ask-dot 1.2s infinite;
+  /* The follow-up questions run off the tray's edge instead of wrapping */
+  .ask-chips {
+    scrollbar-width: none;
+    mask-image: linear-gradient(to right, #000 calc(100% - 2rem), transparent);
   }
 
-  .ask-dots span:nth-child(2) {
-    animation-delay: 0.15s;
+  .ask-chips::-webkit-scrollbar {
+    display: none;
   }
 
-  .ask-dots span:nth-child(3) {
-    animation-delay: 0.3s;
-  }
-
-  /* Ask Laura: the face from the autograph, listening in the composer.
+  /* Ask Laura: the face from the autograph, in the composer and on each answer.
      Its strokes are the signature's own, drawn on like the post sketches */
   .agent-face-gaze,
   .agent-face-brow {
@@ -675,44 +769,26 @@
     transform: translate(-4px, 4px);
   }
 
+  /* Sorry: head down, brows dropped, when an answer fell through */
+  .agent-face[data-mood="sorry"] {
+    transform: rotate(8deg) translateY(2px);
+  }
+
+  .agent-face[data-mood="sorry"] .agent-face-brow {
+    transform: translate(-1px, 4px);
+  }
+
+  .agent-face[data-mood="sorry"] .agent-face-gaze {
+    transform: translate(-2px, 4px);
+  }
+
   @media (prefers-reduced-motion: no-preference) {
-    .agent-face .agent-face-eye {
+    .agent-face[data-blinks] .agent-face-eye {
       animation: handwriting-blink 4.8s var(--ease-out) 1.5s infinite;
     }
   }
 
-  /* Ask Laura: a card's outline is drawn on, then its rows arrive */
-  .ask-card {
-    border-radius: 12px;
-  }
-
-  .ask-card-outline {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-    pointer-events: none;
-  }
-
-  .ask-card-outline rect {
-    x: 0.5px;
-    y: 0.5px;
-    width: calc(100% - 1px);
-    height: calc(100% - 1px);
-    rx: 12px;
-    fill: none;
-    stroke: hsl(var(--border));
-    stroke-width: 1px;
-  }
-
-  /* A longer line than the post sketches, so the pen gets a little longer */
-  @media (prefers-reduced-motion: no-preference) {
-    .ask-card-outline rect {
-      animation-duration: 0.6s;
-    }
-  }
-
+  /* Ask Laura: a card's rows arrive just after the card does */
   .ask-card .ask-rise {
     animation-delay: calc(100ms + min(var(--item, 0), 6) * 30ms);
   }
@@ -724,7 +800,7 @@
     top: 1.2em;
     bottom: -0.3em;
     width: 1px;
-    background: hsl(var(--border));
+    background: hsl(var(--ask-line));
   }
 
   .ask-timeline-dot {
@@ -738,7 +814,7 @@
   }
 
   .ask-timeline li:not(:first-child) .ask-timeline-dot {
-    background: hsl(var(--background));
+    background: hsl(var(--ask-well));
     box-shadow: inset 0 0 0 1.5px hsl(var(--muted));
   }
 
@@ -751,23 +827,22 @@
     pointer-events: none;
   }
 
-  /* Ask Laura: sending flies the plane off; a stop square takes its place */
-  .ask-send-plane,
-  .ask-send-stop {
+  /* Ask Laura: one icon gives way to another in the same button, and the
+     blur carries the swap. Sending flies the plane off first. */
+  .ask-swap > * {
     transition:
       transform 0.25s var(--ease-out),
       opacity 0.2s var(--ease-out),
       filter 0.2s var(--ease-out);
   }
 
-  .ask-send[data-state="idle"] .ask-send-stop {
+  .ask-swap > [data-shown="false"] {
     opacity: 0;
     transform: scale(0.9);
     filter: blur(2px);
   }
 
-  .ask-send[data-state="busy"] .ask-send-plane {
-    opacity: 0;
+  .ask-swap > .ask-send-plane[data-shown="false"] {
     transform: translate(14px, -14px) scale(0.8);
     filter: blur(1px);
   }
@@ -778,13 +853,21 @@
       animation: pen-appear 0.2s ease both;
     }
 
-    .ask-dots span {
-      animation: none;
-      opacity: 0.6;
+    /* Still shows it's working, without the spin */
+    @keyframes ask-pulse {
+      50% {
+        opacity: 0.35;
+      }
     }
 
-    .ask-send[data-state="idle"] .ask-send-stop,
-    .ask-send[data-state="busy"] .ask-send-plane {
+    .ask-spinner {
+      border-color: hsl(var(--foreground));
+      animation: ask-pulse 1.2s ease-in-out infinite;
+    }
+
+    .ask-swap > [data-shown="false"],
+    .ask-swap > .ask-send-plane[data-shown="false"],
+    [data-read="true"] > .ask-unread {
       transform: none;
     }
 
