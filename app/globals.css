@@ -24,6 +24,29 @@
   html {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    /* Phones: no grey flash over whatever was tapped (each control has its own */
+    /* :active), and no inflating the text when the phone turns sideways */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Never waits to see if a tap was the start of a double-tap zoom */
+  a,
+  button,
+  label,
+  summary,
+  [role="button"] {
+    touch-action: manipulation;
+  }
+
+  /* A long press on a control shouldn't select its label or pop a callout. */
+  /* Links stay selectable: they sit inside sentences people copy */
+  button,
+  [role="button"] {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
   }
 
   body {
@@ -1386,6 +1409,136 @@
     .agent-face-gaze,
     .agent-face-brow {
       transition: none;
+    }
+  }
+}
+
+/* iOS zooms into any field under 16px and never zooms back out */
+@media (pointer: coarse) {
+  .composer :is(input, textarea) {
+    font-size: 16px;
+  }
+}
+
+/* On a phone the composer is a sheet instead: it rises from the bottom edge, */
+/* rides on the keyboard while there is one, and dims the page behind it. */
+/* Pulled down by its header it goes away. Matches SHEET in email-me.tsx */
+.composer-backdrop,
+.composer-grabber {
+  display: none;
+}
+
+@media (max-width: 639.98px), (pointer: coarse) and (max-height: 520px) {
+  .composer-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background-color: rgb(0 0 0 / 0.32);
+    opacity: 0;
+    visibility: hidden;
+    /* The page behind doesn't scroll from under a finger on the dim */
+    touch-action: none;
+    transition:
+      opacity 0.2s ease,
+      visibility 0s linear 0.2s;
+  }
+
+  .composer-backdrop[data-open="true"] {
+    opacity: 1;
+    visibility: visible;
+    transition:
+      opacity 0.3s ease,
+      visibility 0s;
+  }
+
+  .composer {
+    --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
+    position: fixed;
+    inset: auto 0 var(--keyboard-inset, 0px);
+    width: auto;
+    max-height: calc(
+      var(--visible-height, 100dvh) - env(safe-area-inset-top, 0px) - 1rem
+    );
+    /* Clear of the home indicator, until the keyboard covers it anyway */
+    padding-bottom: max(
+      0px,
+      env(safe-area-inset-bottom, 0px) - var(--keyboard-inset, 0px)
+    );
+    border-width: 1px 0 0;
+    border-radius: 1rem 1rem 0 0;
+    box-shadow: 0 -8px 32px -12px rgb(0 0 0 / 0.16);
+    overscroll-behavior: contain;
+    opacity: 1;
+    transform: translateY(100%);
+    transition:
+      transform 0.24s var(--ease-sheet),
+      bottom 0.25s var(--ease-out),
+      visibility 0s linear 0.24s;
+  }
+
+  .composer[data-open="true"] {
+    transform: none;
+    transition:
+      transform 0.4s var(--ease-sheet),
+      bottom 0.25s var(--ease-out),
+      visibility 0s;
+  }
+
+  /* The header is the handle: it takes the drag instead of scrolling the page */
+  .composer-header {
+    touch-action: none;
+  }
+
+  .composer-grabber {
+    display: block;
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    width: 36px;
+    height: 4px;
+    margin-left: -18px;
+    border-radius: 9999px;
+    background-color: hsl(var(--border));
+  }
+
+  @starting-style {
+    .composer[data-open="true"] {
+      opacity: 1;
+      transform: translateY(100%);
+    }
+
+    .composer-backdrop[data-open="true"] {
+      opacity: 0;
+    }
+  }
+}
+
+/* With reduced motion the sheet fades in where it rests instead of rising */
+@media ((max-width: 639.98px) or ((pointer: coarse) and (max-height: 520px))) and (prefers-reduced-motion: reduce) {
+  .composer,
+  .composer[data-open="true"] {
+    transform: none;
+  }
+
+  .composer {
+    opacity: 0;
+    transition:
+      opacity 0.2s ease,
+      visibility 0s linear 0.2s;
+  }
+
+  .composer[data-open="true"] {
+    opacity: 1;
+    transition:
+      opacity 0.2s ease,
+      visibility 0s;
+  }
+
+  @starting-style {
+    .composer[data-open="true"] {
+      opacity: 0;
+      transform: none;
     }
   }
 }

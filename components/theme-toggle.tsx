@@ -2,19 +2,36 @@
 
 import { useEffect, useState } from "react";
 
+/** The page's background in each theme. Matches themeColor in app/layout.tsx. */
+const STATUS_BAR = { light: "#ffffff", dark: "#121212" };
+
+/**
+ * The phone's status bar follows the OS theme on its own. When the site's own
+ * choice differs, both tags are pointed at the theme actually on screen.
+ */
+function paintStatusBar(isDark: boolean) {
+  const color = isDark ? STATUS_BAR.dark : STATUS_BAR.light;
+  document
+    .querySelectorAll('meta[name="theme-color"]')
+    .forEach((tag) => tag.setAttribute("content", color));
+}
+
 export function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
+    const dark = document.documentElement.classList.contains("dark");
     setMounted(true);
-    setIsDark(document.documentElement.classList.contains("dark"));
+    setIsDark(dark);
+    paintStatusBar(dark);
   }, []);
 
   function toggle() {
     const next = !isDark;
     setIsDark(next);
     document.documentElement.classList.toggle("dark", next);
+    paintStatusBar(next);
     try {
       localStorage.setItem("theme", next ? "dark" : "light");
     } catch {}
@@ -25,7 +42,7 @@ export function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
-      className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border text-muted transition-[color,transform] duration-[160ms] ease-[var(--ease-out)] hover:text-foreground active:scale-95 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+      className="relative inline-flex h-8 w-8 items-center justify-center rounded-full border border-border text-muted transition-[color,transform] duration-[160ms] ease-[var(--ease-out)] hover:text-foreground after:absolute after:-inset-1.5 active:scale-95 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
     >
       {/* Avoid an icon flash before we know the theme */}
       <span className={mounted ? "" : "opacity-0"}>

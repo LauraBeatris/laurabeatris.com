@@ -47,6 +47,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  // Paints under the notch and home indicator. Whatever is pinned to an edge pads
+  // itself back out with env(safe-area-inset-*)
+  viewportFit: "cover",
+  // Android's keyboard shrinks the layout, the way iOS already behaves
+  interactiveWidget: "resizes-content",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#121212" },

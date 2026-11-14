@@ -2,6 +2,10 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   darkMode: "class",
+  // hover: only applies where something can hover, so a tap doesn't leave it stuck on
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",

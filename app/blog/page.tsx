@@ -30,7 +30,7 @@ export default async function BlogPage() {
                   href={`/blog/${slug}`}
                   className="group flex items-baseline justify-between gap-4 py-4"
                 >
-                  <span className="text-pretty text-lg font-medium underline decoration-transparent decoration-2 underline-offset-4 transition-colors group-hover:decoration-accent">
+                  <span className="text-pretty text-lg font-medium underline decoration-transparent decoration-2 underline-offset-4 transition-colors group-hover:decoration-accent group-active:decoration-accent">
                     {post.title}
                   </span>
                   <time

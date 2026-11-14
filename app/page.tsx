@@ -7,7 +7,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function Home() {
   return (
-    <div className="mx-auto flex min-h-dvh max-w-[640px] flex-col overflow-x-clip px-6">
+    <div className="mx-auto flex min-h-svh max-w-[640px] flex-col overflow-x-clip px-6">
       <header className="flex items-center justify-between py-8">
         <span className="font-mono text-sm text-muted">@lauradotjs</span>
         <ThemeToggle />
@@ -39,14 +39,14 @@ export default function Home() {
             through{" "}
             <Link
               href="/blog"
-              className="font-normal text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
+              className="font-normal text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent active:decoration-accent"
             >
               <span className="paper-word">writing</span>
             </Link>
             ,{" "}
             <Link
               href="/talks"
-              className="font-normal text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
+              className="font-normal text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent active:decoration-accent"
             >
               <span className="paper-word">talks and podcasts</span>
             </Link>
