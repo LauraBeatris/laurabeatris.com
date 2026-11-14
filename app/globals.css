@@ -239,8 +239,8 @@
     }
   }
 
-  /* Post titles and section headings: ink lit from above, each line fading as */
-  /* it nears the page, over a tight contact shadow and a wider soft one */
+  /* Page titles and post section headings: ink lit from above, each line */
+  /* fading as it nears the page, over a tight contact shadow and a wider soft one */
   .title-depth {
     --title-ink-top: hsl(0 0% 8%);
     --title-ink-bottom: hsl(0 0% 24%);

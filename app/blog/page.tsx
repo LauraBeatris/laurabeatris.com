@@ -16,8 +16,8 @@ export default async function BlogPage() {
       <BackHeader href="/" label="@lauradotjs" />
 
       <main className="flex flex-1 flex-col gap-16 py-8">
-        <h1 className="text-pretty text-4xl font-semibold tracking-tight sm:text-5xl">
-          Blog
+        <h1 className="title-depth text-pretty text-4xl font-semibold tracking-tight sm:text-5xl">
+          <span>Blog</span>
         </h1>
 
         {posts.length === 0 ? (
