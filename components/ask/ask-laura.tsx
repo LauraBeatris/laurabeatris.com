@@ -100,18 +100,23 @@ function getStatus(messages: AskLauraUIMessage[], isBusy: boolean) {
   return "Thinking";
 }
 
-const ROUTE_REPLY_STATUSES = [400, 403, 413, 429];
+const FALLBACK_ERROR =
+  "I lost my train of thought. If it keeps happening, the real me is on X at @lauradotjs.";
+
+/**
+ * What to say for each way a question can be turned away. The words are chosen
+ * here and not read from the response: a refusal can come from the firewall in
+ * front of the route, and its reply isn't written for visitors.
+ */
+const ERRORS_BY_STATUS: Record<number, string> = {
+  413: "This conversation has grown too long for me. Reload the page to start a fresh one.",
+  429: "That's a lot of questions at once. Give me a minute, then ask again.",
+};
 
 function getErrorMessage(error: Error) {
-  // The route's own replies (too many questions, too long) are written to be read
-  const isFromRoute =
-    "statusCode" in error &&
-    typeof error.statusCode === "number" &&
-    ROUTE_REPLY_STATUSES.includes(error.statusCode);
+  const status = "statusCode" in error ? Number(error.statusCode) : undefined;
 
-  if (isFromRoute && error.message) return error.message;
-
-  return "I lost my train of thought. If it keeps happening, the real me is on X at @lauradotjs.";
+  return (status && ERRORS_BY_STATUS[status]) || FALLBACK_ERROR;
 }
 
 function prefersReducedMotion() {
