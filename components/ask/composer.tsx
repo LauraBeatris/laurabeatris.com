@@ -70,15 +70,20 @@ export function Composer({
   }
 
   return (
-    // A tray with the input raised off it. Whatever helps you ask sits on the
-    // tray around the input: questions to try above, what's happening below.
-    <div className="ask-tray p-1.5">
+    // Whatever helps you ask sits around the input: questions to try above,
+    // what's happening below. All three share the input's left edge.
+    <div>
       {suggestions.length > 0 && (
         <ul
           aria-label="Questions to try"
-          className={`flex gap-1.5 px-1 pb-2 pt-1 ${
-            // Docked, they stay on one line so the transcript keeps its room
-            isDocked ? "ask-chips overflow-x-auto pr-8" : "flex-wrap"
+          className={`flex gap-2 ${
+            // Docked, they stay on one line so the transcript keeps its room.
+            // A scroller clips its children's shadows, so it's padded by their
+            // size and its margins give that much back: the gap to the input
+            // is 10px either way.
+            isDocked
+              ? "ask-chips -mx-px -mt-px mb-[7px] overflow-x-auto px-px pb-[3px] pr-8 pt-px"
+              : "mb-2.5 flex-wrap"
           }`}
         >
           {suggestions.map((suggestion, index) => (
@@ -194,9 +199,10 @@ export function Composer({
         </div>
       </form>
 
-      {/* One line under the input, always there, so the tray never changes
-          height: the caveat while it waits, the current step while it works */}
-      <div className="flex h-9 items-center justify-between gap-3 px-3 text-[13px] text-muted">
+      {/* One line under the input, always there, so nothing changes height:
+          the caveat while it waits, the current step while it works. It starts
+          where the input's text starts and ends where the send button ends. */}
+      <div className="ask-depth mt-2.5 flex h-5 items-center justify-between gap-3 pl-4 pr-2 text-[13px] text-muted">
         <p key={status ?? "caveat"} role="status" className="ask-rise truncate">
           {status ? `${status}…` : CAVEAT}
         </p>
@@ -205,7 +211,7 @@ export function Composer({
         ) : (
           <span
             aria-hidden
-            className="hidden shrink-0 font-mono text-[11px] uppercase tracking-widest [@media(pointer:fine)]:inline"
+            className="hidden shrink-0 font-mono text-[10px] uppercase tracking-[0.04em] [@media(pointer:fine)]:inline"
           >
             Enter to send
           </span>
