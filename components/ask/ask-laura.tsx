@@ -314,7 +314,8 @@ export function AskLaura() {
         ref={dock}
         className={
           hasMessages
-            ? "ask-composer-dock sticky bottom-0 bg-background pb-4"
+            ? // Clear of the home indicator now the page runs under it
+              "ask-composer-dock sticky bottom-0 bg-background pb-[max(1rem,env(safe-area-inset-bottom))]"
             : "pb-12"
         }
       >

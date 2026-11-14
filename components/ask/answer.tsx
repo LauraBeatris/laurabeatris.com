@@ -196,7 +196,7 @@ export function Answer({
                 className="group flex items-center gap-2.5 py-1.5 text-sm"
               >
                 <SourceIcon source={source} className="h-4 w-4 text-muted" />
-                <span className="underline decoration-transparent decoration-2 underline-offset-4 transition-colors group-hover:decoration-accent">
+                <span className="underline decoration-transparent decoration-2 underline-offset-4 transition-colors group-hover:decoration-accent group-active:decoration-accent">
                   {source.name}
                 </span>
                 <span className="ml-auto truncate font-mono text-xs text-muted">

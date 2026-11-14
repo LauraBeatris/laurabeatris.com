@@ -25,7 +25,7 @@ export function SiteFooter({
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-muted transition-colors hover:text-foreground"
+                  className="-my-2.5 inline-block py-2.5 text-sm text-muted transition-colors hover:text-foreground active:text-foreground"
                 >
                   {link.label}
                 </a>
