@@ -109,7 +109,7 @@ export function InkText({
   const paragraphs = visible.split(/\n{2,}/).filter((paragraph) => paragraph.trim());
 
   return paragraphs.map((paragraph, index) => (
-    <p key={index} className="mt-4 text-pretty text-lg leading-relaxed first:mt-0">
+    <p key={index} className="mt-3 text-pretty text-base leading-7 first:mt-0">
       {tokenize(paragraph.trim(), isStreaming).map((token, tokenIndex) => (
         <InkToken key={tokenIndex} token={token} />
       ))}
