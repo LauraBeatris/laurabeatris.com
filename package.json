@@ -12,7 +12,8 @@
     "build": "node scripts/og-video.ts && next build",
     "start": "next start",
     "lint": "next lint",
-    "og:video": "node scripts/og-video.ts"
+    "og:video": "node scripts/og-video.ts",
+    "video:upload": "node scripts/upload-video.ts"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
@@ -29,6 +30,7 @@
     "@types/node": "^20",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
+    "@vercel/blob": "2.9.0",
     "eslint": "^8",
     "eslint-config-next": "16.4.5",
     "postcss": "^8.5.23",
