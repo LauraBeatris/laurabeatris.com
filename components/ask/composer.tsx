@@ -96,7 +96,7 @@ export function Composer({
                 type="button"
                 disabled={isBusy}
                 onClick={() => onAsk(suggestion)}
-                className="ask-pill ask-hit h-9 whitespace-nowrap px-3.5 text-sm text-foreground/80 transition-[color,transform,opacity] duration-150 ease-[var(--ease-out)] hover:text-foreground active:scale-[0.97] disabled:opacity-50 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className="ask-pill ask-chip ask-hit h-9 whitespace-nowrap px-3.5 text-sm text-foreground/80 transition-[color,transform,opacity] duration-150 ease-[var(--ease-out)] hover:text-foreground active:scale-[0.97] disabled:opacity-50 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
               >
                 {suggestion}
               </button>
@@ -107,7 +107,7 @@ export function Composer({
 
       <form
         onSubmit={handleSubmit}
-        className="ask-raised ask-wash rounded-[22px]"
+        className="ask-raised rounded-[22px]"
       >
         <label htmlFor="ask-question" className="sr-only">
           Your question
