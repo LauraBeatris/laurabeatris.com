@@ -244,24 +244,24 @@
   .title-depth {
     --title-ink-top: hsl(0 0% 6%);
     --title-ink-bottom: hsl(0 0% 34%);
-    --title-shadow-contact: rgb(0 0 0 / 0.18);
-    --title-shadow-ambient: rgb(0 0 0 / 0.1);
+    --title-shadow-contact: rgb(0 0 0 / 0.12);
+    --title-shadow-ambient: rgb(0 0 0 / 0.07);
   }
 
   .dark .title-depth {
     --title-ink-top: hsl(0 0% 100%);
     --title-ink-bottom: hsl(0 0% 62%);
-    --title-shadow-contact: rgb(0 0 0 / 0.6);
-    --title-shadow-ambient: rgb(0 0 0 / 0.5);
+    --title-shadow-contact: rgb(0 0 0 / 0.4);
+    --title-shadow-ambient: rgb(0 0 0 / 0.3);
   }
 
-  /* The wide shadow sits further down than it spreads, so it stays under the */
-  /* letters instead of hazing around them. In em (1px, 0.5px, 4px and 6px on */
-  /* the 48px title) so smaller headings get a proportionally smaller shadow */
+  /* Both shadows stay small and close, so they sit under the letters instead */
+  /* of hazing around them. In em (1px, 0.5px, 2px and 2.5px on the 48px */
+  /* title) so smaller headings get a proportionally smaller shadow */
   @supports (background-clip: text) or (-webkit-background-clip: text) {
     .title-depth {
       filter: drop-shadow(0 0.021em 0.01em var(--title-shadow-contact))
-        drop-shadow(0 0.083em 0.125em var(--title-shadow-ambient));
+        drop-shadow(0 0.042em 0.052em var(--title-shadow-ambient));
     }
 
     /* Inline, so the gradient restarts on every line instead of spanning the block */
