@@ -1,9 +1,10 @@
 import { Signature } from "@/components/signature";
 
-const socials = [
+const links = [
   { label: "X", href: "https://x.com/lauradotjs" },
   { label: "GitHub", href: "https://github.com/LauraBeatris" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/laurabeatris" },
+  { label: "Email", href: "mailto:contato@laurabeatris.com" },
 ];
 
 export function SiteFooter({
@@ -18,17 +19,20 @@ export function SiteFooter({
         <p className="font-mono text-sm text-muted">
           © {new Date().getFullYear()} Laura Beatris
         </p>
-        <nav aria-label="Social links">
+        <nav aria-label="Contact and social links">
           <ul className="flex items-center gap-5">
-            {socials.map((s) => (
-              <li key={s.label}>
+            {links.map((link) => (
+              <li key={link.label}>
                 <a
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={link.href}
+                  // A mailto opens the mail app, so it has no tab to open.
+                  {...(link.href.startsWith("http") && {
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                  })}
                   className="text-sm text-muted transition-colors hover:text-foreground"
                 >
-                  {s.label}
+                  {link.label}
                 </a>
               </li>
             ))}
