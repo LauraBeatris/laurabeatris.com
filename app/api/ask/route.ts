@@ -4,8 +4,8 @@ import {
   smoothStream,
 } from "ai";
 import { askLauraAgent, type AskLauraUIMessage } from "@/lib/ask/agent";
-import { recordRequest } from "@/lib/ask/rate-limit";
 import { MAX_QUESTION_LENGTH, toTranscript } from "@/lib/ask/transcript";
+import { createRateLimit, networkOf } from "@/lib/rate-limit";
 
 export const maxDuration = 30;
 
@@ -13,6 +13,17 @@ export const maxDuration = 30;
 // can make the model read is bounded: the body here, then the transcript's
 // length and contents.
 const MAX_BODY_LENGTH = 20_000;
+
+const MINUTE = 60 * 1000;
+const HOUR = 60 * MINUTE;
+
+const recordVisitor = createRateLimit({ windowMs: 10 * MINUTE, maxRequests: 20 });
+// However many visitors or addresses there are, the model only answers this
+// many. Like the limit above these are per instance: a ceiling on what one warm
+// function can spend, not on what the whole deployment can. The firewall rule
+// on this path and the gateway's credit balance are the limits that hold.
+const recordHour = createRateLimit({ windowMs: HOUR, maxRequests: 300 });
+const recordDay = createRateLimit({ windowMs: 24 * HOUR, maxRequests: 1500 });
 
 export async function POST(request: Request) {
   // Only this site's own pages may ask. Without this, any other website could
@@ -24,7 +35,10 @@ export async function POST(request: Request) {
 
   const address =
     request.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
-  const retryAfter = recordRequest(address);
+  const retryAfter =
+    recordVisitor(networkOf(address.slice(0, 45))) ||
+    recordHour("everyone") ||
+    recordDay("everyone");
 
   if (retryAfter > 0) {
     return new Response("Too many questions. Give me a few minutes.", {

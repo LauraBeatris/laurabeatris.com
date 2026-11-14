@@ -255,8 +255,8 @@ export function AskLaura() {
   return (
     <main ref={page} className="ask flex flex-1 flex-col pt-8">
       <div>
-        <h1 className="text-pretty text-4xl font-semibold tracking-tight sm:text-5xl">
-          Ask me anything
+        <h1 className="title-depth text-pretty text-4xl font-semibold tracking-tight sm:text-5xl">
+          <span>Ask me anything</span>
         </h1>
         <p className="mt-4 text-pretty text-lg text-muted">
           An agent that has read my notes answers for me. It knows my work,
