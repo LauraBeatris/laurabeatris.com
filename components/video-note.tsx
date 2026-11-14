@@ -34,7 +34,8 @@ export function VideoNote(props: VideoNoteProps) {
 }
 
 const RATES = [1, 1.5, 2];
-const CAPTION_FILTER = { kind: "captions" } as const;
+// A metadata track, so the player keeps the cues to itself (see the effect in Note)
+const CAPTIONS = { kind: "metadata", label: "captions", language: "en" } as const;
 
 /** One turn, starting at twelve o'clock, with a slight hand-drawn wobble. */
 const RING = through(
@@ -62,10 +63,9 @@ function Note({ src, poster, captions, title, length }: VideoNoteProps) {
   const currentTime = usePlayer((s) => s.currentTime);
   const duration = usePlayer((s) => s.duration);
   const rate = usePlayer((s) => s.playbackRate);
-  const [cue] = useActiveTextCues(CAPTION_FILTER);
+  const [cue] = useActiveTextCues(CAPTIONS);
 
   const slot = useRef<HTMLDivElement>(null);
-  const video = useRef<HTMLVideoElement>(null);
   const [scrubbing, setScrubbing] = useState(false);
   const [active, setActive] = useState(false);
   const [inView, setInView] = useState(true);
@@ -89,23 +89,18 @@ function Note({ src, poster, captions, title, length }: VideoNoteProps) {
     if (ended) setActive(false);
   }, [ended]);
 
-  // Load the captions without letting the browser draw them over the circle:
-  // a "hidden" track still fires its cues, which we set as text instead.
+  // The captions never become a <track> in the <video>: on an iPhone, Safari
+  // won't load a video from another origin with any <track> in it
+  // (MEDIA_ERR_SRC_NOT_SUPPORTED). The player fetches the file and keeps the cues
+  // in its store, since it only copies captions and subtitles tracks into the
+  // <video>, not metadata ones. We set the active cue as text beside the circle.
   useEffect(() => {
-    const tracks = video.current?.textTracks;
-    if (!tracks) return;
+    if (!captions) return;
 
-    const hide = () => {
-      for (const track of tracks) {
-        if (track.kind === "captions" && track.mode === "disabled") track.mode = "hidden";
-      }
-    };
+    const track = store.addTextTrack({ ...CAPTIONS, src: captions });
 
-    hide();
-    tracks.addEventListener("addtrack", hide);
-
-    return () => tracks.removeEventListener("addtrack", hide);
-  }, []);
+    return () => track.remove();
+  }, [store, captions]);
 
   function play() {
     setActive(true);
@@ -151,17 +146,13 @@ function Note({ src, poster, captions, title, length }: VideoNoteProps) {
         >
           <div className="absolute inset-[7%] overflow-hidden rounded-full bg-border">
             <Video
-              ref={video}
               src={src}
               poster={poster}
               preload="metadata"
               playsInline
-              crossOrigin="anonymous"
               fallback={null}
               className="size-full object-cover"
-            >
-              {captions && <track kind="captions" src={captions} srcLang="en" label="English" />}
-            </Video>
+            />
           </div>
 
           <button
