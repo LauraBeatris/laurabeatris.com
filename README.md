@@ -17,3 +17,13 @@ pnpm dev
 ```
 
 Talks and podcasts live in `content/talks.ts`.
+
+## Ask Laura
+
+`/ask` is an agent that answers questions about me. What it knows lives in `content/laura.ts`, and the agent and its tools are in `lib/ask/agent.ts`.
+
+It calls the model through the [Vercel AI Gateway](https://vercel.com/docs/ai-gateway). On Vercel the deployment authenticates by itself. Locally, put a key in `.env.local`:
+
+```bash
+AI_GATEWAY_API_KEY=...
+```

@@ -560,3 +560,246 @@
     }
   }
 }
+
+@layer utilities {
+  /* Ask Laura: things arrive on the page one after another */
+  @keyframes ask-rise {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+
+  /* The stagger stops growing after a few items, so a long list isn't a wait */
+  .ask-rise {
+    animation: ask-rise 0.3s var(--ease-out) both;
+    animation-delay: calc(min(var(--item, 0), 6) * 30ms);
+  }
+
+  /* Ask Laura: the suggested questions fade where they stand, as the first
+     real one arrives in their place */
+  @keyframes ask-leave {
+    to {
+      opacity: 0;
+    }
+  }
+
+  .ask-suggestions[data-leaving] {
+    position: absolute;
+    inset: 2.5rem 0 auto;
+    pointer-events: none;
+    animation: ask-leave 0.15s var(--ease-out) forwards;
+  }
+
+  /* Ask Laura: the newest question can always scroll to the top of the page.
+     9rem is the docked composer plus the transcript's bottom padding. */
+  .ask-latest-exchange {
+    min-height: calc(100dvh - 9rem);
+  }
+
+  /* Ask Laura: each word of an answer soaks into the page as it arrives */
+  @keyframes ink-in {
+    from {
+      opacity: 0;
+      filter: blur(3px);
+    }
+  }
+
+  .ink-word {
+    animation: ink-in 0.3s var(--ease-out) both;
+  }
+
+  /* Ask Laura: the three dots after "Thinking" take turns */
+  @keyframes ask-dot {
+    0%,
+    60%,
+    100% {
+      opacity: 0.25;
+    }
+    30% {
+      opacity: 1;
+    }
+  }
+
+  .ask-dots span {
+    opacity: 0.25;
+    animation: ask-dot 1.2s infinite;
+  }
+
+  .ask-dots span:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+
+  .ask-dots span:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+
+  /* Ask Laura: the face from the autograph, listening in the composer */
+  .agent-face-stroke {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 3.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .agent-face-gaze,
+  .agent-face-brow {
+    transition: transform 0.3s var(--ease-out);
+  }
+
+  /* Every mood is a pose the face eases into, so a change of mind mid-way
+     picks up from wherever the face already is */
+  .agent-face {
+    overflow: visible;
+    transform-origin: 50% 60%;
+    transition: transform 0.3s var(--ease-out);
+  }
+
+  /* Listening: a glance over at what you're typing */
+  .agent-face[data-mood="listening"] .agent-face-gaze {
+    transform: translate(6px, -1px);
+  }
+
+  /* Thinking: head tilted, brows up, eyes to the ceiling */
+  .agent-face[data-mood="thinking"] {
+    transform: rotate(-9deg);
+  }
+
+  .agent-face[data-mood="thinking"] .agent-face-brow {
+    transform: translate(2px, -5px);
+  }
+
+  .agent-face[data-mood="thinking"] .agent-face-gaze {
+    transform: translate(3px, -5px);
+  }
+
+  /* Writing: leaning in, eyes down on the page */
+  .agent-face[data-mood="writing"] {
+    transform: rotate(5deg) translateY(1px);
+  }
+
+  .agent-face[data-mood="writing"] .agent-face-gaze {
+    transform: translate(-4px, 4px);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .agent-face .agent-face-eye {
+      animation: handwriting-blink 4.8s var(--ease-out) 1.5s infinite;
+    }
+  }
+
+  /* Ask Laura: a card's outline is drawn on, then its rows arrive */
+  .ask-card {
+    border-radius: 12px;
+  }
+
+  .ask-card-outline {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .ask-card-outline rect {
+    x: 0.5px;
+    y: 0.5px;
+    width: calc(100% - 1px);
+    height: calc(100% - 1px);
+    rx: 12px;
+    fill: none;
+    stroke: hsl(var(--border));
+    stroke-width: 1px;
+  }
+
+  /* A longer line than the post sketches, so the pen gets a little longer */
+  @media (prefers-reduced-motion: no-preference) {
+    .ask-card-outline rect {
+      animation-duration: 0.6s;
+    }
+  }
+
+  .ask-card .ask-rise {
+    animation-delay: calc(100ms + min(var(--item, 0), 6) * 30ms);
+  }
+
+  .ask-timeline li:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 1.2em;
+    bottom: -0.3em;
+    width: 1px;
+    background: hsl(var(--border));
+  }
+
+  .ask-timeline-dot {
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 7px;
+    height: 7px;
+    border-radius: 9999px;
+    background: hsl(var(--foreground));
+  }
+
+  .ask-timeline li:not(:first-child) .ask-timeline-dot {
+    background: hsl(var(--background));
+    box-shadow: inset 0 0 0 1.5px hsl(var(--muted));
+  }
+
+  /* Ask Laura: the transcript fades out under the docked composer */
+  .ask-composer-dock::before {
+    content: "";
+    position: absolute;
+    inset: -2rem 0 100% 0;
+    background: linear-gradient(to top, hsl(var(--background)), transparent);
+    pointer-events: none;
+  }
+
+  /* Ask Laura: sending flies the plane off; a stop square takes its place */
+  .ask-send-plane,
+  .ask-send-stop {
+    transition:
+      transform 0.25s var(--ease-out),
+      opacity 0.2s var(--ease-out),
+      filter 0.2s var(--ease-out);
+  }
+
+  .ask-send[data-state="idle"] .ask-send-stop {
+    opacity: 0;
+    transform: scale(0.9);
+    filter: blur(2px);
+  }
+
+  .ask-send[data-state="busy"] .ask-send-plane {
+    opacity: 0;
+    transform: translate(14px, -14px) scale(0.8);
+    filter: blur(1px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ask-rise,
+    .ink-word {
+      animation: pen-appear 0.2s ease both;
+    }
+
+    .ask-dots span {
+      animation: none;
+      opacity: 0.6;
+    }
+
+    .ask-send[data-state="idle"] .ask-send-stop,
+    .ask-send[data-state="busy"] .ask-send-plane {
+      transform: none;
+    }
+
+    .agent-face,
+    .agent-face-gaze,
+    .agent-face-brow {
+      transition: none;
+    }
+  }
+}
