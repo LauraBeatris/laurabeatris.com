@@ -70,7 +70,7 @@ export function Pick({ question, options, answer }: PickProps) {
         <span aria-live="polite">
           {!revealed && "Which one would you rather get?"}
           {revealed && picked === answer && "That's the one."}
-          {revealed && picked !== answer && `Not quite. ${LETTERS[answer]} is the stronger one.`}
+          {revealed && picked !== answer && `Not quite. ${LETTERS[answer]} is the better one.`}
         </span>
         {revealed && <TextButton onClick={() => setPicked(null)}>try again</TextButton>}
       </DrawingFooter>

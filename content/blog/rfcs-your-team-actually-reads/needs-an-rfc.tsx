@@ -13,17 +13,17 @@ const CHANGES = [
   {
     change: "Change the shape of a public API response",
     rfc: true,
-    note: "Customers build on it, and you can't take it back once it ships.",
+    note: "Customers build on top of it, and you can't undo it once it ships.",
   },
   {
-    change: "Bump a dependency's minor version",
+    change: "Update a dependency to a new minor version",
     rfc: false,
-    note: "Your CI is the reviewer here.",
+    note: "Your tests and CI check this for you.",
   },
   {
     change: "Move webhook delivery to a different queue provider",
     rfc: true,
-    note: "Expensive to reverse, and it changes things for everyone on call.",
+    note: "Hard to undo, and it affects everyone who is on call.",
   },
   {
     change: "Add a filter to an internal admin page",
@@ -33,7 +33,7 @@ const CHANGES = [
   {
     change: "Change when customers receive retried webhooks",
     rfc: true,
-    note: "It changes what customers see. That's worth a decision on record.",
+    note: "It changes what customers see. That decision should be written down.",
   },
 ] as const;
 

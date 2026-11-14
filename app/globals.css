@@ -152,6 +152,25 @@
     animation: video-note-bubble 0.25s var(--ease-out);
   }
 
+  /* Wide screens dock it beside the text column, with the bubble on its right */
+  @keyframes video-note-bubble-right {
+    from {
+      opacity: 0;
+      transform: translate(-6px, 50%) scale(0.96);
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .video-note-dock {
+      transform-origin: bottom left;
+    }
+
+    .video-note-bubble {
+      transform-origin: left center;
+      animation-name: video-note-bubble-right;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .video-note-dock,
     .video-note-bubble {

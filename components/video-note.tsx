@@ -140,10 +140,12 @@ function Note({ src, poster, captions, title, length }: VideoNoteProps) {
 
       {/* Keeps the note's place in the text while the video itself is docked. */}
       <div ref={slot} className="relative size-[120px] shrink-0 sm:size-[136px]">
+        {/* Docked: in the corner on small screens; on wide ones, beside the
+            text column (it ends 296px right of center), where the eye is. */}
         <div
           className={
             docked
-              ? "video-note-dock fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-4 z-40 size-[84px] sm:right-6 sm:size-[96px]"
+              ? "video-note-dock fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] right-4 z-40 size-[84px] sm:right-6 sm:size-[96px] xl:bottom-8 xl:left-[calc(50%+328px)] xl:right-auto"
               : "absolute inset-0"
           }
         >
@@ -213,7 +215,7 @@ function Note({ src, poster, captions, title, length }: VideoNoteProps) {
                 <p
                   key={caption}
                   aria-hidden
-                  className="video-note-bubble absolute bottom-1/2 right-full mr-3 w-max max-w-[min(260px,calc(100vw-140px))] translate-y-1/2 rounded-2xl border border-border bg-background px-3 py-2 text-pretty text-sm leading-snug shadow-sm"
+                  className="video-note-bubble absolute bottom-1/2 right-full mr-3 w-max max-w-[min(260px,calc(100vw-140px))] translate-y-1/2 rounded-2xl xl:left-full xl:right-auto xl:ml-3 xl:mr-0 xl:max-w-[min(260px,calc(50vw-460px))] border border-border bg-background px-3 py-2 text-pretty text-sm leading-snug shadow-sm"
                 >
                   {caption}
                 </p>

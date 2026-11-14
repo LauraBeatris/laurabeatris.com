@@ -9,14 +9,14 @@ const DOCS = [
   {
     label: "Warm-up first",
     blocks: [
-      "Webhooks are a critical part of our platform, and their reliability matters a lot to our customers.",
+      "Webhooks are an important part of our platform, and our customers need them to be reliable.",
       "In 2023 we moved webhooks out of the monolith into a separate worker, originally built for batch email, with a Redis-backed queue and a retry cron…",
       "We propose retrying failed webhooks for 24 hours with backoff. We need a decision on the window by Friday.",
     ],
     takeaways: [
       "that webhooks matter.",
       "some history about a worker.",
-      "what you're proposing, finally.",
+      "what you're proposing, at last.",
     ],
   },
   {
@@ -28,8 +28,8 @@ const DOCS = [
     ],
     takeaways: [
       "what you want, and by when.",
-      "why, and why it's cheap.",
-      "enough to challenge the details.",
+      "why, and why it's easy to do.",
+      "enough to question the details.",
     ],
   },
 ] as const;
