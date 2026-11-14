@@ -47,8 +47,8 @@ function polygon(corners: Point[]): Point[] {
 }
 
 // Drawn around the button's centre, in CSS pixels.
-const PILL_X = 41.25;
-const PILL_Y = 17.25;
+const PILL_X = 31.25;
+const PILL_Y = 15.25;
 const PILL_FLAT = PILL_X - PILL_Y;
 const ARC = PILL_Y * 0.5523;
 
@@ -202,14 +202,14 @@ export function SendButton({
       type="submit"
       data-stage={stage}
       aria-disabled={isBusy}
-      className="send-button relative ml-auto h-9 w-[84px] shrink-0 rounded-full text-foreground outline-none transition-transform duration-[160ms] ease-[var(--ease-out)] after:absolute after:-inset-1.5 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.97] aria-disabled:pointer-events-none motion-reduce:active:scale-100"
+      className="send-button relative ml-auto h-8 w-16 shrink-0 rounded-full text-foreground outline-none transition-transform duration-[160ms] ease-[var(--ease-out)] after:absolute after:-inset-1.5 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.97] aria-disabled:pointer-events-none motion-reduce:active:scale-100"
     >
       <svg
         aria-hidden="true"
-        viewBox="-42 -18 84 36"
+        viewBox="-32 -16 64 32"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1.5"
+        strokeWidth="1.25"
         strokeLinecap="round"
         strokeLinejoin="round"
         className="pointer-events-none absolute inset-0 size-full overflow-visible"
@@ -241,7 +241,7 @@ export function SendButton({
         </g>
       </svg>
 
-      <span className="send-label absolute inset-0 flex items-center justify-center text-[11px] font-medium uppercase tracking-[0.14em]">
+      <span className="send-label absolute inset-0 flex items-center justify-center text-sm font-medium">
         Send
       </span>
       <span

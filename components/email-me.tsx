@@ -152,7 +152,8 @@ export function EmailMe() {
         className="mail-trigger inline-flex items-center gap-1.5 rounded-sm text-sm text-muted outline-none transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-background aria-expanded:text-foreground"
       >
         <MailIcon />
-        Email me
+        {/* The words, not the icon, set the baseline the other links line up on */}
+        <span className="self-baseline">Email me</span>
       </button>
 
       {anchor &&
