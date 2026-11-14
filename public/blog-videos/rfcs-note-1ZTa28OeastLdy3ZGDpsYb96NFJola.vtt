@@ -1,0 +1,40 @@
+WEBVTT
+
+00:00.000 --> 00:03.640
+Hey, it's Laura, welcome to my blog post.
+
+00:03.640 --> 00:07.340
+I wrote this because most of the RFCs that I've been seeing,
+
+00:07.340 --> 00:11.280
+they actually hide the decision, and then nobody reads them.
+
+00:11.280 --> 00:15.690
+You've probably opened one, if not a ton of them,
+
+00:15.690 --> 00:21.000
+and it's like almost three pages, and you still don't know what you're being asked for,
+
+00:21.000 --> 00:25.320
+or what exact goal they're trying to get out of the RFC.
+
+00:25.320 --> 00:31.420
+I remember that a manager at a previous company once pointed me to a habit from the military.
+
+00:31.420 --> 00:35.130
+It's called BLUF, I think that's the way it's pronounced,
+
+00:35.130 --> 00:37.960
+and it means bottom line up front.
+
+00:37.960 --> 00:40.960
+Anyway, this post is everything that I've learned,
+
+00:40.960 --> 00:44.000
+and that I'm still learning, while writing RFCs.
+
+00:44.000 --> 00:48.320
+Hopefully it helps you on a daily basis, and it helps your team as well.
+
+00:48.320 --> 00:51.040
+Keep scrolling, and I'll be here in the corner.

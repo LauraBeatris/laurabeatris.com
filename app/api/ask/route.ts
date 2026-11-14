@@ -1,3 +1,4 @@
+import { checkBotId } from "botid/server";
 import {
   createAgentUIStreamResponse,
   safeValidateUIMessages,
@@ -35,6 +36,12 @@ export async function POST(request: Request) {
     request.headers.get("origin") !== new URL(request.url).origin
   ) {
     return new Response("Ask from laurabeatris.com.", { status: 403 });
+  }
+
+  // The origin header stops other websites, but a script can write any header
+  // it likes. This asks whether a real browser on this site sent the request.
+  if ((await checkBotId()).isBot) {
+    return new Response("Ask from a browser.", { status: 403 });
   }
 
   const tooMany = (retryAfter: number) =>
