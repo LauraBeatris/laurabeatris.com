@@ -569,6 +569,7 @@
     --ask-well: 0 0% 92%;
     --ask-line: 0 0% 82%;
     --ask-shadow-tray: inset 0 0 0 1px rgb(0 0 0 / 0.04);
+    --ask-shadow-text: 0 1px 1px rgb(0 0 0 / 0.14);
     --ask-shadow-pill: 0 0 0 1px rgb(0 0 0 / 0.05), 0 1px 2px rgb(0 0 0 / 0.08);
     --ask-shadow-raised:
       0 0 0 1px rgb(0 0 0 / 0.05), 0 1px 2px rgb(0 0 0 / 0.08),
@@ -581,6 +582,7 @@
     --ask-well: 0 0% 7.5%;
     --ask-line: 0 0% 26%;
     --ask-shadow-tray: inset 0 0 0 0.5px hsl(0 0% 18%);
+    --ask-shadow-text: 0 1px 1px rgb(0 0 0 / 0.7);
     --ask-shadow-pill: 0 0 0 0.5px hsl(0 0% 29%), 0 1px 2px rgb(0 0 0 / 0.5);
     --ask-shadow-raised:
       0 0 0 0.5px hsl(0 0% 27%), 0 1px 2px rgb(0 0 0 / 0.5),
@@ -606,6 +608,12 @@
 
   .ask-well {
     background: hsl(var(--ask-well));
+  }
+
+  /* Small grey text sitting straight on the page gets a hint of a drop, so it
+     reads as resting on the surface and not printed into it */
+  .ask-depth {
+    text-shadow: var(--ask-shadow-text);
   }
 
   /* Ask Laura: things arrive on the page one after another.
