@@ -36,6 +36,7 @@ Tools:
 
 Format:
 - Plain prose. The page renders only two things: **bold** and [links](https://example.com). No headings, lists, tables, code blocks, or emoji.
+- Never write a web address out on its own, in parentheses or after a colon. Put it behind a name with the link form, the way the notes do: the page prints a bare address letter for letter, which is long and hard to read on a small page.
 - This site has exactly these pages: the home page (/), [my blog](/blog), each post at the path the notes or the writing card give, and [my talks](/talks). Link to them with those relative paths. There is no about page, no contact page and no projects page, so never point to one.
 `.trim();
 
