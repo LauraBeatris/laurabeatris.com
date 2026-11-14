@@ -239,6 +239,45 @@
     }
   }
 
+  /* Post titles: ink lit from above, each line fading as it nears the page, */
+  /* over a tight contact shadow and a wider soft one */
+  .title-depth {
+    --title-ink-top: hsl(0 0% 6%);
+    --title-ink-bottom: hsl(0 0% 34%);
+    --title-shadow-contact: rgb(0 0 0 / 0.18);
+    --title-shadow-ambient: rgb(0 0 0 / 0.1);
+  }
+
+  .dark .title-depth {
+    --title-ink-top: hsl(0 0% 100%);
+    --title-ink-bottom: hsl(0 0% 62%);
+    --title-shadow-contact: rgb(0 0 0 / 0.6);
+    --title-shadow-ambient: rgb(0 0 0 / 0.5);
+  }
+
+  /* The wide shadow sits further down than it spreads, so it stays under the */
+  /* letters instead of hazing around them */
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    .title-depth {
+      filter: drop-shadow(0 1px 0.5px var(--title-shadow-contact))
+        drop-shadow(0 4px 6px var(--title-shadow-ambient));
+    }
+
+    /* Inline, so the gradient restarts on every line instead of spanning the block */
+    .title-depth > span {
+      background-image: linear-gradient(
+        to bottom,
+        var(--title-ink-top) 25%,
+        var(--title-ink-bottom)
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+      color: transparent;
+    }
+  }
+
   /* Paper folded in real 3D: creased wings over a keel, banked and nose-up at rest */
   /* Drawn at its largest and scaled down, so it stays crisp as it grows */
   .plane-body {
