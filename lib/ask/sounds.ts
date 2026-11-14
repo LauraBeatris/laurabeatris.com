@@ -19,7 +19,7 @@ type Note = {
 const SOUNDS: Record<Sound, Note[]> = {
   // A fingertip on a key
   tap: [{ from: 880, duration: 0.03, level: 0.5 }],
-  // Lifts off, like the plane on the button
+  // Lifts off, like something sent on its way
   send: [{ from: 420, to: 840, duration: 0.11, type: "triangle" }],
   // The first word landing
   arrive: [{ from: 300, to: 240, duration: 0.07, level: 0.8 }],

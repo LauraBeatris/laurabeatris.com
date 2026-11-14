@@ -570,6 +570,23 @@
     --ask-line: 0 0% 82%;
     --ask-shadow-tray: inset 0 0 0 1px rgb(0 0 0 / 0.04);
     --ask-shadow-text: 0 1px 1px rgb(0 0 0 / 0.14);
+    /* The one place with colour: a pastel wash across the input, and a pane of
+       green glass for the button that sends */
+    --ask-wash: linear-gradient(
+      100deg,
+      hsl(285 100% 98.5%),
+      hsl(18 100% 98.2%) 50%,
+      hsl(48 100% 97.4%)
+    );
+    --ask-wash-glow: 0 14px 24px -16px hsl(335 90% 78% / 0.5);
+    --ask-glass-ink: hsl(126 62% 13%);
+    --ask-glass-fill: linear-gradient(hsl(108 20% 78%), hsl(112 22% 80%));
+    --ask-glass-edge: hsl(126 26% 26% / 0.8);
+    --ask-glass-rim: hsl(112 34% 87% / 0.75);
+    --ask-glass-shine: rgb(255 255 255 / 0.6);
+    --ask-glass-glow: hsl(118 70% 92%);
+    --ask-glass-emboss: 0 1px 0 rgb(255 255 255 / 0.5);
+    --ask-glass-drop: 0 8px 14px -8px hsl(126 24% 28% / 0.45);
     --ask-shadow-pill: 0 0 0 1px rgb(0 0 0 / 0.05), 0 1px 2px rgb(0 0 0 / 0.08);
     --ask-shadow-raised:
       0 0 0 1px rgb(0 0 0 / 0.05), 0 1px 2px rgb(0 0 0 / 0.08),
@@ -583,6 +600,21 @@
     --ask-line: 0 0% 26%;
     --ask-shadow-tray: inset 0 0 0 0.5px hsl(0 0% 18%);
     --ask-shadow-text: 0 1px 1px rgb(0 0 0 / 0.7);
+    --ask-wash: linear-gradient(
+      100deg,
+      hsl(285 14% 17%),
+      hsl(18 10% 15.5%) 50%,
+      hsl(48 10% 15%)
+    );
+    --ask-wash-glow: 0 14px 24px -16px hsl(335 60% 40% / 0.35);
+    --ask-glass-ink: hsl(120 55% 90%);
+    --ask-glass-fill: linear-gradient(hsl(124 20% 27%), hsl(124 22% 24%));
+    --ask-glass-edge: hsl(124 30% 52% / 0.6);
+    --ask-glass-rim: hsl(124 24% 34% / 0.7);
+    --ask-glass-shine: rgb(255 255 255 / 0.14);
+    --ask-glass-glow: hsl(122 55% 46% / 0.4);
+    --ask-glass-emboss: 0 1px 0 rgb(0 0 0 / 0.45);
+    --ask-glass-drop: 0 8px 14px -8px rgb(0 0 0 / 0.7);
     --ask-shadow-pill: 0 0 0 0.5px hsl(0 0% 29%), 0 1px 2px rgb(0 0 0 / 0.5);
     --ask-shadow-raised:
       0 0 0 0.5px hsl(0 0% 27%), 0 1px 2px rgb(0 0 0 / 0.5),
@@ -608,6 +640,37 @@
 
   .ask-well {
     background: hsl(var(--ask-well));
+  }
+
+  /* A pastel wash over a raised surface, with a little of its colour spilling
+     out underneath */
+  .ask-wash {
+    background-image: var(--ask-wash);
+    box-shadow: var(--ask-shadow-raised), var(--ask-wash-glow);
+  }
+
+  /* A pane of tinted glass. From the outside in: a thin dark edge, a lighter
+     rim, a line of shine along the top and a glow pooling along the bottom. */
+  .ask-glass {
+    color: var(--ask-glass-ink);
+    background-image: var(--ask-glass-fill);
+    box-shadow:
+      inset 0 0 0 1px var(--ask-glass-edge),
+      inset 0 2px 1px 0 var(--ask-glass-shine),
+      inset 0 -4px 5px -1px var(--ask-glass-glow),
+      inset 0 0 0 3px var(--ask-glass-rim),
+      var(--ask-glass-drop);
+    text-shadow: var(--ask-glass-emboss);
+    transition:
+      transform 0.15s var(--ease-out),
+      opacity 0.15s var(--ease-out),
+      filter 0.15s var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .ask-glass:not(:disabled):hover {
+      filter: brightness(1.04);
+    }
   }
 
   /* Small grey text sitting straight on the page gets a hint of a drop, so it
@@ -835,8 +898,8 @@
     pointer-events: none;
   }
 
-  /* Ask Laura: one icon gives way to another in the same button, and the
-     blur carries the swap. Sending flies the plane off first. */
+  /* Ask Laura: one icon or label gives way to another in the same button, and
+     the blur carries the swap */
   .ask-swap > * {
     transition:
       transform 0.25s var(--ease-out),
@@ -848,11 +911,6 @@
     opacity: 0;
     transform: scale(0.9);
     filter: blur(2px);
-  }
-
-  .ask-swap > .ask-send-plane[data-shown="false"] {
-    transform: translate(14px, -14px) scale(0.8);
-    filter: blur(1px);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -874,7 +932,6 @@
     }
 
     .ask-swap > [data-shown="false"],
-    .ask-swap > .ask-send-plane[data-shown="false"],
     [data-read="true"] > .ask-unread {
       transform: none;
     }

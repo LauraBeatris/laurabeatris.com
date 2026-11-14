@@ -105,7 +105,10 @@ export function Composer({
         </ul>
       )}
 
-      <form onSubmit={handleSubmit} className="ask-raised rounded-[22px]">
+      <form
+        onSubmit={handleSubmit}
+        className="ask-raised ask-wash rounded-[22px]"
+      >
         <label htmlFor="ask-question" className="sr-only">
           Your question
         </label>
@@ -174,27 +177,23 @@ export function Composer({
             type="submit"
             disabled={!isBusy && !canAsk}
             aria-label={isBusy ? "Stop answering" : "Send question"}
-            className="ask-swap ask-hit relative h-10 w-10 shrink-0 rounded-[14px] bg-foreground text-background transition-[transform,opacity] duration-150 ease-[var(--ease-out)] active:scale-[0.97] disabled:opacity-30 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="ask-glass ask-swap ask-hit relative h-10 w-[5.25rem] shrink-0 rounded-full text-[15px] font-semibold active:scale-[0.97] disabled:opacity-50 disabled:saturate-50 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            <svg
+            {/* Both labels stay in the button, so it keeps its width as they swap */}
+            <span
               aria-hidden
               data-shown={!isBusy}
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="ask-send-plane absolute inset-0 m-auto h-[18px] w-[18px]"
+              className="absolute inset-0 flex items-center justify-center"
             >
-              <path d="M21.2 3.1 10.4 13.6" />
-              <path d="M21.2 3.1 14.6 20.6l-4.2-7-7-4.2Z" />
-            </svg>
+              Send
+            </span>
             <span
               aria-hidden
               data-shown={isBusy}
-              className="absolute inset-0 m-auto h-3 w-3 rounded-[3px] bg-current"
-            />
+              className="absolute inset-0 flex items-center justify-center"
+            >
+              Stop
+            </span>
           </button>
         </div>
       </form>
