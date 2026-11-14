@@ -3,10 +3,11 @@ import type { AskLauraUIMessage } from "@/lib/ask/agent";
 /** Shared by the composer and the route, so the page never sends what the API rejects. */
 export const MAX_QUESTION_LENGTH = 400;
 
-// Four exchanges of context is plenty for short answers about one person, and
-// every message kept is paid for again on each later question
-const MAX_MESSAGES = 8;
-const MAX_ANSWER_LENGTH = 1500;
+// Three exchanges of context is plenty for short answers about one person, and
+// every message kept is paid for again on each later question. An honest
+// answer is a few sentences; anything longer in the history was put there.
+const MAX_MESSAGES = 6;
+const MAX_ANSWER_LENGTH = 600;
 
 /**
  * The recent back-and-forth, as words only. The page uses it to keep requests
