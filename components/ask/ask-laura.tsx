@@ -27,6 +27,7 @@ const transport = new DefaultChatTransport<AskLauraUIMessage>({
 /** One for each kind of thing the agent can show, so the range is clear at a glance. */
 const STARTERS = [
   "What are you building at Resend?",
+  "Where have you worked?",
   "Show me your talks",
   "What have you written?",
   "What have you been hacking on lately?",

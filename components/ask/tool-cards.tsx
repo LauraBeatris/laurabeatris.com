@@ -30,6 +30,7 @@ export const NOTES_SOURCE: Source = {
   icon: "M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6",
   followUps: [
     "Where are you from?",
+    "How did you get into software?",
     "What stack do you reach for?",
     "How do you think about taste?",
     "Show me your talks",
@@ -69,9 +70,9 @@ export const TOOL_SOURCES: Record<ToolPart["type"], Source> = {
     href: `${REPOSITORY}/content/laura.ts`,
     icon: "M4 8h16v11H4zM9 8V5h6v3M4 13h16",
     followUps: [
-      "What are you building at Resend?",
-      "What did your team launch recently?",
-      "What have you been hacking on lately?",
+      "Why did you join Resend?",
+      "How did you get into software?",
+      "What advice do you give engineers?",
     ],
   },
   "tool-showContact": {
