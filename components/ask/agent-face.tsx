@@ -24,9 +24,10 @@ export function AgentFace({
         const isSmile = index === FACE_STROKES.length - 1;
         const path = (
           <path
+            key={stroke.d}
             d={stroke.d}
             pathLength={1}
-            className="agent-face-stroke pen-draw"
+            className="handwriting-stroke pen-draw"
             style={{ animationDelay: `${150 + index * 70}ms` }}
           />
         );
@@ -40,11 +41,11 @@ export function AgentFace({
           );
         }
 
-        return (
-          <g
-            key={stroke.d}
-            className={isSmile ? "agent-face-smile" : "agent-face-brow"}
-          >
+        // Only the brows move; the smile stays put
+        return isSmile ? (
+          path
+        ) : (
+          <g key={stroke.d} className="agent-face-brow">
             {path}
           </g>
         );

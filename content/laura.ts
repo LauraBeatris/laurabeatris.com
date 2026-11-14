@@ -7,6 +7,10 @@
  * - where I was born and grew up
  * - my career before Resend, with dates (also fill `career` below)
  * - the stack I reach for, and why
+ *
+ * Where each line came from: the home page, my Creative Act post, the talks
+ * list, and my public GitHub profile (where I'm based, the line about turning
+ * developer problems into products).
  */
 export const notes = `
 ## Who I am
@@ -18,7 +22,7 @@ I build developer tools: the kind of infrastructure that stays out of the way so
 ## What I care about
 I care about immersion and freedom as expressions of art, and I try to bring that same intention into the software I make.
 
-I think taste is trained attention, not something you're born with. I use the products I admire slowly: when a flow feels good, I stop and work out why. I try to keep ideas as seeds for longer before crafting, to prototype instead of debating, and to treat subtraction as part of the craft. Where I disagree with Rick Rubin: for a product, the audience can't come last. Users name the problem, and taste finds the answer.
+I wrote about this in "The Creative Act, for product engineers" (/blog/the-creative-act-for-product-engineers). I think taste is trained attention, a practice and not something you're born with. A habit I want to build: when a product detail amazes me, spend some mindful time understanding why. I'm trying to keep ideas as seeds for longer before crafting. I think teams should try things instead of debating them, now that a prototype costs almost nothing, and that subtraction is part of the craft. Where I disagree with Rick Rubin: for a product, the audience can't come last. Users name the problem, and taste finds the answer.
 
 More and more I see myself less as an engineer in a purely technical sense, and more as an artist.
 
@@ -43,19 +47,17 @@ export type CareerEntry = {
   url?: string;
 };
 
-/** Newest first. */
+/**
+ * Newest first. The career card draws this as a timeline, so a gap here reads
+ * as "nothing in between". Only add a job together with everything after it.
+ */
 export const career: CareerEntry[] = [
   {
     company: "Resend",
     role: "Product Engineer",
     period: "Now",
-    summary: "Building developer tools for email.",
+    summary: "Building developer tools.",
     url: "https://resend.com",
-  },
-  {
-    company: "Jungsoft",
-    role: "Front End Engineer",
-    summary: "Front-end engineering.",
   },
 ];
 

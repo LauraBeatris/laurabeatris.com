@@ -4,20 +4,19 @@ import {
   smoothStream,
 } from "ai";
 import { askLauraAgent, type AskLauraUIMessage } from "@/lib/ask/agent";
-import { MAX_QUESTION_LENGTH } from "@/lib/ask/limits";
-import { secondsUntilAllowed } from "@/lib/ask/rate-limit";
+import { recordRequest } from "@/lib/ask/rate-limit";
+import { MAX_QUESTION_LENGTH, toTranscript } from "@/lib/ask/transcript";
 
 export const maxDuration = 30;
 
-// The agent only needs the recent back-and-forth, and the endpoint is public,
-// so everything a request can make the model read is bounded.
+// The endpoint is public, so everything a request can make the model read is
+// bounded: the body here, then the transcript's length and contents.
 const MAX_BODY_LENGTH = 60_000;
-const MAX_MESSAGES = 16;
 
 export async function POST(request: Request) {
   const address =
     request.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
-  const retryAfter = secondsUntilAllowed(address);
+  const retryAfter = recordRequest(address);
 
   if (retryAfter > 0) {
     return new Response("Too many questions. Give me a few minutes.", {
@@ -49,27 +48,20 @@ export async function POST(request: Request) {
     return new Response("Those messages don't look right.", { status: 400 });
   }
 
-  const messages = validation.data.slice(-MAX_MESSAGES);
-
-  // A window can open on an answer whose question was cut off
-  while (messages.length > 0 && messages[0].role !== "user") messages.shift();
-
-  const question = messages.at(-1);
-  const isTooLong = messages.some(
+  const transcript = toTranscript(validation.data);
+  const isTooLong = transcript.some(
     (message) =>
       message.role === "user" &&
-      message.parts.some(
-        (part) => part.type === "text" && part.text.length > MAX_QUESTION_LENGTH,
-      ),
+      message.parts[0].text.length > MAX_QUESTION_LENGTH,
   );
 
-  if (question?.role !== "user" || isTooLong) {
+  if (transcript.at(-1)?.role !== "user" || isTooLong) {
     return new Response("Ask one short question at a time.", { status: 400 });
   }
 
   return createAgentUIStreamResponse({
     agent: askLauraAgent,
-    uiMessages: messages,
+    uiMessages: transcript,
     abortSignal: request.signal,
     // Release the answer a word at a time, at a pace the page can write out
     experimental_transform: smoothStream({ delayInMs: 22 }),

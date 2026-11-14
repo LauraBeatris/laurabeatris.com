@@ -9,9 +9,14 @@ import { Composer } from "@/components/ask/composer";
 import { InkText } from "@/components/ask/ink-text";
 import { TOOL_LABELS, ToolCard, isToolPart } from "@/components/ask/tool-cards";
 import type { AskLauraUIMessage } from "@/lib/ask/agent";
+import { toTranscript } from "@/lib/ask/transcript";
 
 const transport = new DefaultChatTransport<AskLauraUIMessage>({
   api: "/api/ask",
+  // Send the recent words only, so a long conversation never outgrows the API
+  prepareSendMessagesRequest: ({ messages, trigger, messageId }) => ({
+    body: { messages: toTranscript(messages), trigger, messageId },
+  }),
 });
 
 const SUGGESTIONS = [
@@ -58,11 +63,16 @@ function getWaitingLabel(messages: AskLauraUIMessage[], isBusy: boolean) {
   return "Thinking";
 }
 
+const ROUTE_REPLY_STATUSES = [400, 413, 429];
+
 function getErrorMessage(error: Error) {
   // The route's own replies (too many questions, too long) are written to be read
-  if ("statusCode" in error && error.statusCode !== 500 && error.message) {
-    return error.message;
-  }
+  const isFromRoute =
+    "statusCode" in error &&
+    typeof error.statusCode === "number" &&
+    ROUTE_REPLY_STATUSES.includes(error.statusCode);
+
+  if (isFromRoute && error.message) return error.message;
 
   return "I lost my train of thought.";
 }
@@ -73,10 +83,10 @@ function prefersReducedMotion() {
 
 export function AskLaura() {
   const { messages, sendMessage, status, stop, error, regenerate } =
-    useChat<AskLauraUIMessage>({ transport, experimental_throttle: 50 });
-  const [suggestions, setSuggestions] = useState<"shown" | "leaving" | "gone">(
-    "shown",
-  );
+    useChat<AskLauraUIMessage>({ transport, throttle: 50 });
+  const [suggestionsPhase, setSuggestionsPhase] = useState<
+    "shown" | "leaving" | "gone"
+  >("shown");
 
   const exchanges = toExchanges(messages);
   const hasMessages = messages.length > 0;
@@ -84,15 +94,15 @@ export function AskLaura() {
   const waitingLabel = getWaitingLabel(messages, isBusy);
   const mood: FaceMood = waitingLabel ? "thinking" : isBusy ? "writing" : "idle";
 
-  const composer = useRef<HTMLDivElement>(null);
-  const composerTopBeforeAsking = useRef<number | null>(null);
+  const dock = useRef<HTMLDivElement>(null);
+  const dockTopBeforeAsking = useRef<number | null>(null);
   const latestQuestion = useRef<HTMLHeadingElement>(null);
 
   function ask(question: string) {
     if (!hasMessages) {
-      composerTopBeforeAsking.current =
-        composer.current?.getBoundingClientRect().top ?? null;
-      setSuggestions("leaving");
+      dockTopBeforeAsking.current =
+        dock.current?.getBoundingClientRect().top ?? null;
+      setSuggestionsPhase("leaving");
     }
     sendMessage({ text: question });
   }
@@ -100,9 +110,9 @@ export function AskLaura() {
   // The first question sends the composer to the foot of the page. It's the
   // same element in a new place, so it travels there instead of jumping.
   useLayoutEffect(() => {
-    const from = composerTopBeforeAsking.current;
-    const element = composer.current;
-    composerTopBeforeAsking.current = null;
+    const from = dockTopBeforeAsking.current;
+    const element = dock.current;
+    dockTopBeforeAsking.current = null;
 
     if (from === null || !element || !hasMessages) return;
     if (prefersReducedMotion()) return;
@@ -146,11 +156,13 @@ export function AskLaura() {
         className={`relative pt-10 ${hasMessages ? "flex-1 pb-10" : ""}`}
       >
         {/* Suggested questions sit where the asked ones will go */}
-        {suggestions !== "gone" && (
+        {suggestionsPhase !== "gone" && (
           <ul
-            data-leaving={suggestions === "leaving" || undefined}
+            data-leaving={suggestionsPhase === "leaving" || undefined}
             onAnimationEnd={(event) => {
-              if (event.target === event.currentTarget) setSuggestions("gone");
+              if (event.target === event.currentTarget) {
+                setSuggestionsPhase("gone");
+              }
             }}
             className="ask-suggestions flex flex-wrap gap-2"
           >
@@ -246,7 +258,7 @@ export function AskLaura() {
       </div>
 
       <div
-        ref={composer}
+        ref={dock}
         className={
           hasMessages
             ? "ask-composer-dock sticky bottom-0 bg-background pb-5"
