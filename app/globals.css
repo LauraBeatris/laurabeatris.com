@@ -559,9 +559,7 @@
       }
     }
   }
-}
 
-@layer utilities {
   /* Ask Laura: things arrive on the page one after another */
   @keyframes ask-rise {
     from {
@@ -592,7 +590,8 @@
   }
 
   /* Ask Laura: the newest question can always scroll to the top of the page.
-     9rem is the docked composer plus the transcript's bottom padding. */
+     9rem is the docked composer, at one line, plus the transcript's bottom
+     padding. */
   .ask-latest-exchange {
     min-height: calc(100dvh - 9rem);
   }
@@ -634,15 +633,8 @@
     animation-delay: 0.3s;
   }
 
-  /* Ask Laura: the face from the autograph, listening in the composer */
-  .agent-face-stroke {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 3.4;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
+  /* Ask Laura: the face from the autograph, listening in the composer.
+     Its strokes are the signature's own, drawn on like the post sketches */
   .agent-face-gaze,
   .agent-face-brow {
     transition: transform 0.3s var(--ease-out);

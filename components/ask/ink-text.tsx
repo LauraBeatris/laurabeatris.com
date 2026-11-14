@@ -1,5 +1,5 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
+import { AnyLink } from "@/components/ask/any-link";
 
 type Token = { text: string; isBold: boolean; href?: string };
 
@@ -90,23 +90,10 @@ function InkToken({ token }: { token: Token }) {
 
   if (!token.href) return content;
 
-  if (token.href.startsWith("/")) {
-    return (
-      <Link href={token.href} className={linkClassName}>
-        {content}
-      </Link>
-    );
-  }
-
   return (
-    <a
-      href={token.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={linkClassName}
-    >
+    <AnyLink href={token.href} className={linkClassName}>
       {content}
-    </a>
+    </AnyLink>
   );
 }
 

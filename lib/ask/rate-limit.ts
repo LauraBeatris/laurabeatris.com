@@ -4,11 +4,12 @@ const MAX_REQUESTS = 20;
 const requests = new Map<string, number[]>();
 
 /**
- * A per-instance sliding window. It slows down one visitor hammering a warm
- * function; it doesn't hold across instances, so it's a seatbelt and not a
- * firewall. Returns how many seconds to wait, or 0 when the request can go.
+ * Counts a request against a per-instance sliding window. It slows down one
+ * visitor hammering a warm function; it doesn't hold across instances, so it's
+ * a seatbelt and not a firewall. Returns 0 when the request was counted and
+ * can go, or how many seconds to wait when it's over the limit.
  */
-export function secondsUntilAllowed(key: string, now = Date.now()) {
+export function recordRequest(key: string, now = Date.now()) {
   const recent = (requests.get(key) ?? []).filter(
     (time) => now - time < WINDOW_MS,
   );

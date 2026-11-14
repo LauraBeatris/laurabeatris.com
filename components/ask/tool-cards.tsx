@@ -1,5 +1,5 @@
-import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
+import { AnyLink } from "@/components/ask/any-link";
 import type { AskLauraUIMessage } from "@/lib/ask/agent";
 
 type Part = AskLauraUIMessage["parts"][number];
@@ -76,21 +76,12 @@ function CardRow({
       className="ask-rise border-t border-border first:border-t-0"
       style={{ "--item": index } as CSSProperties}
     >
-      {!href ? (
-        <div className={className}>{content}</div>
-      ) : href.startsWith("/") ? (
-        <Link href={href} className={className}>
+      {href ? (
+        <AnyLink href={href} className={className}>
           {content}
-        </Link>
+        </AnyLink>
       ) : (
-        <a
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={className}
-        >
-          {content}
-        </a>
+        <div className={className}>{content}</div>
       )}
     </li>
   );
@@ -173,14 +164,12 @@ export function ToolCard({ part }: { part: ToolPart }) {
                     {entry.role}
                     <span className="font-normal text-muted"> at </span>
                     {entry.url ? (
-                      <a
+                      <AnyLink
                         href={entry.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
                         className="underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
                       >
                         {entry.company}
-                      </a>
+                      </AnyLink>
                     ) : (
                       entry.company
                     )}

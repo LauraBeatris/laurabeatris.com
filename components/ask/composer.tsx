@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import type { FormEvent, KeyboardEvent } from "react";
 import { AgentFace, type FaceMood } from "@/components/ask/agent-face";
-import { MAX_QUESTION_LENGTH } from "@/lib/ask/limits";
+import { MAX_QUESTION_LENGTH } from "@/lib/ask/transcript";
 
 export function Composer({
   mood,
@@ -55,7 +55,7 @@ export function Composer({
   return (
     <form
       onSubmit={handleSubmit}
-      className="ask-composer flex items-end gap-3 rounded-2xl border border-border bg-background py-2.5 pl-4 pr-2.5 transition-[border-color] duration-200 focus-within:border-accent"
+      className="flex items-end gap-3 rounded-2xl border border-border bg-background py-2.5 pl-4 pr-2.5 transition-[border-color] duration-200 focus-within:border-accent"
     >
       <AgentFace
         // It looks over at what you're typing, unless it's busy answering
