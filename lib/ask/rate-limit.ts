@@ -4,12 +4,24 @@ const MAX_REQUESTS = 20;
 const requests = new Map<string, number[]>();
 
 /**
+ * One home or phone is handed a whole block of IPv6 addresses and can hop
+ * between them at will, so the block is the visitor: its first four groups.
+ */
+function toVisitor(address: string) {
+  return address.includes(":")
+    ? address.split(":").slice(0, 4).join(":")
+    : address;
+}
+
+/**
  * Counts a request against a per-instance sliding window. It slows down one
  * visitor hammering a warm function; it doesn't hold across instances, so it's
  * a seatbelt and not a firewall. Returns 0 when the request was counted and
  * can go, or how many seconds to wait when it's over the limit.
  */
-export function recordRequest(key: string, now = Date.now()) {
+export function recordRequest(address: string, now = Date.now()) {
+  const key = toVisitor(address);
+
   const recent = (requests.get(key) ?? []).filter(
     (time) => now - time < WINDOW_MS,
   );

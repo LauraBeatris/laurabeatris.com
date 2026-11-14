@@ -42,7 +42,8 @@ export const askLauraAgent = new ToolLoopAgent({
   // A string id is routed through the Vercel AI Gateway
   model: "anthropic/claude-haiku-5.5",
   instructions,
-  maxOutputTokens: 500,
+  // Room for a few sentences. Output is the expensive side of every request.
+  maxOutputTokens: 400,
   // One tool call, then the answer, with a step to spare
   stopWhen: isStepCount(3),
   tools: {

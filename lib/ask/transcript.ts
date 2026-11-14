@@ -3,15 +3,17 @@ import type { AskLauraUIMessage } from "@/lib/ask/agent";
 /** Shared by the composer and the route, so the page never sends what the API rejects. */
 export const MAX_QUESTION_LENGTH = 400;
 
-const MAX_MESSAGES = 16;
-const MAX_ANSWER_LENGTH = 3000;
+// Four exchanges of context is plenty for short answers about one person, and
+// every message kept is paid for again on each later question
+const MAX_MESSAGES = 8;
+const MAX_ANSWER_LENGTH = 1500;
 
 /**
  * The recent back-and-forth, as words only. The page uses it to keep requests
  * small; the route uses it because the history comes from the browser, where
  * anyone can write it. Cards are left out, so a made-up "tool result" never
- * reaches the model as something the agent looked up, and answers are cut to
- * the longest one the agent could really have written.
+ * reaches the model as something the agent looked up, and answers are cut
+ * short, so nobody can pad a request with pages of invented history.
  */
 export function toTranscript(messages: AskLauraUIMessage[]) {
   const transcript = messages.flatMap((message) => {

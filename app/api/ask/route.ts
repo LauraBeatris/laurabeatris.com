@@ -9,11 +9,19 @@ import { MAX_QUESTION_LENGTH, toTranscript } from "@/lib/ask/transcript";
 
 export const maxDuration = 30;
 
-// The endpoint is public, so everything a request can make the model read is
-// bounded: the body here, then the transcript's length and contents.
-const MAX_BODY_LENGTH = 60_000;
+// The endpoint is public and every answer costs money, so everything a request
+// can make the model read is bounded: the body here, then the transcript's
+// length and contents.
+const MAX_BODY_LENGTH = 20_000;
 
 export async function POST(request: Request) {
+  // Only this site's own pages may ask. Without this, any other website could
+  // make its visitors' browsers send questions here, from thousands of
+  // addresses the rate limit has never seen.
+  if (request.headers.get("origin") !== new URL(request.url).origin) {
+    return new Response("Ask from laurabeatris.com.", { status: 403 });
+  }
+
   const address =
     request.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
   const retryAfter = recordRequest(address);
@@ -23,6 +31,11 @@ export async function POST(request: Request) {
       status: 429,
       headers: { "Retry-After": String(retryAfter) },
     });
+  }
+
+  // Turn away an oversized body by its label, before reading any of it
+  if (Number(request.headers.get("content-length")) > MAX_BODY_LENGTH) {
+    return new Response("That conversation is too long.", { status: 413 });
   }
 
   const body = await request.text();

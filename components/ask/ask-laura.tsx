@@ -100,7 +100,7 @@ function getStatus(messages: AskLauraUIMessage[], isBusy: boolean) {
   return "Thinking";
 }
 
-const ROUTE_REPLY_STATUSES = [400, 413, 429];
+const ROUTE_REPLY_STATUSES = [400, 403, 413, 429];
 
 function getErrorMessage(error: Error) {
   // The route's own replies (too many questions, too long) are written to be read
