@@ -4,17 +4,20 @@
  * visitor. Whatever isn't here, the agent says it doesn't know.
  *
  * Still to write, so the agent has an answer:
- * - where I was born and grew up
+ * - where I grew up
  * - my career before Resend, with dates (also fill `career` below)
- * - the stack I reach for, and why
  *
  * Where each line came from: the home page, my Creative Act post, the talks
  * list, and my public GitHub profile (where I'm based, the line about turning
- * developer problems into products).
+ * developer problems into products). The facts about Rio Grande are from its
+ * Wikipedia page.
  */
 export const notes = `
 ## Who I am
 I'm Laura Beatris, a Product Engineer at Resend. I go by @lauradotjs online. I'm based in Florianópolis, Brazil.
+
+## Where I'm from
+I was born in Rio Grande, a port city on the southern coast of Rio Grande do Sul, Brazil's southernmost state. It's the oldest city in the state, founded in 1737, and the one the state takes its name from. It sits where the Lagoa dos Patos, Brazil's largest lagoon, meets the Atlantic.
 
 ## What I do
 I build developer tools: the kind of infrastructure that stays out of the way so people can ship. At Resend I turn developer problems into products. My team recently launched Inboxes (https://resend.com/inboxes), and one of the first things we discussed was how to make our current features more reliable before adding more.
@@ -30,6 +33,9 @@ More and more I see myself less as an engineer in a purely technical sense, and 
 When I'm not building, I'm usually learning in the open through writing, talks and podcasts. I've spoken about TypeScript and React, useMemo and useCallback, caching in Apollo Client 3, TDD and BDD in React, and Elixir, at events like React Conf Brasil, React Summit, Apollo Day and GraphQL Summit. One podcast I joined was about learning by teaching.
 
 Right now I'm studying how agents are built: tools, context engineering, streaming UI. This agent is what I made with it.
+
+## The stack I reach for
+TypeScript, Go and React. I like everything that makes the web fast and interactive.
 
 ## Earlier in my career
 I was a Front End Engineer at Jungsoft.

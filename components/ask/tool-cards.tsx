@@ -29,6 +29,8 @@ export const NOTES_SOURCE: Source = {
   href: `${REPOSITORY}/content/laura.ts`,
   icon: "M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6",
   followUps: [
+    "Where are you from?",
+    "What stack do you reach for?",
     "How do you think about taste?",
     "Show me your talks",
     "Where can I find you?",
