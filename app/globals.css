@@ -242,15 +242,15 @@
   /* Post titles and section headings: ink lit from above, each line fading as */
   /* it nears the page, over a tight contact shadow and a wider soft one */
   .title-depth {
-    --title-ink-top: hsl(0 0% 6%);
-    --title-ink-bottom: hsl(0 0% 34%);
+    --title-ink-top: hsl(0 0% 8%);
+    --title-ink-bottom: hsl(0 0% 24%);
     --title-shadow-contact: rgb(0 0 0 / 0.12);
     --title-shadow-ambient: rgb(0 0 0 / 0.07);
   }
 
   .dark .title-depth {
-    --title-ink-top: hsl(0 0% 100%);
-    --title-ink-bottom: hsl(0 0% 62%);
+    --title-ink-top: hsl(0 0% 98%);
+    --title-ink-bottom: hsl(0 0% 76%);
     --title-shadow-contact: rgb(0 0 0 / 0.4);
     --title-shadow-ambient: rgb(0 0 0 / 0.3);
   }
