@@ -685,10 +685,12 @@
     fill: hsl(var(--background));
   }
 
-  /* The pill's outline, which is also the envelope's until the envelope takes over */
+  /* The button's shape. At rest it has no line, only a tint on hover. Pressing */
+  /* Send draws the line in as the shape folds into the envelope's outline */
   .send-outline {
     fill: transparent;
     opacity: 0;
+    stroke-opacity: 0;
   }
 
   [data-stage="idle"] .send-outline,
@@ -699,7 +701,13 @@
   [data-stage="idle"] .send-outline {
     transition:
       opacity 0.2s ease,
+      stroke-opacity 0.15s ease,
       fill 0.15s ease;
+  }
+
+  [data-stage="morph"] .send-outline {
+    stroke-opacity: 1;
+    transition: stroke-opacity 0.12s ease;
   }
 
   @media (hover: hover) and (pointer: fine) {

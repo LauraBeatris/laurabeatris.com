@@ -256,7 +256,7 @@ export function EmailMe() {
                 />
               </div>
 
-              <div className="flex shrink-0 items-center justify-between gap-3 py-3 pl-4 pr-3">
+              <div className="flex shrink-0 items-center justify-between gap-3 py-3 pl-4 pr-2">
                 {error ? (
                   <p
                     role="alert"

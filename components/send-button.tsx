@@ -47,7 +47,7 @@ function polygon(corners: Point[]): Point[] {
 }
 
 // Drawn around the button's centre, in CSS pixels.
-const PILL_X = 31.25;
+const PILL_X = 27.25;
 const PILL_Y = 15.25;
 const PILL_FLAT = PILL_X - PILL_Y;
 const ARC = PILL_Y * 0.5523;
@@ -202,11 +202,11 @@ export function SendButton({
       type="submit"
       data-stage={stage}
       aria-disabled={isBusy}
-      className="send-button relative ml-auto h-8 w-16 shrink-0 rounded-full text-foreground outline-none transition-transform duration-[160ms] ease-[var(--ease-out)] after:absolute after:-inset-1.5 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.97] aria-disabled:pointer-events-none motion-reduce:active:scale-100"
+      className="send-button relative ml-auto h-8 w-14 shrink-0 rounded-full text-foreground outline-none transition-transform duration-[160ms] ease-[var(--ease-out)] after:absolute after:-inset-1.5 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.97] aria-disabled:pointer-events-none motion-reduce:active:scale-100"
     >
       <svg
         aria-hidden="true"
-        viewBox="-32 -16 64 32"
+        viewBox="-28 -16 56 32"
         fill="none"
         stroke="currentColor"
         strokeWidth="1.25"
@@ -246,7 +246,7 @@ export function SendButton({
       </span>
       <span
         aria-hidden="true"
-        className="send-done absolute inset-y-0 right-0 flex items-center whitespace-nowrap text-sm font-medium"
+        className="send-done absolute inset-y-0 right-3 flex items-center whitespace-nowrap text-sm font-medium"
       >
         Email sent
       </span>
