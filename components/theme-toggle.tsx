@@ -1,16 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-/** The page's background in each theme. Matches themeColor in app/layout.tsx. */
-const STATUS_BAR = { light: "#ffffff", dark: "#121212" };
+import { THEME_COLOR } from "@/lib/theme";
 
 /**
  * The phone's status bar follows the OS theme on its own. When the site's own
  * choice differs, both tags are pointed at the theme actually on screen.
  */
 function paintStatusBar(isDark: boolean) {
-  const color = isDark ? STATUS_BAR.dark : STATUS_BAR.light;
+  const color = isDark ? THEME_COLOR.dark : THEME_COLOR.light;
   document
     .querySelectorAll('meta[name="theme-color"]')
     .forEach((tag) => tag.setAttribute("content", color));

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { OG_SIZE } from "@/lib/og-card";
+import { THEME_COLOR } from "@/lib/theme";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -47,16 +48,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
   // Paints under the notch and home indicator. Whatever is pinned to an edge pads
   // itself back out with env(safe-area-inset-*)
   viewportFit: "cover",
   // Android's keyboard shrinks the layout, the way iOS already behaves
   interactiveWidget: "resizes-content",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#121212" },
+    { media: "(prefers-color-scheme: light)", color: THEME_COLOR.light },
+    { media: "(prefers-color-scheme: dark)", color: THEME_COLOR.dark },
   ],
 };
 

@@ -26,6 +26,8 @@ const SHEET =
 /** How far the sheet has to be pulled down, or how fast in px/ms, before it lets go. */
 const DISMISS_DISTANCE = 96;
 const DISMISS_VELOCITY = 0.5;
+/** A finger held still this long before letting go has stopped flicking. */
+const FLICK_STALE_MS = 80;
 
 export function EmailMe() {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,19 +42,20 @@ export function EmailMe() {
   const form = useRef<HTMLFormElement>(null);
   const closing = useRef<ReturnType<typeof setTimeout>>(undefined);
   const drag = useRef<{
-    start: number;
-    last: number;
-    time: number;
+    startY: number;
+    lastY: number;
+    lastAt: number;
     velocity: number;
   } | null>(null);
 
   useEffect(() => () => clearTimeout(closing.current), []);
 
-  // As a sheet it sits on the keyboard, so it follows the part of the page still visible
+  // As a sheet it sits on the keyboard, so it follows the part of the page still
+  // visible. It keeps following while it leaves, since the keyboard drops after it
   useEffect(() => {
     const viewport = window.visualViewport;
     const sheet = panel.current;
-    if (!isOpen || !viewport || !sheet) return;
+    if (!viewport || !sheet) return;
 
     function follow() {
       if (!viewport || !sheet) return;
@@ -74,7 +77,7 @@ export function EmailMe() {
       viewport.removeEventListener("resize", follow);
       viewport.removeEventListener("scroll", follow);
     };
-  }, [isOpen, anchor]);
+  }, [anchor]);
 
   // It grows out of "Email me", wherever that sits along the row
   useLayoutEffect(() => {
@@ -92,9 +95,9 @@ export function EmailMe() {
     const from = fields?.namedItem("from") as HTMLInputElement | null;
     const message = fields?.namedItem("message") as HTMLTextAreaElement | null;
 
-    // On a touch screen a focused field throws the keyboard up while the sheet is
-    // still rising. Focus the sheet instead, and let the first tap pick the field
-    if (window.matchMedia("(pointer: coarse)").matches) {
+    // As a sheet, a focused field throws the keyboard up while it's still rising.
+    // Focus the sheet instead, and let the first tap pick the field
+    if (window.matchMedia(SHEET).matches) {
       panel.current?.focus({ preventScroll: true });
       return;
     }
@@ -126,7 +129,10 @@ export function EmailMe() {
 
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     if (event.key === "Escape") close();
-    if (event.key !== "Enter" || event.nativeEvent.isComposing) return;
+    // Safari ends an IME composition with an Enter that isn't flagged as composing,
+    // only as key 229, so both are checked before Return does anything
+    const isComposing = event.nativeEvent.isComposing || event.keyCode === 229;
+    if (event.key !== "Enter" || isComposing) return;
 
     if (event.metaKey || event.ctrlKey) {
       event.preventDefault();
@@ -151,28 +157,29 @@ export function EmailMe() {
     if ((event.target as Element).closest("button, a")) return;
 
     drag.current = {
-      start: event.clientY,
-      last: event.clientY,
-      time: event.timeStamp,
+      startY: event.clientY,
+      lastY: event.clientY,
+      lastAt: event.timeStamp,
       velocity: 0,
     };
     event.currentTarget.setPointerCapture(event.pointerId);
-    if (panel.current) panel.current.style.transition = "none";
   }
 
   function handleDragMove(event: PointerEvent<HTMLDivElement>) {
     const current = drag.current;
     if (!current || !panel.current) return;
 
-    const elapsed = event.timeStamp - current.time;
+    const elapsed = event.timeStamp - current.lastAt;
     if (elapsed > 0) {
-      current.velocity = (event.clientY - current.last) / elapsed;
+      current.velocity = (event.clientY - current.lastY) / elapsed;
     }
-    current.last = event.clientY;
-    current.time = event.timeStamp;
+    current.lastY = event.clientY;
+    current.lastAt = event.timeStamp;
 
+    // Only once it moves, so a tap on the header doesn't stop the sheet mid-rise
+    panel.current.style.transition = "none";
     // Down it follows the finger; up it only gives a little, as if it's already as tall as it goes
-    const pulled = event.clientY - current.start;
+    const pulled = event.clientY - current.startY;
     const offset = pulled >= 0 ? pulled : -8 * Math.log1p(-pulled / 8);
     panel.current.style.transform = `translateY(${offset}px)`;
   }
@@ -186,10 +193,11 @@ export function EmailMe() {
     panel.current.style.transition = "";
     panel.current.style.transform = "";
 
-    const pulled = event.clientY - current.start;
-    const flicked = pulled > 16 && current.velocity > DISMISS_VELOCITY;
-    const letGo = pulled > DISMISS_DISTANCE || flicked;
-    if (event.type === "pointerup" && letGo) close();
+    const pulled = event.clientY - current.startY;
+    const isFresh = event.timeStamp - current.lastAt < FLICK_STALE_MS;
+    const flicked = pulled > 16 && isFresh && current.velocity > DISMISS_VELOCITY;
+    const shouldDismiss = pulled > DISMISS_DISTANCE || flicked;
+    if (event.type === "pointerup" && shouldDismiss) close();
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -326,7 +334,7 @@ export function EmailMe() {
               >
                 <div
                   data-locked={isLocked}
-                  className="flex min-h-0 flex-1 flex-col transition-opacity duration-200 data-[locked=true]:opacity-50"
+                  className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain transition-opacity duration-200 data-[locked=true]:opacity-50"
                 >
                   <Row label="To" as="div">
                     <a

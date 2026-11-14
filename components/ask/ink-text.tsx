@@ -4,7 +4,7 @@ import { AnyLink } from "@/components/ask/any-link";
 type Token = { text: string; isBold: boolean; href?: string };
 
 const linkClassName =
-  "font-medium text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent";
+  "font-medium text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent active:decoration-accent";
 
 /**
  * The only formatting the agent is asked for: **bold** and [links](url).
