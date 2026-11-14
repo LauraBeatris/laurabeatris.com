@@ -1,0 +1,193 @@
+import { NeedsAnRfc } from "./needs-an-rfc";
+import { Pick } from "./pick";
+import { StopReading } from "./stop-reading";
+import { VideoNote } from "@/components/video-note";
+
+export const metadata = {
+  title: "How to write RFCs your team actually reads",
+  description: "Start with the decision, split the plan into small slices, and understand every line, even when an AI agent writes the first draft.",
+  publishedAt: "2026-11-14",
+  draft: false,
+};
+
+An RFC is a product. Your teammates are its users, and they pay for it with their attention.
+
+I've written a lot of RFCs over the years. The ones that worked weren't the longest or the most detailed. They were the ones someone could open between two meetings, understand what was being decided, and leave a comment that helped move it forward.
+
+<VideoNote
+  src="https://8d6k3de6i9wk8gxs.public.blob.vercel-storage.com/blog-videos/rfcs-note-hFb3twx5uj4a8yUpAqOFPJvkvojFMJ.mp4"
+  poster="https://8d6k3de6i9wk8gxs.public.blob.vercel-storage.com/blog-videos/rfcs-note-60D0QZho6BiGvep9KdqreWDRz57wjj.jpg"
+  captions="https://8d6k3de6i9wk8gxs.public.blob.vercel-storage.com/blog-videos/rfcs-note-1ZTa28OeastLdy3ZGDpsYb96NFJola.vtt"
+  title="Why I wrote this one"
+  length="0:51"
+/>
+
+Here's what I've learned. I also added a few interactive questions along the way. Have fun!
+
+## Say the decision first
+
+Many RFCs start slowly: the history of the system, why it matters, what the document will cover. By the time the proposal appears, the reader is already tired.
+
+Be direct. The first paragraph should say what you want to do, why, and what you need from the reader. If someone reads only that paragraph, they should still be able to tell you if they agree.
+
+A manager at a previous company once gave me feedback on a doc by pointing me to a habit from the military: [BLUF](https://en.wikipedia.org/wiki/BLUF_(communication)), short for *bottom line up front*. It comes from the US Army's writing rules, which ask you to put the main point at the very start. The reader might be busy, interrupted, or about to make a decision with only one minute to read. So the most important thing goes first.
+
+That's the shape I want for an RFC:
+
+- **The bottom line:** what you want to do, and what you need from the reader.
+- **The reasons:** why this, why now, and why not the obvious other option.
+- **The evidence:** data, history, other options, and the detailed plan, lower in the doc or in an appendix.
+
+<Demo>
+  <StopReading />
+</Demo>
+
+The warm-up version isn't wrong, and it has the same facts. It just makes the reader search for the point. Here's the same idea in a single paragraph.
+
+<Demo>
+  <Pick
+    question="Two RFCs arrive in your inbox. Which first paragraph tells you what's being decided?"
+    answer={1}
+    options={[
+      {
+        text: `This document looks at ways to make our webhook delivery more reliable. Webhooks are an important part of our platform, and in the last few quarters we've had more problems with delivery. Below, we'll go through the history of the system, compare a few options, and suggest a way forward.`,
+        note: "After three sentences, you still don't know what's being proposed, or what you're being asked to do.",
+      },
+      {
+        text: `We want to retry failed webhooks for up to 24 hours with exponential backoff, and show every attempt in the dashboard. Today we retry only once, and failed deliveries are our most common support ticket. I need a decision on the retry window by Friday.`,
+        note: "The proposal, the reason, and the ask, in three sentences. The rest of the doc is there to support this paragraph.",
+      },
+    ]}
+  />
+</Demo>
+
+Being direct also applies to each sentence. Write "we will" instead of "it may be worth considering". And when you're not sure yet, say that directly too: "I don't know which one is better, and here's how we'll find out."
+
+## Write for someone new to the problem
+
+You've been thinking about this problem for weeks. Your readers haven't. Some of them are on another team, some joined last month, and some will find the doc a year from now while trying to understand why the code works the way it does.
+
+It's easy to try to fix that by adding everything. But context has a cost too. Every paragraph of background is something the reader has to keep in mind before they get to the part that matters. Give them enough to follow the proposal, and link to the rest.
+
+<Demo>
+  <Pick
+    question="An engineer from another team opens your RFC. Which background helps them more?"
+    answer={0}
+    options={[
+      {
+        text: `Today, a failed webhook gets one retry after 5 minutes, and then we drop it. Customers whose endpoints are down for longer than that lose events, and they find out from their own users. Incident history and delivery metrics are in the appendix.`,
+        note: "Enough to follow the proposal. The rest is one click away for anyone who wants it.",
+      },
+      {
+        text: `In 2023 we moved webhooks out of the monolith into a separate worker, originally built for the batch email pipeline. The worker uses a Redis-backed queue with a 30s visibility timeout, which interacts with the SQS fallback introduced during the March incident (see postmortems #142, #157 and #163), and with the retry cron, which runs every 5 minutes except during deploys, when…`,
+        note: "All true, and all useful to someone. But probably not to a person reading it for the first time.",
+      },
+    ]}
+  />
+</Demo>
+
+What works for me: I write the background for a smart engineer who joined last week. If they would need to ask me a question to understand it, I add a sentence. If they would skip over it, it goes to an appendix.
+
+## Split the plan into slices
+
+A plan with one giant step is hard to review, because the only possible answer is yes or no to all of it. It's also hard to ship, because nothing is released until everything is done.
+
+Split the plan into slices: small steps that each ship on their own. Each slice should be useful by itself and safe to stop after. That gives reviewers something they can agree on today. It also gives you natural points to learn something and change the plan.
+
+<Demo>
+  <Pick
+    question="Which plan would you rather review?"
+    answer={1}
+    options={[
+      {
+        text: `1. Build the new delivery pipeline, with retries and attempt logs.
+          2. Move every customer to it.
+          3. Remove the old worker.
+          Estimate: 6 weeks.`,
+        note: "One big step that looks like three. Nothing ships until week six, and nobody can say yes to only part of it.",
+      },
+      {
+        text: `1. Add retries with backoff, behind a flag, only for our own account.
+          2. Show every attempt in the dashboard.
+          3. Turn on retries for every customer.
+          4. Remove the old retry cron.
+          Each slice ships on its own, and can be rolled back on its own.`,
+        note: "Every slice is something you can ship, measure, and stop after. Reviewers can approve the first one while they're still discussing the third.",
+      },
+    ]}
+  />
+</Demo>
+
+Slices also make the RFC easier to write. When I can't describe the first slice in one sentence, it usually means I don't understand the problem well enough yet.
+
+## Don't waste your open questions
+
+The open questions section can be the most valuable part of an RFC. But it often becomes a place for everything: questions you could answer yourself, a discussion about names, and a "thoughts?" at the end.
+
+Every question you add asks for someone's time. Use it on what really matters: decisions that are hard to undo, trade-offs you can't decide alone, and topics where someone else knows more than you. Say which answer you prefer, and who you think can answer.
+
+<Demo>
+  <Pick
+    question="Which open questions are worth the reader's time?"
+    answer={0}
+    options={[
+      {
+        text: `1. With 24 hours of retries, a customer can receive an event a day late. Do we add an "attempt" field to the payload, or only document it? It changes the public payload, so I need a decision before slice 3.
+          2. Should retries count against the customer's rate limit? I think no, but the billing team knows things I don't.`,
+        note: "Each question explains what's at stake, says what you think, and names who can answer it.",
+      },
+      {
+        text: `1. Should we use exponential or linear backoff?
+          2. What should we name the new table?
+          3. Is 24 hours the right window?
+          4. Any other thoughts or concerns?`,
+        note: "You can decide the first two yourself. The third one is the proposal itself. The last one asks for everything except a decision.",
+      },
+    ]}
+  />
+</Demo>
+
+## Writing RFCs with AI agents
+
+You can usually tell: every section is filled in, every option is listed, every risk has a plan, and the whole thing is three times longer than it needs to be.
+
+I'm not against it. I actually recommend it. An agent can turn messy notes, a Slack thread, and a few links to the code into a structured first draft in minutes, and that speed is real. You don't have to start from an empty page, and it often finds gaps you hadn't thought about.
+
+But the agent doesn't know what your team already knows, what they care about, or which of its twelve sections really matters. It tries to cover everything, and your reader needs focus. When you share a draft you don't fully understand, the work moves to the reviewers. Now ten people each spend twenty minutes trying to figure out what you meant.
+
+<Demo>
+  <Pick
+    question="An agent wrote your RFC in ten minutes. It's twelve pages long, and every section is filled in. What do you do?"
+    answer={0}
+    options={[
+      {
+        text: `Set aside an hour. Read the whole thing, rewrite the summary and the proposal in your own words, and delete every section you couldn't explain if someone asked about it in the review.`,
+        note: "The draft gave you speed. The hour is what makes it yours.",
+      },
+      {
+        text: `Share it right away. It covers everything, and the review will catch anything that's wrong.`,
+        note: "Your reviewers become your editors, and they review what the agent thinks, not what you think.",
+      },
+    ]}
+  />
+</Demo>
+
+So spend at least an hour with the draft before anyone else sees it. Read it from start to finish. Rewrite the important parts in your own words. Remove anything you can't explain. My test is simple: if a teammate asks me about any line in the doc, I should be able to answer without opening it.
+
+## Not everything needs an RFC
+
+RFCs should bring value to your team. Each one asks people to stop, read, and think about something new. That's worth it when the decision is hard to undo, or when more than one person needs to agree on it. Otherwise, it isn't.
+
+When a team gets four RFCs in a week about things that could have been a PR description, people stop reading carefully. 
+
+<Demo>
+  <NeedsAnRfc />
+</Demo>
+
+My simple rule: write an RFC when the decision is hard to undo, when it affects people outside your team, or when you really need other people's input to make it. For everything else, a good PR description or a message in the channel respects people's time more.
+
+## To sum up
+
+An RFC isn't done when every section has text in it. It's done when your team can read it, understand it, and make a decision with it.
+
+Start with the decision. Give just enough context. Split the plan into slices, ask the questions that matter, and make sure you understand every line. Your team will notice, and they'll read your next one too.

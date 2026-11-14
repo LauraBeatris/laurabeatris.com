@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, type PointerEvent } from "react";
-import { DrawingFooter, Ink, penBox, penCircle, penLine, TextButton } from "./sketch";
+import { DrawingFooter, Ink, penBox, penCircle, penLine, TextButton } from "@/components/sketch";
 
 const WIDTH = 360;
 const HEIGHT = 224;

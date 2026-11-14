@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DrawingFooter, Ink, TextButton } from "./sketch";
+import { DrawingFooter, Ink, TextButton } from "@/components/sketch";
 
 /** The cloud above the home page greeting, as it stood after each commit. */
 const COMMITS = [

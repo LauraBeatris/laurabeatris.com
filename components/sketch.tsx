@@ -1,5 +1,5 @@
 /**
- * Shared bits for the post's pen drawings. Lines wobble and overshoot a little
+ * Shared bits for the blog's pen drawings. Lines wobble and overshoot a little
  * like a real pen, and are seeded so the server and client draw the same marks.
  */
 import type { ReactNode } from "react";
