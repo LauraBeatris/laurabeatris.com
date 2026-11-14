@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { PageTransitions } from "@/components/page-transitions";
 import { OG_SIZE } from "@/lib/og-card";
 import "./globals.css";
 
@@ -78,7 +79,9 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        <PageTransitions>{children}</PageTransitions>
+      </body>
     </html>
   );
 }

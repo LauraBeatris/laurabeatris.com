@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { BackHeader } from "@/components/back-header";
+import { SweepLink } from "@/components/sweep-link";
 import { formatPostDate, getPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
@@ -26,7 +26,7 @@ export default async function BlogPage() {
           <ul className="flex flex-col">
             {posts.map(({ slug, metadata: post }) => (
               <li key={slug} className="border-t border-border">
-                <Link
+                <SweepLink
                   href={`/blog/${slug}`}
                   className="group flex items-baseline justify-between gap-4 py-4"
                 >
@@ -39,7 +39,7 @@ export default async function BlogPage() {
                   >
                     {formatPostDate(post.publishedAt)}
                   </time>
-                </Link>
+                </SweepLink>
               </li>
             ))}
           </ul>

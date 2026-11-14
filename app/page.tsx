@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { Greeting } from "@/components/greeting";
 import { ResendLink } from "@/components/resend-link";
 import { Signature } from "@/components/signature";
 import { SiteFooter } from "@/components/site-footer";
+import { SweepLink } from "@/components/sweep-link";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function Home() {
@@ -37,19 +37,19 @@ export default function Home() {
           <p className="text-muted">
             When I&apos;m not building, I&apos;m usually learning in the open
             through{" "}
-            <Link
+            <SweepLink
               href="/blog"
               className="font-normal text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
             >
               <span className="paper-word">writing</span>
-            </Link>
+            </SweepLink>
             ,{" "}
-            <Link
+            <SweepLink
               href="/talks"
               className="font-normal text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
             >
               <span className="paper-word">talks and podcasts</span>
-            </Link>
+            </SweepLink>
             .
           </p>
         </div>
