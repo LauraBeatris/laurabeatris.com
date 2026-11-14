@@ -239,6 +239,46 @@
     }
   }
 
+  /* Page titles and post section headings: ink lit from above, each line */
+  /* fading as it nears the page, over a tight contact shadow and a wider soft one */
+  .title-depth {
+    --title-ink-top: hsl(0 0% 8%);
+    --title-ink-bottom: hsl(0 0% 24%);
+    --title-shadow-contact: rgb(0 0 0 / 0.12);
+    --title-shadow-ambient: rgb(0 0 0 / 0.07);
+  }
+
+  .dark .title-depth {
+    --title-ink-top: hsl(0 0% 98%);
+    --title-ink-bottom: hsl(0 0% 76%);
+    --title-shadow-contact: rgb(0 0 0 / 0.4);
+    --title-shadow-ambient: rgb(0 0 0 / 0.3);
+  }
+
+  /* Both shadows stay small and close, so they sit under the letters instead */
+  /* of hazing around them. In em (1px, 0.5px, 2px and 2.5px on the 48px */
+  /* title) so smaller headings get a proportionally smaller shadow */
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    .title-depth {
+      filter: drop-shadow(0 0.021em 0.01em var(--title-shadow-contact))
+        drop-shadow(0 0.042em 0.052em var(--title-shadow-ambient));
+    }
+
+    /* Inline, so the gradient restarts on every line instead of spanning the block */
+    .title-depth > span {
+      background-image: linear-gradient(
+        to bottom,
+        var(--title-ink-top) 25%,
+        var(--title-ink-bottom)
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+      color: transparent;
+    }
+  }
+
   /* Paper folded in real 3D: creased wings over a keel, banked and nose-up at rest */
   /* Drawn at its largest and scaled down, so it stays crisp as it grows */
   .plane-body {

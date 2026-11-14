@@ -18,8 +18,8 @@ export default function Home() {
           <Greeting />
         </p>
 
-        <h1 className="text-pretty text-4xl font-semibold tracking-tight sm:text-5xl">
-          I&apos;m Laura Beatris
+        <h1 className="title-depth text-pretty text-4xl font-semibold tracking-tight sm:text-5xl">
+          <span>I&apos;m Laura Beatris</span>
         </h1>
 
         <p className="mt-4 text-lg text-muted">
