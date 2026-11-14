@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { DrawingFooter, Ink, penBox, penLine, through } from "./sketch";
+import { DrawingFooter, Ink, penBox, penLine, through } from "@/components/sketch";
 
 const WIDTH = 360;
 const HEIGHT = 200;

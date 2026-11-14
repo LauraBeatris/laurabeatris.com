@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DrawingFooter, Ink, penBox, penCircle, penLine, TextButton, through } from "./sketch";
+import { DrawingFooter, Ink, penBox, penCircle, penLine, TextButton, through } from "@/components/sketch";
 
 const CHAIR = [
   ...penBox(110, 120, 90, 11, 3),

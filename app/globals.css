@@ -127,6 +127,38 @@
     }
   }
 
+  /* Video note: docks in the corner when you scroll away while it plays */
+  @keyframes video-note-dock {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.6);
+    }
+  }
+
+  .video-note-dock {
+    transform-origin: bottom right;
+    animation: video-note-dock 0.35s var(--ease-out);
+  }
+
+  @keyframes video-note-bubble {
+    from {
+      opacity: 0;
+      transform: translate(6px, 50%) scale(0.96);
+    }
+  }
+
+  .video-note-bubble {
+    transform-origin: right center;
+    animation: video-note-bubble 0.25s var(--ease-out);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .video-note-dock,
+    .video-note-bubble {
+      animation: pen-appear 0.2s ease;
+    }
+  }
+
   /* Signature: the face in the autograph blinks while you hover the autograph */
   .handwriting-eye {
     transform-box: fill-box;
