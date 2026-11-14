@@ -317,10 +317,49 @@ function SendHint() {
   return (
     <p
       aria-hidden="true"
-      className="hidden font-mono text-xs text-muted [@media(hover:hover)_and_(pointer:fine)]:block"
+      className="hidden items-center gap-1 font-mono text-xs text-muted [@media(hover:hover)_and_(pointer:fine)]:flex"
     >
-      {isApple ? "⌘" : "Ctrl"} ↵ to send
+      <Key>
+        {isApple ? (
+          <KeyGlyph d="M9 9V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V9Z" />
+        ) : (
+          "Ctrl"
+        )}
+      </Key>
+      <Key>
+        <KeyGlyph d="M20 5v6a4 4 0 0 1-4 4H5M9 10.5 4.5 15 9 19.5" />
+      </Key>
+      <span className="ml-1">to send</span>
     </p>
+  );
+}
+
+/**
+ * A keycap. The symbols on it are drawn here: as text they fall back to
+ * whatever font has them, each at its own size and height.
+ */
+function Key({ children }: { children: ReactNode }) {
+  return (
+    <kbd className="inline-flex h-[18px] min-w-[18px] items-center justify-center rounded-[5px] border border-border px-[3px] font-sans text-[10px] font-medium leading-none">
+      {children}
+    </kbd>
+  );
+}
+
+function KeyGlyph({ d }: { d: string }) {
+  return (
+    <svg
+      width="10"
+      height="10"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d={d} />
+    </svg>
   );
 }
 
