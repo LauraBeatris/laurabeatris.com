@@ -110,6 +110,7 @@ const FALLBACK_ERROR =
  * front of the route, and its reply isn't written for visitors.
  */
 const ERRORS_BY_STATUS: Record<number, string> = {
+  403: "I couldn't tell you apart from a bot. Reload the page and ask again.",
   413: "This conversation has grown too long for me. Reload the page to start a fresh one.",
   429: "That's a lot of questions at once. Give me a minute, then ask again.",
 };

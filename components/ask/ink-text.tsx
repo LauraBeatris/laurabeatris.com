@@ -57,9 +57,12 @@ function tokenize(paragraph: string, isStreaming: boolean): Token[] {
   return tokens;
 }
 
+// The pages this site really has. The model sometimes links to one it imagines.
+const SITE_PAGE = /^\/(blog(\/[a-z0-9-]+)?|talks|ask)?$/;
+
 /** The model writes the address, so only let through what a link should be. */
 function safeHref(href: string) {
-  if (href.startsWith("/") && !href.startsWith("//")) return href;
+  if (href.startsWith("/")) return SITE_PAGE.test(href) ? href : undefined;
   if (/^https?:\/\//i.test(href)) return href;
   return undefined;
 }

@@ -1,3 +1,4 @@
+import { checkBotId } from "botid/server";
 import { Resend } from "resend";
 import {
   CONTACT_EMAIL,
@@ -7,6 +8,7 @@ import {
   isEmailAddress,
 } from "@/lib/contact";
 import { createRateLimit, networkOf } from "@/lib/rate-limit";
+import { isOnSiteHost } from "@/lib/site";
 
 // The endpoint is public and every request it accepts becomes an email in the
 // inbox and a line on Resend's bill. So it only listens to this site's own
@@ -85,8 +87,14 @@ function readField(payload: Record<string, unknown>, name: string) {
 }
 
 export async function POST(request: Request) {
-  if (isFromAnotherSite(request)) {
+  if (!isOnSiteHost(request) || isFromAnotherSite(request)) {
     return reply("This form only works from laurabeatris.com.", 403);
+  }
+
+  // Anything that isn't a browser sends neither of the headers checked above.
+  // This asks whether a real browser on this site sent the request.
+  if ((await checkBotId()).isBot) {
+    return reply("This form only works from a browser.", 403);
   }
 
   // A page on another site can post plain text or a form without asking first.
