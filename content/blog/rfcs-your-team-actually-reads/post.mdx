@@ -1,5 +1,6 @@
 import { NeedsAnRfc } from "./needs-an-rfc";
 import { Pick } from "./pick";
+import { StopReading } from "./stop-reading";
 
 export const metadata = {
   title: "How to write RFCs your team actually reads",
@@ -19,6 +20,22 @@ Here's what I've learned along the way. There are a few tests in between: pick t
 A lot of RFCs open by warming up: the history of the system, why it matters, what the document is going to cover. By the time the proposal shows up, the reader has already spent their best attention on the preamble.
 
 Be direct. The first paragraph should say what you want to do, why, and what you need from the reader. If someone only reads that paragraph, they should still be able to tell you whether they agree.
+
+A manager at a previous company once gave me feedback on a doc by pointing me to a habit from the military: [BLUF](https://en.wikipedia.org/wiki/BLUF_(communication)), short for *bottom line up front*. It comes from the US Army's rules for writing correspondence, which ask for the main point at the very beginning. The person reading might be busy, interrupted, or about to make a call with only a minute to spare, so the thing they most need goes first.
+
+Barbara Minto reached the same idea at McKinsey with the [Pyramid Principle](https://strategyu.co/structure-your-ideas-pyramid-principle-part-1/): start with the answer, then group the reasons that support it, then put the evidence under each reason. The reader can stop at any level and still leave with the point.
+
+That's the shape I want for an RFC:
+
+- **The bottom line:** what you want to do, and what you need from the reader.
+- **The reasons:** why this, why now, and why not the obvious alternative.
+- **The evidence:** data, history, alternatives, and the detailed plan, further down or in an appendix.
+
+<Demo>
+  <StopReading />
+</Demo>
+
+The warm-up version isn't wrong, and it has the same facts. It just makes the reader do the digging. Here's the same thing at the scale of a single paragraph.
 
 <Demo>
   <Pick
