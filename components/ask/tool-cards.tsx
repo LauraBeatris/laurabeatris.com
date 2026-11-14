@@ -144,7 +144,7 @@ function CardRow({
   const content = (
     <>
       <span className="flex flex-col gap-x-4 gap-y-0.5 sm:flex-row sm:items-baseline sm:justify-between">
-        <span className="text-pretty text-[15px] underline decoration-transparent decoration-2 underline-offset-4 transition-colors group-hover:decoration-accent">
+        <span className="text-pretty text-[15px] underline decoration-transparent decoration-2 underline-offset-4 transition-colors group-hover:decoration-accent group-active:decoration-accent">
           {title}
         </span>
         {detail && (
@@ -255,7 +255,7 @@ export function ToolCard({ part }: { part: ToolPart }) {
                     {entry.url ? (
                       <AnyLink
                         href={entry.url}
-                        className="underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
+                        className="underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent active:decoration-accent"
                       >
                         {entry.company}
                       </AnyLink>

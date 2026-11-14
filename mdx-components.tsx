@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Demo } from "@/components/demo";
 
 const linkClassName =
-  "font-medium text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent";
+  "font-medium text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent active:decoration-accent";
 
 function MdxLink({ href = "", children }: ComponentProps<"a">) {
   if (href.startsWith("/") || href.startsWith("#")) {
