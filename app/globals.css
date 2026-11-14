@@ -1031,71 +1031,27 @@
 }
 
 @layer utilities {
-  /* Ask Laura: surfaces. Grey answer cards with wells sunk into them, and one
-     material for everything you can press: glass. It is all in the site's own
-     greys, with no hue anywhere. The depth comes from light: a wash that runs
-     from white to a soft grey, at three strengths, so the input, the questions
-     and the send button read as cut from the same sheet. Light mode lifts with
-     rings, shine and short drops; dark lifts by getting lighter, with a thin
-     outline, because a shadow can't show there. */
+  /* Ask Laura: surfaces, in the site's own greys. Grey answer cards with wells
+     sunk into them, and white things raised off the page by very little: a
+     hairline ring and one short drop. Dark mode lifts by getting lighter, with
+     a thin outline, because a shadow can't show there. */
   .ask {
     --ask-tray: 0 0% 96%;
     --ask-raised: 0 0% 100%;
     --ask-well: 0 0% 92%;
     --ask-line: 0 0% 82%;
     --ask-shadow-tray: inset 0 0 0 1px rgb(0 0 0 / 0.04);
-    --ask-shadow-text: 0 1px 1px rgb(0 0 0 / 0.14);
-
-    /* The wash, at three strengths: a whisper for surfaces, a tint for the
-       questions, and dark enough to be a button */
-    --ask-wash: linear-gradient(
-      100deg,
-      hsl(0 0% 100%),
-      hsl(0 0% 98.6%) 50%,
-      hsl(0 0% 96.8%)
-    );
-    --ask-wash-tint: linear-gradient(
-      100deg,
-      hsl(0 0% 99%),
-      hsl(0 0% 97%) 50%,
-      hsl(0 0% 94.5%)
-    );
-    --ask-wash-deep: linear-gradient(
-      100deg,
-      hsl(0 0% 89%),
-      hsl(0 0% 85%) 50%,
-      hsl(0 0% 80%)
-    );
-    /* Light falling from the top left, on top of whatever the glass is made of */
-    --ask-sheen: radial-gradient(
-      120% 100% at 0% 0%,
-      rgb(255 255 255 / 0.8),
-      rgb(255 255 255 / 0) 60%
-    );
-    --ask-gloss: linear-gradient(
-      rgb(255 255 255 / 0.6),
-      rgb(255 255 255 / 0) 52%
-    );
-
-    --ask-shadow-pill:
-      inset 0 1px 0 rgb(255 255 255 / 0.9),
-      inset 0 -2px 3px -1px rgb(0 0 0 / 0.06), 0 0 0 1px rgb(0 0 0 / 0.06),
-      0 1px 2px rgb(0 0 0 / 0.07), 0 5px 8px -5px rgb(0 0 0 / 0.14);
+    --ask-shadow-text: 0 1px 0 rgb(0 0 0 / 0.06);
+    --ask-shadow-pill: 0 0 0 1px rgb(0 0 0 / 0.07), 0 1px 1px rgb(0 0 0 / 0.04);
     --ask-shadow-raised:
-      inset 0 1px 0 rgb(255 255 255 / 0.9), 0 0 0 1px rgb(0 0 0 / 0.05),
-      0 1px 2px rgb(0 0 0 / 0.07), 0 10px 18px -10px rgb(0 0 0 / 0.16);
-    --ask-wash-glow: 0 22px 30px -22px rgb(0 0 0 / 0.22);
+      0 0 0 1px rgb(0 0 0 / 0.07), 0 1px 2px rgb(0 0 0 / 0.04),
+      0 4px 8px -4px rgb(0 0 0 / 0.06);
 
-    /* The send button's ink is the page's ink */
-    --ask-glass-ink: hsl(var(--foreground));
-    --ask-glass-edge: hsl(0 0% 24% / 0.75);
-    --ask-glass-rim: rgb(255 255 255 / 0.45);
-    --ask-glass-shine: rgb(255 255 255 / 0.9);
-    --ask-glass-glow: rgb(255 255 255 / 0.95);
-    --ask-glass-emboss: 0 1px 0 rgb(255 255 255 / 0.6);
-    --ask-glass-drop:
-      0 1px 2px rgb(0 0 0 / 0.2), 0 8px 12px -6px rgb(0 0 0 / 0.28),
-      0 16px 20px -14px rgb(0 0 0 / 0.3);
+    /* The send button: a shade off white, with a top edge that catches light */
+    --ask-glass-fill: linear-gradient(hsl(0 0% 96%), hsl(0 0% 92%));
+    --ask-glass-shadow:
+      inset 0 0 0 1px rgb(0 0 0 / 0.14), inset 0 1.5px 0 rgb(255 255 255 / 0.9),
+      0 1px 2px rgb(0 0 0 / 0.06);
   }
 
   .dark .ask {
@@ -1104,52 +1060,14 @@
     --ask-well: 0 0% 7.5%;
     --ask-line: 0 0% 26%;
     --ask-shadow-tray: inset 0 0 0 0.5px hsl(0 0% 18%);
-    --ask-shadow-text: 0 1px 1px rgb(0 0 0 / 0.7);
+    --ask-shadow-text: 0 1px 0 rgb(0 0 0 / 0.5);
+    --ask-shadow-pill: 0 0 0 0.5px hsl(0 0% 30%), 0 1px 1px rgb(0 0 0 / 0.3);
+    --ask-shadow-raised: 0 0 0 0.5px hsl(0 0% 26%), 0 1px 2px rgb(0 0 0 / 0.35);
 
-    --ask-wash: linear-gradient(
-      100deg,
-      hsl(0 0% 17%),
-      hsl(0 0% 15.5%) 50%,
-      hsl(0 0% 14.5%)
-    );
-    --ask-wash-tint: linear-gradient(
-      100deg,
-      hsl(0 0% 19%),
-      hsl(0 0% 17.5%) 50%,
-      hsl(0 0% 16%)
-    );
-    --ask-wash-deep: linear-gradient(
-      100deg,
-      hsl(0 0% 36%),
-      hsl(0 0% 32%) 50%,
-      hsl(0 0% 28%)
-    );
-    --ask-sheen: radial-gradient(
-      120% 100% at 0% 0%,
-      rgb(255 255 255 / 0.07),
-      rgb(255 255 255 / 0) 60%
-    );
-    --ask-gloss: linear-gradient(
-      rgb(255 255 255 / 0.16),
-      rgb(255 255 255 / 0) 52%
-    );
-
-    --ask-shadow-pill:
-      inset 0 1px 0 rgb(255 255 255 / 0.09), 0 0 0 0.5px hsl(0 0% 30%),
-      0 1px 2px rgb(0 0 0 / 0.5), 0 5px 8px -5px rgb(0 0 0 / 0.6);
-    --ask-shadow-raised:
-      inset 0 1px 0 rgb(255 255 255 / 0.07), 0 0 0 0.5px hsl(0 0% 27%),
-      0 1px 2px rgb(0 0 0 / 0.5), 0 10px 18px -10px rgb(0 0 0 / 0.7);
-    --ask-wash-glow: 0 22px 30px -22px rgb(0 0 0 / 0.8);
-
-    --ask-glass-edge: hsl(0 0% 62% / 0.5);
-    --ask-glass-rim: rgb(255 255 255 / 0.07);
-    --ask-glass-shine: rgb(255 255 255 / 0.28);
-    --ask-glass-glow: rgb(255 255 255 / 0.18);
-    --ask-glass-emboss: 0 1px 0 rgb(0 0 0 / 0.5);
-    --ask-glass-drop:
-      0 1px 2px rgb(0 0 0 / 0.6), 0 8px 12px -6px rgb(0 0 0 / 0.7),
-      0 16px 20px -14px rgb(0 0 0 / 0.8);
+    --ask-glass-fill: linear-gradient(hsl(0 0% 30%), hsl(0 0% 26%));
+    --ask-glass-shadow:
+      inset 0 0 0 0.5px rgb(255 255 255 / 0.22),
+      inset 0 1px 0 rgb(255 255 255 / 0.14), 0 1px 2px rgb(0 0 0 / 0.4);
   }
 
   .ask-tray {
@@ -1162,47 +1080,29 @@
     background: hsl(var(--ask-well));
   }
 
-  /* The input and what you've asked: the wash, with light across the top left
-     and a soft shadow pooling underneath */
+  /* The input and what you've asked */
   .ask-raised {
-    background: var(--ask-sheen), var(--ask-wash), hsl(var(--ask-raised));
-    box-shadow: var(--ask-shadow-raised), var(--ask-wash-glow);
+    background: hsl(var(--ask-raised));
+    box-shadow: var(--ask-shadow-raised);
   }
 
-  /* Clear glass, for small things that sit on other surfaces. It's see-through
-     toward the bottom, so it picks up whatever is underneath. */
+  /* Small things that sit on other surfaces: questions to try, the name, the
+     sources */
   .ask-pill {
     border-radius: 9999px;
-    background: linear-gradient(
-      hsl(var(--ask-raised) / 0.96),
-      hsl(var(--ask-raised) / 0.62)
-    );
+    background: hsl(var(--ask-raised));
     box-shadow: var(--ask-shadow-pill);
   }
 
   .dark .ask-pill {
-    background: linear-gradient(rgb(255 255 255 / 0.12), rgb(255 255 255 / 0.06));
+    background: hsl(0 0% 18.5%);
   }
 
-  /* A question you could ask: clear glass with the wash's tint in it */
-  .ask-chip,
-  .dark .ask-chip {
-    background: var(--ask-gloss), var(--ask-wash-tint);
-  }
-
-  /* The button that sends: the same wash, deep enough to press. From the
-     outside in: a thin dark edge, a lighter rim, a line of shine along the top,
-     gloss over the upper half and a glow pooling along the bottom. */
+  /* The button that sends */
   .ask-glass {
-    color: var(--ask-glass-ink);
-    background: var(--ask-gloss), var(--ask-wash-deep);
-    box-shadow:
-      inset 0 0 0 1px var(--ask-glass-edge),
-      inset 0 2px 1px 0 var(--ask-glass-shine),
-      inset 0 -5px 6px -2px var(--ask-glass-glow),
-      inset 0 0 0 3px var(--ask-glass-rim),
-      var(--ask-glass-drop);
-    text-shadow: var(--ask-glass-emboss);
+    color: hsl(var(--foreground));
+    background: var(--ask-glass-fill);
+    box-shadow: var(--ask-glass-shadow);
     transition:
       transform 0.15s var(--ease-out),
       opacity 0.15s var(--ease-out),
@@ -1211,13 +1111,12 @@
 
   @media (hover: hover) and (pointer: fine) {
     .ask-glass:not(:disabled):hover {
-      filter: brightness(1.04);
+      filter: brightness(0.98);
     }
   }
 
-  /* Pressed, glass sits down into the surface: the drop closes up */
   .ask-glass:not(:disabled):active {
-    filter: brightness(0.97);
+    filter: brightness(0.95);
   }
 
   /* Small grey text sitting straight on the page gets a hint of a drop, so it
