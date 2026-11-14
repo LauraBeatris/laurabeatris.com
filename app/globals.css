@@ -599,4 +599,463 @@
       }
     }
   }
+
+  /* Ask Laura: surfaces. Grey answer cards with wells sunk into them, and one
+     material for everything you can press: glass. It is all in the site's own
+     greys, with no hue anywhere. The depth comes from light: a wash that runs
+     from white to a soft grey, at three strengths, so the input, the questions
+     and the send button read as cut from the same sheet. Light mode lifts with
+     rings, shine and short drops; dark lifts by getting lighter, with a thin
+     outline, because a shadow can't show there. */
+  .ask {
+    --ask-tray: 0 0% 96%;
+    --ask-raised: 0 0% 100%;
+    --ask-well: 0 0% 92%;
+    --ask-line: 0 0% 82%;
+    --ask-shadow-tray: inset 0 0 0 1px rgb(0 0 0 / 0.04);
+    --ask-shadow-text: 0 1px 1px rgb(0 0 0 / 0.14);
+
+    /* The wash, at three strengths: a whisper for surfaces, a tint for the
+       questions, and dark enough to be a button */
+    --ask-wash: linear-gradient(
+      100deg,
+      hsl(0 0% 100%),
+      hsl(0 0% 98.6%) 50%,
+      hsl(0 0% 96.8%)
+    );
+    --ask-wash-tint: linear-gradient(
+      100deg,
+      hsl(0 0% 99%),
+      hsl(0 0% 97%) 50%,
+      hsl(0 0% 94.5%)
+    );
+    --ask-wash-deep: linear-gradient(
+      100deg,
+      hsl(0 0% 89%),
+      hsl(0 0% 85%) 50%,
+      hsl(0 0% 80%)
+    );
+    /* Light falling from the top left, on top of whatever the glass is made of */
+    --ask-sheen: radial-gradient(
+      120% 100% at 0% 0%,
+      rgb(255 255 255 / 0.8),
+      rgb(255 255 255 / 0) 60%
+    );
+    --ask-gloss: linear-gradient(
+      rgb(255 255 255 / 0.6),
+      rgb(255 255 255 / 0) 52%
+    );
+
+    --ask-shadow-pill:
+      inset 0 1px 0 rgb(255 255 255 / 0.9),
+      inset 0 -2px 3px -1px rgb(0 0 0 / 0.06), 0 0 0 1px rgb(0 0 0 / 0.06),
+      0 1px 2px rgb(0 0 0 / 0.07), 0 5px 8px -5px rgb(0 0 0 / 0.14);
+    --ask-shadow-raised:
+      inset 0 1px 0 rgb(255 255 255 / 0.9), 0 0 0 1px rgb(0 0 0 / 0.05),
+      0 1px 2px rgb(0 0 0 / 0.07), 0 10px 18px -10px rgb(0 0 0 / 0.16);
+    --ask-wash-glow: 0 22px 30px -22px rgb(0 0 0 / 0.22);
+
+    /* The send button's ink is the page's ink */
+    --ask-glass-ink: hsl(var(--foreground));
+    --ask-glass-edge: hsl(0 0% 24% / 0.75);
+    --ask-glass-rim: rgb(255 255 255 / 0.45);
+    --ask-glass-shine: rgb(255 255 255 / 0.9);
+    --ask-glass-glow: rgb(255 255 255 / 0.95);
+    --ask-glass-emboss: 0 1px 0 rgb(255 255 255 / 0.6);
+    --ask-glass-drop:
+      0 1px 2px rgb(0 0 0 / 0.2), 0 8px 12px -6px rgb(0 0 0 / 0.28),
+      0 16px 20px -14px rgb(0 0 0 / 0.3);
+  }
+
+  .dark .ask {
+    --ask-tray: 0 0% 10.5%;
+    --ask-raised: 0 0% 15.5%;
+    --ask-well: 0 0% 7.5%;
+    --ask-line: 0 0% 26%;
+    --ask-shadow-tray: inset 0 0 0 0.5px hsl(0 0% 18%);
+    --ask-shadow-text: 0 1px 1px rgb(0 0 0 / 0.7);
+
+    --ask-wash: linear-gradient(
+      100deg,
+      hsl(0 0% 17%),
+      hsl(0 0% 15.5%) 50%,
+      hsl(0 0% 14.5%)
+    );
+    --ask-wash-tint: linear-gradient(
+      100deg,
+      hsl(0 0% 19%),
+      hsl(0 0% 17.5%) 50%,
+      hsl(0 0% 16%)
+    );
+    --ask-wash-deep: linear-gradient(
+      100deg,
+      hsl(0 0% 36%),
+      hsl(0 0% 32%) 50%,
+      hsl(0 0% 28%)
+    );
+    --ask-sheen: radial-gradient(
+      120% 100% at 0% 0%,
+      rgb(255 255 255 / 0.07),
+      rgb(255 255 255 / 0) 60%
+    );
+    --ask-gloss: linear-gradient(
+      rgb(255 255 255 / 0.16),
+      rgb(255 255 255 / 0) 52%
+    );
+
+    --ask-shadow-pill:
+      inset 0 1px 0 rgb(255 255 255 / 0.09), 0 0 0 0.5px hsl(0 0% 30%),
+      0 1px 2px rgb(0 0 0 / 0.5), 0 5px 8px -5px rgb(0 0 0 / 0.6);
+    --ask-shadow-raised:
+      inset 0 1px 0 rgb(255 255 255 / 0.07), 0 0 0 0.5px hsl(0 0% 27%),
+      0 1px 2px rgb(0 0 0 / 0.5), 0 10px 18px -10px rgb(0 0 0 / 0.7);
+    --ask-wash-glow: 0 22px 30px -22px rgb(0 0 0 / 0.8);
+
+    --ask-glass-edge: hsl(0 0% 62% / 0.5);
+    --ask-glass-rim: rgb(255 255 255 / 0.07);
+    --ask-glass-shine: rgb(255 255 255 / 0.28);
+    --ask-glass-glow: rgb(255 255 255 / 0.18);
+    --ask-glass-emboss: 0 1px 0 rgb(0 0 0 / 0.5);
+    --ask-glass-drop:
+      0 1px 2px rgb(0 0 0 / 0.6), 0 8px 12px -6px rgb(0 0 0 / 0.7),
+      0 16px 20px -14px rgb(0 0 0 / 0.8);
+  }
+
+  .ask-tray {
+    border-radius: 28px;
+    background: hsl(var(--ask-tray));
+    box-shadow: var(--ask-shadow-tray);
+  }
+
+  .ask-well {
+    background: hsl(var(--ask-well));
+  }
+
+  /* The input and what you've asked: the wash, with light across the top left
+     and a soft shadow pooling underneath */
+  .ask-raised {
+    background: var(--ask-sheen), var(--ask-wash), hsl(var(--ask-raised));
+    box-shadow: var(--ask-shadow-raised), var(--ask-wash-glow);
+  }
+
+  /* Clear glass, for small things that sit on other surfaces. It's see-through
+     toward the bottom, so it picks up whatever is underneath. */
+  .ask-pill {
+    border-radius: 9999px;
+    background: linear-gradient(
+      hsl(var(--ask-raised) / 0.96),
+      hsl(var(--ask-raised) / 0.62)
+    );
+    box-shadow: var(--ask-shadow-pill);
+  }
+
+  .dark .ask-pill {
+    background: linear-gradient(rgb(255 255 255 / 0.12), rgb(255 255 255 / 0.06));
+  }
+
+  /* A question you could ask: clear glass with the wash's tint in it */
+  .ask-chip,
+  .dark .ask-chip {
+    background: var(--ask-gloss), var(--ask-wash-tint);
+  }
+
+  /* The button that sends: the same wash, deep enough to press. From the
+     outside in: a thin dark edge, a lighter rim, a line of shine along the top,
+     gloss over the upper half and a glow pooling along the bottom. */
+  .ask-glass {
+    color: var(--ask-glass-ink);
+    background: var(--ask-gloss), var(--ask-wash-deep);
+    box-shadow:
+      inset 0 0 0 1px var(--ask-glass-edge),
+      inset 0 2px 1px 0 var(--ask-glass-shine),
+      inset 0 -5px 6px -2px var(--ask-glass-glow),
+      inset 0 0 0 3px var(--ask-glass-rim),
+      var(--ask-glass-drop);
+    text-shadow: var(--ask-glass-emboss);
+    transition:
+      transform 0.15s var(--ease-out),
+      opacity 0.15s var(--ease-out),
+      filter 0.15s var(--ease-out);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .ask-glass:not(:disabled):hover {
+      filter: brightness(1.04);
+    }
+  }
+
+  /* Pressed, glass sits down into the surface: the drop closes up */
+  .ask-glass:not(:disabled):active {
+    filter: brightness(0.97);
+  }
+
+  /* Small grey text sitting straight on the page gets a hint of a drop, so it
+     reads as resting on the surface and not printed into it */
+  .ask-depth {
+    text-shadow: var(--ask-shadow-text);
+  }
+
+  /* Ask Laura: things arrive on the page one after another.
+     The stagger stops growing after a few items, so a long list isn't a wait */
+  @keyframes ask-rise {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+
+  .ask-rise {
+    animation: ask-rise 0.3s var(--ease-out) both;
+    animation-delay: calc(min(var(--item, 0), 6) * 30ms);
+  }
+
+  /* Ask Laura: the newest question can always scroll to the top of the page.
+     --ask-dock is the docked composer's height, measured as it changes. */
+  .ask-latest-exchange {
+    min-height: calc(100dvh - var(--ask-dock, 14rem) - 2.5rem);
+  }
+
+  /* Ask Laura: each word of an answer soaks into the page as it arrives */
+  @keyframes ink-in {
+    from {
+      opacity: 0;
+      filter: blur(3px);
+    }
+  }
+
+  .ink-word {
+    animation: ink-in 0.3s var(--ease-out) both;
+  }
+
+  /* Ask Laura: a line runs from the face down the answer and turns into the
+     pill that says where the answer came from */
+  .ask-thread-line {
+    position: absolute;
+    top: 3.25rem;
+    bottom: 1.125rem;
+    left: calc(1.25rem - 0.75px);
+    width: 1.375rem;
+    border-bottom: 1.5px solid hsl(var(--ask-line));
+    border-left: 1.5px solid hsl(var(--ask-line));
+    border-bottom-left-radius: 14px;
+    pointer-events: none;
+  }
+
+  /* Fast, so a wait reads as shorter */
+  @keyframes ask-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .ask-spinner {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    border: 2px solid hsl(var(--ask-line));
+    border-top-color: hsl(var(--foreground));
+    border-radius: 9999px;
+    animation: ask-spin 0.6s linear infinite;
+  }
+
+  /* The dot on a sources pill nobody has opened yet */
+  .ask-unread {
+    width: 0.375rem;
+    height: 0.375rem;
+    flex-shrink: 0;
+    border-radius: 9999px;
+    background: hsl(var(--foreground));
+    transition:
+      transform 0.2s var(--ease-out),
+      opacity 0.2s var(--ease-out);
+  }
+
+  [data-read="true"] > .ask-unread {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  /* Once opened, the pill settles back into the card, like a read message */
+  .ask-sources {
+    transition:
+      background-color 0.2s var(--ease-out),
+      box-shadow 0.2s var(--ease-out),
+      color 0.2s var(--ease-out),
+      transform 0.15s var(--ease-out);
+  }
+
+  .ask-sources[data-read="true"] {
+    background: hsl(var(--ask-well));
+    box-shadow: none;
+    color: hsl(var(--muted));
+  }
+
+  /* On a touch screen, small controls keep their look and get a finger-sized
+     area to hit */
+  @media (pointer: coarse) {
+    .ask-hit {
+      position: relative;
+    }
+
+    .ask-hit::after {
+      content: "";
+      position: absolute;
+      inset: -4px;
+    }
+  }
+
+  /* The follow-up questions run off the tray's edge instead of wrapping */
+  .ask-chips {
+    scrollbar-width: none;
+    mask-image: linear-gradient(to right, #000 calc(100% - 2rem), transparent);
+  }
+
+  .ask-chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Ask Laura: the face from the autograph, in the composer and on each answer.
+     Its strokes are the signature's own, drawn on like the post sketches */
+  .agent-face-gaze,
+  .agent-face-brow {
+    transition: transform 0.3s var(--ease-out);
+  }
+
+  /* Every mood is a pose the face eases into, so a change of mind mid-way
+     picks up from wherever the face already is */
+  .agent-face {
+    overflow: visible;
+    transform-origin: 50% 60%;
+    transition: transform 0.3s var(--ease-out);
+  }
+
+  /* Listening: a glance over at what you're typing */
+  .agent-face[data-mood="listening"] .agent-face-gaze {
+    transform: translate(6px, -1px);
+  }
+
+  /* Thinking: head tilted, brows up, eyes to the ceiling */
+  .agent-face[data-mood="thinking"] {
+    transform: rotate(-9deg);
+  }
+
+  .agent-face[data-mood="thinking"] .agent-face-brow {
+    transform: translate(2px, -5px);
+  }
+
+  .agent-face[data-mood="thinking"] .agent-face-gaze {
+    transform: translate(3px, -5px);
+  }
+
+  /* Writing: leaning in, eyes down on the page */
+  .agent-face[data-mood="writing"] {
+    transform: rotate(5deg) translateY(1px);
+  }
+
+  .agent-face[data-mood="writing"] .agent-face-gaze {
+    transform: translate(-4px, 4px);
+  }
+
+  /* Sorry: head down, brows dropped, when an answer fell through */
+  .agent-face[data-mood="sorry"] {
+    transform: rotate(8deg) translateY(2px);
+  }
+
+  .agent-face[data-mood="sorry"] .agent-face-brow {
+    transform: translate(-1px, 4px);
+  }
+
+  .agent-face[data-mood="sorry"] .agent-face-gaze {
+    transform: translate(-2px, 4px);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .agent-face[data-blinks] .agent-face-eye {
+      animation: handwriting-blink 4.8s var(--ease-out) 1.5s infinite;
+    }
+  }
+
+  /* Ask Laura: a card's rows arrive just after the card does */
+  .ask-card .ask-rise {
+    animation-delay: calc(100ms + min(var(--item, 0), 6) * 30ms);
+  }
+
+  .ask-timeline li:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    left: 3px;
+    top: 1.2em;
+    bottom: -0.3em;
+    width: 1px;
+    background: hsl(var(--ask-line));
+  }
+
+  .ask-timeline-dot {
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 7px;
+    height: 7px;
+    border-radius: 9999px;
+    background: hsl(var(--foreground));
+  }
+
+  .ask-timeline li:not(:first-child) .ask-timeline-dot {
+    background: hsl(var(--ask-well));
+    box-shadow: inset 0 0 0 1.5px hsl(var(--muted));
+  }
+
+  /* Ask Laura: the transcript fades out under the docked composer */
+  .ask-composer-dock::before {
+    content: "";
+    position: absolute;
+    inset: -2rem 0 100% 0;
+    background: linear-gradient(to top, hsl(var(--background)), transparent);
+    pointer-events: none;
+  }
+
+  /* Ask Laura: one icon or label gives way to another in the same button, and
+     the blur carries the swap */
+  .ask-swap > * {
+    transition:
+      transform 0.25s var(--ease-out),
+      opacity 0.2s var(--ease-out),
+      filter 0.2s var(--ease-out);
+  }
+
+  .ask-swap > [data-shown="false"] {
+    opacity: 0;
+    transform: scale(0.9);
+    filter: blur(2px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ask-rise,
+    .ink-word {
+      animation: pen-appear 0.2s ease both;
+    }
+
+    /* Still shows it's working, without the spin */
+    @keyframes ask-pulse {
+      50% {
+        opacity: 0.35;
+      }
+    }
+
+    .ask-spinner {
+      border-color: hsl(var(--foreground));
+      animation: ask-pulse 1.2s ease-in-out infinite;
+    }
+
+    .ask-swap > [data-shown="false"],
+    [data-read="true"] > .ask-unread {
+      transform: none;
+    }
+
+    .agent-face,
+    .agent-face-gaze,
+    .agent-face-brow {
+      transition: none;
+    }
+  }
 }

@@ -1,10 +1,5 @@
 import { Signature } from "@/components/signature";
-
-const socials = [
-  { label: "X", href: "https://x.com/lauradotjs" },
-  { label: "GitHub", href: "https://github.com/LauraBeatris" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/laurabeatris" },
-];
+import { socials } from "@/content/laura";
 
 export function SiteFooter({
   showSignature = true,
@@ -23,7 +18,7 @@ export function SiteFooter({
             {socials.map((s) => (
               <li key={s.label}>
                 <a
-                  href={s.href}
+                  href={s.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-muted transition-colors hover:text-foreground"

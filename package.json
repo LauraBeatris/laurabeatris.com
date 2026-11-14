@@ -15,13 +15,16 @@
     "og:video": "node scripts/og-video.ts"
   },
   "dependencies": {
+    "@ai-sdk/react": "^4.0.176",
     "@mdx-js/loader": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
     "@next/mdx": "16.4.5",
     "@types/mdx": "^2.0.14",
+    "ai": "^7.0.172",
     "next": "16.4.5",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",

@@ -50,6 +50,13 @@ export default function Home() {
             >
               <span className="paper-word">talks and podcasts</span>
             </Link>
+            . Curious about anything else?{" "}
+            <Link
+              href="/ask"
+              className="font-normal text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
+            >
+              <span className="paper-word">Ask me</span>
+            </Link>
             .
           </p>
         </div>
