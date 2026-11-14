@@ -22,7 +22,8 @@
     "@videojs/react": "10.4.0",
     "next": "16.4.5",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "resend": "^6.38.0"
   },
   "devDependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",

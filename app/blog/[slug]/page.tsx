@@ -61,8 +61,8 @@ export default async function PostPage({ params }: PostPageProps) {
       <main className="flex-1 pb-16 pt-8">
         <article>
           <header className="mb-12">
-            <h1 className="text-pretty text-4xl font-semibold tracking-tight sm:text-5xl">
-              {post.title}
+            <h1 className="title-depth text-pretty text-4xl font-semibold tracking-tight sm:text-5xl">
+              <span>{post.title}</span>
             </h1>
             <time
               dateTime={post.publishedAt}

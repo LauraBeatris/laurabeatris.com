@@ -30,11 +30,13 @@ function MdxLink({ href = "", children }: ComponentProps<"a">) {
 const components = {
   Demo,
   a: MdxLink,
-  h2: (props) => (
+  h2: ({ children, ...props }) => (
     <h2
-      className="mt-12 text-pretty text-2xl font-semibold tracking-tight"
+      className="title-depth mt-12 text-pretty text-2xl font-semibold tracking-tight"
       {...props}
-    />
+    >
+      <span>{children}</span>
+    </h2>
   ),
   h3: (props) => (
     <h3

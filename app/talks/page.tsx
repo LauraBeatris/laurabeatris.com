@@ -51,8 +51,8 @@ export default function TalksPage() {
 
       <main className="flex flex-1 flex-col gap-16 py-8">
         <div>
-          <h1 className="text-pretty text-4xl font-semibold tracking-tight sm:text-5xl">
-            Talks &amp; Podcasts
+          <h1 className="title-depth text-pretty text-4xl font-semibold tracking-tight sm:text-5xl">
+            <span>Talks &amp; Podcasts</span>
           </h1>
           <p className="mt-4 text-pretty text-lg text-muted">
             Conversations and conference talks on React, TypeScript, GraphQL,
