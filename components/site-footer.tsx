@@ -1,11 +1,6 @@
 import { EmailMe } from "@/components/email-me";
 import { Signature } from "@/components/signature";
-
-const links = [
-  { label: "X", href: "https://x.com/lauradotjs" },
-  { label: "GitHub", href: "https://github.com/LauraBeatris" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/laurabeatris" },
-];
+import { socials } from "@/content/laura";
 
 export function SiteFooter({
   showSignature = true,
@@ -24,10 +19,10 @@ export function SiteFooter({
         </p>
         <nav aria-label="Contact and social links">
           <ul className="flex items-center gap-5">
-            {links.map((link) => (
+            {socials.map((link) => (
               <li key={link.label}>
                 <a
-                  href={link.href}
+                  href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-muted transition-colors hover:text-foreground"
