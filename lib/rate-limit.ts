@@ -39,3 +39,32 @@ export function createRateLimit({
     return 0;
   };
 }
+
+/**
+ * The network an address belongs to: the address itself for IPv4, the /64 for
+ * IPv6. One IPv6 connection is handed billions of addresses, so counting each
+ * one separately would let a single visitor never run out.
+ */
+export function networkOf(address: string) {
+  const mapped = address.match(/^::ffff:(\d+\.\d+\.\d+\.\d+)$/i);
+  if (mapped) return mapped[1];
+  if (!address.includes(":")) return address;
+
+  const [head, tail] = address.toLowerCase().split("::");
+  const leading = head ? head.split(":") : [];
+  const trailing = tail ? tail.split(":") : [];
+  // "::" stands for however many zero groups are missing from the eight
+  const groups =
+    tail === undefined
+      ? leading
+      : [
+          ...leading,
+          ...Array(Math.max(0, 8 - leading.length - trailing.length)).fill("0"),
+          ...trailing,
+        ];
+
+  return `${groups
+    .slice(0, 4)
+    .map((group) => group.replace(/^0+(?=.)/, ""))
+    .join(":")}::/64`;
+}

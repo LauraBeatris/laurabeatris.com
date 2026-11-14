@@ -3,23 +3,80 @@ import {
   CONTACT_EMAIL,
   MAX_MESSAGE_LENGTH,
   MAX_SUBJECT_LENGTH,
+  hasText,
   isEmailAddress,
 } from "@/lib/contact";
-import { createRateLimit } from "@/lib/rate-limit";
+import { createRateLimit, networkOf } from "@/lib/rate-limit";
 
-// The endpoint is public and every request can become an email in the inbox,
-// so the body, each field and how often one address can write are all bounded.
-const MAX_BODY_LENGTH = 20_000;
+// The endpoint is public and every request it accepts becomes an email in the
+// inbox and a line on Resend's bill. So it only listens to this site's own
+// pages, and the body, each field, how often one visitor can write and how
+// many emails go out in total are all bounded.
+export const maxDuration = 10;
+
+const MAX_BODY_BYTES = 20_000;
 const SENDER = "laurabeatris.com <site@laurabeatris.com>";
-const DEFAULT_SUBJECT = "A message from laurabeatris.com";
 
-const recordRequest = createRateLimit({
-  windowMs: 10 * 60 * 1000,
-  maxRequests: 5,
-});
+const MINUTE = 60 * 1000;
+const HOUR = 60 * MINUTE;
+
+const recordVisitor = createRateLimit({ windowMs: 10 * MINUTE, maxRequests: 5 });
+// However many visitors or addresses there are, the inbox only takes this many.
+// Like the limit above these are per instance: a ceiling on what one warm
+// function can send, not on what the whole deployment can.
+const recordHour = createRateLimit({ windowMs: HOUR, maxRequests: 10 });
+const recordDay = createRateLimit({ windowMs: 24 * HOUR, maxRequests: 40 });
 
 function reply(error: string, status: number, headers?: HeadersInit) {
   return Response.json({ error }, { status, headers });
+}
+
+/**
+ * Browsers say where a request came from. Another site's page could post here
+ * through its own visitors, each arriving from a different address, so only
+ * this site's pages are let in. Anything that isn't a browser sends neither
+ * header and is left to the limits.
+ */
+function isFromAnotherSite(request: Request) {
+  const site = request.headers.get("sec-fetch-site");
+  if (site) return site !== "same-origin";
+
+  const origin = request.headers.get("origin");
+  if (!origin) return false;
+
+  const host =
+    request.headers.get("x-forwarded-host") ?? request.headers.get("host");
+
+  try {
+    return new URL(origin).host !== host;
+  } catch {
+    return true;
+  }
+}
+
+/** Reads the body up to a limit, and stops listening the moment it's passed. */
+async function readBody(request: Request, limit: number) {
+  if (Number(request.headers.get("content-length")) > limit) return null;
+
+  const reader = request.body?.getReader();
+  if (!reader) return "";
+
+  const decoder = new TextDecoder();
+  let text = "";
+  let size = 0;
+
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) return text + decoder.decode();
+
+    size += value.byteLength;
+    if (size > limit) {
+      await reader.cancel();
+      return null;
+    }
+
+    text += decoder.decode(value, { stream: true });
+  }
 }
 
 function readField(payload: Record<string, unknown>, name: string) {
@@ -28,9 +85,21 @@ function readField(payload: Record<string, unknown>, name: string) {
 }
 
 export async function POST(request: Request) {
-  const body = await request.text();
+  if (isFromAnotherSite(request)) {
+    return reply("This form only works from laurabeatris.com.", 403);
+  }
 
-  if (body.length > MAX_BODY_LENGTH) {
+  // A page on another site can post plain text or a form without asking first.
+  // JSON it has to ask for, and nothing here says yes.
+  const type = request.headers.get("content-type")?.split(";")[0].trim();
+
+  if (type?.toLowerCase() !== "application/json") {
+    return reply("Expected JSON.", 415);
+  }
+
+  const body = await readBody(request, MAX_BODY_BYTES);
+
+  if (body === null) {
     return reply("That message is too long.", 413);
   }
 
@@ -60,7 +129,7 @@ export async function POST(request: Request) {
     return reply("That email address doesn't look right.", 400);
   }
 
-  if (!message) {
+  if (!hasText(message)) {
     return reply("Write a message first.", 400);
   }
 
@@ -70,11 +139,20 @@ export async function POST(request: Request) {
 
   const address =
     request.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
-  const retryAfter = recordRequest(address);
+  const visitorWait = recordVisitor(networkOf(address.slice(0, 45)));
 
-  if (retryAfter > 0) {
+  if (visitorWait > 0) {
     return reply("That's a lot of emails. Try again in a few minutes.", 429, {
-      "Retry-After": String(retryAfter),
+      "Retry-After": String(visitorWait),
+    });
+  }
+
+  const everyoneWait = recordHour("everyone") || recordDay("everyone");
+
+  if (everyoneWait > 0) {
+    console.error("The email form reached its ceiling and is turning emails away.");
+    return reply("The inbox is full for now.", 503, {
+      "Retry-After": String(everyoneWait),
     });
   }
 
@@ -90,8 +168,15 @@ export async function POST(request: Request) {
     to: CONTACT_EMAIL,
     // Replying from the inbox answers the person who wrote
     replyTo: from,
-    subject: subject || DEFAULT_SUBJECT,
-    text: `${message}\n\n--\n${from}, through the email form on laurabeatris.com`,
+    // Whatever the visitor wrote, the inbox can tell it came through the form:
+    // the subject says so first, and so does the body before any of their words
+    subject: `[laurabeatris.com] ${subject || "New message"}`,
+    text: [
+      "Sent through the email form on laurabeatris.com.",
+      `The sender typed their own address and nothing checked it: ${from}`,
+      "",
+      message,
+    ].join("\n"),
   });
 
   if (error) {

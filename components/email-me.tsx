@@ -9,6 +9,7 @@ import {
   MAX_EMAIL_LENGTH,
   MAX_MESSAGE_LENGTH,
   MAX_SUBJECT_LENGTH,
+  hasText,
   isEmailAddress,
 } from "@/lib/contact";
 
@@ -97,7 +98,7 @@ export function EmailMe() {
       return;
     }
 
-    if (!message.value.trim()) {
+    if (!hasText(message.value)) {
       setError("Write a message first.");
       message.focus();
       return;
