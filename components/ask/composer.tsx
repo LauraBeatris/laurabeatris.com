@@ -177,7 +177,7 @@ export function Composer({
             type="submit"
             disabled={!isBusy && !canAsk}
             aria-label={isBusy ? "Stop answering" : "Send question"}
-            className="ask-glass ask-swap ask-hit relative h-10 w-[5.25rem] shrink-0 rounded-full text-[15px] font-semibold active:scale-[0.97] disabled:opacity-50 disabled:saturate-50 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="ask-glass ask-swap ask-hit relative h-10 w-[5.25rem] shrink-0 rounded-full text-[15px] font-semibold active:scale-[0.97] disabled:opacity-50 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             {/* Both labels stay in the button, so it keeps its width as they swap */}
             <span
