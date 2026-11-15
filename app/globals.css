@@ -12,14 +12,15 @@
     --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
     --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 
-    /* The sheet the site is printed on. Two tiny inline SVGs, no image files: */
-    /* --paper-tooth is fractal noise lit from the top left, so the fine grain */
-    /* reads as a surface with dents and rims rather than as dust; */
-    /* --paper-pulp is a broad, barely-there unevenness, the way no sheet is one flat tone. */
-    /* Light mode is smooth white paper that only shades its dents. Dark mode is */
-    /* black card stock: a coarser, slower tooth whose rims catch the light */
-    --paper-tooth: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3CfeDiffuseLighting surfaceScale='1.4' result='l'%3E%3CfeDistantLight azimuth='225' elevation='60'/%3E%3C/feDiffuseLighting%3E%3CfeColorMatrix in='l' result='s' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.09 0 0 0 0.078'/%3E%3CfeColorMatrix in='l' result='h' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0'/%3E%3CfeMerge%3E%3CfeMergeNode in='s'/%3E%3CfeMergeNode in='h'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
-    --paper-pulp: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='720' height='720'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0045' numOctaves='1' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.024 0 0 0 -0.01'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E");
+    /* The sheet the site is printed on: recycled paper. Tiny inline SVGs, no image files: */
+    /* --paper-flecks is a sparse scatter of tiny inclusions, the imperfections that make */
+    /* recycled stock read as real; --paper-tooth is a flat, very fine grain; */
+    /* --paper-formation is the slow cloudiness you see looking across any real sheet. */
+    /* Tiles are unrelated sizes so their repeats never line up. */
+    /* Dark mode is black card, where flecks show both lighter and darker than the sheet */
+    --paper-formation: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='613' height='613'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006' numOctaves='3' seed='3' stitchTiles='stitch' result='v'/%3E%3CfeColorMatrix in='v' result='t0' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.07 0 0 0 0.035'/%3E%3CfeMerge%3E%3CfeMergeNode in='t0'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+    --paper-tooth: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='211' height='211'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='5' stitchTiles='stitch' result='v'/%3E%3CfeColorMatrix in='v' result='t0' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.07 0 0 0 0.035'/%3E%3CfeMerge%3E%3CfeMergeNode in='t0'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+    --paper-flecks: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='487' height='487'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.3' numOctaves='2' seed='12' stitchTiles='stitch' result='v'/%3E%3CfeColorMatrix in='v' result='t0' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3.2 0 0 0 0.704'/%3E%3CfeMerge%3E%3CfeMergeNode in='t0'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
   }
 
   .dark {
@@ -29,8 +30,9 @@
     --border: 0 0% 17%;
     --accent: 0 0% 72%;
 
-    --paper-tooth: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.42' numOctaves='4' stitchTiles='stitch'/%3E%3CfeDiffuseLighting surfaceScale='2.2' result='l'%3E%3CfeDistantLight azimuth='225' elevation='60'/%3E%3C/feDiffuseLighting%3E%3CfeColorMatrix in='l' result='s' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.16 0 0 0 0.139'/%3E%3CfeColorMatrix in='l' result='h' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.22 0 0 0 -0.191'/%3E%3CfeMerge%3E%3CfeMergeNode in='s'/%3E%3CfeMergeNode in='h'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
-    --paper-pulp: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='720' height='720'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0045' numOctaves='1' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.03 0 0 0 -0.012'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E");
+    --paper-formation: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='613' height='613'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006' numOctaves='3' seed='3' stitchTiles='stitch' result='v'/%3E%3CfeColorMatrix in='v' result='t0' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.06 0 0 0 -0.03'/%3E%3CfeColorMatrix in='v' result='t1' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.12 0 0 0 0.06'/%3E%3CfeMerge%3E%3CfeMergeNode in='t0'/%3E%3CfeMergeNode in='t1'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+    --paper-tooth: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='211' height='211'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='5' stitchTiles='stitch' result='v'/%3E%3CfeColorMatrix in='v' result='t0' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.08 0 0 0 -0.04'/%3E%3CfeColorMatrix in='v' result='t1' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.1 0 0 0 0.05'/%3E%3CfeMerge%3E%3CfeMergeNode in='t0'/%3E%3CfeMergeNode in='t1'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+    --paper-flecks: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='487' height='487'%3E%3Cfilter id='p' x='0' y='0' width='100%25' height='100%25' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.3' numOctaves='2' seed='12' stitchTiles='stitch' result='v'/%3E%3CfeColorMatrix in='v' result='t0' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 2.2 0 0 0 -1.716'/%3E%3CfeColorMatrix in='v' result='t1' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.4 0 0 0 0.528'/%3E%3CfeMerge%3E%3CfeMergeNode in='t0'/%3E%3CfeMergeNode in='t1'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
   }
 
   html {
@@ -65,7 +67,7 @@
   /* It scrolls with the words, the way ink sits on paper. Each SVG is */
   /* rasterized once and tiled, so it costs nothing after first paint */
   html {
-    background-image: var(--paper-tooth), var(--paper-pulp);
+    background-image: var(--paper-flecks), var(--paper-tooth), var(--paper-formation);
   }
 
   /* No fill of its own: a flat body would paint over the sheet */
