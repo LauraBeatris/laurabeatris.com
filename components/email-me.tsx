@@ -319,6 +319,8 @@ export function EmailMe() {
               onClick={() => close()}
               className="composer-backdrop"
             />
+            {/* Hangs 13px past the column, so Send's edge lands on the column's and
+                the corner has finished rounding before "Email me" ends */}
             <div
               ref={panel}
               id={composerId}
@@ -328,7 +330,7 @@ export function EmailMe() {
               data-open={isOpen}
               inert={!isOpen}
               onKeyDown={handleKeyDown}
-              className="composer absolute bottom-[calc(100%-1.625rem)] right-0 z-50 flex max-h-[calc(100dvh-7rem)] w-full flex-col rounded-2xl border border-border bg-background outline-none sm:w-[24rem]"
+              className="composer absolute bottom-[calc(100%-1.625rem)] -right-[13px] z-50 flex max-h-[calc(100dvh-7rem)] w-full flex-col rounded-2xl border border-border bg-background outline-none sm:w-[24rem]"
             >
               <div
                 onPointerDown={handleDragStart}

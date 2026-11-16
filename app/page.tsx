@@ -36,7 +36,7 @@ const jsonLd = {
 
 export default function Home() {
   return (
-    <div className="mx-auto flex min-h-svh max-w-[640px] flex-col overflow-x-clip px-6">
+    <div className="mx-auto flex min-h-svh max-w-[640px] flex-col px-6">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }}
@@ -46,7 +46,9 @@ export default function Home() {
         <ThemeToggle />
       </header>
 
-      <main className="flex flex-1 flex-col justify-center py-16">
+      {/* Clipped here, where the paper plane flies off, and not on the whole page:
+          the footer's composer casts a shadow past this edge */}
+      <main className="-mx-6 flex flex-1 flex-col justify-center overflow-x-clip px-6 py-16">
         <p className="mb-6 font-mono text-sm">
           <Greeting />
         </p>
