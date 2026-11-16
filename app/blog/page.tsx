@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { BackHeader } from "@/components/back-header";
 import { formatPostDate, getPosts } from "@/lib/blog";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Blog — Laura Beatris",
-  description: "Writing by Laura Beatris.",
-};
+  description:
+    "Writing by Laura Beatris on product engineering, developer tools, and building software with taste.",
+  path: "/blog",
+});
 
 export default async function BlogPage() {
   const posts = await getPosts();

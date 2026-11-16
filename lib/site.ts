@@ -1,6 +1,9 @@
 /** The one address the live site is meant to be reached on. */
 const SITE_HOST = "laurabeatris.com";
 
+/** Where every canonical link, sitemap entry and feed item points. */
+export const SITE_URL = `https://${SITE_HOST}`;
+
 /**
  * Every deployment is also reachable on generated *.vercel.app addresses, and
  * this repository's deployment history lists them publicly. The routes that

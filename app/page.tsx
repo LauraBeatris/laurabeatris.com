@@ -1,13 +1,46 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Greeting } from "@/components/greeting";
 import { ResendLink } from "@/components/resend-link";
 import { Signature } from "@/components/signature";
 import { SiteFooter } from "@/components/site-footer";
 import { ThemeToggle } from "@/components/theme-toggle";
+import {
+  HOME_DESCRIPTION,
+  HOME_TITLE,
+  jsonLdScript,
+  pageMetadata,
+  personJsonLd,
+  SITE_NAME,
+} from "@/lib/seo";
+import { SITE_URL } from "@/lib/site";
+
+export const metadata: Metadata = pageMetadata({
+  title: HOME_TITLE,
+  description: HOME_DESCRIPTION,
+  path: "/",
+});
+
+const jsonLd = {
+  "@graph": [
+    personJsonLd,
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: SITE_NAME,
+      url: SITE_URL,
+      author: { "@id": personJsonLd["@id"] },
+    },
+  ],
+};
 
 export default function Home() {
   return (
     <div className="mx-auto flex min-h-svh max-w-[640px] flex-col overflow-x-clip px-6">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLdScript(jsonLd) }}
+      />
       <header className="flex items-center justify-between py-8">
         <span className="font-mono text-sm text-muted">@lauradotjs</span>
         <ThemeToggle />

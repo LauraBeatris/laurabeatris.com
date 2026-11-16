@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { OG_SIZE } from "@/lib/og-card";
+import { HOME_DESCRIPTION, HOME_TITLE, SITE_NAME } from "@/lib/seo";
+import { SITE_URL } from "@/lib/site";
 import { THEME_COLOR } from "@/lib/theme";
 import "./globals.css";
 
@@ -17,34 +18,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://laurabeatris.com"),
-  title: "Laura Beatris — Product Engineer",
-  description:
-    "Laura Beatris, a Product Engineer at Resend building developer tools.",
-  openGraph: {
-    title: "Laura Beatris — Product Engineer",
-    description:
-      "Product Engineer at Resend building developer tools.",
-    url: "https://laurabeatris.com",
-    siteName: "Laura Beatris",
-    type: "website",
-    // Written by scripts/og-video.ts: the card, with the signature writing itself
-    videos: [
-      {
-        url: "https://laurabeatris.com/og/site.mp4",
-        type: "video/mp4",
-        width: OG_SIZE.width,
-        height: OG_SIZE.height,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Laura Beatris — Product Engineer",
-    description:
-      "Product Engineer at Resend building developer tools.",
-    creator: "@lauradotjs",
-  },
+  metadataBase: new URL(SITE_URL),
+  title: HOME_TITLE,
+  description: HOME_DESCRIPTION,
+  applicationName: SITE_NAME,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  // Each page sets its own canonical link and share card through pageMetadata
 };
 
 export const viewport: Viewport = {

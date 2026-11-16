@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { AskLaura } from "@/components/ask/ask-laura";
 import { BackHeader } from "@/components/back-header";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Ask Laura — Laura Beatris",
   description:
     "Ask an AI agent about Laura Beatris: her work at Resend, her talks, her writing, and how she thinks about building software.",
-};
+  path: "/ask",
+});
 
 export default function AskPage() {
   return (
