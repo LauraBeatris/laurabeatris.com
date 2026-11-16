@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import { BackHeader } from "@/components/back-header";
 import { SiteFooter } from "@/components/site-footer";
 import { podcasts, talks, type Appearance } from "@/content/talks";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Talks & Podcasts — Laura Beatris",
   description:
     "Talks and podcast appearances by Laura Beatris on React, TypeScript, GraphQL, testing, and continuous learning.",
-};
+  path: "/talks",
+});
 
 function ContentSection({
   title,
