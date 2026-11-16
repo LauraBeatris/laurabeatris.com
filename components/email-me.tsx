@@ -330,7 +330,7 @@ export function EmailMe() {
               data-open={isOpen}
               inert={!isOpen}
               onKeyDown={handleKeyDown}
-              className="composer absolute bottom-[calc(100%-1.625rem)] -right-[13px] z-50 flex max-h-[calc(100dvh-7rem)] w-full flex-col rounded-2xl border border-border bg-background outline-none sm:w-[24rem]"
+              className="composer absolute bottom-[calc(100%-1.375rem)] -right-[13px] z-50 flex max-h-[calc(100dvh-7rem)] w-full flex-col rounded-2xl border border-border bg-background outline-none sm:w-[24rem]"
             >
               <div
                 onPointerDown={handleDragStart}
