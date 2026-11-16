@@ -28,6 +28,8 @@ const DISMISS_DISTANCE = 96;
 const DISMISS_VELOCITY = 0.5;
 /** A finger held still this long before letting go has stopped flicking. */
 const FLICK_STALE_MS = 80;
+/** How long the keycaps stay down after the shortcut. A Mac never reports Return coming back up while ⌘ is held. */
+const KEY_PRESS_MS = 160;
 
 export function EmailMe() {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,20 +37,30 @@ export function EmailMe() {
   const [anchor, setAnchor] = useState<Element | null>(null);
   const [status, setStatus] = useState<SendStatus>("idle");
   const [error, setError] = useState<ReactNode>(null);
+  const [isShortcutDown, setIsShortcutDown] = useState(false);
 
   const composerId = useId();
   const trigger = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
+  const backdrop = useRef<HTMLDivElement>(null);
   const form = useRef<HTMLFormElement>(null);
   const closing = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const releasing = useRef<ReturnType<typeof setTimeout>>(undefined);
   const drag = useRef<{
     startY: number;
     lastY: number;
     lastAt: number;
     velocity: number;
+    height: number;
   } | null>(null);
 
-  useEffect(() => () => clearTimeout(closing.current), []);
+  useEffect(
+    () => () => {
+      clearTimeout(closing.current);
+      clearTimeout(releasing.current);
+    },
+    [],
+  );
 
   // As a sheet it sits on the keyboard, so it follows the part of the page still
   // visible. It keeps following while it leaves, since the keyboard drops after it
@@ -83,8 +95,14 @@ export function EmailMe() {
   useLayoutEffect(() => {
     if (!isOpen || !panel.current || !trigger.current) return;
 
+    // As a sheet it has no offset parent, and only ever slides
+    const row = panel.current.offsetParent;
+    if (!row) return;
+
+    // Read from the layout: the box on screen is already scaled by the time this runs
     const link = trigger.current.getBoundingClientRect();
-    const left = panel.current.getBoundingClientRect().left;
+    const left =
+      row.getBoundingClientRect().left + row.clientLeft + panel.current.offsetLeft;
     panel.current.style.transformOrigin = `${link.left + link.width / 2 - left}px 100%`;
   }, [isOpen, anchor]);
 
@@ -136,6 +154,10 @@ export function EmailMe() {
 
     if (event.metaKey || event.ctrlKey) {
       event.preventDefault();
+      // The keycaps in the corner go down with the real ones
+      setIsShortcutDown(true);
+      clearTimeout(releasing.current);
+      releasing.current = setTimeout(() => setIsShortcutDown(false), KEY_PRESS_MS);
       form.current?.requestSubmit();
       return;
     }
@@ -161,6 +183,7 @@ export function EmailMe() {
       lastY: event.clientY,
       lastAt: event.timeStamp,
       velocity: 0,
+      height: panel.current?.offsetHeight ?? 0,
     };
     event.currentTarget.setPointerCapture(event.pointerId);
   }
@@ -182,6 +205,13 @@ export function EmailMe() {
     const pulled = event.clientY - current.startY;
     const offset = pulled >= 0 ? pulled : -8 * Math.log1p(-pulled / 8);
     panel.current.style.transform = `translateY(${offset}px)`;
+
+    // The dim lifts as the sheet leaves, so the page is back by the time it's gone
+    if (backdrop.current && current.height > 0) {
+      const gone = Math.min(Math.max(pulled / current.height, 0), 1);
+      backdrop.current.style.transition = "none";
+      backdrop.current.style.opacity = String(1 - gone);
+    }
   }
 
   function handleDragEnd(event: PointerEvent<HTMLDivElement>) {
@@ -192,6 +222,10 @@ export function EmailMe() {
     // Hands the sheet back to the stylesheet, which carries it on from where the finger left it
     panel.current.style.transition = "";
     panel.current.style.transform = "";
+    if (backdrop.current) {
+      backdrop.current.style.transition = "";
+      backdrop.current.style.opacity = "";
+    }
 
     const pulled = event.clientY - current.startY;
     const isFresh = event.timeStamp - current.lastAt < FLICK_STALE_MS;
@@ -279,11 +313,14 @@ export function EmailMe() {
           <>
             {/* Only drawn as a sheet, to dim the page behind it. Tapping it puts the sheet away */}
             <div
+              ref={backdrop}
               aria-hidden="true"
               data-open={isOpen}
               onClick={() => close()}
               className="composer-backdrop"
             />
+            {/* Hangs 13px past the column, so Send's edge lands on the column's and
+                the corner has finished rounding before "Email me" ends */}
             <div
               ref={panel}
               id={composerId}
@@ -293,14 +330,14 @@ export function EmailMe() {
               data-open={isOpen}
               inert={!isOpen}
               onKeyDown={handleKeyDown}
-              className="composer absolute bottom-[calc(100%-1.25rem)] right-0 z-50 flex max-h-[calc(100dvh-7rem)] w-full flex-col rounded-2xl border border-border bg-background outline-none sm:w-[24rem]"
+              className="composer absolute bottom-[calc(100%-1.375rem)] -right-[13px] z-50 flex max-h-[calc(100dvh-7rem)] w-full flex-col rounded-2xl border border-border bg-background outline-none sm:w-[24rem]"
             >
               <div
                 onPointerDown={handleDragStart}
                 onPointerMove={handleDragMove}
                 onPointerUp={handleDragEnd}
                 onPointerCancel={handleDragEnd}
-                className="composer-header relative flex h-12 shrink-0 items-center justify-between pl-4 pr-2"
+                className="composer-header relative flex h-12 shrink-0 items-center justify-between pl-4 pr-3"
               >
                 <span aria-hidden="true" className="composer-grabber" />
                 <h2 className="text-sm font-medium">New message</h2>
@@ -308,7 +345,7 @@ export function EmailMe() {
                   type="button"
                   onClick={() => close()}
                   aria-label="Close"
-                  className="inline-flex size-8 items-center justify-center rounded-full text-muted outline-none transition-[color,transform] duration-[160ms] ease-[var(--ease-out)] hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent active:scale-95 motion-reduce:active:scale-100"
+                  className="relative inline-flex size-6 items-center justify-center rounded-full text-muted outline-none transition-[color,background-color,transform] duration-[160ms] ease-[var(--ease-out)] after:absolute after:-inset-2.5 hover:bg-foreground/[0.06] hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent active:scale-95 active:bg-foreground/[0.06] motion-reduce:active:scale-100"
                 >
                   <svg
                     width="14"
@@ -392,16 +429,16 @@ export function EmailMe() {
                   />
                 </div>
 
-                <div className="flex shrink-0 items-center justify-between gap-3 py-3 pl-4 pr-2">
+                <div className="flex shrink-0 items-center justify-between gap-3 py-3 pl-4 pr-3">
                   {error ? (
                     <p
                       role="alert"
-                      className="min-w-0 text-pretty text-[13px] leading-snug text-muted"
+                      className="composer-alert min-w-0 text-pretty text-[13px] leading-snug text-muted"
                     >
                       {error}
                     </p>
                   ) : (
-                    <SendHint />
+                    <SendHint isSpent={isLocked} isPressed={isShortcutDown} />
                   )}
                   <SendButton
                     status={status}
@@ -447,23 +484,33 @@ function Row({
   );
 }
 
-/** Rendered with the composer, which only exists in the browser. */
-function SendHint() {
+/**
+ * Rendered with the composer, which only exists in the browser. Once the email
+ * is on its way there's nothing left to send, so the hint steps aside.
+ */
+function SendHint({
+  isSpent,
+  isPressed,
+}: {
+  isSpent: boolean;
+  isPressed: boolean;
+}) {
   const isApple = /Mac|iPhone|iPad/.test(navigator.platform);
 
   return (
     <p
       aria-hidden="true"
-      className="hidden items-center gap-1 font-mono text-xs text-muted [@media(hover:hover)_and_(pointer:fine)]:flex"
+      data-spent={isSpent}
+      className="composer-hint hidden items-center gap-1 font-mono text-xs text-muted [@media(hover:hover)_and_(pointer:fine)]:flex"
     >
-      <Key>
+      <Key isPressed={isPressed}>
         {isApple ? (
           <KeyGlyph d="M9 9V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V9Z" />
         ) : (
           "Ctrl"
         )}
       </Key>
-      <Key>
+      <Key isPressed={isPressed}>
         <KeyGlyph d="M20 5v6a4 4 0 0 1-4 4H5M9 10.5 4.5 15 9 19.5" />
       </Key>
       <span className="ml-1">to send</span>
@@ -475,9 +522,18 @@ function SendHint() {
  * A keycap. The symbols on it are drawn here: as text they fall back to
  * whatever font has them, each at its own size and height.
  */
-function Key({ children }: { children: ReactNode }) {
+function Key({
+  isPressed,
+  children,
+}: {
+  isPressed: boolean;
+  children: ReactNode;
+}) {
   return (
-    <kbd className="inline-flex h-[18px] min-w-[18px] items-center justify-center rounded-[5px] border border-border px-[3px] font-sans text-[10px] font-medium leading-none">
+    <kbd
+      data-pressed={isPressed}
+      className="composer-key inline-flex h-[18px] min-w-[18px] items-center justify-center rounded-[5px] border border-border px-[3px] font-sans text-[10px] font-medium leading-none"
+    >
       {children}
     </kbd>
   );

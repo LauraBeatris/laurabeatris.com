@@ -772,14 +772,72 @@
     background-color: hsl(var(--foreground) / 0.035);
   }
 
+  /* What went wrong arrives where the hint was, instead of blinking in */
+  .composer-alert {
+    transition:
+      opacity 0.2s var(--ease-out),
+      transform 0.2s var(--ease-out),
+      filter 0.2s var(--ease-out);
+  }
+
+  /* The shortcut's hint. It waits a beat before leaving, so keys pressed to */
+  /* send are seen going down first */
+  .composer-hint {
+    transition: opacity 0.2s ease;
+  }
+
+  .composer-hint[data-spent="true"] {
+    opacity: 0;
+    transition: opacity 0.15s ease 0.06s;
+  }
+
+  .composer-key {
+    transition:
+      transform 0.12s var(--ease-out),
+      background-color 0.12s var(--ease-out);
+  }
+
+  .composer-key[data-pressed="true"] {
+    transform: translateY(1px) scale(0.94);
+    background-color: hsl(var(--foreground) / 0.08);
+  }
+
   /* Signature: Send folds into an envelope, tucks the letter in and seals it. */
   /* The envelope waits for the inbox to answer, then leaves as a paper plane */
   .send-paper {
     fill: hsl(var(--background));
   }
 
-  /* The button's shape. At rest it has no line, only a tint on hover. Pressing */
-  /* Send draws the line in as the shape folds into the envelope's outline */
+  /* The button's shape: the same glass as the one that sends a question. */
+  /* Pressing Send lets the glass go and draws its edge in as a line, which */
+  /* folds into the envelope's outline */
+  .send-button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--ask-glass-fill);
+    box-shadow: var(--ask-glass-shadow);
+    transition:
+      opacity 0.2s ease,
+      filter 0.15s var(--ease-out);
+  }
+
+  .send-button:not([data-stage="idle"])::before {
+    opacity: 0;
+    transition: opacity 0.12s ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .send-button[data-stage="idle"]:hover::before {
+      filter: brightness(0.98);
+    }
+  }
+
+  .send-button[data-stage="idle"]:active::before {
+    filter: brightness(0.95);
+  }
+
   .send-outline {
     fill: transparent;
     opacity: 0;
@@ -794,19 +852,12 @@
   [data-stage="idle"] .send-outline {
     transition:
       opacity 0.2s ease,
-      stroke-opacity 0.15s ease,
-      fill 0.15s ease;
+      stroke-opacity 0.15s ease;
   }
 
   [data-stage="morph"] .send-outline {
     stroke-opacity: 1;
     transition: stroke-opacity 0.12s ease;
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .send-button[data-stage="idle"]:hover .send-outline {
-      fill: hsl(var(--foreground) / 0.06);
-    }
   }
 
   .send-label {
@@ -1021,6 +1072,7 @@
       transform: none;
     }
 
+    .composer-key[data-pressed="true"],
     .send-button .send-letter,
     .send-button .send-plane,
     .send-button .send-envelope,
@@ -1062,12 +1114,23 @@
     opacity: 0;
     transform: translateY(8px) scale(0.97);
   }
+
+  .composer-alert {
+    opacity: 0;
+    transform: translateY(4px);
+    filter: blur(2px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   @starting-style {
     .composer[data-open="true"] {
       transform: none;
+    }
+
+    .composer-alert {
+      transform: none;
+      filter: none;
     }
   }
 }
@@ -1088,8 +1151,12 @@
     --ask-shadow-raised:
       0 0 0 1px rgb(0 0 0 / 0.07), 0 1px 2px rgb(0 0 0 / 0.04),
       0 4px 8px -4px rgb(0 0 0 / 0.06);
+  }
 
-    /* The send button: a shade off white, with a top edge that catches light */
+  /* The button that sends, here and in the email composer: a shade off white, */
+  /* with a top edge that catches light */
+  .ask,
+  .composer {
     --ask-glass-fill: linear-gradient(hsl(0 0% 96%), hsl(0 0% 92%));
     --ask-glass-shadow:
       inset 0 0 0 1px rgb(0 0 0 / 0.14), inset 0 1.5px 0 rgb(255 255 255 / 0.9),
@@ -1105,7 +1172,10 @@
     --ask-shadow-text: 0 1px 0 rgb(0 0 0 / 0.5);
     --ask-shadow-pill: 0 0 0 0.5px hsl(0 0% 30%), 0 1px 1px rgb(0 0 0 / 0.3);
     --ask-shadow-raised: 0 0 0 0.5px hsl(0 0% 26%), 0 1px 2px rgb(0 0 0 / 0.35);
+  }
 
+  .dark .ask,
+  .dark .composer {
     --ask-glass-fill: linear-gradient(hsl(0 0% 30%), hsl(0 0% 26%));
     --ask-glass-shadow:
       inset 0 0 0 0.5px rgb(255 255 255 / 0.22),
