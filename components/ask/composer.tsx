@@ -9,7 +9,7 @@ import {
 } from "@/components/ask/agent-face";
 import { MAX_QUESTION_LENGTH } from "@/lib/ask/transcript";
 
-const CAVEAT = "AI answers from my notes and can get things wrong";
+const CAVEAT = "Answered by AI from my notes, not by me";
 
 export function Composer({
   mood,
