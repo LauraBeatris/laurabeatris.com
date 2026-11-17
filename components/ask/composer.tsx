@@ -130,7 +130,7 @@ export function Composer({
           narrow phone it takes a second line before it loses a word: it's the
           page's small print */}
       <div className="ask-depth mt-2.5 flex min-h-5 items-start justify-end text-[13px] leading-5 text-muted">
-        <p className="text-pretty text-right">{CAVEAT}</p>
+        <p className="text-pretty text-right opacity-75">{CAVEAT}</p>
 
         <button
           type="button"
