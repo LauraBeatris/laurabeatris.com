@@ -49,10 +49,13 @@ export function AgentFace({
         );
 
         if (stroke.isEye) {
-          // Gaze on the outside, blink on the inside, so neither replaces the other
+          // Gaze on the outside, then the wander while it thinks, then the
+          // blink on the inside, so none of the three replaces another
           return (
             <g key={stroke.d} className="agent-face-gaze">
-              <g className="agent-face-eye handwriting-eye">{path}</g>
+              <g className="agent-face-wander">
+                <g className="agent-face-eye handwriting-eye">{path}</g>
+              </g>
             </g>
           );
         }

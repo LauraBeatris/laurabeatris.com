@@ -11,10 +11,7 @@ export type Source = {
   /** How the source is named once the answer has used it. */
   name: string;
   /** Where it really lives, so a visitor can check the answer against it. */
-  origin: string;
   href: string;
-  /** Path data for a 24×24 stroke icon. */
-  icon: string;
   /** Questions that go one step further from an answer that used this. */
   followUps: string[];
 };
@@ -25,9 +22,7 @@ const REPOSITORY = "https://github.com/LauraBeatris/laurabeatris.com/blob/master
 export const NOTES_SOURCE: Source = {
   working: "Thinking",
   name: "My notes",
-  origin: "content/laura.ts",
   href: `${REPOSITORY}/content/laura.ts`,
-  icon: "M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6",
   followUps: [
     "Where are you from?",
     "How did you get into software?",
@@ -42,9 +37,7 @@ export const TOOL_SOURCES: Record<ToolPart["type"], Source> = {
   "tool-showTalks": {
     working: "Pulling out my talks",
     name: "My talks and podcasts",
-    origin: "/talks",
     href: "/talks",
-    icon: "M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3zM6 11a6 6 0 0 0 12 0M12 17v4",
     followUps: [
       "Which topics do you speak about most?",
       "Which podcasts have you been on?",
@@ -54,9 +47,7 @@ export const TOOL_SOURCES: Record<ToolPart["type"], Source> = {
   "tool-showWriting": {
     working: "Finding my writing",
     name: "My blog",
-    origin: "/blog",
     href: "/blog",
-    icon: "M4 20l1-5L16 4l4 4L9 19zM14 6l4 4",
     followUps: [
       "Where do you disagree with Rick Rubin?",
       "How do you think about taste?",
@@ -66,9 +57,7 @@ export const TOOL_SOURCES: Record<ToolPart["type"], Source> = {
   "tool-showCareer": {
     working: "Sketching my career",
     name: "My career",
-    origin: "content/laura.ts",
     href: `${REPOSITORY}/content/laura.ts`,
-    icon: "M4 8h16v11H4zM9 8V5h6v3M4 13h16",
     followUps: [
       "Why did you join Resend?",
       "How did you get into software?",
@@ -78,9 +67,7 @@ export const TOOL_SOURCES: Record<ToolPart["type"], Source> = {
   "tool-showContact": {
     working: "Looking up where to find me",
     name: "My links",
-    origin: "content/laura.ts",
     href: `${REPOSITORY}/content/laura.ts`,
-    icon: "M16 12a4 4 0 1 0-1.2 2.9M16 8v5a2.5 2.5 0 0 0 5 0v-1a9 9 0 1 0-3.5 7.1",
     followUps: [
       "Where are you based?",
       "What are you building at Resend?",
@@ -90,9 +77,7 @@ export const TOOL_SOURCES: Record<ToolPart["type"], Source> = {
   "tool-showGithubActivity": {
     working: "Checking GitHub",
     name: "GitHub, live",
-    origin: "github.com/LauraBeatris",
     href: "https://github.com/LauraBeatris",
-    icon: "M6 4v10M6 14a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM18 4a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM18 10c0 4-6 3-9 6",
     followUps: [
       "How was this agent built?",
       "What is this site built with?",
@@ -105,13 +90,13 @@ export function isToolPart(part: Part): part is ToolPart {
   return part.type.startsWith("tool-");
 }
 
-/** A sheet the agent pulls out mid-answer, sunk into the answer it belongs to. */
+/**
+ * What the agent pulls out mid-answer. Ruled like the lists on /talks and
+ * /blog, and written on the same page as the answer it belongs to.
+ */
 function Card({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <section
-      aria-label={label}
-      className="ask-card ask-well ask-rise rounded-[20px] px-4 py-3.5"
-    >
+    <section aria-label={label} className="ask-card ask-rise">
       {children}
     </section>
   );
@@ -120,7 +105,7 @@ function Card({ label, children }: { label: string; children: ReactNode }) {
 function CardHeading({ children, index }: { children: ReactNode; index: number }) {
   return (
     <h3
-      className="ask-rise font-mono text-[11px] uppercase tracking-widest text-muted [&:not(:first-child)]:mt-4"
+      className="ask-rise font-mono text-[11px] uppercase tracking-widest text-muted [&:not(:first-child)]:mt-5"
       style={{ "--item": index } as CSSProperties}
     >
       {children}
@@ -162,7 +147,7 @@ function CardRow({
 
   return (
     <li
-      className="ask-rise border-t border-foreground/[0.07] first:border-t-0"
+      className="ask-rise border-t border-border"
       style={{ "--item": index } as CSSProperties}
     >
       {href ? (
@@ -188,7 +173,7 @@ export function ToolCard({ part }: { part: ToolPart }) {
       return (
         <Card label="Talks and podcasts">
           {hasBoth && <CardHeading index={0}>Talks</CardHeading>}
-          <ul className={hasBoth ? "mt-1" : "-my-2.5"}>
+          <ul className={hasBoth ? "mt-2" : undefined}>
             {talks.map((talk, index) => (
               <CardRow
                 key={talk.url}
@@ -202,7 +187,7 @@ export function ToolCard({ part }: { part: ToolPart }) {
           {hasBoth && (
             <CardHeading index={talks.length + 1}>Podcasts</CardHeading>
           )}
-          <ul className={hasBoth ? "-mb-2.5 mt-1" : "-my-2.5"}>
+          <ul className={hasBoth ? "mt-2" : undefined}>
             {podcasts.map((podcast, index) => (
               <CardRow
                 key={podcast.url}
@@ -222,7 +207,7 @@ export function ToolCard({ part }: { part: ToolPart }) {
 
       return (
         <Card label="Writing">
-          <ul className="-my-2.5">
+          <ul>
             {part.output.posts.map((post, index) => (
               <CardRow
                 key={post.href}
@@ -240,7 +225,7 @@ export function ToolCard({ part }: { part: ToolPart }) {
     case "tool-showCareer":
       return (
         <Card label="Career">
-          <ol className="ask-timeline">
+          <ol className="ask-timeline border-t border-border pt-3.5">
             {part.output.career.map((entry, index) => (
               <li
                 key={entry.company}
@@ -281,7 +266,7 @@ export function ToolCard({ part }: { part: ToolPart }) {
     case "tool-showContact":
       return (
         <Card label="Where to find me">
-          <ul className="-my-2.5">
+          <ul>
             {part.output.socials.map((social, index) => (
               <CardRow
                 key={social.url}
@@ -300,7 +285,7 @@ export function ToolCard({ part }: { part: ToolPart }) {
 
       return (
         <Card label="Recent GitHub activity">
-          <ul className="-my-2.5">
+          <ul>
             {part.output.repos.map((repo, index) => (
               <CardRow
                 key={repo.url}
