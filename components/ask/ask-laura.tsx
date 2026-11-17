@@ -8,7 +8,12 @@ import type { FaceMood } from "@/components/ask/agent-face";
 import { Answer, getSources, hasContent } from "@/components/ask/answer";
 import { AskLink } from "@/components/ask/ask-link";
 import { Composer } from "@/components/ask/composer";
-import { TOOL_SOURCES, isToolPart } from "@/components/ask/tool-cards";
+import {
+  NOTES_SOURCE,
+  TOOL_SOURCES,
+  isToolPart,
+} from "@/components/ask/tool-cards";
+import { PenLoop } from "@/components/pen-loop";
 import type { AskLauraUIMessage } from "@/lib/ask/agent";
 import {
   playSound,
@@ -95,7 +100,7 @@ function getStatus(messages: AskLauraUIMessage[], isBusy: boolean) {
   if (!isBusy) return null;
 
   const last = messages.at(-1);
-  if (last?.role !== "assistant") return "Thinking";
+  if (last?.role !== "assistant") return NOTES_SOURCE.working;
 
   const part = last.parts.at(-1);
   if (part?.type === "text" && part.text) return "Writing";
@@ -103,7 +108,7 @@ function getStatus(messages: AskLauraUIMessage[], isBusy: boolean) {
     return TOOL_SOURCES[part.type].working;
   }
 
-  return "Thinking";
+  return NOTES_SOURCE.working;
 }
 
 const FALLBACK_ERROR =
@@ -272,17 +277,7 @@ export function AskLaura() {
             <span className="title-depth inline-block">
               <span>Ask me</span>
             </span>
-            <svg
-              aria-hidden
-              viewBox="0 0 100 40"
-              preserveAspectRatio="none"
-              className="ask-me-loop ask-title-loop"
-            >
-              <path
-                d="M86 5C68 0 24 1 9 9C-3 16 2 32 22 36C45 40 83 38 95 28C103 20 96 8 74 4C64 2 54 2 46 4"
-                pathLength={1}
-              />
-            </svg>
+            <PenLoop scalesWithWords className="ask-title-loop" />
           </span>{" "}
           <span className="title-depth inline-block">
             <span>anything</span>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Greeting } from "@/components/greeting";
+import { PenLoop } from "@/components/pen-loop";
 import { ResendLink } from "@/components/resend-link";
 import { Signature } from "@/components/signature";
 import { SiteFooter } from "@/components/site-footer";
@@ -91,18 +92,7 @@ export default function Home() {
               className="ask-me relative isolate mr-[0.12em] whitespace-nowrap font-normal text-foreground underline decoration-border decoration-2 underline-offset-4 transition-colors hover:decoration-accent"
             >
               <span className="paper-word">Ask me</span>
-              <svg
-                aria-hidden
-                viewBox="0 0 100 40"
-                preserveAspectRatio="none"
-                className="ask-me-loop"
-              >
-                <path
-                  d="M86 5C68 0 24 1 9 9C-3 16 2 32 22 36C45 40 83 38 95 28C103 20 96 8 74 4C64 2 54 2 46 4"
-                  pathLength={1}
-                  vectorEffect="non-scaling-stroke"
-                />
-              </svg>
+              <PenLoop />
             </Link>
             .
           </p>

@@ -1545,6 +1545,24 @@
       filter 0.15s var(--ease-out);
   }
 
+  /* The last step, left under the first words of the answer just long enough
+     to dissolve. It's there only while those words are still arriving */
+  @keyframes ask-status-out {
+    to {
+      opacity: 0;
+      filter: blur(2px);
+    }
+  }
+
+  .ask-status-out {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    pointer-events: none;
+    animation: ask-status-out 0.15s var(--ease-out) forwards;
+  }
+
   /* Ask Laura: one icon or label gives way to another in the same button, and
      the blur carries the swap */
   .ask-swap > * {

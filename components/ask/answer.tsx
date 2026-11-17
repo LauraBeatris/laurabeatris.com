@@ -69,12 +69,22 @@ export function Answer({
         {answers.map((answer) =>
           answer.parts.map((part, index) => {
             if (part.type === "text" && part.text) {
+              const isStreaming = part.state === "streaming";
+
               return (
-                <div key={`${answer.id}-${index}`}>
-                  <InkText
-                    text={part.text}
-                    isStreaming={part.state === "streaming"}
-                  />
+                <div key={`${answer.id}-${index}`} className="relative">
+                  {/* The words take the place of the line that said it was
+                      thinking, and that line dissolves under them instead of
+                      blinking out */}
+                  {isStreaming && (
+                    <span
+                      aria-hidden
+                      className="ask-status-out text-base leading-7 text-muted"
+                    >
+                      {NOTES_SOURCE.working}…
+                    </span>
+                  )}
+                  <InkText text={part.text} isStreaming={isStreaming} />
                 </div>
               );
             }
