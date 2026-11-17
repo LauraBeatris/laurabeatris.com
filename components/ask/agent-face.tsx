@@ -9,9 +9,9 @@ const FACE_STROKES = SIGNATURE_STROKES.slice(-5);
 /** The agent's name never appears without saying what it is. */
 export function AgentName({ className }: { className?: string }) {
   return (
-    <span className={`inline-flex items-center gap-2 ${className ?? ""}`}>
+    <span className={`inline-flex items-center gap-1.5 ${className ?? ""}`}>
       Laura
-      <span className="rounded-md bg-foreground/[0.07] px-1.5 py-0.5 font-mono text-[10px] font-normal uppercase tracking-wider text-foreground/70">
+      <span className="rounded-[5px] px-1 text-[10px] font-medium uppercase leading-4 tracking-[0.06em] text-muted ring-1 ring-inset ring-foreground/15">
         AI
       </span>
     </span>
