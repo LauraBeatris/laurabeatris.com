@@ -9,9 +9,9 @@ const FACE_STROKES = SIGNATURE_STROKES.slice(-5);
 /** The agent's name never appears without saying what it is. */
 export function AgentName({ className }: { className?: string }) {
   return (
-    <span className={`inline-flex items-center gap-2 ${className ?? ""}`}>
+    <span className={`inline-flex items-center gap-1.5 ${className ?? ""}`}>
       Laura
-      <span className="rounded-md bg-foreground/[0.07] px-1.5 py-0.5 font-mono text-[10px] font-normal uppercase tracking-wider text-foreground/70">
+      <span className="rounded-[5px] px-1 text-[10px] font-medium uppercase leading-4 tracking-[0.06em] text-muted ring-1 ring-inset ring-foreground/15">
         AI
       </span>
     </span>
@@ -49,10 +49,13 @@ export function AgentFace({
         );
 
         if (stroke.isEye) {
-          // Gaze on the outside, blink on the inside, so neither replaces the other
+          // Gaze on the outside, then the wander while it thinks, then the
+          // blink on the inside, so none of the three replaces another
           return (
             <g key={stroke.d} className="agent-face-gaze">
-              <g className="agent-face-eye handwriting-eye">{path}</g>
+              <g className="agent-face-wander">
+                <g className="agent-face-eye handwriting-eye">{path}</g>
+              </g>
             </g>
           );
         }

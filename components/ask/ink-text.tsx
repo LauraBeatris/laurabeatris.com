@@ -116,20 +116,28 @@ function safeHref(href: string) {
 }
 
 function Words({ text }: { text: string }) {
-  // Each word is its own element, so it's inked in once, when it arrives
-  return text.split(/(\s+)/).map((piece, index) =>
-    /^\s*$/.test(piece) ? (
-      piece.includes("\n") ? (
-        <br key={index} />
-      ) : (
-        piece
-      )
-    ) : (
+  // Each word is its own element, so it's inked in once, when it arrives. The
+  // space after a word is inked in with it: left on its own inside a link, a
+  // space shows its piece of the underline before the words around it appear
+  const pieces = text.split(/(\s+)/);
+
+  return pieces.map((piece, index) => {
+    if (/^\s*$/.test(piece)) {
+      if (piece.includes("\n")) return <br key={index} />;
+      // Carried by the word before it, when there is one
+      return index > 0 && pieces[index - 1] ? null : piece;
+    }
+
+    const after = pieces[index + 1];
+    const space = after && !after.includes("\n") ? after : "";
+
+    return (
       <span key={index} className="ink-word">
         {piece}
+        {space}
       </span>
-    ),
-  );
+    );
+  });
 }
 
 function InkToken({ token }: { token: Token }) {
@@ -148,6 +156,17 @@ function InkToken({ token }: { token: Token }) {
   );
 }
 
+/**
+ * The agent is asked for plain prose, and sometimes writes a heading, a list
+ * or a bit of code anyway. The page has no way to draw those, so their marks
+ * are dropped and the words stay, each line where it was.
+ */
+function toProse(text: string) {
+  return text
+    .replace(/`+/g, "")
+    .replace(/^[ \t]*(?:#{1,6}|[-*•])[ \t]+/gm, "");
+}
+
 export function InkText({
   text,
   isStreaming,
@@ -156,7 +175,7 @@ export function InkText({
   isStreaming: boolean;
 }) {
   // A lone asterisk at the very end is half of a ** that's still on its way
-  const visible = isStreaming ? text.replace(/\*$/, "") : text;
+  const visible = toProse(isStreaming ? text.replace(/\*$/, "") : text);
   const paragraphs = visible.split(/\n{2,}/).filter((paragraph) => paragraph.trim());
 
   return paragraphs.map((paragraph, index) => (

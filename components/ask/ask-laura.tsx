@@ -1,12 +1,19 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import type { FaceMood } from "@/components/ask/agent-face";
-import { Answer, getSources, type Timing } from "@/components/ask/answer";
+import { Answer, getSources, hasContent } from "@/components/ask/answer";
+import { AskLink } from "@/components/ask/ask-link";
 import { Composer } from "@/components/ask/composer";
-import { TOOL_SOURCES, isToolPart } from "@/components/ask/tool-cards";
+import {
+  NOTES_SOURCE,
+  TOOL_SOURCES,
+  isToolPart,
+} from "@/components/ask/tool-cards";
+import { PenLoop } from "@/components/pen-loop";
 import type { AskLauraUIMessage } from "@/lib/ask/agent";
 import {
   playSound,
@@ -24,14 +31,21 @@ const transport = new DefaultChatTransport<AskLauraUIMessage>({
   }),
 });
 
-/** One for each kind of thing the agent can show, so the range is clear at a glance. */
+/**
+ * One for each kind of thing the agent can show, so the range is clear at a
+ * glance. They read as one sentence in the intro, and each phrase asks its
+ * question when pressed.
+ */
 const STARTERS = [
-  "What are you building at Resend?",
-  "Where have you worked?",
-  "Show me your talks",
-  "What have you written?",
-  "What have you been hacking on lately?",
-  "Where can I find you?",
+  { phrase: "what I'm building", question: "What are you building at Resend?" },
+  { phrase: "where I've worked", question: "Where have you worked?" },
+  { phrase: "my talks", question: "Show me your talks" },
+  { phrase: "my writing", question: "What have you written?" },
+  {
+    phrase: "what I'm hacking on",
+    question: "What have you been hacking on lately?",
+  },
+  { phrase: "where to find me", question: "Where can I find you?" },
 ];
 
 const MAX_FOLLOW_UPS = 3;
@@ -63,17 +77,13 @@ function getText(message: AskLauraUIMessage) {
 }
 
 /**
- * Before the first question: starters. After an answer: questions that follow
- * from what it just drew on, most specific source first, minus anything
- * already asked.
+ * Questions that follow from what the latest answer drew on, most specific
+ * source first, minus anything already asked. None until there's an answer to
+ * follow from.
  */
-function getSuggestions(exchanges: Exchange[], isBusy: boolean) {
-  if (exchanges.length === 0) return STARTERS;
-
-  // An answer still being written hasn't shown what it will draw on yet
-  const answered = isBusy ? exchanges.slice(0, -1) : exchanges;
-  const latest = answered.at(-1);
-  if (!latest) return [];
+function getFollowUps(exchanges: Exchange[]) {
+  const latest = exchanges.at(-1);
+  if (!latest || !hasContent(latest.answers)) return [];
 
   const asked = new Set(exchanges.map(({ question }) => getText(question)));
   const followUps = getSources(latest.answers)
@@ -90,7 +100,7 @@ function getStatus(messages: AskLauraUIMessage[], isBusy: boolean) {
   if (!isBusy) return null;
 
   const last = messages.at(-1);
-  if (last?.role !== "assistant") return "Thinking";
+  if (last?.role !== "assistant") return NOTES_SOURCE.working;
 
   const part = last.parts.at(-1);
   if (part?.type === "text" && part.text) return "Writing";
@@ -98,7 +108,7 @@ function getStatus(messages: AskLauraUIMessage[], isBusy: boolean) {
     return TOOL_SOURCES[part.type].working;
   }
 
-  return "Thinking";
+  return NOTES_SOURCE.working;
 }
 
 const FALLBACK_ERROR =
@@ -125,11 +135,18 @@ function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
+// The least an answer needs to be seen starting: the face, the line that says
+// what it's doing and a few lines of text. With less than this between the
+// first question and the docked note, the question goes to the top of the page
+const ROOM_FOR_AN_ANSWER = 200;
+// How far above the note the transcript starts to fade (2rem, in globals.css)
+const DOCK_FADE = 32;
+
 export function AskLaura() {
   const { messages, sendMessage, status, stop, error, regenerate } =
     useChat<AskLauraUIMessage>({ transport, throttle: 50 });
-  const [timings, setTimings] = useState<Timing[]>([]);
   const [isSoundOn, setIsSoundOn] = useState(true);
+  const [isFirstQuestionLifted, setIsFirstQuestionLifted] = useState(false);
 
   const exchanges = toExchanges(messages);
   const hasMessages = messages.length > 0;
@@ -142,10 +159,12 @@ export function AskLaura() {
     : agentStatus === "Writing"
       ? "writing"
       : "thinking";
+  // Nothing to follow from while an answer is on its way, or after one failed
+  const followUps = isBusy || error ? [] : getFollowUps(exchanges);
 
   const page = useRef<HTMLElement>(null);
   const dock = useRef<HTMLDivElement>(null);
-  const dockTopBeforeAsking = useRef<number | null>(null);
+  const noteTopBeforeAsking = useRef<number | null>(null);
   const latestQuestion = useRef<HTMLParagraphElement>(null);
   const previousStatus = useRef(status);
   const wasStopped = useRef(false);
@@ -165,20 +184,24 @@ export function AskLaura() {
     if (next) playSound("tap");
   }
 
+  // The note itself, and not the dock around it: it's the thing the eye follows
+  function getNoteTop() {
+    return (
+      dock.current?.querySelector("form")?.getBoundingClientRect().top ?? null
+    );
+  }
+
   function ask(question: string) {
-    if (!hasMessages) {
-      dockTopBeforeAsking.current =
-        dock.current?.getBoundingClientRect().top ?? null;
-    }
+    // One question at a time; the note's button says Stop until this one is done
+    if (isBusy) return;
+    if (!hasMessages) noteTopBeforeAsking.current = getNoteTop();
     wasStopped.current = false;
-    setTimings((all) => [...all, { startedAt: Date.now() }]);
     play("send");
     sendMessage({ text: question });
   }
 
   function retry() {
     wasStopped.current = false;
-    setTimings((all) => [...all.slice(0, -1), { startedAt: Date.now() }]);
     play("send");
     regenerate();
   }
@@ -188,49 +211,65 @@ export function AskLaura() {
     stop();
   }
 
-  // Each change of state is heard once, and the answer's clock stops with it
+  // Each change of state is heard once
   useEffect(() => {
     const previous = previousStatus.current;
     previousStatus.current = status;
     if (previous === status) return;
 
     if (status === "streaming") play("arrive");
-
-    if (status === "ready" || status === "error") {
-      setTimings((all) =>
-        all.map((timing, index) =>
-          index === all.length - 1 && !timing.endedAt
-            ? { ...timing, endedAt: Date.now() }
-            : timing,
-        ),
-      );
-      if (status === "error") play("error");
-      else if (!wasStopped.current) play("done");
-    }
+    if (status === "error") play("error");
+    if (status === "ready" && !wasStopped.current) play("done");
     // `play` reads the sound setting; a status change is the only trigger
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
-  // The first question sends the composer to the foot of the page. It's the
-  // same element in a new place, so it travels there instead of jumping.
+  // The first question sends the note to the foot of the page. It's the same
+  // note in a new place, so it travels there from exactly where it was.
   useLayoutEffect(() => {
-    const from = dockTopBeforeAsking.current;
+    const from = noteTopBeforeAsking.current;
+    const to = getNoteTop();
     const element = dock.current;
-    dockTopBeforeAsking.current = null;
+    noteTopBeforeAsking.current = null;
 
-    if (from === null || !element || !hasMessages) return;
+    if (!element) return;
+    // Docking changes the note's height, and the paper under it is cut to that
+    // height: measured here so the very first docked frame is right
+    page.current?.style.setProperty("--ask-dock", `${element.offsetHeight}px`);
+
+    if (!hasMessages) return;
+
+    // On a phone the intro and the docked note leave little between them, and
+    // the first answer would be written underneath the note. When that's so,
+    // the first question goes to the top like every one after it
+    const question = latestQuestion.current;
+    if (question) {
+      const room =
+        window.innerHeight -
+        element.offsetHeight -
+        DOCK_FADE -
+        question.getBoundingClientRect().bottom;
+
+      if (room < ROOM_FOR_AN_ANSWER) setIsFirstQuestionLifted(true);
+    }
+
+    if (from === null || to === null) return;
     if (prefersReducedMotion()) return;
 
-    const distance = from - element.getBoundingClientRect().top;
-
     element.animate(
-      [{ transform: `translateY(${distance}px)` }, { transform: "none" }],
-      { duration: 500, easing: "cubic-bezier(0.32, 0.72, 0, 1)" },
+      [{ transform: `translateY(${from - to}px)` }, { transform: "none" }],
+      {
+        // The pace of the site's other sheet, the email composer on a phone
+        duration: 400,
+        easing:
+          getComputedStyle(element).getPropertyValue("--ease-drawer").trim() ||
+          "ease-out",
+      },
     );
   }, [hasMessages]);
 
   // The newest exchange keeps enough room under it to scroll to the top, and
-  // how much that is depends on how tall the docked composer is right now
+  // how much that is depends on how tall the docked note is right now
   useEffect(() => {
     const element = dock.current;
     if (!element) return;
@@ -244,27 +283,69 @@ export function AskLaura() {
 
   // Each new question moves to the top of the page, once, and its answer fills
   // in below it. The page never chases the text, so nothing moves while reading.
-  // The first question is already under the intro and stays put.
+  // The first question is already under the intro and stays put, unless that
+  // would leave its answer no room.
   useEffect(() => {
-    if (exchanges.length < 2) return;
+    if (exchanges.length === 0) return;
+    if (exchanges.length === 1 && !isFirstQuestionLifted) return;
 
     latestQuestion.current?.scrollIntoView({
       block: "start",
       behavior: prefersReducedMotion() ? "auto" : "smooth",
     });
-  }, [exchanges.length]);
+  }, [exchanges.length, isFirstQuestionLifted]);
 
   return (
-    <main ref={page} className="ask flex flex-1 flex-col pt-8">
+    <main
+      ref={page}
+      data-conversation={hasMessages || undefined}
+      className="ask flex flex-1 flex-col pt-8"
+    >
       <div>
-        <h1 className="title-depth text-pretty text-4xl font-semibold tracking-tight sm:text-5xl">
-          <span>Ask me anything</span>
+        <h1 className="text-pretty text-4xl font-semibold tracking-tight sm:text-5xl">
+          {/* Circled in pen, like the link on the home page that led here */}
+          <span className="relative isolate inline-block whitespace-nowrap">
+            <span className="title-depth inline-block">
+              <span>Ask me</span>
+            </span>
+            <PenLoop scalesWithWords className="ask-title-loop" />
+          </span>{" "}
+          <span className="title-depth inline-block">
+            <span>anything</span>
+          </span>
         </h1>
-        <p className="mt-4 text-pretty text-lg text-muted">
-          An agent that has read my notes answers for me. It knows my work,
-          my talks and my writing, and tells you when it doesn&apos;t know.
+        {/* On a touch screen the lines sit a little further apart: each
+            underlined phrase is something to press, one above the other */}
+        <p className="mt-4 text-pretty text-lg text-muted [@media(pointer:coarse)]:leading-8">
+          An agent that has read my notes answers for me, and tells you when it
+          doesn&apos;t know. Ask about{" "}
+          {STARTERS.map(({ phrase, question }, index) => (
+            <Fragment key={question}>
+              <AskLink
+                index={index}
+                // The pen comes down from circling the title and keeps going
+                delay={500}
+                disabled={isBusy}
+                label={`Ask about ${phrase}`}
+                onClick={() => ask(question)}
+                className="whitespace-nowrap"
+              >
+                {phrase}
+              </AskLink>
+              {index < STARTERS.length - 2
+                ? ", "
+                : index === STARTERS.length - 2
+                  ? " or "
+                  : "."}
+            </Fragment>
+          ))}
         </p>
       </div>
+
+      {/* Read out as it changes, from outside the transcript it describes */}
+      <p role="status" className="sr-only">
+        {agentStatus ? `${agentStatus}…` : ""}
+      </p>
 
       <div
         role="log"
@@ -280,25 +361,30 @@ export function AskLaura() {
             <section
               key={question.id}
               // Room for the latest question to reach the top of the page
-              className={`mt-8 first:mt-0 ${
-                isLatest && index > 0 ? "ask-latest-exchange" : ""
+              className={`mt-10 first:mt-0 ${
+                isLatest && (index > 0 || isFirstQuestionLifted)
+                  ? "ask-latest-exchange"
+                  : ""
               }`}
             >
               <p
                 ref={isLatest ? latestQuestion : undefined}
-                className="ask-raised ask-rise ml-auto w-fit max-w-[85%] scroll-mt-6 text-pretty rounded-[22px] rounded-br-lg px-4 py-2.5 text-base leading-7"
+                className="ask-raised ask-rise ml-auto w-fit max-w-[85%] scroll-mt-6 whitespace-pre-line text-pretty rounded-2xl [overflow-wrap:anywhere] rounded-br-md px-4 py-2.5 text-base leading-7"
               >
                 <span className="sr-only">You asked: </span>
                 {getText(question)}
               </p>
 
               {(answers.length > 0 || isLatest) && (
-                <div className="mt-3">
+                <div className="mt-4">
                   <Answer
                     answers={answers}
                     mood={isLatest ? mood : "idle"}
+                    // While it's writing, the words themselves say so
+                    status={
+                      isLatest && agentStatus !== "Writing" ? agentStatus : null
+                    }
                     isBusy={isLatest && isBusy}
-                    timing={timings[index]}
                     errorMessage={
                       hasFailed && error ? getErrorMessage(error) : undefined
                     }
@@ -306,26 +392,58 @@ export function AskLaura() {
                   />
                 </div>
               )}
+
+              {isLatest && followUps.length > 0 && (
+                // Where the reading ends is where the next question starts.
+                // They're offers and not part of what was said, so they aren't
+                // read out with the transcript
+                <div aria-live="off" className="mt-7">
+                  <p className="ask-rise font-mono text-[11px] uppercase tracking-widest text-muted">
+                    Ask next
+                  </p>
+                  <ul
+                    aria-label="Questions to ask next"
+                    className="mt-1 flex flex-col items-start"
+                  >
+                    {followUps.map((followUp, followUpIndex) => (
+                      <li
+                        key={followUp}
+                        className="ask-rise"
+                        style={{ "--item": followUpIndex + 1 } as CSSProperties}
+                      >
+                        <AskLink
+                          index={followUpIndex}
+                          delay={100}
+                          onClick={() => ask(followUp)}
+                          className="py-2 text-left text-[15px]"
+                        >
+                          {followUp}
+                        </AskLink>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </section>
           );
         })}
       </div>
+
+      {/* The paper the transcript slides under, once there is one */}
+      {hasMessages && <div aria-hidden className="ask-dock-paper" />}
 
       <div
         ref={dock}
         className={
           hasMessages
             ? // Clear of the home indicator now the page runs under it
-              "ask-composer-dock sticky bottom-0 bg-background pb-[max(1rem,env(safe-area-inset-bottom))]"
+              "sticky bottom-0 pb-[max(1rem,env(safe-area-inset-bottom))]"
             : "pb-12"
         }
       >
         <Composer
           mood={mood}
-          status={agentStatus}
           isBusy={isBusy}
-          isDocked={hasMessages}
-          suggestions={getSuggestions(exchanges, isBusy)}
           isSoundOn={isSoundOn}
           onToggleSound={toggleSound}
           onAsk={ask}

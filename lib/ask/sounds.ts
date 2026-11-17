@@ -55,33 +55,37 @@ export function saveSoundPreference(isOn: boolean) {
 }
 
 export function playSound(sound: Sound) {
-  // Browsers only allow audio after the visitor has interacted with the page.
-  // Every sound here follows a click or a key press, or an answer to one.
-  context ??= new AudioContext();
-  if (context.state === "suspended") void context.resume();
+  // A sound is decoration. It's played in the same breath as sending a
+  // question, so if the browser won't make one, the question still has to go
+  try {
+    // Browsers only allow audio after the visitor has interacted with the page.
+    // Every sound here follows a click or a key press, or an answer to one.
+    context ??= new AudioContext();
+    if (context.state === "suspended") void context.resume();
 
-  const start = context.currentTime;
+    const start = context.currentTime;
 
-  for (const note of SOUNDS[sound]) {
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
-    const begin = start + (note.at ?? 0);
-    const end = begin + note.duration;
-    const peak = MASTER_VOLUME * (note.level ?? 1);
+    for (const note of SOUNDS[sound]) {
+      const oscillator = context.createOscillator();
+      const gain = context.createGain();
+      const begin = start + (note.at ?? 0);
+      const end = begin + note.duration;
+      const peak = MASTER_VOLUME * (note.level ?? 1);
 
-    oscillator.type = note.type ?? "sine";
-    oscillator.frequency.setValueAtTime(note.from, begin);
-    if (note.to) {
-      oscillator.frequency.exponentialRampToValueAtTime(note.to, end);
+      oscillator.type = note.type ?? "sine";
+      oscillator.frequency.setValueAtTime(note.from, begin);
+      if (note.to) {
+        oscillator.frequency.exponentialRampToValueAtTime(note.to, end);
+      }
+
+      // A quick swell and a longer fade, so no note starts or stops with a click
+      gain.gain.setValueAtTime(0.0001, begin);
+      gain.gain.exponentialRampToValueAtTime(peak, begin + 0.008);
+      gain.gain.exponentialRampToValueAtTime(0.0001, end);
+
+      oscillator.connect(gain).connect(context.destination);
+      oscillator.start(begin);
+      oscillator.stop(end + 0.02);
     }
-
-    // A quick swell and a longer fade, so no note starts or stops with a click
-    gain.gain.setValueAtTime(0.0001, begin);
-    gain.gain.exponentialRampToValueAtTime(peak, begin + 0.008);
-    gain.gain.exponentialRampToValueAtTime(0.0001, end);
-
-    oscillator.connect(gain).connect(context.destination);
-    oscillator.start(begin);
-    oscillator.stop(end + 0.02);
-  }
+  } catch {}
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import type { CSSProperties, FormEvent, KeyboardEvent } from "react";
+import type { FormEvent, KeyboardEvent } from "react";
 import {
   AgentFace,
   AgentName,
@@ -9,25 +9,18 @@ import {
 } from "@/components/ask/agent-face";
 import { MAX_QUESTION_LENGTH } from "@/lib/ask/transcript";
 
-const CAVEAT = "AI answers from my notes. It can be wrong.";
+const CAVEAT = "Answered by AI from my notes, not by me";
 
 export function Composer({
   mood,
-  status,
   isBusy,
-  isDocked,
-  suggestions,
   isSoundOn,
   onToggleSound,
   onAsk,
   onStop,
 }: {
   mood: FaceMood;
-  /** What the agent is doing right now, or null when it's waiting for a question. */
-  status: string | null;
   isBusy: boolean;
-  isDocked: boolean;
-  suggestions: string[];
   isSoundOn: boolean;
   onToggleSound: () => void;
   onAsk: (question: string) => void;
@@ -70,45 +63,10 @@ export function Composer({
   }
 
   return (
-    // Whatever helps you ask sits around the input: questions to try above,
-    // what's happening below. All three share the input's left edge.
     <div>
-      {suggestions.length > 0 && (
-        <ul
-          aria-label="Questions to try"
-          className={`flex gap-2 ${
-            // Docked, they stay on one line so the transcript keeps its room.
-            // A scroller clips its children's shadows, so it's padded by their
-            // size and its margins give that much back: the gap to the input
-            // is 10px either way.
-            isDocked
-              ? "ask-chips -mx-px -mt-px mb-[7px] overflow-x-auto px-px pb-[3px] pr-8 pt-px"
-              : "mb-2.5 flex-wrap"
-          }`}
-        >
-          {suggestions.map((suggestion, index) => (
-            <li
-              key={suggestion}
-              className="ask-rise shrink-0"
-              style={{ "--item": index } as CSSProperties}
-            >
-              <button
-                type="button"
-                disabled={isBusy}
-                onClick={() => onAsk(suggestion)}
-                className="ask-pill ask-hit h-9 whitespace-nowrap px-3.5 text-sm text-foreground/80 transition-[color,transform,opacity] duration-150 ease-[var(--ease-out)] hover:text-foreground active:scale-[0.97] disabled:opacity-50 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-              >
-                {suggestion}
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      <form
-        onSubmit={handleSubmit}
-        className="ask-raised rounded-[22px]"
-      >
+      {/* The note you write on: the one thing on the page that's raised off it */}
+      {/* 16px corners, like the email composer: the site's other thing to write on */}
+      <form onSubmit={handleSubmit} className="ask-note ask-raised rounded-2xl">
         <label htmlFor="ask-question" className="sr-only">
           Your question
         </label>
@@ -118,66 +76,34 @@ export function Composer({
           rows={1}
           value={question}
           maxLength={MAX_QUESTION_LENGTH}
-          placeholder="Ask me anything"
+          placeholder="What are you curious about?"
           enterKeyHint="send"
           onChange={(event) => {
             setQuestion(event.target.value);
             resize();
           }}
           onKeyDown={handleKeyDown}
-          // 16px or iOS zooms the page on focus
-          className="block max-h-40 w-full resize-none bg-transparent px-4 pb-1 pt-3.5 text-base leading-relaxed placeholder:text-muted focus:outline-none"
+          // 16px or iOS zooms the page on focus. The note lights up in its place
+          className="block max-h-40 w-full resize-none bg-transparent px-3.5 pb-2 pt-3 text-base leading-6 placeholder:text-muted focus:outline-none"
         />
 
-        <div className="flex items-center justify-between gap-2 px-2 pb-2 pt-1">
-          <div className="flex items-center gap-1.5">
-            {/* Who you're asking, and that it's an AI, right where you type */}
-            <span className="ask-pill inline-flex h-9 items-center gap-2 pl-2.5 pr-3 text-sm">
-              <AgentFace
-                // It looks over at what you're typing, unless it's busy answering
-                mood={isBusy || !question.trim() ? mood : "listening"}
-                blinks
-                className="w-6 text-foreground"
-              />
-              <AgentName />
-            </span>
-
-            <button
-              type="button"
-              onClick={onToggleSound}
-              aria-pressed={isSoundOn}
-              aria-label="Sound effects"
-              className="ask-pill ask-swap ask-hit relative h-9 w-9 text-muted transition-[color,transform] duration-150 ease-[var(--ease-out)] hover:text-foreground active:scale-[0.94] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-            >
-              {[true, false].map((isOnIcon) => (
-                <svg
-                  key={String(isOnIcon)}
-                  aria-hidden
-                  data-shown={isOnIcon === isSoundOn}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="absolute inset-0 m-auto h-4 w-4"
-                >
-                  <path d="M4 9.5v5h3.5L12 18V6L7.5 9.5z" />
-                  {isOnIcon ? (
-                    <path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" />
-                  ) : (
-                    <path d="m16 9.5 5 5m0-5-5 5" />
-                  )}
-                </svg>
-              ))}
-            </button>
-          </div>
+        <div className="flex items-center justify-between gap-2 pb-2 pl-3 pr-2 pt-1">
+          {/* Who you're asking, and that it's an AI, right where you type */}
+          <span className="inline-flex h-8 items-center gap-2 text-sm">
+            <AgentFace
+              // It looks over at what you're typing, unless it's busy answering
+              mood={isBusy || !question.trim() ? mood : "listening"}
+              blinks
+              className="w-6 text-foreground"
+            />
+            <AgentName />
+          </span>
 
           <button
             type="submit"
             disabled={!isBusy && !canAsk}
             aria-label={isBusy ? "Stop answering" : "Send question"}
-            className="ask-glass ask-swap ask-hit relative h-10 w-[5.25rem] shrink-0 rounded-full text-[15px] font-semibold active:scale-[0.97] disabled:opacity-50 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="ask-glass ask-swap ask-hit relative h-8 w-16 shrink-0 rounded-full text-sm font-medium active:scale-[0.97] disabled:opacity-50 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             {/* Both labels stay in the button, so it keeps its width as they swap */}
             <span
@@ -198,23 +124,43 @@ export function Composer({
         </div>
       </form>
 
-      {/* One line under the input, always there, so nothing changes height:
-          the caveat while it waits, the current step while it works. It starts
-          where the input's text starts and ends where the send button ends. */}
-      <div className="ask-depth mt-2.5 flex h-5 items-center justify-between gap-3 pl-4 pr-2 text-[13px] text-muted">
-        <p key={status ?? "caveat"} role="status" className="ask-rise truncate">
-          {status ? `${status}…` : CAVEAT}
-        </p>
-        {isBusy ? (
-          <span aria-hidden className="ask-spinner" />
-        ) : (
-          <span
-            aria-hidden
-            className="hidden shrink-0 font-mono text-[10px] uppercase tracking-[0.04em] [@media(pointer:fine)]:inline"
-          >
-            Enter to send
-          </span>
-        )}
+      {/* One quiet line under the note, the same whatever the agent is doing.
+          It sits at the right, beside the sound icon, and the two end where
+          Send ends. On a
+          narrow phone it takes a second line before it loses a word: it's the
+          page's small print */}
+      <div className="ask-depth mt-2.5 flex min-h-5 items-start justify-end text-[13px] leading-5 text-muted">
+        <p className="text-balance text-right opacity-75">{CAVEAT}</p>
+
+        <button
+          type="button"
+          onClick={onToggleSound}
+          aria-pressed={isSoundOn}
+          aria-label="Sound effects"
+          className="ask-swap ask-hit relative -my-2 -ml-1.5 -mr-[3px] h-9 w-9 shrink-0 rounded-full transition-[color,transform] duration-150 ease-[var(--ease-out)] hover:text-foreground active:scale-[0.95] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        >
+          {[true, false].map((isOnIcon) => (
+            <svg
+              key={String(isOnIcon)}
+              aria-hidden
+              data-shown={isOnIcon === isSoundOn}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="absolute inset-0 m-auto h-4 w-4"
+            >
+              <path d="M4 9.5v5h3.5L12 18V6L7.5 9.5z" />
+              {isOnIcon ? (
+                <path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" />
+              ) : (
+                <path d="m16 9.5 5 5m0-5-5 5" />
+              )}
+            </svg>
+          ))}
+        </button>
       </div>
     </div>
   );
