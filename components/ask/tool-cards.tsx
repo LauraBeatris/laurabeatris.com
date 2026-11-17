@@ -129,11 +129,11 @@ function CardRow({
   const content = (
     <>
       <span className="flex flex-col gap-x-4 gap-y-0.5 sm:flex-row sm:items-baseline sm:justify-between">
-        <span className="text-pretty text-[15px] underline decoration-transparent decoration-2 underline-offset-4 transition-colors group-hover:decoration-accent group-active:decoration-accent">
+        <span className="min-w-0 text-pretty text-[15px] underline decoration-transparent decoration-2 underline-offset-4 transition-colors group-hover:decoration-accent group-active:decoration-accent">
           {title}
         </span>
         {detail && (
-          <span className="shrink-0 font-mono text-xs text-muted sm:text-right">
+          <span className="font-mono text-xs text-muted sm:max-w-[50%] sm:shrink-0 sm:text-right">
             {detail}
           </span>
         )}
@@ -169,6 +169,9 @@ export function ToolCard({ part }: { part: ToolPart }) {
     case "tool-showTalks": {
       const { talks, podcasts } = part.output;
       const hasBoth = talks.length > 0 && podcasts.length > 0;
+
+      // A card with nothing on it is a ruled gap in the answer
+      if (talks.length === 0 && podcasts.length === 0) return null;
 
       return (
         <Card label="Talks and podcasts">
@@ -223,6 +226,8 @@ export function ToolCard({ part }: { part: ToolPart }) {
       );
 
     case "tool-showCareer":
+      if (part.output.career.length === 0) return null;
+
       return (
         <Card label="Career">
           <ol className="ask-timeline border-t border-border pt-3.5">
@@ -234,7 +239,7 @@ export function ToolCard({ part }: { part: ToolPart }) {
               >
                 <span aria-hidden className="ask-timeline-dot" />
                 <p className="flex items-baseline justify-between gap-4 text-[15px]">
-                  <span>
+                  <span className="min-w-0">
                     {entry.role}
                     <span className="text-muted"> at </span>
                     {entry.url ? (
@@ -249,7 +254,7 @@ export function ToolCard({ part }: { part: ToolPart }) {
                     )}
                   </span>
                   {entry.period && (
-                    <span className="shrink-0 font-mono text-xs text-muted">
+                    <span className="max-w-[50%] shrink-0 text-right font-mono text-xs text-muted">
                       {entry.period}
                     </span>
                   )}
@@ -264,6 +269,8 @@ export function ToolCard({ part }: { part: ToolPart }) {
       );
 
     case "tool-showContact":
+      if (part.output.socials.length === 0) return null;
+
       return (
         <Card label="Where to find me">
           <ul>

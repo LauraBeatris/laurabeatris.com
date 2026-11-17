@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import {
   AgentFace,
   AgentName,
@@ -59,7 +58,7 @@ export function Answer({
 
   return (
     // Written straight onto the page, like everything else I've put on it
-    <article className="ask-rise">
+    <article className="ask-rise [overflow-wrap:anywhere]">
       <header className="flex items-center gap-2.5">
         <AgentFace mood={mood} className="w-7 text-foreground" />
         <AgentName className="text-[15px] font-medium" />
@@ -128,7 +127,8 @@ export function Answer({
             Sources
           </span>
           {sources.map((source, index) => (
-            <Fragment key={source.name}>
+            // The dot travels with the name after it, so a line never ends on one
+            <span key={source.name} className="inline-flex items-baseline gap-x-2">
               {index > 0 && <span aria-hidden>·</span>}
               <AnyLink
                 href={source.href}
@@ -136,7 +136,7 @@ export function Answer({
               >
                 {source.name}
               </AnyLink>
-            </Fragment>
+            </span>
           ))}
         </p>
       )}
