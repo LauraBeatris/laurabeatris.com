@@ -115,7 +115,7 @@ export function Answer({
           <p className="text-pretty text-base leading-7 text-muted">
             {errorMessage}
           </p>
-          <AskLink onClick={onRetry} className="mt-2 py-1 text-[15px]">
+          <AskLink onClick={onRetry} className="mt-1 py-2 text-[15px]">
             Try again
           </AskLink>
         </div>

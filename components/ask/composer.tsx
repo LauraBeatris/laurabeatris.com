@@ -124,9 +124,10 @@ export function Composer({
       </form>
 
       {/* One quiet line under the note, the same whatever the agent is doing.
-          It starts where the note's text starts */}
-      <div className="ask-depth mt-2.5 flex h-5 items-center justify-between gap-3 pl-4 text-[13px] text-muted">
-        <p className="truncate">{CAVEAT}</p>
+          It starts where the note's text starts. On a narrow phone it takes a
+          second line before it loses a word: it's the page's small print */}
+      <div className="ask-depth mt-2.5 flex min-h-5 items-start justify-between gap-3 pl-4 text-[13px] leading-5 text-muted">
+        <p className="text-pretty">{CAVEAT}</p>
 
         <button
           type="button"

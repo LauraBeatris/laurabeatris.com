@@ -135,10 +135,18 @@ function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
+// The least an answer needs to be seen starting: the face, the line that says
+// what it's doing and a few lines of text. With less than this between the
+// first question and the docked note, the question goes to the top of the page
+const ROOM_FOR_AN_ANSWER = 200;
+// How far above the note the transcript starts to fade (2rem, in globals.css)
+const DOCK_FADE = 32;
+
 export function AskLaura() {
   const { messages, sendMessage, status, stop, error, regenerate } =
     useChat<AskLauraUIMessage>({ transport, throttle: 50 });
   const [isSoundOn, setIsSoundOn] = useState(true);
+  const [isFirstQuestionLifted, setIsFirstQuestionLifted] = useState(false);
 
   const exchanges = toExchanges(messages);
   const hasMessages = messages.length > 0;
@@ -229,7 +237,23 @@ export function AskLaura() {
     // height: measured here so the very first docked frame is right
     page.current?.style.setProperty("--ask-dock", `${element.offsetHeight}px`);
 
-    if (from === null || to === null || !hasMessages) return;
+    if (!hasMessages) return;
+
+    // On a phone the intro and the docked note leave little between them, and
+    // the first answer would be written underneath the note. When that's so,
+    // the first question goes to the top like every one after it
+    const question = latestQuestion.current;
+    if (question) {
+      const room =
+        window.innerHeight -
+        element.offsetHeight -
+        DOCK_FADE -
+        question.getBoundingClientRect().bottom;
+
+      if (room < ROOM_FOR_AN_ANSWER) setIsFirstQuestionLifted(true);
+    }
+
+    if (from === null || to === null) return;
     if (prefersReducedMotion()) return;
 
     element.animate(
@@ -259,18 +283,24 @@ export function AskLaura() {
 
   // Each new question moves to the top of the page, once, and its answer fills
   // in below it. The page never chases the text, so nothing moves while reading.
-  // The first question is already under the intro and stays put.
+  // The first question is already under the intro and stays put, unless that
+  // would leave its answer no room.
   useEffect(() => {
-    if (exchanges.length < 2) return;
+    if (exchanges.length === 0) return;
+    if (exchanges.length === 1 && !isFirstQuestionLifted) return;
 
     latestQuestion.current?.scrollIntoView({
       block: "start",
       behavior: prefersReducedMotion() ? "auto" : "smooth",
     });
-  }, [exchanges.length]);
+  }, [exchanges.length, isFirstQuestionLifted]);
 
   return (
-    <main ref={page} className="ask flex flex-1 flex-col pt-8">
+    <main
+      ref={page}
+      data-conversation={hasMessages || undefined}
+      className="ask flex flex-1 flex-col pt-8"
+    >
       <div>
         <h1 className="text-pretty text-4xl font-semibold tracking-tight sm:text-5xl">
           {/* Circled in pen, like the link on the home page that led here */}
@@ -284,7 +314,9 @@ export function AskLaura() {
             <span>anything</span>
           </span>
         </h1>
-        <p className="mt-4 text-pretty text-lg text-muted">
+        {/* On a touch screen the lines sit a little further apart: each
+            underlined phrase is something to press, one above the other */}
+        <p className="mt-4 text-pretty text-lg text-muted [@media(pointer:coarse)]:leading-8">
           An agent that has read my notes answers for me, and tells you when it
           doesn&apos;t know. Ask about{" "}
           {STARTERS.map(({ phrase, question }, index) => (
@@ -330,7 +362,9 @@ export function AskLaura() {
               key={question.id}
               // Room for the latest question to reach the top of the page
               className={`mt-10 first:mt-0 ${
-                isLatest && index > 0 ? "ask-latest-exchange" : ""
+                isLatest && (index > 0 || isFirstQuestionLifted)
+                  ? "ask-latest-exchange"
+                  : ""
               }`}
             >
               <p
@@ -381,7 +415,7 @@ export function AskLaura() {
                           index={followUpIndex}
                           delay={100}
                           onClick={() => ask(followUp)}
-                          className="py-1.5 text-left text-[15px]"
+                          className="py-2 text-left text-[15px]"
                         >
                           {followUp}
                         </AskLink>

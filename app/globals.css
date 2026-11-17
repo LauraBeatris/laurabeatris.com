@@ -1461,7 +1461,15 @@
     transition: stroke 0.2s var(--ease-out);
   }
 
-  .ask-me:hover .ask-me-loop,
+  /* Hover only where something can hover: a tap fakes one and leaves it stuck.
+     A finger gets the darker loop while it's down */
+  @media (hover: hover) and (pointer: fine) {
+    .ask-me:hover .ask-me-loop {
+      stroke: hsl(var(--foreground) / 0.55);
+    }
+  }
+
+  .ask-me:active .ask-me-loop,
   .ask-me:focus-visible .ask-me-loop {
     stroke: hsl(var(--foreground) / 0.55);
   }
@@ -1624,6 +1632,13 @@
       filter: none;
     }
   }
+}
+
+/* Ask Laura: a conversation lives in the page, so a pull down from the top that
+   reloads it throws the conversation away. Once there's one, the page keeps its
+   own bounce but stops handing that gesture over to the browser */
+html:has(.ask[data-conversation]) {
+  overscroll-behavior-y: contain;
 }
 
 /* iOS zooms into any field under 16px and never zooms back out */
