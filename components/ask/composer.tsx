@@ -129,7 +129,7 @@ export function Composer({
           Send ends. On a
           narrow phone it takes a second line before it loses a word: it's the
           page's small print */}
-      <div className="ask-depth mt-2.5 flex min-h-5 items-start justify-end gap-1 text-[13px] leading-5 text-muted">
+      <div className="ask-depth mt-2.5 flex min-h-5 items-start justify-end text-[13px] leading-5 text-muted">
         <p className="text-pretty text-right">{CAVEAT}</p>
 
         <button
@@ -137,7 +137,7 @@ export function Composer({
           onClick={onToggleSound}
           aria-pressed={isSoundOn}
           aria-label="Sound effects"
-          className="ask-swap ask-hit relative -my-2 -mr-0.5 h-9 w-9 shrink-0 rounded-full transition-[color,transform] duration-150 ease-[var(--ease-out)] hover:text-foreground active:scale-[0.95] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="ask-swap ask-hit relative -my-2 -ml-1.5 -mr-[3px] h-9 w-9 shrink-0 rounded-full transition-[color,transform] duration-150 ease-[var(--ease-out)] hover:text-foreground active:scale-[0.95] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           {[true, false].map((isOnIcon) => (
             <svg
