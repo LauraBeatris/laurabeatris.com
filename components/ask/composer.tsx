@@ -125,12 +125,12 @@ export function Composer({
       </form>
 
       {/* One quiet line under the note, the same whatever the agent is doing.
-          It starts where the note's own text starts, clear of the corner
-          above it, and the sound icon ends where Send ends. On a
+          It sits at the right, beside the sound icon, and the two end where
+          Send ends. On a
           narrow phone it takes a second line before it loses a word: it's the
           page's small print */}
-      <div className="ask-depth mt-2.5 flex min-h-5 items-start justify-between gap-3 pl-3.5 text-[13px] leading-5 text-muted">
-        <p className="text-pretty">{CAVEAT}</p>
+      <div className="ask-depth mt-2.5 flex min-h-5 items-start justify-end gap-1 text-[13px] leading-5 text-muted">
+        <p className="text-pretty text-right">{CAVEAT}</p>
 
         <button
           type="button"
