@@ -1280,7 +1280,7 @@
        is stretched to its words but keeps its weight, and dashes on a stroke
        like that are measured on screen, so a long phrase's line would stop
        short. The clip is wider than the box so the pen's overshoot shows */
-    animation: ask-underline 0.45s var(--ease-out) backwards;
+    animation: ask-underline 0.35s var(--ease-out) backwards;
   }
 
   @keyframes ask-underline {
@@ -1432,8 +1432,10 @@
       animation: handwriting-blink 4.8s var(--ease-out) 1.5s infinite;
     }
 
-    /* Starts once the head has finished tilting */
-    .agent-face[data-mood="thinking"] .agent-face-wander {
+    /* Starts once the head has finished tilting. Only the face on the answer
+       does it, where the eye already is: the one in the note blinks instead,
+       and two faces searching in step would read as a machine */
+    .agent-face:not([data-blinks])[data-mood="thinking"] .agent-face-wander {
       animation: agent-face-wander 2.4s var(--ease-in-out) 0.3s infinite;
     }
   }
@@ -1581,7 +1583,7 @@
   @media (prefers-reduced-motion: reduce) {
     .ask-rise,
     .ink-word {
-      animation: pen-appear 0.2s ease both;
+      animation: pen-appear 0.2s ease backwards;
     }
 
     .ask-swap > [data-shown="false"] {

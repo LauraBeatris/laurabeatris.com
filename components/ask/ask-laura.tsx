@@ -235,7 +235,8 @@ export function AskLaura() {
     element.animate(
       [{ transform: `translateY(${from - to}px)` }, { transform: "none" }],
       {
-        duration: 500,
+        // The pace of the site's other sheet, the email composer on a phone
+        duration: 400,
         easing:
           getComputedStyle(element).getPropertyValue("--ease-drawer").trim() ||
           "ease-out",
@@ -290,7 +291,8 @@ export function AskLaura() {
             <Fragment key={question}>
               <AskLink
                 index={index}
-                delay={700}
+                // The pen comes down from circling the title and keeps going
+                delay={500}
                 disabled={isBusy}
                 label={`Ask about ${phrase}`}
                 onClick={() => ask(question)}
@@ -377,7 +379,7 @@ export function AskLaura() {
                       >
                         <AskLink
                           index={followUpIndex}
-                          delay={150}
+                          delay={100}
                           onClick={() => ask(followUp)}
                           className="py-1.5 text-left text-[15px]"
                         >

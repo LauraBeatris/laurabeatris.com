@@ -43,7 +43,7 @@ export function AskLink({
           viewBox="0 0 100 4"
           preserveAspectRatio="none"
           className="ask-link-line"
-          style={{ animationDelay: `${delay + index * 90}ms` }}
+          style={{ animationDelay: `${delay + index * 70}ms` }}
         >
           <path
             d={penLine(1, 2, 99, 2, index + 1)}
