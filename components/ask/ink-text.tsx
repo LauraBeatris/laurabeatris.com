@@ -156,6 +156,17 @@ function InkToken({ token }: { token: Token }) {
   );
 }
 
+/**
+ * The agent is asked for plain prose, and sometimes writes a heading, a list
+ * or a bit of code anyway. The page has no way to draw those, so their marks
+ * are dropped and the words stay, each line where it was.
+ */
+function toProse(text: string) {
+  return text
+    .replace(/`+/g, "")
+    .replace(/^[ \t]*(?:#{1,6}|[-*•])[ \t]+/gm, "");
+}
+
 export function InkText({
   text,
   isStreaming,
@@ -164,7 +175,7 @@ export function InkText({
   isStreaming: boolean;
 }) {
   // A lone asterisk at the very end is half of a ** that's still on its way
-  const visible = isStreaming ? text.replace(/\*$/, "") : text;
+  const visible = toProse(isStreaming ? text.replace(/\*$/, "") : text);
   const paragraphs = visible.split(/\n{2,}/).filter((paragraph) => paragraph.trim());
 
   return paragraphs.map((paragraph, index) => (
