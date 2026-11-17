@@ -65,7 +65,8 @@ export function Composer({
   return (
     <div>
       {/* The note you write on: the one thing on the page that's raised off it */}
-      <form onSubmit={handleSubmit} className="ask-note ask-raised rounded-[22px]">
+      {/* 16px corners, like the email composer: the site's other thing to write on */}
+      <form onSubmit={handleSubmit} className="ask-note ask-raised rounded-2xl">
         <label htmlFor="ask-question" className="sr-only">
           Your question
         </label>
@@ -83,12 +84,12 @@ export function Composer({
           }}
           onKeyDown={handleKeyDown}
           // 16px or iOS zooms the page on focus. The note lights up in its place
-          className="block max-h-40 w-full resize-none bg-transparent px-4 pb-1 pt-3.5 text-base leading-relaxed placeholder:text-muted focus:outline-none"
+          className="block max-h-40 w-full resize-none bg-transparent px-3.5 pb-0.5 pt-3 text-base leading-6 placeholder:text-muted focus:outline-none"
         />
 
-        <div className="flex items-center justify-between gap-2 pb-2 pl-3.5 pr-2 pt-1">
+        <div className="flex items-center justify-between gap-2 pb-2 pl-3 pr-2 pt-0.5">
           {/* Who you're asking, and that it's an AI, right where you type */}
-          <span className="inline-flex h-9 items-center gap-2 text-sm">
+          <span className="inline-flex h-8 items-center gap-2 text-sm">
             <AgentFace
               // It looks over at what you're typing, unless it's busy answering
               mood={isBusy || !question.trim() ? mood : "listening"}
@@ -102,7 +103,7 @@ export function Composer({
             type="submit"
             disabled={!isBusy && !canAsk}
             aria-label={isBusy ? "Stop answering" : "Send question"}
-            className="ask-glass ask-swap ask-hit relative h-10 w-[5.25rem] shrink-0 rounded-full text-[15px] font-semibold active:scale-[0.97] disabled:opacity-50 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="ask-glass ask-swap ask-hit relative h-8 w-16 shrink-0 rounded-full text-sm font-medium active:scale-[0.97] disabled:opacity-50 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             {/* Both labels stay in the button, so it keeps its width as they swap */}
             <span
@@ -124,9 +125,11 @@ export function Composer({
       </form>
 
       {/* One quiet line under the note, the same whatever the agent is doing.
-          It starts where the note's text starts. On a narrow phone it takes a
-          second line before it loses a word: it's the page's small print */}
-      <div className="ask-depth mt-2.5 flex min-h-5 items-start justify-between gap-3 pl-4 text-[13px] leading-5 text-muted">
+          It starts at the note's left edge, the edge everything else on the
+          page starts from, and the sound icon ends at its right edge. On a
+          narrow phone it takes a second line before it loses a word: it's the
+          page's small print */}
+      <div className="ask-depth mt-2.5 flex min-h-5 items-start justify-between gap-3 text-[13px] leading-5 text-muted">
         <p className="text-pretty">{CAVEAT}</p>
 
         <button
@@ -134,7 +137,7 @@ export function Composer({
           onClick={onToggleSound}
           aria-pressed={isSoundOn}
           aria-label="Sound effects"
-          className="ask-swap ask-hit relative -my-2 -mr-0.5 h-9 w-9 shrink-0 rounded-full transition-[color,transform] duration-150 ease-[var(--ease-out)] hover:text-foreground active:scale-[0.95] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="ask-swap ask-hit relative -my-2 -mr-3 h-9 w-9 shrink-0 rounded-full transition-[color,transform] duration-150 ease-[var(--ease-out)] hover:text-foreground active:scale-[0.95] motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
           {[true, false].map((isOnIcon) => (
             <svg

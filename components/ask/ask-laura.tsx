@@ -369,7 +369,7 @@ export function AskLaura() {
             >
               <p
                 ref={isLatest ? latestQuestion : undefined}
-                className="ask-raised ask-rise ml-auto w-fit max-w-[85%] scroll-mt-6 text-pretty rounded-[22px] rounded-br-lg px-4 py-2.5 text-base leading-7"
+                className="ask-raised ask-rise ml-auto w-fit max-w-[85%] scroll-mt-6 text-pretty rounded-2xl rounded-br-md px-4 py-2.5 text-base leading-7"
               >
                 <span className="sr-only">You asked: </span>
                 {getText(question)}
