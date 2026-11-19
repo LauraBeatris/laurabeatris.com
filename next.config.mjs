@@ -8,6 +8,26 @@ const nextConfig = {
   // endpoint anyone can call to have images resized at my expense, so no path
   // or host is allowed through it.
   images: { unoptimized: true, localPatterns: [], remotePatterns: [] },
+  // Addresses that used to be pages. Google still asks for them and reports
+  // each 404, so send each to the closest page there is now.
+  async redirects() {
+    return [
+      // The site before 2024: an about page and a learning journal
+      { source: "/about", destination: "/", permanent: true },
+      { source: "/learning-journal", destination: "/blog", permanent: true },
+      {
+        source: "/learning-journal/:entry*",
+        destination: "/blog",
+        permanent: true,
+      },
+      // A post that was up for a day in November 2026
+      {
+        source: "/blog/writing-posts-in-mdx",
+        destination: "/blog",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
