@@ -1,5 +1,5 @@
 /** Shared by the composer and the route that delivers what it writes. */
-export const CONTACT_EMAIL = "contato@laurabeatris.com";
+export const CONTACT_EMAIL = "contact@laurabeatris.com";
 
 export const MAX_EMAIL_LENGTH = 254;
 export const MAX_SUBJECT_LENGTH = 150;
